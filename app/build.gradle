@@ -1,0 +1,86 @@
+plugins {
+    id 'com.android.application'
+//    id 'com.google.firebase.firebase-perf'
+//    id 'com.google.gms.google-services'
+//    id 'com.google.firebase.crashlytics'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion 31
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.loadapp.load"
+        minSdkVersion 19
+        targetSdkVersion 31
+        versionCode 3
+        versionName "Version 1.0.0"
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions{
+        pickFirst "androidsupportmultidexversion.txt"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('../loanapp.jks');
+            storePassword "123456"
+            keyAlias "loanapp"
+            keyPassword "123456"
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+
+    implementation 'com.lzy.net:okgo:3.0.4'
+    implementation 'com.blankj:utilcodex:1.30.6'
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+////     Import the Firebase BoM
+//    implementation platform('com.google.firebase:firebase-bom:28.4.1')
+//    // When using the BoM, you don't specify versions in Firebase library dependencies
+//    // Declare the dependency for the Firebase SDK for Google Analytics
+//    implementation 'com.google.firebase:firebase-analytics'
+//    implementation 'com.google.firebase:firebase-perf'
+//
+////     Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
+////     When using the BoM, you don't specify versions in Firebase library dependencies
+//    implementation 'com.google.firebase:firebase-messaging'
+//    implementation 'com.google.firebase:firebase-analytics'
+//    implementation 'com.google.firebase:firebase-crashlytics'
+//
+//    implementation 'com.google.firebase:firebase-auth'
+//    implementation 'com.google.firebase:firebase-firestore'
+
+    implementation 'org.greenrobot:eventbus:3.2.0'
+
+    implementation  'io.github.scwang90:refresh-layout-kernel:2.0.5'      //核心必须依赖
+    implementation  'io.github.scwang90:refresh-header-classics:2.0.5'    //经典刷新头
+    implementation  'io.github.scwang90:refresh-footer-classics:2.0.5'    //经典加载
+
+    implementation 'com.alibaba:fastjson:1.2.76'
+    implementation 'top.zibin:Luban:1.1.8'
+}
