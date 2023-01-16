@@ -9,6 +9,7 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.bean.ServerLiveBean
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.login.SignInActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -27,7 +28,8 @@ class LauncherActivity : BaseActivity() {
         checkServerAvailable(object : CallBack {
             override fun onEnd() {
 //                startActivity(Intent(this@LauncherActivity, SignInActivity::class.java))
-//                finish()
+                startActivity(Intent(this@LauncherActivity, MainActivity::class.java))
+                finish()
             }
         })
     }

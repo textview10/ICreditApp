@@ -1,13 +1,17 @@
 package com.loan.icreditapp.ui.home
 
-import androidx.appcompat.app.AppCompatActivity
+import android.Manifest
 import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.drawerlayout.widget.DrawerLayout
+import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.dialog.RequestPermissionDialog
 
 class MainActivity : BaseActivity() {
 
@@ -20,6 +24,7 @@ class MainActivity : BaseActivity() {
         BarUtils.setStatusBarColor(this, resources.getColor(android.R.color.transparent))
         setContentView(R.layout.activity_main)
         initializeView()
+        requestPermission()
     }
 
     private fun initializeView() {
@@ -40,4 +45,50 @@ class MainActivity : BaseActivity() {
         transaction.commitAllowingStateLoss()
     }
 
+    private fun requestPermission() {
+        val hasPermission = PermissionUtils.isGranted(
+            PermissionConstants.LOCATION,
+            PermissionConstants.CAMERA,
+            PermissionConstants.SMS,
+            PermissionConstants.CONTACTS,
+            PermissionConstants.PHONE,
+            PermissionConstants.STORAGE
+        )
+        //        if (false && hasPermission) {
+        if (hasPermission) {
+            executeNext()
+        } else {
+            requestPermissionInternal()
+        }
+    }
+
+    private fun requestPermissionInternal() {
+        val dialog = RequestPermissionDialog(this)
+        dialog.setOnItemClickListener(object : RequestPermissionDialog.OnItemClickListener() {
+            override fun onClickAgree() {
+                PermissionUtils.permission(
+                    Manifest.permission.READ_CALL_LOG,
+                    Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.READ_SMS,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ).callback(object : PermissionUtils.SimpleCallback {
+                    override fun onGranted() {
+                        executeNext()
+                    }
+
+                    override fun onDenied() {
+                        ToastUtils.showShort("please allow permission.")
+                    }
+                }).request()
+            }
+        })
+        dialog.show()
+    }
+
+    private fun executeNext() {}
 }

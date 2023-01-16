@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/ic_bg_common" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="@string/request_permission_title"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
+
+                <!--        <ScrollView-->
+                <!--            android:layout_width="match_parent"-->
+                <!--            android:layout_height="100dp">-->
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="start"
+                    android:text="@string/request_permission_desc"
+                    android:textColor="#ff999999"
+                    android:textSize="14sp" />
+
+                <!--        </ScrollView>-->
+
+                <LinearLayout
+                    style="@style/request_permission_container"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        style="@style/request_permission_iv"
+                        android:src="@drawable/ic_request_permission_mobile" />
+
+                    <LinearLayout style="@style/request_permission_tv_container">
+
+                        <TextView
+                            style="@style/request_permission_tv_top"
+                            android:text="@string/request_permission_phone_title" />
+
+                        <!--                    <ScrollView style="@style/request_permission_sc_container">-->
+
+                        <TextView
+                            style="@style/request_permission_tv_bottom"
+                            android:text="@string/request_permission_phone_desc" />
+
+                        <!--                    </ScrollView>-->
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/request_permission_container">
+
+                    <ImageView
+                        style="@style/request_permission_iv"
+                        android:src="@drawable/ic_request_permission_camera" />
+
+                    <LinearLayout style="@style/request_permission_tv_container">
+
+                        <TextView
+                            style="@style/request_permission_tv_top"
+                            android:text="@string/request_permission_camera_title" />
+
+                        <!--                    <ScrollView style="@style/request_permission_sc_container">-->
+
+                        <TextView
+                            style="@style/request_permission_tv_bottom"
+                            android:text="@string/request_permission_camera_desc" />
+
+                        <!--                    </ScrollView>-->
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/request_permission_container">
+
+                    <ImageView
+                        style="@style/request_permission_iv"
+                        android:src="@drawable/ic_request_permission_sd" />
+
+                    <LinearLayout style="@style/request_permission_tv_container">
+
+                        <TextView
+                            style="@style/request_permission_tv_top"
+                            android:text="@string/request_permission_sdcard_title" />
+
+                        <!--                    <ScrollView style="@style/request_permission_sc_container">-->
+
+                        <TextView
+                            style="@style/request_permission_tv_bottom"
+                            android:text="@string/request_permission_sdcard_desc" />
+
+                        <!--                    </ScrollView>-->
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/request_permission_container">
+
+                    <ImageView
+                        style="@style/request_permission_iv"
+                        android:src="@drawable/ic_request_permission_position" />
+
+                    <LinearLayout style="@style/request_permission_tv_container">
+
+                        <TextView
+                            style="@style/request_permission_tv_top"
+                            android:text="@string/request_permission_location_title" />
+
+                        <!--                    <ScrollView style="@style/request_permission_sc_container">-->
+
+                        <TextView
+                            style="@style/request_permission_tv_bottom"
+                            android:text="@string/request_permission_location_desc" />
+
+                        <!--                    </ScrollView>-->
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/request_permission_container">
+
+                    <ImageView
+                        style="@style/request_permission_iv"
+                        android:src="@drawable/ic_request_permission_maillist" />
+
+                    <LinearLayout style="@style/request_permission_tv_container">
+
+                        <TextView
+                            style="@style/request_permission_tv_top"
+                            android:text="@string/request_permission_contacts_title" />
+
+                        <!--                    <ScrollView style="@style/request_permission_sc_container">-->
+
+                        <TextView
+                            style="@style/request_permission_tv_bottom"
+                            android:text="@string/request_permission_contacts_desc" />
+
+                        <!--                    </ScrollView>-->
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/request_permission_container">
+
+                    <ImageView
+                        style="@style/request_permission_iv"
+                        android:src="@drawable/ic_request_permission_recording" />
+
+                    <LinearLayout style="@style/request_permission_tv_container">
+
+                        <TextView
+                            style="@style/request_permission_tv_top"
+                            android:text="@string/request_permission_call_record_title" />
+
+                        <TextView
+                            style="@style/request_permission_tv_bottom"
+                            android:text="@string/request_permission_call_record_desc" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout style="@style/request_permission_container">
+
+                    <ImageView
+                        style="@style/request_permission_iv"
+                        android:src="@drawable/ic_request_permission_sms" />
+
+                    <LinearLayout style="@style/request_permission_tv_container">
+
+                        <TextView
+                            style="@style/request_permission_tv_top"
+                            android:text="@string/request_permission_sms_title" />
+
+                        <TextView
+                            style="@style/request_permission_tv_bottom"
+                            android:text="@string/request_permission_sms_desc" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="25dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="start"
+                android:text="@string/request_permission_desc2"
+                android:textColor="#ff999999"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_request_permission_agree"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/request_permission_comfire"
+                android:gravity="center"
+                android:text="@string/request_permission_agree"
+                android:textAllCaps="true"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_request_permission_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/request_permission_cancel"
+                android:gravity="center"
+                android:text="@string/request_permission_cancel"
+                android:textAllCaps="true"
+                android:textColor="#666666"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Creditng</string>
+
+    <string name="request_permission_title">Welcome to ICredit!</string>
+    <string name="request_permission_desc">To ensure that you can use cool credit related functions normally,You need to apply for the following permissions:</string>
+    <string name="request_permission_phone_title">Mobile phone status</string>
+    <string name="request_permission_phone_desc">It is used to identify the user identity, prevent malicious programs and safe operation.</string>
+    <string name="request_permission_camera_title">Camera</string>
+    <string name="request_permission_camera_desc">It is used to identify the user identity, prevent malicious programs and safe operation.</string>
+    <string name="request_permission_sdcard_title">SD card</string>
+    <string name="request_permission_sdcard_desc">It is used to identify the user identity, prevent malicious programs and safe operation.</string>
+    <string name="request_permission_location_title">Position</string>
+    <string name="request_permission_location_desc">It is used to identify the user identity, prevent malicious programs and safe operation.</string>
+    <string name="request_permission_contacts_title">Mail list</string>
+    <string name="request_permission_contacts_desc">It is used to identify the user identity, prevent malicious programs and safe operation.</string>
+    <string name="request_permission_call_record_title">Recording function</string>
+    <string name="request_permission_call_record_desc">It is used to identify the user identity, prevent malicious programs and safe operation.</string>
+    <string name="request_permission_sms_title">SMS</string>
+    <string name="request_permission_sms_desc">It is used to identify the user identity, prevent malicious programs and safe operation.</string>
+    <string name="request_permission_desc2">Please read the authorization carefully before using Cool Credit</string>
+
+<!--    <string name="request_permission_calendar_title">Calendar</string>-->
+<!--    <string name="request_permission_calendar_desc">You agree that we must be granted access to your smartphone\'s calendar in order to input reminders pertaining to repayment dates of your loan. We will not extract nor view any information in your calendar and limit our actions to setting reminders Gallery We need to obtain your storage permission to ensure the normal operation of the program. </string>-->
+    <string name="request_permission_cancel">disagree</string>
+    <string name="request_permission_agree">Allow</string>
 </resources>
