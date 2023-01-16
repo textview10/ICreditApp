@@ -28,7 +28,7 @@ class LauncherActivity : BaseActivity() {
         checkServerAvailable(object : CallBack {
             override fun onEnd() {
 //                startActivity(Intent(this@LauncherActivity, SignInActivity::class.java))
-                startActivity(Intent(this@LauncherActivity, MainActivity::class.java))
+                startActivity(Intent(this@LauncherActivity, SplashActivity::class.java))
                 finish()
             }
         })

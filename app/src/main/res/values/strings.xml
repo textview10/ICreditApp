@@ -23,4 +23,6 @@
 <!--    <string name="request_permission_calendar_desc">You agree that we must be granted access to your smartphone\'s calendar in order to input reminders pertaining to repayment dates of your loan. We will not extract nor view any information in your calendar and limit our actions to setting reminders Gallery We need to obtain your storage permission to ensure the normal operation of the program. </string>-->
     <string name="request_permission_cancel">disagree</string>
     <string name="request_permission_agree">Allow</string>
+
+    <string name="splash_title"> Make your finance peace in mind</string>
 </resources>

@@ -1,9 +1,11 @@
 package com.loan.icreditapp;
 
+import android.view.View;
+
 public class Test {
 
     private void test1() {
-        int a = 3;
-        String s1 = a + "";
+        View view;
+
     }
 }

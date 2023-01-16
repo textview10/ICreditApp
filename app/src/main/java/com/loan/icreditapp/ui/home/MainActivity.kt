@@ -22,6 +22,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BarUtils.setStatusBarColor(this, resources.getColor(android.R.color.transparent))
+        BarUtils.setNavBarLightMode(this,true)
         setContentView(R.layout.activity_main)
         initializeView()
         requestPermission()
