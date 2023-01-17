@@ -8,7 +8,7 @@ import com.loan.icreditapp.global.AppManager
 import com.loan.icreditapp.util.CheckResponseUtils
 import com.lzy.okgo.model.Response
 
-open abstract class BaseActivity : AppCompatActivity() {
+ abstract class BaseActivity : AppCompatActivity() {
 
     fun toFragment(fragment: BaseFragment?) {
         if (fragment != null) {
@@ -20,7 +20,7 @@ open abstract class BaseActivity : AppCompatActivity() {
     }
 
     @IdRes
-    protected fun getFragmentContainerRes(): Int {
+    protected open fun getFragmentContainerRes(): Int {
 //        return R.id.fl_sign_up_container
         return -1
     }
