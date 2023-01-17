@@ -8,19 +8,19 @@ class Api {
         //检测服务器是否存活
         val CHECK_SERVER_ALIVE: String = HOST + "/v1/start/live"
         // 检测更新
-        val UPDATE_DETAIL: String = HOST + " /v1/start/detail"
+        val UPDATE_DETAIL: String = HOST + "/v1/start/detail"
         //    v1/station/list
         //验证手机号码是否注册
-        val CHECK_MOBILE: String = HOST + "/api/v1/account/check_mobile"
+        val CHECK_MOBILE: String = HOST + "/v1/account/mobile/check"
 
         //发送短信验证码(获取验证码)
-        val GET_SMS_CODE: String = HOST + "/api/v1/account/send_sms_otp"
+        val GET_SMS_CODE: String = HOST + "/v1/account/captcha"
 
         //验证验证码
-        val CHECK_SMS_CODE: String = HOST + "/api/v1/account/check_otp_code"
+        val CHECK_SMS_CODE: String = HOST + "/v1/account/captcha/check"
 
         //注册账号
-        val REGISTER: String = HOST + "/api/v1/account/register"
+        val REGISTER: String = HOST + "/v1/account/register"
 
         //登录账号
         val LOGIN: String = HOST + "/api/v1/account/login"

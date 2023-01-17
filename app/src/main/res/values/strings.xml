@@ -25,4 +25,8 @@
     <string name="request_permission_agree">Allow</string>
 
     <string name="splash_title"> Make your finance peace in mind</string>
+
+    <string name="loan_person_profile_gender">Gender </string>
+    <string name="Resent_now">Resend now</string>
+    <string name="Resent_after">Resend After</string>
 </resources>
