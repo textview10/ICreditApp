@@ -1,193 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_splash_logo" />
+       <include
+           android:layout_width="match_parent"
+           layout="@layout/include_logo"
+           android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:text="ICredit"
-            android:textColor="#333333"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="12dp"
-        android:background="@color/white"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_signup_phone_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enter your phone number:"
-                android:textColor="#999999"
-                android:textSize="16sp" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="51dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:text="+"
-                            android:textSize="14sp" />
-
-                        <Spinner
-                            android:id="@+id/spinner_signup_input"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical" />
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_marginStart="10dp"
-                            android:layout_height="match_parent">
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/et_signup_phone_num"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@null"
-                                android:textCursorDrawable="@drawable/et_cursor_color"
-                                android:layout_weight="1" />
-
-                            <ImageView
-                                android:id="@+id/iv_signup_phonenum_clear"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center_vertical|end"
-                                android:paddingStart="10dp"
-                                android:paddingTop="5dp"
-                                android:paddingEnd="10dp"
-                                android:src="@drawable/ic_edit_text_clear"
-                                android:visibility="gone"
-                                android:paddingBottom="5dp" />
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="#E5E5E5" />
-            </FrameLayout>
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="80dp"
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:background="@color/white"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_signup_verify_code"
+                    android:id="@+id/tv_signup_phone_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Enter the captcha:"
+                    android:text="Enter your phone number:"
                     android:textColor="#999999"
                     android:textSize="16sp" />
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="51dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="+"
+                                android:textSize="14sp" />
+
+                            <Spinner
+                                android:id="@+id/spinner_signup_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical" />
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="10dp">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/et_signup_phone_num"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:background="@null"
+                                    android:textCursorDrawable="@drawable/et_cursor_color" />
+
+                                <ImageView
+                                    android:id="@+id/iv_signup_phonenum_clear"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center_vertical|end"
+                                    android:paddingStart="10dp"
+                                    android:paddingTop="5dp"
+                                    android:paddingEnd="10dp"
+                                    android:paddingBottom="5dp"
+                                    android:src="@drawable/ic_edit_text_clear"
+                                    android:visibility="gone" />
+
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:background="#E5E5E5" />
+                </FrameLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:orientation="horizontal">
-
-                    <include
-                        layout="@layout/include_input_verify_code"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_weight="1" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_signin_resend"
-                        android:layout_width="102dp"
+                        android:id="@+id/tv_signup_verify_code"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="6dp"
-                        android:paddingEnd="6dp"
-                        android:paddingTop="7dp"
-                        android:paddingBottom="7dp"
-                        android:gravity="center"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/register_resend_msg_bg"
-                        android:text="@string/Resent_now" />
+                        android:text="Enter the captcha:"
+                        android:textColor="#999999"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:orientation="horizontal">
+
+                        <include
+                            layout="@layout/include_input_verify_code"
+                            android:layout_width="0dp"
+                            android:layout_height="56dp"
+                            android:layout_weight="1" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_signin_resend"
+                            android:layout_width="102dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/register_resend_msg_bg"
+                            android:gravity="center"
+                            android:paddingStart="6dp"
+                            android:paddingTop="7dp"
+                            android:paddingEnd="6dp"
+                            android:paddingBottom="7dp"
+                            android:text="@string/Resent_now" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
+
             </LinearLayout>
 
+            <ProgressBar
+                android:id="@+id/pb_login_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+        </FrameLayout>
 
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/pb_login_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-    </FrameLayout>
-
+    </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/fl_signin_commit"
+        android:id="@+id/fl_signup_commit"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="30dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp">
-        <!--        android:background="@drawable/source2"-->
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/signup_commit_bg">
+        <!--        -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
             android:textColor="#FFFFFF"
+            android:text="next"
+            android:textAllCaps="true"
             android:textSize="16sp" />
         <!--        android:text="@string/signin_login"-->
 
     </FrameLayout>
 
-</LinearLayout>
+</FrameLayout>

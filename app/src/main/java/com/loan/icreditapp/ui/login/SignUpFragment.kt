@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatEditText
@@ -23,6 +24,8 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.login.VerifyPhoneNumBean
+import com.loan.icreditapp.bean.login.VerifySmsCodeBean
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
 import com.loan.icreditapp.util.BuildRequestJsonUtils
@@ -43,6 +46,7 @@ class SignUpFragment : BaseFragment() {
     private var tvResend: AppCompatTextView? = null
     private var ivClear: ImageView? = null
     private var verifyCodeView: InputVerifyCodeView? = null
+    private var flCommit: FrameLayout ? = null
 
     private var mPresenter: PhoneNumPresenter? = null
     private var mPhoneNum: String? = null
@@ -96,6 +100,7 @@ class SignUpFragment : BaseFragment() {
         tvPhoneNum = view.findViewById(R.id.tv_signup_phone_num)
         tvVerifyCode = view.findViewById(R.id.tv_signup_verify_code)
         tvResend = view.findViewById(R.id.tv_signin_resend)
+        flCommit = view.findViewById(R.id.fl_signup_commit)
 
         ivClear = view.findViewById(R.id.iv_signup_phonenum_clear)
         verifyCodeView = view.findViewById(R.id.view_input_verify_code_verify_code)
@@ -156,6 +161,11 @@ class SignUpFragment : BaseFragment() {
             checkAndVerifyPhoneNum()
 //            requestSendSms()
         }
+        mEtPhoneNum?.requestFocus()
+
+        flCommit?.setOnClickListener {
+            checkVerifySmsCode()
+        }
         initView()
     }
 
@@ -215,6 +225,11 @@ class SignUpFragment : BaseFragment() {
 
     //申请发送短信
     private fun requestSendSms() {
+        if (Constant.TEST_SEND_MSG) {
+            verifyCodeView?.clearAll()
+            mHandler?.sendEmptyMessage(TYPE_TIME_REDUCE)
+            return
+        }
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("mobile", mPhoneNum)
@@ -240,6 +255,7 @@ class SignUpFragment : BaseFragment() {
                     }
                     ToastUtils.showShort(" send sms success.")
                     verifyCodeView?.clearAll()
+                    mHandler?.sendEmptyMessage(TYPE_TIME_REDUCE)
                 }
 
                 override fun onError(response: Response<String>) {
@@ -251,10 +267,6 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun checkVerifySmsCode(){
-        if (mCurTime == 0) {
-            ToastUtils.showShort("please click later")
-            return
-        }
         if (TextUtils.isEmpty(mPhoneNum)) {
             ToastUtils.showShort(" phone num is null")
             mEtPhoneNum?.setSelection(0)
@@ -262,7 +274,7 @@ class SignUpFragment : BaseFragment() {
         }
         var verifyCode = verifyCodeView?.verifyCode
         if (TextUtils.isEmpty(verifyCode)) {
-            ToastUtils.showShort(" phone num is null")
+            ToastUtils.showShort(" verify code is null")
 //            verifyCodeView?.clearAll()
             return
         }
@@ -270,6 +282,10 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun requestVerifySmsCode(mPhoneNum: String?, verifyCode: String?) {
+        if (Constant.TEST_SEND_MSG) {
+            verifySuccess()
+            return
+        }
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("mobile", mPhoneNum)
@@ -277,22 +293,21 @@ class SignUpFragment : BaseFragment() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        OkGo.post<String>(Api.GET_SMS_CODE).tag(TAG)
-            .params("data", jsonObject.toString()) //                .upJson(jsonObject)
+        OkGo.post<String>(Api.CHECK_SMS_CODE).tag(TAG)
+            .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    val baseResponseBean: BaseResponseBean? =
-                        checkResponseSuccess(response, BaseResponseBean::class.java)
+                    val baseResponseBean: VerifySmsCodeBean? =
+                        checkResponseSuccess(response, VerifySmsCodeBean::class.java)
                     if (baseResponseBean == null) {
-                        ToastUtils.showShort("request send sms failure.")
+                        ToastUtils.showShort("request check sms code failure.")
                         return
                     }
-                    if (!baseResponseBean.isRequestSuccess()) {
-                        ToastUtils.showShort("request send sms failure 2.")
+                    if (!baseResponseBean.verifyed) {
+                        ToastUtils.showShort("check sms code verifyed failure.")
                         return
                     }
-                    ToastUtils.showShort(" send sms success.")
-                    verifyCodeView?.clearAll()
+                    verifySuccess()
                 }
 
                 override fun onError(response: Response<String>) {
@@ -301,5 +316,17 @@ class SignUpFragment : BaseFragment() {
                     ToastUtils.showShort("request send sms error ...")
                 }
             })
+    }
+
+    private fun verifySuccess(){
+        if (activity is SignUpActivity) {
+            var signUpActivity : SignUpActivity = activity as SignUpActivity
+            signUpActivity.toSetPwdPage()
+        }
+    }
+
+    override fun onDestroy() {
+        OkGo.getInstance().cancelTag(TAG)
+        super.onDestroy()
     }
 }

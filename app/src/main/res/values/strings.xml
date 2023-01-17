@@ -29,4 +29,7 @@
     <string name="loan_person_profile_gender">Gender </string>
     <string name="Resent_now">Resend now</string>
     <string name="Resent_after">Resend After</string>
+
+    <string name="signup_set_pwd_1">Creat a 4-digit password</string>
+    <string name="signup_set_pwd_2">Confirm Password</string>
 </resources>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="62dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
     <!--    <TextView-->
@@ -17,23 +17,24 @@
     <!--        android:orientation="horizontal">-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_view_input_layout"
+        style="@style/Widget.Design.TextInputLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        style="@style/Widget.Design.TextInputLayout"
-        app:hintTextAppearance="@style/TextInputLayout"
+        android:layout_weight="1"
         android:background="@color/white"
         android:textColor="#999999"
-        app:boxStrokeColor="@color/white"
         android:textColorHint="#999999"
-        android:layout_weight="1">
+        app:boxStrokeColor="@color/white"
+        app:hintTextAppearance="@style/TextInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_view_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@null"
             android:textColor="#999999"
-            android:textColorHint="#999999"
-            android:background="@null" />
+            android:textCursorDrawable="@drawable/et_cursor_color"
+            android:textColorHint="#999999" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

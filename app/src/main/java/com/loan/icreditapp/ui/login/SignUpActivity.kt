@@ -41,6 +41,11 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
+    open fun toSetPwdPage() {
+        var setPwdPage = SetPwdFragment()
+        toFragment(setPwdPage)
+    }
+
     private fun initView() {
         var ivBack:ImageView = findViewById(R.id.iv_signup_back)
         var tvTitle:TextView = findViewById(R.id.tv_signin_title)

@@ -43,7 +43,7 @@ class LauncherActivity : BaseActivity() {
         }
         //        Log.e(TAG, " = " + jsonObject.toString());
         OkGo.post<String>(Api.CHECK_SERVER_ALIVE).tag(TAG)
-            .params("data", jsonObject.toString()) //                .upJson(jsonObject)
+            .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
                     val serverLiveBean: ServerLiveBean? =
