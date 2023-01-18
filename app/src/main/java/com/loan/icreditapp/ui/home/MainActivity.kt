@@ -2,6 +2,7 @@ package com.loan.icreditapp.ui.home
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.constant.PermissionConstants
@@ -9,11 +10,19 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
+import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.dialog.RequestPermissionDialog
+import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.lzy.okgo.OkGo
+import com.lzy.okgo.callback.StringCallback
+import com.lzy.okgo.model.Response
+import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
+
+    private val TAG = "MainActivity"
 
     private var drawerLayout: DrawerLayout? = null
     private var flContent: FrameLayout? = null
@@ -47,18 +56,17 @@ class MainActivity : BaseActivity() {
     }
 
     private fun requestPermission() {
-        Manifest.permission.READ_CALL_LOG
-
         val hasPermission = PermissionUtils.isGranted(
             PermissionConstants.LOCATION,
             PermissionConstants.CAMERA,
             PermissionConstants.SMS,
             PermissionConstants.CONTACTS,
-            PermissionConstants.PHONE,
             PermissionConstants.STORAGE,
         )
+        val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
+
         //        if (false && hasPermission) {
-        if (hasPermission) {
+        if (hasPermission && hasPermissionCallLog) {
             executeNext()
         } else {
             requestPermissionInternal()
@@ -93,5 +101,23 @@ class MainActivity : BaseActivity() {
         dialog.show()
     }
 
-    private fun executeNext() {}
+    private fun executeNext() {
+        Log.e(TAG, " has all permission .")
+    }
+
+    private fun requestUpdate() {
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        OkGo.post<String>(Api.UPDATE_DETAIL).tag("Test")
+            .params("data", jsonObject.toString()) //                .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+
+                }
+            })
+    }
 }

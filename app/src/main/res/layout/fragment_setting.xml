@@ -4,4 +4,147 @@
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_setting_my_loan"
+            style="@style/setting_container">
+
+            <ImageView
+                style="@style/setting_lef_icon"
+                android:src="@drawable/ic_my_loan" />
+
+            <TextView
+                style="@style/setting_middle_text"
+                android:text="@string/setting_my_loan" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting_my_profile"
+            style="@style/setting_container">
+
+            <ImageView
+                style="@style/setting_lef_icon"
+                android:src="@drawable/ic_my_profile" />
+
+            <TextView
+                style="@style/setting_middle_text"
+                android:text="@string/setting_my_profile" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting_card"
+            style="@style/setting_container">
+
+            <ImageView
+                style="@style/setting_lef_icon"
+                android:src="@drawable/ic_card" />
+
+            <TextView
+                style="@style/setting_middle_text"
+                android:text="@string/setting_card" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting_bank_account"
+            style="@style/setting_container">
+
+            <ImageView
+                style="@style/setting_lef_icon"
+                android:src="@drawable/ic_account" />
+
+            <TextView
+                style="@style/setting_middle_text"
+                android:text="@string/setting_bank_account" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting_message"
+            style="@style/setting_container">
+
+            <ImageView
+                style="@style/setting_lef_icon"
+                android:src="@drawable/ic_message" />
+
+            <TextView
+                style="@style/setting_middle_text"
+                android:text="@string/setting_message" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting_help"
+            style="@style/setting_container">
+
+            <ImageView
+                style="@style/setting_lef_icon"
+                android:src="@drawable/ic_help" />
+
+            <TextView
+                style="@style/setting_middle_text"
+                android:text="@string/setting_help" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting_about"
+            style="@style/setting_container">
+
+            <ImageView
+                style="@style/setting_lef_icon"
+                android:src="@drawable/ic_about" />
+
+            <TextView
+                style="@style/setting_middle_text"
+                android:text="@string/setting_abount" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setting_logout"
+            style="@style/setting_container">
+
+            <ImageView
+                style="@style/setting_lef_icon"
+                android:src="@drawable/ic_out" />
+
+            <TextView
+                style="@style/setting_middle_text"
+                android:text="@string/setting_logout" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </FrameLayout>

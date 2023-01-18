@@ -37,31 +37,17 @@ class SplashActivity : BaseActivity() {
         OkGo.getInstance().addCommonHeaders(httpHeaders)
     }
 
-    private fun requestUpdate() {
-        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        OkGo.post<String>(Api.UPDATE_DETAIL).tag("Test")
-            .params("data", jsonObject.toString()) //                .upJson(jsonObject)
-            .execute(object : StringCallback() {
-                override fun onSuccess(response: Response<String>) {
-
-                }
-
-                override fun onError(response: Response<String>) {
-                    super.onError(response)
-
-                }
-            })
-    }
-
     private fun initializeView() {
         tvRegister =  findViewById(R.id.tv_splash_register)
         tvSignIn =  findViewById(R.id.tv_splash_signin)
 
         tvRegister?.setOnClickListener(View.OnClickListener {
            SignUpActivity.startActivity(this@SplashActivity, SignUpActivity.SIGNUP_1)
+            finish()
         })
         tvSignIn?.setOnClickListener(View.OnClickListener {
             SignInActivity.startActivity(this@SplashActivity)
+            finish()
         })
     }
 

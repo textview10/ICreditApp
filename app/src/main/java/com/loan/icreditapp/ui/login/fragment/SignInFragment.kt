@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +22,6 @@ import com.loan.icreditapp.bean.login.SignInBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
 import com.loan.icreditapp.ui.login.SignInActivity
-import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -105,6 +102,10 @@ class SignInFragment : BaseFragment() {
         ivShowPwd?.setOnClickListener {
             passwordMode = !passwordMode
             etSignInPwd?.setPassWordMode(passwordMode)
+            if (ivShowPwd != null) {
+                var icLogo:Int = if (passwordMode) R.drawable.ic_show_pwd else R.drawable.ic_hide_pwd
+                ivShowPwd?.setImageResource(icLogo)
+            }
         }
         initView()
     }

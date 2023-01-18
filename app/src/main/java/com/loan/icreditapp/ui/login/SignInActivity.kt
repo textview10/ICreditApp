@@ -33,9 +33,7 @@ class SignInActivity : BaseActivity(){
         var tvTitle: TextView = findViewById(R.id.tv_signin_title)
 
         ivBack.setOnClickListener {
-            var intent = Intent(this@SignInActivity, SplashActivity::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressedInternal()
         }
     }
 
@@ -50,6 +48,16 @@ class SignInActivity : BaseActivity(){
 
     fun toHomePage() {
         var intent: Intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onBackPressed() {
+        onBackPressedInternal()
+    }
+
+    private fun onBackPressedInternal(){
+        var intent = Intent(this@SignInActivity, SplashActivity::class.java)
         startActivity(intent)
         finish()
     }
