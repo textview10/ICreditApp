@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#3865CB"
     tools:context=".ui.home.MainActivity">
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -12,20 +12,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/fl_main_content"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
 
-            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="#3865CB">
 
-        </FrameLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_main_menu"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_main_menu" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/iv_main_title"
+                    android:layout_width="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_main_content"
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/fl_main_setting"
             android:layout_width="280dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="@android:color/holo_blue_bright">
+            android:background="@color/white">
 
         </FrameLayout>
 

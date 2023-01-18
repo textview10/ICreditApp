@@ -3,7 +3,11 @@ package com.loan.icreditapp.ui.home
 import android.Manifest
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.BarUtils
@@ -27,10 +31,12 @@ class MainActivity : BaseActivity() {
     private var drawerLayout: DrawerLayout? = null
     private var flContent: FrameLayout? = null
     private var flSetting: FrameLayout? = null
+    private var ivMenu: ImageView? = null
+    private var tvTitle: AppCompatTextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BarUtils.setStatusBarColor(this, resources.getColor(android.R.color.transparent))
+        BarUtils.setStatusBarColor(this, resources.getColor(R.color.theme_color))
         BarUtils.setNavBarLightMode(this,true)
         setContentView(R.layout.activity_main)
         initializeView()
@@ -41,9 +47,15 @@ class MainActivity : BaseActivity() {
         drawerLayout = findViewById(R.id.drawer_layout_container)
         flContent = findViewById(R.id.fl_main_content)
         flSetting = findViewById(R.id.fl_main_setting)
+        ivMenu = findViewById(R.id.iv_main_menu)
+        tvTitle = findViewById(R.id.iv_main_title)
 
-        var homeFragment = HomeFragment()
-        replaceFragment(homeFragment, R.id.fl_main_content)
+        ivMenu?.setOnClickListener(View.OnClickListener {
+            drawerLayout?.openDrawer(GravityCompat.START)
+        })
+
+        var myLoanFragment = MyLoanFragment()
+        replaceFragment(myLoanFragment, R.id.fl_main_content)
         var settingFragment = SettingFragment()
         replaceFragment(settingFragment, R.id.fl_main_setting)
     }

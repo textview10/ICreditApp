@@ -2,6 +2,7 @@ package com.loan.icreditapp.global
 
 import android.R
 import android.app.Application
+import com.loan.icreditapp.collect.LocationMgr
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.cookie.CookieJarImpl
 import com.lzy.okgo.cookie.store.DBCookieStore
@@ -61,8 +62,7 @@ class MyApp : Application() {
 
 
     private fun initializeData() {
-//        LocationMgr.getInstance().init(this);
-//
+        LocationMgr.getInstance().init(this);
 //        FireBaseMgr.getInstance().getToken()
     }
 

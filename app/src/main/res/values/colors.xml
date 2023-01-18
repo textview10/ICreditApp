@@ -11,4 +11,5 @@
     <color name="signin_unselect">#999999</color>
     <color name="verify_sms_unselect">#EBEBEB</color>
     <color name="verify_sms_select">#3364CD</color>
+    <color name="theme_color">#3865CB</color>
 </resources>

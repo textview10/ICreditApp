@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseFragment
 
-class HomeFragment : BaseFragment() {
+class MyLoanFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +17,7 @@ class HomeFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view: View = inflater.inflate(R.layout.fragment_home, container, false)
+        var view: View = inflater.inflate(R.layout.fragment_myloan, container, false)
         return view
     }
 }

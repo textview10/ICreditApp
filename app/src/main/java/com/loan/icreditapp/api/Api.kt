@@ -26,7 +26,7 @@ class Api {
         val LOGIN: String = HOST + "/v1/account/login"
 
         //登出账号
-        val LOGOUT: String = HOST + "/api/v1/account/logout"
+        val LOGOUT: String = HOST + "/v1/account/logout"
 
         //修改密码
         val MODIFY_PSD: String = HOST + "/api/v1/account/modify_password"
@@ -58,8 +58,7 @@ class Api {
         val UPLOAD_WALLET: String = HOST + "/api/v1/account/upload_wallet"
 
         //上传客户端信息
-        val UPLOAD_CLIENT_INFO: String =
-            HOST + "/api/v1/account/upload_client_info"
+        val UPLOAD_CLIENT_INFO: String = HOST + "/api/v1/account/upload_client_info"
 
         //产品试算
         val PRODUCT_TRIAL: String = HOST + "/api/v1/product/trial"
@@ -79,6 +78,8 @@ class Api {
         val WEB_VIEW_POLICY: String = HOST + "/html/Privacy.html"
 
         val WEB_VIEW_TERM: String = HOST + "/html/terms.html"
+
+        val REQUEST_MESSAGE_LIST: String = HOST + "/v1/station/list"
     }
 
 }

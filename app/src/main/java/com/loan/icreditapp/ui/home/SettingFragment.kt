@@ -1,14 +1,28 @@
 package com.loan.icreditapp.ui.home
 
+import android.nfc.Tag
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
+import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.bean.BaseResponseBean
+import com.loan.icreditapp.bean.login.SignInBean
+import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.lzy.okgo.OkGo
+import com.lzy.okgo.callback.StringCallback
+import com.lzy.okgo.model.Response
+import org.json.JSONObject
 
 class SettingFragment : BaseFragment() {
+
+    private val TAG = "SettingFragment"
 
     private var llMyloan:LinearLayout? = null
     private var llMyProfile:LinearLayout? = null
@@ -62,7 +76,62 @@ class SettingFragment : BaseFragment() {
 
         })
         llLogout?.setOnClickListener(View.OnClickListener {
-
+            logOut()
         })
+    }
+
+    override fun onDestroy() {
+        OkGo.getInstance().cancelTag(TAG)
+        super.onDestroy()
+    }
+
+    private fun logOut(){
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        OkGo.post<String>(Api.LOGOUT).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    val baseResponseBean: BaseResponseBean? =
+                        checkResponseSuccess(response, BaseResponseBean::class.java)
+                    if (baseResponseBean == null ) {
+                        ToastUtils.showShort("logout failure.")
+                        return
+                    }
+                    if (!baseResponseBean.isRequestSuccess()) {
+                        ToastUtils.showShort("request logout failure.")
+                        return
+                    }
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    Log.e(TAG, "logout error .")
+                }
+            })
+    }
+
+    private fun requestMessageList(){
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        OkGo.post<String>(Api.REQUEST_MESSAGE_LIST).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    val baseResponseBean: BaseResponseBean? =
+                        checkResponseSuccess(response, BaseResponseBean::class.java)
+                    if (baseResponseBean == null ) {
+                        ToastUtils.showShort("logout failure.")
+                        return
+                    }
+                    if (!baseResponseBean.isRequestSuccess()) {
+                        ToastUtils.showShort("request logout failure.")
+                        return
+                    }
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    Log.e(TAG, "logout error .")
+                }
+            })
     }
 }
