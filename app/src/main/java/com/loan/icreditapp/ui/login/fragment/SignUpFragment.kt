@@ -1,4 +1,4 @@
-package com.loan.icreditapp.ui.login
+package com.loan.icreditapp.ui.login.fragment
 
 import android.graphics.Color
 import android.os.Bundle
@@ -27,6 +27,7 @@ import com.loan.icreditapp.bean.login.VerifyPhoneNumBean
 import com.loan.icreditapp.bean.login.VerifySmsCodeBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
+import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -141,7 +142,7 @@ class SignUpFragment : BaseFragment() {
                         ToastUtils.showShort("verify code = null. please input again.")
                         return
                     }
-                    requestVerifySmsCode(mPhoneNum, verifyCode)
+                    checkVerifySmsCode(false)
                 }
             }
 
@@ -164,7 +165,7 @@ class SignUpFragment : BaseFragment() {
         mEtPhoneNum?.requestFocus()
 
         flCommit?.setOnClickListener {
-            checkVerifySmsCode()
+            checkVerifySmsCode(true)
         }
         initView()
     }
@@ -266,15 +267,19 @@ class SignUpFragment : BaseFragment() {
             })
     }
 
-    private fun checkVerifySmsCode(){
+    private fun checkVerifySmsCode(needTip : Boolean){
         if (TextUtils.isEmpty(mPhoneNum)) {
-            ToastUtils.showShort(" phone num is null")
-            mEtPhoneNum?.setSelection(0)
+            if (needTip) {
+                ToastUtils.showShort(" phone num is null")
+                mEtPhoneNum?.setSelection(0)
+            }
             return
         }
-        var verifyCode = verifyCodeView?.verifyCode
+        var verifyCode = verifyCodeView?.getVerifyCode()
         if (TextUtils.isEmpty(verifyCode)) {
-            ToastUtils.showShort(" verify code is null")
+            if (needTip) {
+                ToastUtils.showShort(" verify code is null")
+            }
 //            verifyCodeView?.clearAll()
             return
         }
@@ -321,7 +326,7 @@ class SignUpFragment : BaseFragment() {
     private fun verifySuccess(){
         if (activity is SignUpActivity) {
             var signUpActivity : SignUpActivity = activity as SignUpActivity
-            signUpActivity.toSetPwdPage()
+            signUpActivity.toSetPwdPage(mPhoneNum!!)
         }
     }
 

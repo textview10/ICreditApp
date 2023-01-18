@@ -118,6 +118,15 @@ public class EditTextContainer extends FrameLayout {
             }
         });
     }
+    public void setSelectionLast(){
+        if (editText != null){
+            String editTextStr = editText.getText().toString();
+            if (!TextUtils.isEmpty(editTextStr)) {
+                editText.setText(editTextStr);
+                editText.setSelection(editTextStr.length());
+            }
+        }
+    }
 
     public void setPassWordMode(boolean isPasswordMode){
         if (editText != null){

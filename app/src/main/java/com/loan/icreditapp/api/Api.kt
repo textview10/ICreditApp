@@ -23,7 +23,7 @@ class Api {
         val REGISTER: String = HOST + "/v1/account/register"
 
         //登录账号
-        val LOGIN: String = HOST + "/api/v1/account/login"
+        val LOGIN: String = HOST + "/v1/account/login"
 
         //登出账号
         val LOGOUT: String = HOST + "/api/v1/account/logout"

@@ -47,13 +47,15 @@ class MainActivity : BaseActivity() {
     }
 
     private fun requestPermission() {
+        Manifest.permission.READ_CALL_LOG
+
         val hasPermission = PermissionUtils.isGranted(
             PermissionConstants.LOCATION,
             PermissionConstants.CAMERA,
             PermissionConstants.SMS,
             PermissionConstants.CONTACTS,
             PermissionConstants.PHONE,
-            PermissionConstants.STORAGE
+            PermissionConstants.STORAGE,
         )
         //        if (false && hasPermission) {
         if (hasPermission) {

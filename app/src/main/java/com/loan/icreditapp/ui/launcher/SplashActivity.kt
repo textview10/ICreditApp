@@ -11,6 +11,7 @@ import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.bean.BaseResponseBean
+import com.loan.icreditapp.ui.login.SignInActivity
 import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.CheckResponseUtils
@@ -34,32 +35,11 @@ class SplashActivity : BaseActivity() {
 
         val httpHeaders = BuildRequestJsonUtils.buildHttpHeadersNonPermission()
         OkGo.getInstance().addCommonHeaders(httpHeaders)
-        login()
     }
 
     private fun requestUpdate() {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         OkGo.post<String>(Api.UPDATE_DETAIL).tag("Test")
-            .params("data", jsonObject.toString()) //                .upJson(jsonObject)
-            .execute(object : StringCallback() {
-                override fun onSuccess(response: Response<String>) {
-
-                }
-
-                override fun onError(response: Response<String>) {
-                    super.onError(response)
-
-                }
-            })
-    }
-
-    private fun login() {
-        //password	String
-        //mobile	String
-        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        jsonObject.put("mobile", "18518511461")
-        jsonObject.put("password", "123456")
-        OkGo.post<String>(Api.REGISTER).tag("Test")
             .params("data", jsonObject.toString()) //                .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
@@ -81,7 +61,7 @@ class SplashActivity : BaseActivity() {
            SignUpActivity.startActivity(this@SplashActivity, SignUpActivity.SIGNUP_1)
         })
         tvSignIn?.setOnClickListener(View.OnClickListener {
-
+            SignInActivity.startActivity(this@SplashActivity)
         })
     }
 
