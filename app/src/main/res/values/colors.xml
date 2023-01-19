@@ -12,4 +12,17 @@
     <color name="verify_sms_unselect">#EBEBEB</color>
     <color name="verify_sms_select">#3364CD</color>
     <color name="theme_color">#3865CB</color>
+
+    <color name="view_line_unselect">#EBEBEB</color>
+    <color name="view_line_select">#3865CB</color>
+
+    <color name="custom_dialog_confirm_text_color_light">#161A20</color>
+    <!--    <color name="custom_dialog_cancel_text_color_light">#666666</color>-->
+    <color name="custom_dialog_cancel_text_color_light">#161A20</color>
+    <color name="custom_dialog_text_color_light">#333333</color>
+    <color name="custom_dialog_title_text_color_light">#000000</color>
+    <color name="custom_dialog_check_text_color_light">#666666</color>
+
+    <color name="blue">#0077f4</color>
+
 </resources>

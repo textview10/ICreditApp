@@ -16,4 +16,15 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="DialogTheme" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+
+        <item name="android:windowIsTranslucent">true</item><!--半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
+    </style>
 </resources>

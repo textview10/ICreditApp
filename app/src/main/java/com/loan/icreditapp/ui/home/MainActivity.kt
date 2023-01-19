@@ -42,6 +42,7 @@ class MainActivity : BaseActivity() {
         BarUtils.setNavBarLightMode(this,true)
         setContentView(R.layout.activity_main)
         initializeView()
+        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderLoginNonPermission())
         requestPermission()
         ConfigMgr.getAllConfig()
     }
@@ -118,6 +119,7 @@ class MainActivity : BaseActivity() {
 
     private fun executeNext() {
         Log.e(TAG, " has all permission .")
+        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
     }
 
     private fun requestUpdate() {

@@ -33,7 +33,7 @@ class SplashActivity : BaseActivity() {
         setContentView(R.layout.activity_splash)
         initializeView()
 
-        val httpHeaders = BuildRequestJsonUtils.buildHttpHeadersNonPermission()
+        val httpHeaders = BuildRequestJsonUtils.buildHeadersNonLogin()
         OkGo.getInstance().addCommonHeaders(httpHeaders)
     }
 

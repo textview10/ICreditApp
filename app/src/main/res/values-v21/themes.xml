@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextInputLayout" parent="Widget.Design.TextInputLayout">
+        <item name="android:textColor">#999999</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColorHint">#999999</item>
+        <item name="android:colorControlNormal">@android:color/white</item>
+        <item name="android:colorControlActivated">@android:color/white</item>
+    </style>
+</resources>

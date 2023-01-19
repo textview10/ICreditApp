@@ -21,7 +21,7 @@ class BuildRequestJsonUtils {
             return httpHeaders
         }
 
-        fun buildHttpHeadersNonPermission(): HttpHeaders {
+        fun buildHeadersNonLogin(): HttpHeaders {
             val httpHeaders = HttpHeaders()
             try {
                 //platform	String	Y	应用平台
@@ -59,8 +59,8 @@ class BuildRequestJsonUtils {
                 //banner,click,search words
                 //  utmMedium	String	Y	媒介
                 httpHeaders.put("utmMedium", "banner")   //媒介
-                //   imei	String	Y	语言
-                httpHeaders.put("imei", "en")        //imei
+                //   imei
+                httpHeaders.put("imei", "")        //imei
                 // longitude	String	Y	经度
                 httpHeaders.put("longitude", "")   //经度
                 //latitude	String	Y	纬度
@@ -71,11 +71,22 @@ class BuildRequestJsonUtils {
             }
             return httpHeaders
         }
+        fun buildHeaderLoginNonPermission(): HttpHeaders {
+            val httpHeaders = HttpHeaders()
+            httpHeaders.put("token", Constant.mToken)
+            return httpHeaders
+        }
 
         @SuppressLint("MissingPermission")
-        fun buildHttpHeadersWithPermission(): HttpHeaders {
+        fun buildHeaderImei(): HttpHeaders {
             val httpHeaders = HttpHeaders()
             httpHeaders.put("imei", PhoneUtils.getIMEI())        //imei
+            return httpHeaders
+        }
+
+        @SuppressLint("MissingPermission")
+        fun buildHeaderLocation(): HttpHeaders {
+            val httpHeaders = HttpHeaders()
             httpHeaders.put("longitude", Constant.mToken)   //经度
             httpHeaders.put("latitude", Constant.mToken)   //纬度
             return httpHeaders

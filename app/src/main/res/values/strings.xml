@@ -69,8 +69,15 @@
     <string name="profile1_item7">Residential address</string>
     <string name="profile1_item8">Street name</string>
     <string name="profile1_item9">Street number</string>
-<!--    <string name="profile1_item3">Last Name</string>-->
-<!--    <string name="profile1_item3">Last Name</string>-->
-<!--    <string name="profile1_item3">Last Name</string>-->
+
+    <string name="add_profile_title_2_2">First Referee\' s</string>
+    <string name="profile2_item1">Referee\' full leagal name</string>
+    <string name="profile2_item2">Referee\' mobile number</string>
+    <string name="profile2_item3">Ralationship</string>
+    <string name="add_profile_title_2_3">Second Referee\' s</string>
+    <string name="profile2_item4">Referee\' full leagal name</string>
+    <string name="profile2_item5">Referee\' mobile number</string>
+    <string name="profile2_item6">Ralationship</string>
+
 
 </resources>

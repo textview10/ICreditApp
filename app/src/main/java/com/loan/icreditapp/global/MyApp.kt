@@ -2,6 +2,10 @@ package com.loan.icreditapp.global
 
 import android.R
 import android.app.Application
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.util.DisplayMetrics
+import com.blankj.utilcode.util.LanguageUtils
 import com.loan.icreditapp.collect.LocationMgr
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.cookie.CookieJarImpl
@@ -12,6 +16,7 @@ import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import okhttp3.OkHttpClient
+import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.logging.Level
 
@@ -33,6 +38,7 @@ class MyApp : Application() {
         initOkGo()
         //        CrashHandler.getInstance().init(this);  //捕获异常, 并杀掉app
         initializeData()
+        LanguageUtils.applyLanguage(Locale.ENGLISH, false)
     }
 
     private fun initOkGo() {

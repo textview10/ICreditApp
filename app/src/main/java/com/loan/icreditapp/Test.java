@@ -15,11 +15,6 @@ import okhttp3.Response;
 public class Test {
 
     private void test1() {
-        JSONArray array = new JSONArray();
-        for (int i =0; i < array.length(); i++){
-            JSONObject jsonObject = array.optJSONObject(i);
-            String key = jsonObject.optString("key");
-            String value = jsonObject.optString("val");
-        }
+
     }
 }

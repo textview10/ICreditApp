@@ -3,6 +3,7 @@ package com.loan.icreditapp.ui.profile.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -132,6 +133,12 @@ public class EditTextContainer extends FrameLayout {
         if (editText != null){
             editText.setTransformationMethod(isPasswordMode ? PasswordTransformationMethod.getInstance()
                     : HideReturnsTransformationMethod.getInstance());
+        }
+    }
+
+    public void setInputNum(){
+        if (editText != null){
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
     }
 

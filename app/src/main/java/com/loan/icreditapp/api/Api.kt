@@ -37,11 +37,16 @@ class Api {
         //获取基本信息
         val GET_CONFIG: String = HOST + "/v1/dict/detail"
 
-        //获取客户信息
-        val GET_PROFILE: String = HOST + "/api/v1/account/get_profile"
+        //查询个人资料 profile1
+        val GET_PROFILE_1: String = HOST + "/v1/account/profile/detail"
+        //上传个人资料 profile1
+        val UPLOAD_PROFILE_1: String = HOST + "/v1/account/profile"
 
-        //上传客户基本信息
-        val UPLOAD_BASE: String = HOST + "/api/v1/account/upload_base"
+        //查询紧急通讯录 profile2
+        val GET_CONTACT_2: String = HOST + "/v1/account/contact/detail"
+        //上传紧急通讯录 profile2
+        val UPLOAD_CONTACT_2: String = HOST + "/v1/account/contact"
+
 
         //上传联系人信息
         val UPLOAD_CONTACT: String = HOST + "/api/v1/account/upload_contact"
