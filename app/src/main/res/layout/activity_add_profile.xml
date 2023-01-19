@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -42,12 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/ic_step_1" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_add_profile_step_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
         <FrameLayout
             android:id="@+id/fl_add_profile_container"

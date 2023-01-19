@@ -44,7 +44,33 @@
     <string name="setting_logout">Log out</string>
 
     <string name="add_profile_title_1">Basic information about you</string>
+    <string name="add_profile_title_1_2"> Tell us something more about you</string>
     <string name="add_profile_title_2">Tell us about you referee</string>
     <string name="add_profile_title_3">Tell us about you details information</string>
+
+    <string name="profile3_item1">Number of Spouses</string>
+    <string name="profile3_item2">Is there any foreign debt?</string>
+    <string name="profile3_item3">Gross Salary(monthly)</string>
+    <string name="profile3_item4">Employer Name</string>
+    <string name="profile3_item5">Employer Address</string>
+    <string name="profile3_item6">Working Status</string>
+    <string name="profile3_item_desc">Choose from list</string>
+
+    <string name="profile1_submit">submit</string>
+
+    <string name="profile1_item1">First Name</string>
+    <string name="profile1_item2">Other/middle Name (optional)</string>
+    <string name="profile1_item3">Last Name</string>
+    <string name="profile1_checkbox_male">Male</string>
+    <string name="profile1_checkbox_female">Female</string>
+    <string name="profile1_item4">Date of Birth</string>
+    <string name="profile1_item5">BVN</string>
+    <string name="profile1_item6">Personal Email</string>
+    <string name="profile1_item7">Residential address</string>
+    <string name="profile1_item8">Street name</string>
+    <string name="profile1_item9">Street number</string>
+<!--    <string name="profile1_item3">Last Name</string>-->
+<!--    <string name="profile1_item3">Last Name</string>-->
+<!--    <string name="profile1_item3">Last Name</string>-->
 
 </resources>

@@ -21,6 +21,7 @@ public class SelectContainer extends FrameLayout {
     private TextView tvTitle, tvDesc;
     private ImageView ivIcon;
     private String hint;
+    private String desc;
     private @DrawableRes
     int drawableRes;
 
@@ -44,7 +45,8 @@ public class SelectContainer extends FrameLayout {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.select_view);
             if (typedArray != null) {
                 hint = typedArray.getString(R.styleable.select_view_select_view_hint);
-                drawableRes = typedArray.getResourceId(R.styleable.select_view_select_view_icon, R.drawable.ic_edit_text_clear);
+                desc = typedArray.getString(R.styleable.select_view_select_view_desc);
+                drawableRes = typedArray.getResourceId(R.styleable.select_view_select_view_icon, R.drawable.ic_profile_bottom_arrow);
             }
         }
         View view = LayoutInflater.from(getContext()).inflate(R.layout.view_select, this, false);
@@ -53,6 +55,9 @@ public class SelectContainer extends FrameLayout {
         ivIcon = view.findViewById(R.id.view_select_iv_icon);
 
         tvTitle.setText(hint);
+        if (!TextUtils.isEmpty(desc)) {
+            tvDesc.setText(desc);
+        }
         if (drawableRes != 0) {
             ivIcon.setImageResource(drawableRes);
         }

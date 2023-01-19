@@ -3,6 +3,7 @@
 
     <declare-styleable name="select_view">
         <attr name="select_view_hint" format="string" />
+        <attr name="select_view_desc" format="string" />
         <attr name="select_view_icon" format="reference" />
     </declare-styleable>
 

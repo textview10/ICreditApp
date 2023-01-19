@@ -1,5 +1,6 @@
 package com.loan.icreditapp.ui.home
 
+import android.content.Intent
 import android.nfc.Tag
 import android.os.Bundle
 import android.text.TextUtils
@@ -14,6 +15,7 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.login.SignInBean
+import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -32,6 +34,7 @@ class SettingFragment : BaseFragment() {
     private var llHelp:LinearLayout? = null
     private var llAbout:LinearLayout? = null
     private var llLogout:LinearLayout? = null
+    private var llTest:LinearLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +55,7 @@ class SettingFragment : BaseFragment() {
         llHelp = view.findViewById(R.id.ll_setting_help)
         llAbout = view.findViewById(R.id.ll_setting_about)
         llLogout = view.findViewById(R.id.ll_setting_logout)
+        llTest = view.findViewById(R.id.ll_setting_test)
 
         llMyloan?.setOnClickListener(View.OnClickListener {
 
@@ -77,6 +81,10 @@ class SettingFragment : BaseFragment() {
         })
         llLogout?.setOnClickListener(View.OnClickListener {
             logOut()
+        })
+        llTest?.setOnClickListener(View.OnClickListener {
+            var intent: Intent = Intent(activity, AddProfileActivity::class.java)
+            startActivity(intent)
         })
     }
 

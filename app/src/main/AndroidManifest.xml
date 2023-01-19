@@ -68,6 +68,12 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity
+            android:name=".ui.profile.AddProfileActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

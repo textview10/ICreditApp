@@ -4,18 +4,23 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.blankj.utilcode.util.BarUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
+import com.loan.icreditapp.ui.profile.fragment.AddProfile1Fragment
+import com.loan.icreditapp.ui.profile.fragment.AddProfile2Fragment
+import com.loan.icreditapp.ui.profile.fragment.AddProfile3Fragment
 
 class AddProfileActivity : BaseActivity() {
 
     private var ivBack :ImageView? = null
     private var tvTitle :TextView? = null
     private var ivStep :ImageView? = null
-    private var tvStepTitle :TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BarUtils.setStatusBarColor(this, resources.getColor(R.color.white))
+        BarUtils.setStatusBarLightMode(this, true)
         setContentView(R.layout.activity_add_profile)
         initializeView()
     }
@@ -29,21 +34,27 @@ class AddProfileActivity : BaseActivity() {
         })
 
         ivStep = findViewById(R.id.iv_add_profile_step)
-        tvStepTitle = findViewById(R.id.tv_add_profile_step_title)
 
-
+        toStep(0)
     }
 
     private fun toStep(step :Int) {
         if (step == 0){
             ivStep?.setImageResource(R.drawable.ic_step_1)
-            tvStepTitle?.setText(resources.getText(R.string.add_profile_title_1))
+            var profile1Fragment = AddProfile1Fragment()
+            toFragment(profile1Fragment)
         } else if (step == 1){
             ivStep?.setImageResource(R.drawable.ic_step_2)
-            tvStepTitle?.setText(resources.getText(R.string.add_profile_title_2))
+            var profile2Fragment = AddProfile2Fragment()
+            toFragment(profile2Fragment)
         } else if (step == 2){
             ivStep?.setImageResource(R.drawable.ic_step_3)
-            tvStepTitle?.setText(resources.getText(R.string.add_profile_title_3))
+            var profile3Fragment = AddProfile3Fragment()
+            toFragment(profile3Fragment)
         }
+    }
+
+    override fun getFragmentContainerRes(): Int {
+        return R.id.fl_add_profile_container
     }
 }
