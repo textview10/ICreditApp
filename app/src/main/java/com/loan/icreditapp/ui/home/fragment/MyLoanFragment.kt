@@ -1,4 +1,4 @@
-package com.loan.icreditapp.ui.home
+package com.loan.icreditapp.ui.home.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -32,10 +32,10 @@ class Api {
         val MODIFY_PSD: String = HOST + "/api/v1/account/modify_password"
 
         //上传fcm token
-        val UPLOAD_FCM_TOKEN: String = HOST + "/api/v1/account/upload_fcmtoken"
+        val UPLOAD_FCM_TOKEN: String = HOST + "/v1/account/fcmtoken"
 
         //获取基本信息
-        val GET_CONFIG: String = HOST + "/api/v1/account/base_profile_config"
+        val GET_CONFIG: String = HOST + "/v1/dict/detail"
 
         //获取客户信息
         val GET_PROFILE: String = HOST + "/api/v1/account/get_profile"

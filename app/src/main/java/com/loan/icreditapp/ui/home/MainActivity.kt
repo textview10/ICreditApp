@@ -18,6 +18,8 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.dialog.RequestPermissionDialog
+import com.loan.icreditapp.global.ConfigMgr
+import com.loan.icreditapp.ui.home.fragment.MyLoanFragment
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -41,6 +43,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         initializeView()
         requestPermission()
+        ConfigMgr.getAllConfig()
     }
 
     private fun initializeView() {

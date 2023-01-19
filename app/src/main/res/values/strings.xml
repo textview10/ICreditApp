@@ -43,4 +43,8 @@
     <string name="setting_abount">About</string>
     <string name="setting_logout">Log out</string>
 
+    <string name="add_profile_title_1">Basic information about you</string>
+    <string name="add_profile_title_2">Tell us about you referee</string>
+    <string name="add_profile_title_3">Tell us about you details information</string>
+
 </resources>
