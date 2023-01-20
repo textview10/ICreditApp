@@ -1,11 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#F5F5F5"
     android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/loan_apply_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="15dp"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:src="@drawable/ic_apply_load_info" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/loan_apply_title"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/loan_apply_middle_bg"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_loan_apply_title"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_height="52dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:text="Loan Amount :"
+                    android:textColor="#666666"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="1dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_loan_apply_amount"
+                    android:layout_width="wrap_content"
+                    android:text="20000"
+                    android:textColor="#666666"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="52dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:text="Repay Term :"
+                    android:textColor="#666666"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content"/>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="1dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_loan_apply_term"
+                    android:layout_width="wrap_content"
+                    android:text="14"
+                    android:textColor="#666666"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
-        android:text="loan apply."
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_height="wrap_content"/>
+        android:text="loan apply." />
 </FrameLayout>

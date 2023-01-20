@@ -1,15 +1,12 @@
 package com.loan.icreditapp.ui.home
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.constant.PermissionConstants
@@ -19,7 +16,6 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.dialog.RequestPermissionDialog
-import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.fragment.*
 import com.loan.icreditapp.ui.setting.PageType
@@ -40,16 +36,17 @@ class MainActivity : BaseActivity() {
     private var ivMenu: ImageView? = null
     private var tvTitle: AppCompatTextView? = null
 
-    @PageType private
+    @PageType
+    private
     var mCurPageType: Int = PageType.MY_LOAN
 
-    var mMyLoanFragment : MyLoanFragment? = null
-    var mMyProfileFragment : MyProfileFragment? = null
+    var mMyLoanFragment: MyLoanFragment? = null
+    var mMyProfileFragment: MyProfileFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BarUtils.setStatusBarColor(this, resources.getColor(R.color.theme_color))
-        BarUtils.setNavBarLightMode(this,true)
+        BarUtils.setNavBarLightMode(this, true)
         setContentView(R.layout.activity_main)
         initializeView()
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderToken())
@@ -92,7 +89,8 @@ class MainActivity : BaseActivity() {
             PermissionConstants.STORAGE,
         )
         val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
-        val hasPermissionReadPhoneState = PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
+        val hasPermissionReadPhoneState =
+            PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
 
         //        if (false && hasPermission) {
         if (hasPermission && hasPermissionCallLog && hasPermissionReadPhoneState) {
@@ -134,7 +132,7 @@ class MainActivity : BaseActivity() {
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
     }
 
-    fun updatePageByType(@PageType type :Int){
+    fun updatePageByType(@PageType type: Int) {
         if (type == mCurPageType) {
             return
         }
@@ -142,38 +140,53 @@ class MainActivity : BaseActivity() {
         updatePageByTypeInternal()
     }
 
-   private fun updatePageByTypeInternal(){
+    fun setTitle(title: String) {
+        tvTitle?.text = title
+    }
+
+    override fun setTitle(@StringRes titleRes: Int) {
+        tvTitle?.text = resources.getText(titleRes)
+    }
+
+    private fun updatePageByTypeInternal() {
         var curFragment: BaseFragment? = null
-        when(mCurPageType) {
+        when (mCurPageType) {
             PageType.MY_LOAN -> {
-              if (mMyLoanFragment == null){
-                  mMyLoanFragment = MyLoanFragment()
-              }
+                setTitle(R.string.setting_my_loan)
+                if (mMyLoanFragment == null) {
+                    mMyLoanFragment = MyLoanFragment()
+                }
                 curFragment = mMyLoanFragment
             }
             PageType.MY_PROFILE -> {
+                setTitle(R.string.setting_my_profile)
                 if (mMyProfileFragment == null) {
                     mMyProfileFragment = MyProfileFragment()
                 }
                 curFragment = mMyProfileFragment
             }
             PageType.CARD -> {
-                curFragment = CardFragment()
+                setTitle(R.string.setting_card)
+                curFragment = BankCardFragment()
             }
             PageType.BANK_ACCOUNT -> {
+                setTitle(R.string.setting_bank_account)
                 curFragment = BankAccountFragment()
             }
             PageType.MESSAGE -> {
+                setTitle(R.string.setting_message)
                 curFragment = MessageFragment()
             }
             PageType.HELP -> {
+                setTitle(R.string.setting_help)
                 curFragment = HelpFragment()
             }
             PageType.ABOUT -> {
+                setTitle(R.string.setting_about)
                 curFragment = AboutFragment()
             }
         }
-        if (curFragment != null){
+        if (curFragment != null) {
             replaceFragment(curFragment, R.id.fl_main_content)
         }
 

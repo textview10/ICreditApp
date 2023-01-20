@@ -40,7 +40,7 @@
     <string name="setting_bank_account">Bank Account</string>
     <string name="setting_message">Message</string>
     <string name="setting_help">Help</string>
-    <string name="setting_abount">About</string>
+    <string name="setting_about">About</string>
     <string name="setting_logout">Logout</string>
     <string name="setting_test1">to test profile</string>
 
@@ -80,5 +80,8 @@
     <string name="profile2_item5">Referee\' mobile number</string>
     <string name="profile2_item6">Ralationship</string>
 
+    <string name="loan_apply_title">Please do not transfer money to any stranger. Be careful not to be cheated.</string>
+    <string name="bank_list">Bank Name</string>
+    <string name="bank_account_1">Bank Name</string>
 
 </resources>

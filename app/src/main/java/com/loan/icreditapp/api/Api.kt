@@ -52,6 +52,8 @@ class Api {
         //填写联系人资料(包括修改) profile3
         val UPLOAD_OTHER_3: String = HOST + "/v1/account/other"
 
+        val GET_PRODUCTS: String = HOST + "/v1/order/products"
+
         //上传联系人信息
         val UPLOAD_CONTACT: String = HOST + "/api/v1/account/upload_contact"
 
@@ -59,7 +61,7 @@ class Api {
         val UPLOAD_IDENTITY: String = HOST + "/api/v1/account/upload_identity"
 
         //获取银行列表
-        val GET_BANK_LIST: String = HOST + "/api/v1/account/get_bank_list"
+        val GET_BANK_LIST: String = HOST + "/v1/account/card/list"
 
         //上传银行账号信息
         val UPLOAD_BANK: String = HOST + "/api/v1/account/upload_bank"

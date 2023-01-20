@@ -61,7 +61,7 @@ class MyLoanFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pbLoading = view.findViewById<ProgressBar>(R.id.pb_loan_loading)
-        pbLoading?.setVisibility(View.VISIBLE)
+        pbLoading?.visibility = View.VISIBLE
         mHandler.sendEmptyMessageDelayed(TYPE_DELAY, 500)
     }
 
@@ -77,10 +77,8 @@ class MyLoanFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    if (pbLoading != null) {
-                        pbLoading!!.visibility = View.GONE
-                    }
-                    if (activity!!.isFinishing || activity!!.isDestroyed) {
+                    pbLoading?.visibility = View.GONE
+                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
                     val orderInfo: OrderInfoBean? =
@@ -94,10 +92,8 @@ class MyLoanFragment : BaseFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
-                    if (pbLoading != null) {
-                        pbLoading!!.visibility = View.GONE
-                    }
-                    if (activity!!.isFinishing || activity!!.isDestroyed) {
+                    pbLoading?.visibility = View.GONE
+                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
                     if (BuildConfig.DEBUG) {
@@ -110,7 +106,8 @@ class MyLoanFragment : BaseFragment() {
 
     private fun updatePageByStatus(orderInfoBean: OrderInfoBean) {
         //可以借款
-        if (orderInfoBean.canApply == true || TextUtils.equals(orderInfoBean.orderId, "0")) {
+        if (orderInfoBean.canApply == true || TextUtils.isEmpty(orderInfoBean.orderId) ||
+            TextUtils.equals(orderInfoBean.orderId, "0")) {
 //        if (true){
             val loanApplyFragment = LoanApplyFragment()
             toFragment(loanApplyFragment)

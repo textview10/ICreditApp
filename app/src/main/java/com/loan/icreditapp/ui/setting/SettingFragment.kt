@@ -16,6 +16,7 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.setting.SettingBean
+import com.loan.icreditapp.ui.banklist.BankListActivity
 import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
@@ -77,7 +78,8 @@ class SettingFragment : BaseFragment() {
                         logOut()
                     }
                     PageType.TEST_TO_PROFILE -> {
-                        var intent: Intent = Intent(activity, AddProfileActivity::class.java)
+//                        var intent: Intent = Intent(activity, AddProfileActivity::class.java)
+                        var intent: Intent = Intent(activity, BankListActivity::class.java)
                         startActivity(intent)
                     }
                 }
@@ -113,7 +115,7 @@ class SettingFragment : BaseFragment() {
             )
         )
         mList.add(SettingBean(R.drawable.ic_help, R.string.setting_help, PageType.HELP, true))
-        mList.add(SettingBean(R.drawable.ic_about, R.string.setting_abount, PageType.ABOUT, true))
+        mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
         if (BuildConfig.DEBUG) {
             mList.add(
