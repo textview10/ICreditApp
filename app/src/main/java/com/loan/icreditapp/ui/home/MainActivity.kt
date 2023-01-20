@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
@@ -19,6 +20,7 @@ import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.global.ConfigMgr
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.fragment.MyLoanFragment
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -45,6 +47,9 @@ class MainActivity : BaseActivity() {
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderLoginNonPermission())
         requestPermission()
         ConfigMgr.getAllConfig()
+
+        SPUtils.getInstance().put(Constant.KEY_ACCOUNT_ID, Constant.mAccountId)
+        SPUtils.getInstance().put(Constant.KEY_TOKEN, Constant.mToken)
     }
 
     private fun initializeView() {

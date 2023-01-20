@@ -21,6 +21,7 @@ class ConfigMgr {
     companion object {
         private val TAG = "ConfigMgr"
 
+        val mDebtList = ArrayList<Pair<String, String>>()
         val mEducationList = ArrayList<Pair<String, String>>()
         val mSalaryList = ArrayList<Pair<String, String>>()
         val mMaritalList = ArrayList<Pair<String, String>>()
@@ -29,6 +30,8 @@ class ConfigMgr {
         val mAreaMap = HashMap<String, ArrayList<String>>()
 
         fun getAllConfig() {
+            mDebtList.add(Pair("yes","0"))
+            mDebtList.add(Pair("no","1"))
             //学历等级，
             getItemConfig("education", object : CallBack{
                 override fun onGetData(list : ArrayList<Pair<String, String>>) {

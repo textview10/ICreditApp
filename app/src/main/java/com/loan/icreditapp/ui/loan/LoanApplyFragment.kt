@@ -1,4 +1,4 @@
-package com.loan.icreditapp.ui.home.fragment
+package com.loan.icreditapp.ui.loan
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,22 +7,14 @@ import android.view.ViewGroup
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseFragment
 
-class MyProfileFragment : BaseFragment() {
+class LoanApplyFragment : BaseLoanFragment()  {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_myprofile, container, false)
+        var view = inflater.inflate(R.layout.fragment_loan_apply, container, false)
         return view
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        view.findViewById()
-    }
-
-
-
 }

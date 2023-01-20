@@ -128,6 +128,9 @@ class AddProfile2Fragment : BaseFragment() {
         })
 
         flCommit?.setOnClickListener(OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
             if (checkContactAvailable()){
                 uploadContact2()
             }

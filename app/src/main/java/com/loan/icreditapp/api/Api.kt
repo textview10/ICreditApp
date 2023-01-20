@@ -47,6 +47,10 @@ class Api {
         //上传紧急通讯录 profile2
         val UPLOAD_CONTACT_2: String = HOST + "/v1/account/contact"
 
+        //查询其他信息 profile3
+        val GET_OTHER_3: String = HOST + "/v1/account/other/detail"
+        //填写联系人资料(包括修改) profile3
+        val UPLOAD_OTHER_3: String = HOST + "/v1/account/other"
 
         //上传联系人信息
         val UPLOAD_CONTACT: String = HOST + "/api/v1/account/upload_contact"
@@ -72,7 +76,7 @@ class Api {
         val GET_PRODUCT_LIST: String = HOST + "/api/v1/product/list"
 
         //获取订单详情
-        val GET_ORDER_INFO: String = HOST + "/api/v1/order/info"
+        val GET_ORDER_INFO: String = HOST + "/v1/loan/detail"
 
         //验证客户是否可以借贷
         val CHECK_CAN_ORDER: String = HOST + "/api/v1/order/check"

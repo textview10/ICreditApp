@@ -40,6 +40,7 @@
         <activity
             android:name=".ui.launcher.LauncherActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +48,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.launcher.SplashActivity"
+        <activity android:name=".ui.launcher.WelcomeActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             ></activity>

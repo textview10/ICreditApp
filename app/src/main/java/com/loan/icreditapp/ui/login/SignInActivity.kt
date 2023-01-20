@@ -8,9 +8,8 @@ import android.widget.TextView
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.ui.home.MainActivity
-import com.loan.icreditapp.ui.launcher.SplashActivity
+import com.loan.icreditapp.ui.launcher.WelcomeActivity
 import com.loan.icreditapp.ui.login.fragment.SignInFragment
-import com.loan.icreditapp.ui.login.fragment.SignUpFragment
 
 class SignInActivity : BaseActivity(){
 
@@ -57,7 +56,7 @@ class SignInActivity : BaseActivity(){
     }
 
     private fun onBackPressedInternal(){
-        var intent = Intent(this@SignInActivity, SplashActivity::class.java)
+        var intent = Intent(this@SignInActivity, WelcomeActivity::class.java)
         startActivity(intent)
         finish()
     }

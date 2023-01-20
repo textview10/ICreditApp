@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.ui.home.MainActivity
-import com.loan.icreditapp.ui.launcher.SplashActivity
+import com.loan.icreditapp.ui.launcher.WelcomeActivity
 import com.loan.icreditapp.ui.login.fragment.SetPwdFragment
 import com.loan.icreditapp.ui.login.fragment.SignUpFragment
 
@@ -62,7 +62,7 @@ class SignUpActivity : BaseActivity() {
         var tvTitle: TextView = findViewById(R.id.tv_signin_title)
 
         ivBack.setOnClickListener {
-            var intent: Intent = Intent(this@SignUpActivity, SplashActivity::class.java)
+            var intent: Intent = Intent(this@SignUpActivity, WelcomeActivity::class.java)
             startActivity(intent)
             finish()
         }

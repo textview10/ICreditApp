@@ -28,7 +28,6 @@ class BuildRequestJsonUtils {
                 httpHeaders.put("platform", "Google play")      //应用平台
                 // token	String	Y	用户token
                 httpHeaders.put("token", Constant.mToken)   //用户token
-                httpHeaders.put("token", "")   //用户token
                 // device	String	Y	设备型号
                 httpHeaders.put("device", DeviceUtils.getModel())  //设备型号
                 //  deviceId	String	Y	设备唯一标识
