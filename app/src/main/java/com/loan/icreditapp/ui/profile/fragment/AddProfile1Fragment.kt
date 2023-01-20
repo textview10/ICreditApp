@@ -317,7 +317,7 @@ class AddProfile1Fragment : BaseFragment() {
         }
         initAreaPickerData()
         if (provinceList.size == 0 || stateList.size == 0) {
-            ConfigMgr.getAllConfig()
+            ConfigMgr.getCityData()
             ToastUtils.showShort("area data error , please wait a monment and try again")
             return
         }

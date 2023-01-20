@@ -77,7 +77,7 @@ class LauncherActivity : BaseActivity() {
 //        Log.e(TAG, " token = " + token)
 
         if (TextUtils.isEmpty(accountId) || TextUtils.isEmpty(token)) {
-//        if (BuildConfig.DEBUG || accountId == 0 || TextUtils.isEmpty(token)) {
+//        if (BuildConfig.DEBUG) {
             mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 1000)
         } else {
             val httpHeaders = BuildRequestJsonUtils.buildHeaderToken()

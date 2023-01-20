@@ -66,6 +66,10 @@ class ConfigMgr {
                     mWorkList.addAll(list)
                 }
             })
+            getCityData()
+        }
+
+        fun getCityData(){
             //            stateArea:州地区地址联动,    state:州， area:地区，
             getCityConfig("stateArea", object : CallBack2{
                 override fun onGetData(map : HashMap<String, ArrayList<String>>) {

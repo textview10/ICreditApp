@@ -1,19 +1,19 @@
 package com.loan.icreditapp.ui.home
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.PermissionUtils
-import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
@@ -54,7 +54,7 @@ class MainActivity : BaseActivity() {
         initializeView()
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderToken())
         requestPermission()
-        ConfigMgr.getAllConfig()
+//        ConfigMgr.getAllConfig()
 
         SPUtils.getInstance().put(Constant.KEY_ACCOUNT_ID, Constant.mAccountId)
         SPUtils.getInstance().put(Constant.KEY_TOKEN, Constant.mToken)
@@ -131,7 +131,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun executeNext() {
-        Log.e(TAG, " has all permission .")
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
     }
 

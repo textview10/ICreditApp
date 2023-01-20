@@ -38,11 +38,13 @@ class MyLoanFragment : BaseFragment() {
         Looper.getMainLooper()
     ) { message ->
         when (message.what) {
-            TYPE_DELAY -> if (Constant.mLaunchOrderInfo != null) {
-                pbLoading?.setVisibility(View.GONE)
-                updatePageByStatus(Constant.mLaunchOrderInfo!!)
-            } else {
-                getOrderInfo()
+            TYPE_DELAY -> {
+                if (Constant.mLaunchOrderInfo != null) {
+                    pbLoading?.setVisibility(View.GONE)
+                    updatePageByStatus(Constant.mLaunchOrderInfo!!)
+                } else {
+                    getOrderInfo()
+                }
             }
         }
         false
