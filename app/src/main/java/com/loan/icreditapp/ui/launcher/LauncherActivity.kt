@@ -68,18 +68,20 @@ class LauncherActivity : BaseActivity() {
 //        if (openGuide) {
 //            SPUtils.getInstance().put(KEY_GUIDE, false);
 //        }
-
+        val httpHeaders = BuildRequestJsonUtils.buildHeadersNonLogin()
+        OkGo.getInstance().addCommonHeaders(httpHeaders)
         val accountId = SPUtils.getInstance().getString(Constant.KEY_ACCOUNT_ID)
         val token = SPUtils.getInstance().getString(Constant.KEY_TOKEN)
 
         Constant.mToken = token
 //        Log.e(TAG, " token = " + token)
-        val httpHeaders = BuildRequestJsonUtils.buildHeadersNonLogin()
-        OkGo.getInstance().addCommonHeaders(httpHeaders)
+
         if (TextUtils.isEmpty(accountId) || TextUtils.isEmpty(token)) {
 //        if (BuildConfig.DEBUG || accountId == 0 || TextUtils.isEmpty(token)) {
             mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 1000)
         } else {
+            val httpHeaders = BuildRequestJsonUtils.buildHeaderToken()
+            OkGo.getInstance().addCommonHeaders(httpHeaders)
             requestDetail(accountId!!, token!!)
             mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 3000)
         }

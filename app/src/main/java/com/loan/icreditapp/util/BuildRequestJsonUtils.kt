@@ -26,20 +26,17 @@ class BuildRequestJsonUtils {
             try {
                 //platform	String	Y	应用平台
                 httpHeaders.put("platform", "Google play")      //应用平台
-                // token	String	Y	用户token
-                httpHeaders.put("token", Constant.mToken)   //用户token
                 // device	String	Y	设备型号
                 httpHeaders.put("device", DeviceUtils.getModel())  //设备型号
                 //  deviceId	String	Y	设备唯一标识
                 httpHeaders.put("deviceId", DeviceUtils.getUniqueDeviceId())   // 设备唯一标识
                 //brand	String	Y	手机品牌
-                httpHeaders.put("brand", "xiaomi")       //手机品牌
+                httpHeaders.put("brand", DeviceUtils.getManufacturer())       //手机品牌
                 // os	String	Y	操作系统
                 httpHeaders.put("os", "Android")          //操作系统
                 var isSimulatorStr = "0"
                 if (DeviceUtils.isEmulator()) {
-                    isSimulatorStr = "0"
-//                    isSimulatorStr = "1"
+                    isSimulatorStr = "1"
                 }
                 // isSimulator	String	Y	是否为模拟器
                 httpHeaders.put("isSimulator", isSimulatorStr) //是否为模拟器
@@ -48,8 +45,7 @@ class BuildRequestJsonUtils {
                //  innerVersionCode	Integer	Y	内部版本号
                 httpHeaders.put("innerVersionCode", "12")   //内部版本号
                 //   appVersion	String	Y	APP版本号
-//                httpHeaders.put("appVersion", AppUtils.getAppVersionCode().toString())   //APP版本号
-                httpHeaders.put("appVersion", "1.2.01")   //APP版本号
+                httpHeaders.put("appVersion", AppUtils.getAppVersionCode().toString())   //APP版本号
                 //  channel	String	Y	安装包发布的渠道
                 httpHeaders.put("channel", "google play")   //安装包发布的渠道
                 //H5,google play
@@ -59,18 +55,18 @@ class BuildRequestJsonUtils {
                 //  utmMedium	String	Y	媒介
                 httpHeaders.put("utmMedium", "banner")   //媒介
                 //   imei
-                httpHeaders.put("imei", "")        //imei
+//                httpHeaders.put("imei", "")        //imei
                 // longitude	String	Y	经度
-                httpHeaders.put("longitude", "")   //经度
+//                httpHeaders.put("longitude", "")   //经度
                 //latitude	String	Y	纬度
-                httpHeaders.put("latitude", "")
+//                httpHeaders.put("latitude", "")
             } catch (e: JSONException) {
                 Log.e("BuildRequestJsonUtils", e.toString())
                 e.printStackTrace()
             }
             return httpHeaders
         }
-        fun buildHeaderLoginNonPermission(): HttpHeaders {
+        fun buildHeaderToken(): HttpHeaders {
             val httpHeaders = HttpHeaders()
             httpHeaders.put("token", Constant.mToken)
             return httpHeaders

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_setting_container"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:id="@+id/ll_setting_container"
+        style="@style/setting_container">
+
+        <ImageView
+            android:id="@+id/iv_setting_left_icon"
+            style="@style/setting_lef_icon"
+            android:src="@drawable/ic_my_loan" />
+
+        <TextView
+            android:id="@+id/tv_setting_left_title"
+            style="@style/setting_middle_text"
+            android:text="@string/setting_my_loan" />
+
+        <ImageView
+            style="@style/setting_right_arrow"
+            android:src="@drawable/ic_setting_arrow" />
+    </LinearLayout>
+
+</FrameLayout>

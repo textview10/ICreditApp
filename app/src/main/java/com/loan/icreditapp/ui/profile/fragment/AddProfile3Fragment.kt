@@ -15,6 +15,7 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.profile.GetContact2Bean
 import com.loan.icreditapp.bean.profile.GetOther3Bean
+import com.loan.icreditapp.bean.profile.ModifyOther3Bean
 import com.loan.icreditapp.dialog.selectdata.SelectDataDialog
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
@@ -38,7 +39,7 @@ class AddProfile3Fragment : BaseFragment() {
     private var selectWorkStatus: SelectContainer? = null
     private var flCommit: FrameLayout? = null
 
-    private var mSpouse: Pair<String, String>? = null
+    private var mMarital: Pair<String, String>? = null
     private var mDebt: Pair<String, String>? = null
     private var mSalary: Pair<String, String>? = null
     private var mWorkStatus: Pair<String, String>? = null
@@ -70,7 +71,7 @@ class AddProfile3Fragment : BaseFragment() {
         selectSpouse?.setOnClickListener(View.OnClickListener {
             showListDialog(ConfigMgr.mMaritalList, object : SelectDataDialog.Observer {
                 override fun onItemClick(content: Pair<String, String>?, pos: Int) {
-                    mSpouse = content
+                    mMarital = content
                     selectSpouse?.data = content?.first
                 }
             })
@@ -123,8 +124,8 @@ class AddProfile3Fragment : BaseFragment() {
     }
 
     private fun checkOtherAvailable() : Boolean{
-        if (mSpouse == null){
-            ToastUtils.showShort("marital == null")
+        if (mMarital == null){
+            ToastUtils.showShort("unselect spouse")
             return false
         }
         if (mWorkStatus == null){
@@ -156,7 +157,7 @@ class AddProfile3Fragment : BaseFragment() {
             //用户唯一标识
             jsonObject.put("accountId", Constant.mAccountId)
             //个人婚姻状况
-            jsonObject.put("marital", mSpouse?.second)
+            jsonObject.put("marital", mMarital?.second)
             //个人工作情况
             jsonObject.put("work", mWorkStatus?.second)
             //薪水区间
@@ -174,13 +175,17 @@ class AddProfile3Fragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    val getOther3Bean: GetOther3Bean? =
-                        checkResponseSuccess(response, GetOther3Bean::class.java)
-                    if (getOther3Bean == null) {
+                    val modifyOther3: ModifyOther3Bean? =
+                        checkResponseSuccess(response, ModifyOther3Bean::class.java)
+                    if (modifyOther3 == null) {
 //                        ToastUtils.showShort("upload other 3 failure.")
                         return
                     }
-
+                    if (modifyOther3.hasContact != true){
+                        ToastUtils.showShort("upload other 3 failure.")
+                        return
+                    }
+                    ToastUtils.showShort("modify other3 success")
                 }
 
                 override fun onError(response: Response<String>) {
@@ -235,6 +240,14 @@ class AddProfile3Fragment : BaseFragment() {
                 }
             }
         }
+        if (!TextUtils.isEmpty(getOther3Bean.marital)) {
+            for (i in 0 until ConfigMgr.mMaritalList.size) {
+                var maritalPair: Pair<String, String> = ConfigMgr.mMaritalList[i]
+                if (maritalPair.second == getOther3Bean.salary){
+                    mMarital = maritalPair
+                }
+            }
+        }
         if (!TextUtils.isEmpty(getOther3Bean.salary)) {
             for (i in 0 until ConfigMgr.mSalaryList.size) {
                 var salaryPair: Pair<String, String> = ConfigMgr.mSalaryList[i]
@@ -264,6 +277,7 @@ class AddProfile3Fragment : BaseFragment() {
         selectDebt?.data = mDebt?.first
         selectSalary?.data = mSalary?.first
         selectWorkStatus?.data = mWorkStatus?.first
+        selectSpouse?.data = mMarital?.first
 
         if (!TextUtils.isEmpty(employName)) {
             editEmployName?.setEditTextAndSelection(employName)

@@ -41,7 +41,8 @@
     <string name="setting_message">Message</string>
     <string name="setting_help">Help</string>
     <string name="setting_abount">About</string>
-    <string name="setting_logout">Log out</string>
+    <string name="setting_logout">Logout</string>
+    <string name="setting_test1">to test profile</string>
 
     <string name="add_profile_title_1">Basic information about you</string>
     <string name="add_profile_title_1_2"> Tell us something more about you</string>

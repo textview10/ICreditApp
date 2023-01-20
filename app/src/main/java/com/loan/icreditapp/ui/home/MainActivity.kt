@@ -21,7 +21,9 @@ import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
-import com.loan.icreditapp.ui.home.fragment.MyLoanFragment
+import com.loan.icreditapp.ui.home.fragment.*
+import com.loan.icreditapp.ui.setting.PageType
+import com.loan.icreditapp.ui.setting.SettingFragment
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -38,13 +40,19 @@ class MainActivity : BaseActivity() {
     private var ivMenu: ImageView? = null
     private var tvTitle: AppCompatTextView? = null
 
+    @PageType private
+    var mCurPageType: Int = PageType.MY_LOAN
+
+    var mMyLoanFragment : MyLoanFragment? = null
+    var mMyProfileFragment : MyProfileFragment? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BarUtils.setStatusBarColor(this, resources.getColor(R.color.theme_color))
         BarUtils.setNavBarLightMode(this,true)
         setContentView(R.layout.activity_main)
         initializeView()
-        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderLoginNonPermission())
+        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderToken())
         requestPermission()
         ConfigMgr.getAllConfig()
 
@@ -63,8 +71,7 @@ class MainActivity : BaseActivity() {
             drawerLayout?.openDrawer(GravityCompat.START)
         })
 
-        var myLoanFragment = MyLoanFragment()
-        replaceFragment(myLoanFragment, R.id.fl_main_content)
+        updatePageByTypeInternal()
         var settingFragment = SettingFragment()
         replaceFragment(settingFragment, R.id.fl_main_setting)
     }
@@ -85,9 +92,10 @@ class MainActivity : BaseActivity() {
             PermissionConstants.STORAGE,
         )
         val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
+        val hasPermissionReadPhoneState = PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
 
         //        if (false && hasPermission) {
-        if (hasPermission && hasPermissionCallLog) {
+        if (hasPermission && hasPermissionCallLog && hasPermissionReadPhoneState) {
             executeNext()
         } else {
             requestPermissionInternal()
@@ -125,6 +133,51 @@ class MainActivity : BaseActivity() {
     private fun executeNext() {
         Log.e(TAG, " has all permission .")
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
+    }
+
+    fun updatePageByType(@PageType type :Int){
+        if (type == mCurPageType) {
+            return
+        }
+        mCurPageType = type
+        updatePageByTypeInternal()
+    }
+
+   private fun updatePageByTypeInternal(){
+        var curFragment: BaseFragment? = null
+        when(mCurPageType) {
+            PageType.MY_LOAN -> {
+              if (mMyLoanFragment == null){
+                  mMyLoanFragment = MyLoanFragment()
+              }
+                curFragment = mMyLoanFragment
+            }
+            PageType.MY_PROFILE -> {
+                if (mMyProfileFragment == null) {
+                    mMyProfileFragment = MyProfileFragment()
+                }
+                curFragment = mMyProfileFragment
+            }
+            PageType.CARD -> {
+                curFragment = CardFragment()
+            }
+            PageType.BANK_ACCOUNT -> {
+                curFragment = BankAccountFragment()
+            }
+            PageType.MESSAGE -> {
+                curFragment = MessageFragment()
+            }
+            PageType.HELP -> {
+                curFragment = HelpFragment()
+            }
+            PageType.ABOUT -> {
+                curFragment = AboutFragment()
+            }
+        }
+        if (curFragment != null){
+            replaceFragment(curFragment, R.id.fl_main_content)
+        }
+
     }
 
     private fun requestUpdate() {
