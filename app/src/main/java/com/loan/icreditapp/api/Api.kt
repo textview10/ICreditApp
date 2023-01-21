@@ -54,14 +54,12 @@ class Api {
 
         val GET_PRODUCTS: String = HOST + "/v1/order/products"
 
-        //上传联系人信息
-        val UPLOAD_CONTACT: String = HOST + "/api/v1/account/upload_contact"
-
-        //上传证件相关信息
-        val UPLOAD_IDENTITY: String = HOST + "/api/v1/account/upload_identity"
+        val UPLOAD_BANK_ACCOUNT: String = HOST + "/v1/account/bankaccount/check"
 
         //获取银行列表
-        val GET_BANK_LIST: String = HOST + "/v1/account/card/list"
+        val GET_BANK_LIST: String = HOST + "/v1/account/bank/list"
+        //获取自己银行卡列表
+        val GET_CARD_LIST: String = HOST + "/v1/account/card/list"
 
         //上传银行账号信息
         val UPLOAD_BANK: String = HOST + "/api/v1/account/upload_bank"

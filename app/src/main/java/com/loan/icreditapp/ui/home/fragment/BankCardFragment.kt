@@ -1,10 +1,13 @@
 package com.loan.icreditapp.ui.home.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
@@ -12,6 +15,8 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.bank.CardResponseBean
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.ui.banklist.BankListActivity
+import com.loan.icreditapp.ui.card.BindNewCardActivity
 import com.loan.icreditapp.ui.card.CardListAdapter
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -26,6 +31,8 @@ class BankCardFragment : BaseFragment() {
     private val TAG = "BankCardFragment"
 
     private var rvBankList: RecyclerView? = null
+    private var llAddCard: LinearLayout? = null
+
     private var mAdapter: CardListAdapter? = null
     private val mBankList = ArrayList<CardResponseBean.Bank>()
 
@@ -41,9 +48,15 @@ class BankCardFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvBankList = view.findViewById(R.id.rv_card_bank_list)
+        llAddCard = view.findViewById(R.id.ll_card_bank_add_card)
+
         mAdapter = CardListAdapter(mBankList)
 
-        getBankList()
+        llAddCard?.setOnClickListener(OnClickListener {
+            var intent: Intent = Intent(activity, BindNewCardActivity::class.java)
+            startActivity(intent)
+        })
+//        getBankList()
     }
 
     private fun getBankList() {
@@ -53,7 +66,7 @@ class BankCardFragment : BaseFragment() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        OkGo.post<String>(Api.GET_BANK_LIST).tag(TAG)
+        OkGo.post<String>(Api.GET_CARD_LIST).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {

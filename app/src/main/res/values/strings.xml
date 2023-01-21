@@ -81,7 +81,13 @@
     <string name="profile2_item6">Ralationship</string>
 
     <string name="loan_apply_title">Please do not transfer money to any stranger. Be careful not to be cheated.</string>
-    <string name="bank_list">Bank Name</string>
+    <string name="bank_list">Bank List</string>
     <string name="bank_account_1">Bank Name</string>
+
+    <string name="bind_new_card_desc1">Bank Name</string>
+    <string name="bind_new_card_desc2">Bank Account Number</string>
+    <string name="add_bank_num_desc1">Card number</string>
+
+
 
 </resources>

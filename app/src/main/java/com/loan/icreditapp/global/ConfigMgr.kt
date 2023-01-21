@@ -4,8 +4,10 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.Pair
 import com.blankj.utilcode.util.GsonUtils
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.BaseResponseBean
+import com.loan.icreditapp.bean.bank.BankResponseBean
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.CheckResponseUtils
 import com.lzy.okgo.OkGo
@@ -28,6 +30,8 @@ class ConfigMgr {
         val mRelationShipList = ArrayList<Pair<String, String>>()
         val mWorkList = ArrayList<Pair<String, String>>()
         val mAreaMap = HashMap<String, ArrayList<String>>()
+
+        val mBankList = ArrayList<BankResponseBean.Bank>()
 
         fun getAllConfig() {
             mDebtList.add(Pair("yes","0"))

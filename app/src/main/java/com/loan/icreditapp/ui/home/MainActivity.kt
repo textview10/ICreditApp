@@ -46,7 +46,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BarUtils.setStatusBarColor(this, resources.getColor(R.color.theme_color))
-        BarUtils.setNavBarLightMode(this, true)
+        BarUtils.setStatusBarLightMode(this, false)
         setContentView(R.layout.activity_main)
         initializeView()
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderToken())
@@ -138,6 +138,10 @@ class MainActivity : BaseActivity() {
         }
         mCurPageType = type
         updatePageByTypeInternal()
+    }
+
+    fun closeSlide() {
+        drawerLayout?.closeDrawer(GravityCompat.START)
     }
 
     fun setTitle(title: String) {

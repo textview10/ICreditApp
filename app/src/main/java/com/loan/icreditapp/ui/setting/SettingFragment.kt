@@ -70,17 +70,18 @@ class SettingFragment : BaseFragment() {
                     PageType.BANK_ACCOUNT, PageType.MESSAGE, PageType.HELP,
                     PageType.ABOUT -> {
                         updateMainPage(settingBean.type)
+                        closeSlide()
                     }
                     PageType.LOGOUT -> {
                         if (checkClickFast()) {
                             return
                         }
                         logOut()
+                        closeSlide()
                     }
                     PageType.TEST_TO_PROFILE -> {
-//                        var intent: Intent = Intent(activity, AddProfileActivity::class.java)
-                        var intent: Intent = Intent(activity, BankListActivity::class.java)
-                        startActivity(intent)
+                        var intent: Intent = Intent(activity, AddProfileActivity::class.java)
+                        closeSlide()
                     }
                 }
             }
@@ -132,6 +133,13 @@ class SettingFragment : BaseFragment() {
         if (activity is MainActivity) {
             var main: MainActivity = activity as MainActivity
             main.updatePageByType(type)
+        }
+    }
+
+    private fun closeSlide(){
+        if (activity is MainActivity) {
+            var main: MainActivity = activity as MainActivity
+            main.closeSlide()
         }
     }
 

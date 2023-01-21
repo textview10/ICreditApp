@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_height="match_parent">
+
+        <com.loan.icreditapp.ui.profile.widget.SelectContainer
+            android:id="@+id/select_container_add_bank_account_bank_list"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="15dp"
+            app:select_view_desc="@string/profile3_item_desc"
+            app:select_view_hint="@string/bind_new_card_desc1"
+            app:select_view_icon="@drawable/ic_profile_bottom_arrow" />
+
+
+        <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+            android:id="@+id/edit_container_add_bank_account_banknum"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_marginTop="10dp"
+            app:select_view_hint="@string/bind_new_card_desc2" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_add_bank_account_commit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/add_profile_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/profile1_submit"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+</FrameLayout>
