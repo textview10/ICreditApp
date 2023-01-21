@@ -86,6 +86,13 @@ class SettingFragment : BaseFragment() {
         mList.clear()
         mList.add(
             SettingBean(
+                R.drawable.ic_my_loan,
+                R.string.setting_my_loan,
+                PageType.MY_LOAN, true
+            )
+        )
+        mList.add(
+            SettingBean(
                 R.drawable.ic_my_profile,
                 R.string.setting_my_profile,
                 PageType.MY_PROFILE, true

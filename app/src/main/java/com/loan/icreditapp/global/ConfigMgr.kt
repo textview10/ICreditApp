@@ -179,36 +179,6 @@ class ConfigMgr {
             return map
         }
 
-        fun getMouthList() : Pair<ArrayList<String>, ArrayList<ArrayList<String>>>{
-            val mouthList = ArrayList<String>()
-            for (i in 1 until 13) {
-                mouthList.add(i.toString())
-            }
-
-            val date1List = ArrayList<String>()
-            for (i in 1 until 31) {
-                date1List.add(i.toString())
-            }
-            val date2List = ArrayList<String>()
-            for (i in 1 until 32) {
-                date2List.add(i.toString())
-            }
-            var result = ArrayList<ArrayList<String>>()
-            result.add(date2List) //1
-            result.add(date1List)
-            result.add(date2List) //3
-            result.add(date1List)
-            result.add(date2List) //5
-            result.add(date1List)
-            result.add(date2List) //7
-            result.add(date2List) //8
-            result.add(date1List)
-            result.add(date2List) //10
-            result.add(date1List)
-            result.add(date2List) //12
-            return Pair(mouthList, result)
-        }
-
         private fun parseItem(key : String, obj: Any): ArrayList<Pair<String, String>> {
             val list: ArrayList<Pair<String, String>> = ArrayList<Pair<String, String>>()
             try {

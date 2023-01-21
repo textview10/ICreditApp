@@ -46,17 +46,23 @@
             android:background="@drawable/loan_apply_middle_bg"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_loan_apply_title"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_loan_apply_title"
+                android:layout_width="wrap_content"
+                android:text="Loan Product"
+                android:layout_marginTop="20dp"
+                android:textColor="#333333"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:layout_height="52dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -72,13 +78,11 @@
                     android:layout_weight="1"
                     android:layout_height="1dp"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_loan_apply_amount"
+                <Spinner
+                    android:id="@+id/spinner_loan_apply_amount"
                     android:layout_width="wrap_content"
-                    android:text="20000"
-                    android:textColor="#666666"
                     android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
+                    android:background="@drawable/spinner_loan_arrow"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
@@ -104,13 +108,11 @@
                     android:layout_weight="1"
                     android:layout_height="1dp"/>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_loan_apply_term"
+                <Spinner
+                    android:id="@+id/spinner_loan_apply_term"
                     android:layout_width="wrap_content"
-                    android:text="14"
-                    android:textColor="#666666"
                     android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
+                    android:background="@drawable/spinner_loan_arrow"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
@@ -123,9 +125,4 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="loan apply." />
 </FrameLayout>

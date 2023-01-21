@@ -4,6 +4,7 @@ class Api {
 
     companion object {
         private val HOST = "http://srv.chucard.com"
+//        private val HOST = " https://api.hipkloan.com"
 
         //检测服务器是否存活
         val CHECK_SERVER_ALIVE: String = HOST + "/v1/start/live"
@@ -51,8 +52,8 @@ class Api {
         val GET_OTHER_3: String = HOST + "/v1/account/other/detail"
         //填写联系人资料(包括修改) profile3
         val UPLOAD_OTHER_3: String = HOST + "/v1/account/other"
-
-        val GET_PRODUCTS: String = HOST + "/v1/order/products"
+        //获取产品列表（APP使用）
+        val GET_PRODUCTS: String = HOST + "/v1/loan/products"
 
         val UPLOAD_BANK_ACCOUNT: String = HOST + "/v1/account/bankaccount/check"
 
@@ -65,19 +66,12 @@ class Api {
         val UPLOAD_AUTH: String = HOST + "/v1/account/auth/upload"
 
         //产品试算
-        val PRODUCT_TRIAL: String = HOST + "/api/v1/product/trial"
-
-        //产品列表
-        val GET_PRODUCT_LIST: String = HOST + "/api/v1/product/list"
+        val PRODUCT_TRIAL: String = HOST + "/v1/loan/trial"
+        //获取订单号
+        val GET_ORDER_ID: String = HOST + "v1/loan/check"
 
         //获取订单详情
         val GET_ORDER_INFO: String = HOST + "/v1/loan/detail"
-
-        //验证客户是否可以借贷
-        val CHECK_CAN_ORDER: String = HOST + "/api/v1/order/check"
-
-        //申请订单
-        val ORDER_APPLY: String = HOST + "/api/v1/order/apply"
 
         val WEB_VIEW_POLICY: String = HOST + "/html/Privacy.html"
 

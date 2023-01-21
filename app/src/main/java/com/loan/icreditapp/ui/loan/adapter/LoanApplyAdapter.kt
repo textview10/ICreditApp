@@ -34,8 +34,8 @@ class LoanApplyAdapter : RecyclerView.Adapter<LoanApplyHolder> {
     @SuppressLint("RecyclerView")
     override fun onBindViewHolder(holder: LoanApplyHolder, position: Int) {
         val product: ProductResponseBean.Product = mList!![position]
-        if (!TextUtils.isEmpty(product.amount)) {
-            holder.tvAmount?.text = product.amount
+        if (!TextUtils.isEmpty(product.prodName)) {
+            holder.tvAmount?.text = product.prodName
         }
         holder.flBg?.setBackgroundResource(if (mSelectPos == position) R.drawable.shape_round_grey_10 else R.drawable.shape_round_white_10)
         @ColorRes val res: Int = if (mSelectPos == position) R.color.white else R.color.black

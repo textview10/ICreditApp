@@ -95,6 +95,12 @@
     <string name="bind_new_card2_cvv">CVV</string>
     <string name="bind_new_card2_choose_date">Choose Date</string>
 
+    <string name="loan_declined_1"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>
+    <string name="loan_declined_2"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>
+    <string name="loan_declined_3"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>
+    <string name="loan_declined_4"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>
+    <string name="loan_declined_5"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>
+
 
 
 </resources>

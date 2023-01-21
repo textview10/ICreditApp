@@ -213,4 +213,17 @@ class MainActivity : BaseActivity() {
                 }
             })
     }
+
+    override fun onBackPressed() {
+       onBackPressedInternal()
+    }
+
+    private fun onBackPressedInternal() : Boolean{
+        if (drawerLayout?.isDrawerVisible(GravityCompat.START) == true){
+            drawerLayout?.closeDrawer(GravityCompat.START)
+            return true
+        }
+        finish()
+        return false
+    }
 }

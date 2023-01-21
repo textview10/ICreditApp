@@ -51,12 +51,6 @@ class AddBankNum2Fragment : BaseFragment() {
         etCvv = view.findViewById(R.id.et_add_bank_card_cvv)
         flCommit = view.findViewById(R.id.fl_add_bank_num_commit)
 
-        var pair: Pair<ArrayList<String>, ArrayList<ArrayList<String>>> = ConfigMgr.getMouthList()
-        mouthList.clear()
-        mouthList.addAll(pair.first)
-        dateList.clear()
-        dateList.addAll(pair.second)
-
         flChooseDate?.setOnClickListener(OnClickListener {
             showTimePicker { date, v ->
                 val sdf = SimpleDateFormat("MM-dd")
@@ -73,9 +67,6 @@ class AddBankNum2Fragment : BaseFragment() {
     private fun checkBankNum() : Boolean{
         return false
     }
-
-    private val mouthList = ArrayList<String>()
-    private val dateList = ArrayList<ArrayList<String>>()
 
     fun showTimePicker(listener: OnTimeSelectListener?) {
         if (KeyboardUtils.isSoftInputVisible(requireActivity())) {
