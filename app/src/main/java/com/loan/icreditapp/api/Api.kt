@@ -61,13 +61,8 @@ class Api {
         //获取自己银行卡列表
         val GET_CARD_LIST: String = HOST + "/v1/account/card/list"
 
-        //上传银行账号信息
-        val UPLOAD_BANK: String = HOST + "/api/v1/account/upload_bank"
-
-        val UPLOAD_WALLET: String = HOST + "/api/v1/account/upload_wallet"
-
-        //上传客户端信息
-        val UPLOAD_CLIENT_INFO: String = HOST + "/api/v1/account/upload_client_info"
+        //授权信息上报
+        val UPLOAD_AUTH: String = HOST + "/v1/account/auth/upload"
 
         //产品试算
         val PRODUCT_TRIAL: String = HOST + "/api/v1/product/trial"

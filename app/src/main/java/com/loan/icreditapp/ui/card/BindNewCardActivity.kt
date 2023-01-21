@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.ui.card.fragment.AddBankAccount1Fragment
+import com.loan.icreditapp.ui.card.fragment.AddBankNum2Fragment
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.ui.profile.fragment.AddProfile2Fragment
 import com.loan.icreditapp.ui.profile.fragment.AddProfile3Fragment
@@ -38,20 +39,26 @@ class BindNewCardActivity : BaseActivity() {
         ivBack = findViewById(R.id.iv_bind_new_card_back)
         tvTitle = findViewById(R.id.tv_bind_new_card_title)
 
-        toStepInternal(ADD_BANK_ACCOUNT)
+        toStepInternal(ADD_BANK_CARD_NUM)
     }
 
+    fun toStep(step: Int){
+        toStepInternal(step)
+    }
 
     private fun toStepInternal(step: Int) {
         if (step == ADD_BANK_ACCOUNT) {
             var addBankFragment = AddBankAccount1Fragment()
             toFragment(addBankFragment)
+            tvTitle?.text = resources.getString(R.string.bind_new_card_title1)
         } else if (step == ADD_BANK_CARD_NUM) {
-            var profile2Fragment = AddProfile2Fragment()
-            toFragment(profile2Fragment)
+            var addBankNum2Fragment = AddBankNum2Fragment()
+            toFragment(addBankNum2Fragment)
+            tvTitle?.text = resources.getString(R.string.bind_new_card_title2)
         } else if (step == AddProfileActivity.TO_STEP_3) {
             var profile3Fragment = AddProfile3Fragment()
             toFragment(profile3Fragment)
+            tvTitle?.text = resources.getString(R.string.bind_new_card_title3)
         }
     }
 

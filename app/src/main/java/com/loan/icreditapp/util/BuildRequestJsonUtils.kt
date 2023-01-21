@@ -16,7 +16,7 @@ class BuildRequestJsonUtils {
     companion object {
 
         fun buildRequestJson(): JSONObject {
-            var httpHeaders:JSONObject = JSONObject()
+            var httpHeaders: JSONObject = JSONObject()
 
             return httpHeaders
         }
@@ -34,15 +34,11 @@ class BuildRequestJsonUtils {
                 httpHeaders.put("brand", DeviceUtils.getManufacturer())       //手机品牌
                 // os	String	Y	操作系统
                 httpHeaders.put("os", "Android")          //操作系统
-                var isSimulatorStr = "0"
-                if (DeviceUtils.isEmulator()) {
-                    isSimulatorStr = "1"
-                }
                 // isSimulator	String	Y	是否为模拟器
-                httpHeaders.put("isSimulator", isSimulatorStr) //是否为模拟器
+                httpHeaders.put("isSimulator", if (DeviceUtils.isEmulator()) "1" else "0") //是否为模拟器
                 // lang	String	Y	语言
                 httpHeaders.put("lang", "en")
-               //  innerVersionCode	Integer	Y	内部版本号
+                //  innerVersionCode	Integer	Y	内部版本号
                 httpHeaders.put("innerVersionCode", "12")   //内部版本号
                 //   appVersion	String	Y	APP版本号
                 httpHeaders.put("appVersion", AppUtils.getAppVersionCode().toString())   //APP版本号
@@ -66,6 +62,7 @@ class BuildRequestJsonUtils {
             }
             return httpHeaders
         }
+
         fun buildHeaderToken(): HttpHeaders {
             val httpHeaders = HttpHeaders()
             httpHeaders.put("token", Constant.mToken)
@@ -80,10 +77,10 @@ class BuildRequestJsonUtils {
         }
 
         @SuppressLint("MissingPermission")
-        fun buildHeaderLocation(): HttpHeaders {
+        fun buildHeaderLocation(longitude: String, latitude: String): HttpHeaders {
             val httpHeaders = HttpHeaders()
-            httpHeaders.put("longitude", Constant.mToken)   //经度
-            httpHeaders.put("latitude", Constant.mToken)   //纬度
+            httpHeaders.put("longitude", longitude)   //经度
+            httpHeaders.put("latitude", latitude)   //纬度
             return httpHeaders
         }
     }

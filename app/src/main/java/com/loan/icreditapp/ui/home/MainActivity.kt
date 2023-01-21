@@ -15,6 +15,7 @@ import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.fragment.*
@@ -130,6 +131,7 @@ class MainActivity : BaseActivity() {
 
     private fun executeNext() {
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
+        LocationMgr.getInstance().getLocation()
     }
 
     fun updatePageByType(@PageType type: Int) {

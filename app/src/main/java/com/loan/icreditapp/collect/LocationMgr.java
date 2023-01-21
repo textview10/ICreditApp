@@ -7,7 +7,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationRequest;
 import android.net.wifi.ScanResult;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +17,9 @@ import android.util.Pair;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.loan.icreditapp.BuildConfig;
+import com.loan.icreditapp.collect.bean.LocationRequest;
+import com.loan.icreditapp.util.BuildRequestJsonUtils;
+import com.lzy.okgo.OkGo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,6 +200,16 @@ public class LocationMgr {
                     extra.append("countryCode" + address.getCountryCode());
                 }
             }
+            Pair<Double, Double> pair = getLocationInfo();
+            double longitude = pair.first;
+            double latitude = pair.second;
+            if (longitude > 0d && latitude > 0d) {
+                OkGo.getInstance().addCommonHeaders(
+                        BuildRequestJsonUtils.Companion.buildHeaderLocation(
+                                longitude + "", latitude + ""));
+                Log.d("LocationMgr", " gps 1 = " + gpsLongitude + " gps 2 = " + gpsLatitude
+                        + "network 1 = " + netWorkLongitude + " network 2 = " + netWorkLatitude);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -211,6 +223,16 @@ public class LocationMgr {
             return new Pair<>(netWorkLongitude, netWorkLatitude);
         }
         return new Pair<>(0d, 0d);
+    }
+
+    public LocationRequest getLocationBean(){
+        LocationRequest request = new LocationRequest();
+        request.setGpsLongitude(gpsLongitude);
+        request.setGpsLatitude(gpsLatitude);
+        request.setNetWorkLongitude(netWorkLongitude);
+        request.setNetWorkLatitude(netWorkLatitude);
+        request.setExtra(extra.toString());
+        return request;
     }
 
     public void onDestroy() {

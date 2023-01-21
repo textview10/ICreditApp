@@ -18,6 +18,8 @@ import com.loan.icreditapp.bean.bank.BankResponseBean
 import com.loan.icreditapp.event.BankListEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.banklist.BankListActivity
+import com.loan.icreditapp.ui.card.BindNewCardActivity
+import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.ui.profile.widget.SelectContainer
 import com.loan.icreditapp.util.BuildRequestJsonUtils
@@ -124,11 +126,15 @@ class AddBankAccount1Fragment : BaseFragment() {
                         }
                         return
                     }
-                    if (responseBean.bankAccountChecked != true) {
-                        ToastUtils.showShort("check bank account failure ")
-                        return
+                    // TODO
+//                    if (responseBean.bankAccountChecked != true) {
+//                        ToastUtils.showShort("check bank account failure ")
+//                        return
+//                    }
+                    if (activity is BindNewCardActivity) {
+                        var bindNewCardActivity : BindNewCardActivity = activity as BindNewCardActivity
+                        bindNewCardActivity.toStep(BindNewCardActivity.ADD_BANK_CARD_NUM)
                     }
-
                 }
 
                 override fun onError(response: Response<String>) {

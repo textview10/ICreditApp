@@ -15,6 +15,8 @@ import okhttp3.Response;
 public class Test {
 
     private void test1() {
-
+        boolean[] type = new boolean[]{
+                false, true, true, false, false, false
+        };
     }
 }

