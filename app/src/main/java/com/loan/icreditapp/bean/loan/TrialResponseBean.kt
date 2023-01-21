@@ -17,7 +17,7 @@ class TrialResponseBean {
 
     class Trial {
         //当期借款金额
-        var loanAmount: String? = null
+        var disburseAmount: String? = null
 
         //当期放款金额
         var amountDisburse: String? = null
@@ -35,7 +35,7 @@ class TrialResponseBean {
         var repayDate: String? = null
 
         //还款日
-        var repayDateMills: Long? = null
+        var repayDateMills: String? = null
 
         //服务费
         var fee: String? = null
@@ -44,7 +44,7 @@ class TrialResponseBean {
         var feePrePaid: String? = null
 
         //利息
-        var interest: Long? = null
+        var interest: String? = null
 
         //砍头利息
         var interestPrePaid: String? = null

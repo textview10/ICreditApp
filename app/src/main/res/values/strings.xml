@@ -101,6 +101,6 @@
     <string name="loan_declined_4"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>
     <string name="loan_declined_5"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>
 
-
+    <string name="load_apply_apply_now">apply now</string>
 
 </resources>

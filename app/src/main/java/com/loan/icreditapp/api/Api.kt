@@ -54,9 +54,10 @@ class Api {
         val UPLOAD_OTHER_3: String = HOST + "/v1/account/other"
         //获取产品列表（APP使用）
         val GET_PRODUCTS: String = HOST + "/v1/loan/products"
+        //产品试算
+        val PRODUCT_TRIAL: String = HOST + "/v1/loan/trial"
 
         val UPLOAD_BANK_ACCOUNT: String = HOST + "/v1/account/bankaccount/check"
-
         //获取银行列表
         val GET_BANK_LIST: String = HOST + "/v1/account/bank/list"
         //获取自己银行卡列表
@@ -65,8 +66,7 @@ class Api {
         //授权信息上报
         val UPLOAD_AUTH: String = HOST + "/v1/account/auth/upload"
 
-        //产品试算
-        val PRODUCT_TRIAL: String = HOST + "/v1/loan/trial"
+
         //获取订单号
         val GET_ORDER_ID: String = HOST + "v1/loan/check"
 

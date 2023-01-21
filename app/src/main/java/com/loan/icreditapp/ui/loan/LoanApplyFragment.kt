@@ -11,12 +11,16 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.loan.ProductResponseBean
+import com.loan.icreditapp.bean.loan.TrialResponseBean
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.ui.loan.adapter.LoanApplyAdapter
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -34,8 +38,13 @@ class LoanApplyFragment : BaseLoanFragment() {
     private var spinnerAmount: Spinner? = null
     private var spinnerTerm: Spinner? = null
     private var tvTitle: AppCompatTextView? = null
+    private var rvContent: RecyclerView? = null
 
-    private var mAmountList: ArrayList<Pair<String, ArrayList<ProductResponseBean.Product>>> = ArrayList()
+    private var mAmountList: ArrayList<Pair<String, ArrayList<ProductResponseBean.Product>>> =
+        ArrayList()
+
+    private var mTrialList: ArrayList<TrialResponseBean.Trial> = ArrayList<TrialResponseBean.Trial>()
+    private var mAdapter: LoanApplyAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,8 +60,14 @@ class LoanApplyFragment : BaseLoanFragment() {
         spinnerAmount = view.findViewById(R.id.spinner_loan_apply_amount)
         spinnerTerm = view.findViewById(R.id.spinner_loan_apply_term)
         tvTitle = view.findViewById(R.id.tv_loan_apply_title)
+        rvContent = view.findViewById(R.id.rv_loan_apply_container)
 
-        if (mAmountList.size == 0){
+        var manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        rvContent?.layoutManager = manager
+        mAdapter = LoanApplyAdapter(mTrialList)
+        rvContent?.adapter = mAdapter
+
+        if (mAmountList.size == 0) {
             getProducts()
         }
     }
@@ -118,7 +133,7 @@ class LoanApplyFragment : BaseLoanFragment() {
     private fun updateSpinner() {
         val mItem1s = arrayOfNulls<String>(mAmountList.size)
         for (i in 0 until mAmountList.size) {
-            mItem1s[i] = mAmountList[i].first
+            mItem1s[i] = mAmountList[i].first + " "
         }
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mItem1s)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -140,13 +155,13 @@ class LoanApplyFragment : BaseLoanFragment() {
 
     }
 
-    private fun selectPos(pos : Int){
-        var pair : Pair<String, ArrayList<ProductResponseBean.Product>> = mAmountList[pos]
-        var products : ArrayList<ProductResponseBean.Product> = pair.second
+    private fun selectPos(pos: Int) {
+        var pair: Pair<String, ArrayList<ProductResponseBean.Product>> = mAmountList[pos]
+        var products: ArrayList<ProductResponseBean.Product> = pair.second
 
         val mItem2s = arrayOfNulls<String>(products.size)
         for (i in 0 until products.size) {
-            mItem2s[i] = products[i].period + "  "
+            mItem2s[i] = products[i].period + " days  "
         }
         val adapter2 = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mItem2s)
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -162,9 +177,51 @@ class LoanApplyFragment : BaseLoanFragment() {
                 var product = products[i]
                 tvTitle?.text = product.prodName
                 Log.e(TAG, "select pos 2 = " + i)
+                if (!TextUtils.isEmpty(product.prodId) && !TextUtils.isEmpty(product.amount)){
+                    requestLoanTrial(product.prodId!!, product.amount!!)
+                }
+
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
         })
+    }
+
+    private fun requestLoanTrial(proId : String , loanAmount : String) {
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        try {
+            jsonObject.put("prodId", proId)
+            jsonObject.put("loanAmount", loanAmount)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        OkGo.post<String>(Api.PRODUCT_TRIAL).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                        return
+                    }
+                    val trialBean: TrialResponseBean? =
+                        checkResponseSuccess(response, TrialResponseBean::class.java)
+                    if (trialBean == null || trialBean.trial?.size == 0) {
+                        return
+                    }
+                    mTrialList.clear()
+                    mTrialList.addAll(trialBean.trial!!)
+                    mAdapter?.notifyDataSetChanged()
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                        return
+                    }
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, " product list error ." + response.body())
+                    }
+                    ToastUtils.showShort("product list error")
+                }
+            })
     }
 }
