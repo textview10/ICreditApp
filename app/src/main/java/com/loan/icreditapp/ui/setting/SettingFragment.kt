@@ -18,6 +18,7 @@ import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.setting.SettingBean
 import com.loan.icreditapp.ui.banklist.BankListActivity
 import com.loan.icreditapp.ui.home.MainActivity
+import com.loan.icreditapp.ui.launcher.WelcomeActivity
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -29,16 +30,6 @@ class SettingFragment : BaseFragment() {
 
     private val TAG = "SettingFragment"
 
-    //
-//    private var llMyloan: LinearLayout? = null
-//    private var llMyProfile: LinearLayout? = null
-//    private var llCard: LinearLayout? = null
-//    private var llBankAccount: LinearLayout? = null
-//    private var llMessage: LinearLayout? = null
-//    private var llHelp: LinearLayout? = null
-//    private var llAbout: LinearLayout? = null
-//    private var llLogout: LinearLayout? = null
-//    private var llTest: LinearLayout? = null
     private var rvContent: RecyclerView? = null
     private var mAdater: SettingAdapter? = null
 
@@ -81,6 +72,7 @@ class SettingFragment : BaseFragment() {
                     }
                     PageType.TEST_TO_PROFILE -> {
                         var intent: Intent = Intent(activity, AddProfileActivity::class.java)
+                        activity?.startActivity(intent)
                         closeSlide()
                     }
                 }
@@ -154,16 +146,29 @@ class SettingFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    val baseResponseBean: BaseResponseBean? =
-                        checkResponseSuccess(response, BaseResponseBean::class.java)
-                    if (baseResponseBean == null) {
+                    var responseBean: BaseResponseBean? = null
+                    try {
+                        responseBean = com.alibaba.fastjson.JSONObject.parseObject(
+                            response.body().toString(),
+                            BaseResponseBean::class.java
+                        )
+                    } catch (e: Exception) {
+                        if (BuildConfig.DEBUG) {
+                            throw e
+                        }
+                    }
+                    if (responseBean == null) {
                         ToastUtils.showShort("logout failure.")
                         return
                     }
-                    if (!baseResponseBean.isRequestSuccess()) {
+                    if (!responseBean.isRequestSuccess()) {
                         ToastUtils.showShort("request logout failure.")
                         return
                     }
+                    ToastUtils.showShort("logout success")
+                    var intent: Intent = Intent(activity, WelcomeActivity::class.java)
+                    activity?.startActivity(intent)
+                    activity?.finish()
                 }
 
                 override fun onError(response: Response<String>) {
