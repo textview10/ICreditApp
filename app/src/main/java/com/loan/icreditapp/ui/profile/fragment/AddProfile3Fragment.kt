@@ -168,6 +168,7 @@ class AddProfile3Fragment : BaseFragment() {
             jsonObject.put("companyName", editEmployName?.text)
             //工作地址-手填详细地址
             jsonObject.put("companyAddress", editEmployAddress?.text)
+            jsonObject.put("education", "1")
         } catch (e: JSONException) {
             e.printStackTrace()
         }

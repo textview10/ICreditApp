@@ -1,5 +1,6 @@
 package com.loan.icreditapp.ui.loan
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
 import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +19,14 @@ import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
+import com.loan.icreditapp.bean.loan.CheckLoanResponseBean
 import com.loan.icreditapp.bean.loan.ProductResponseBean
 import com.loan.icreditapp.bean.loan.TrialResponseBean
+import com.loan.icreditapp.dialog.producttrial.ProductTrialDialog
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.loan.adapter.LoanApplyAdapter
+import com.loan.icreditapp.ui.login.SignInActivity
+import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -39,12 +45,15 @@ class LoanApplyFragment : BaseLoanFragment() {
     private var spinnerTerm: Spinner? = null
     private var tvTitle: AppCompatTextView? = null
     private var rvContent: RecyclerView? = null
+    private var flCommit: FrameLayout? = null
 
     private var mAmountList: ArrayList<Pair<String, ArrayList<ProductResponseBean.Product>>> =
         ArrayList()
 
     private var mTrialList: ArrayList<TrialResponseBean.Trial> = ArrayList<TrialResponseBean.Trial>()
     private var mAdapter: LoanApplyAdapter? = null
+
+    private var mTrialBean: TrialResponseBean? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +70,7 @@ class LoanApplyFragment : BaseLoanFragment() {
         spinnerTerm = view.findViewById(R.id.spinner_loan_apply_term)
         tvTitle = view.findViewById(R.id.tv_loan_apply_title)
         rvContent = view.findViewById(R.id.rv_loan_apply_container)
+        flCommit = view.findViewById(R.id.fl_loan_apply_commit)
 
         var manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvContent?.layoutManager = manager
@@ -69,7 +79,16 @@ class LoanApplyFragment : BaseLoanFragment() {
 
         if (mAmountList.size == 0) {
             getProducts()
+        } else {
+            updateSpinner()
         }
+
+        flCommit?.setOnClickListener(View.OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            getOrderId()
+        })
     }
 
     private fun getProducts() {
@@ -133,7 +152,7 @@ class LoanApplyFragment : BaseLoanFragment() {
     private fun updateSpinner() {
         val mItem1s = arrayOfNulls<String>(mAmountList.size)
         for (i in 0 until mAmountList.size) {
-            mItem1s[i] = mAmountList[i].first + " "
+            mItem1s[i] = "₦ " + mAmountList[i].first + " "
         }
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mItem1s)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -207,9 +226,51 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (trialBean == null || trialBean.trial?.size == 0) {
                         return
                     }
+                    mTrialBean = trialBean
                     mTrialList.clear()
                     mTrialList.addAll(trialBean.trial!!)
                     mAdapter?.notifyDataSetChanged()
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                        return
+                    }
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, " product list error ." + response.body())
+                    }
+                    ToastUtils.showShort("product list error")
+                }
+            })
+    }
+
+    private fun getOrderId(){
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        try {
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        OkGo.post<String>(Api.GET_ORDER_ID).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                        return
+                    }
+                    val checkLoanBean: CheckLoanResponseBean? =
+                        checkResponseSuccess(response, CheckLoanResponseBean::class.java)
+                    if (checkLoanBean == null ) {
+                        return
+                    }
+                    if (checkLoanBean.hasProfile != true || checkLoanBean.hasContact != true
+                        || checkLoanBean.hasOther != true){
+                        var intent: Intent = Intent(context, AddProfileActivity::class.java)
+                        context?.startActivity(intent)
+                        return
+                    }
+                    var trialDialog =  ProductTrialDialog(requireContext(), mTrialBean!!)
+                    trialDialog.show()
                 }
 
                 override fun onError(response: Response<String>) {

@@ -66,9 +66,8 @@ class Api {
         //授权信息上报
         val UPLOAD_AUTH: String = HOST + "/v1/account/auth/upload"
 
-
         //获取订单号
-        val GET_ORDER_ID: String = HOST + "v1/loan/check"
+        val GET_ORDER_ID: String = HOST + "/v1/loan/check"
 
         //获取订单详情
         val GET_ORDER_INFO: String = HOST + "/v1/loan/detail"

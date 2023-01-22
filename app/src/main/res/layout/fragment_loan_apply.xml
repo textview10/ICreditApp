@@ -153,7 +153,7 @@
         </ScrollView>
 
         <FrameLayout
-            android:id="@+id/fl_profile1_commit"
+            android:id="@+id/fl_loan_apply_commit"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="bottom"

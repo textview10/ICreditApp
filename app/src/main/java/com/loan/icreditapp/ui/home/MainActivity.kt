@@ -17,6 +17,7 @@ import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.dialog.RequestPermissionDialog
+import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.fragment.*
 import com.loan.icreditapp.ui.setting.PageType
@@ -52,7 +53,7 @@ class MainActivity : BaseActivity() {
         initializeView()
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderToken())
         requestPermission()
-//        ConfigMgr.getAllConfig()
+        ConfigMgr.getAllConfig()
 
         SPUtils.getInstance().put(Constant.KEY_ACCOUNT_ID, Constant.mAccountId)
         SPUtils.getInstance().put(Constant.KEY_TOKEN, Constant.mToken)
