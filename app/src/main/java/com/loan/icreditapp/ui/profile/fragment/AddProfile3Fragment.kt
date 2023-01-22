@@ -68,6 +68,16 @@ class AddProfile3Fragment : BaseFragment() {
         selectWorkStatus = view.findViewById(R.id.select_container_profile_work_status)
         flCommit = view.findViewById(R.id.fl_profile_other3_commit)
 
+        if (mShowMode){
+            selectSpouse?.setShowMode()
+            selectDebt?.setShowMode()
+            selectSalary?.setShowMode()
+            editEmployName?.setShowMode()
+            editEmployAddress?.setShowMode()
+            selectWorkStatus?.setShowMode()
+            flCommit?.visibility = View.GONE
+        }
+
         selectSpouse?.setOnClickListener(View.OnClickListener {
             showListDialog(ConfigMgr.mMaritalList, object : SelectDataDialog.Observer {
                 override fun onItemClick(content: Pair<String, String>?, pos: Int) {
@@ -200,10 +210,12 @@ class AddProfile3Fragment : BaseFragment() {
     }
 
     private fun getOther3() {
-        if (hasUpload) {
+        if (hasUpload && !Constant.mNeedRefreshProfile) {
+            bindData()
             return
         }
         hasUpload = true
+        Constant.mNeedRefreshProfile = false
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -286,5 +298,10 @@ class AddProfile3Fragment : BaseFragment() {
         if (!TextUtils.isEmpty(employAddress)) {
             editEmployAddress?.setEditTextAndSelection(employAddress)
         }
+    }
+
+    var mShowMode :Boolean = false
+    fun setShowMode(){
+        mShowMode = true
     }
 }

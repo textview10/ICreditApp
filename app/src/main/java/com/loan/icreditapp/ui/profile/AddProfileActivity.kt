@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.blankj.utilcode.util.BarUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.profile.fragment.AddProfile1Fragment
 import com.loan.icreditapp.ui.profile.fragment.AddProfile2Fragment
 import com.loan.icreditapp.ui.profile.fragment.AddProfile3Fragment
@@ -29,6 +30,7 @@ class AddProfileActivity : BaseActivity() {
         BarUtils.setStatusBarLightMode(this, false)
         setContentView(R.layout.activity_add_profile)
         initializeView()
+        Constant.mNeedRefreshProfile = true
     }
 
     private fun initializeView() {

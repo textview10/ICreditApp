@@ -65,4 +65,12 @@ class GenderCheckBox : LinearLayout {
             updateState()
         }
     }
+
+    fun setShowMode() {
+        isFocusable = false
+        isEnabled = false
+        isClickable = false
+        llMale?.isClickable = false
+        llFamily?.isClickable = false
+    }
 }

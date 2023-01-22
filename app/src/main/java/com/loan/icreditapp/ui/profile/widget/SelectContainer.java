@@ -64,16 +64,25 @@ public class SelectContainer extends FrameLayout {
         addView(view);
     }
 
-    public void setData(String data){
+    public void setData(String data) {
         tvDesc.setText(data);
     }
 
-    public String getData(){
+    public String getData() {
         return tvDesc == null ? "" : tvDesc.getText().toString();
     }
 
-    public boolean isEmptyText(){
+    public boolean isEmptyText() {
         String data = getData();
         return TextUtils.isEmpty(data);
+    }
+
+    public void setShowMode() {
+        setFocusable(false);
+        setEnabled(false);
+        setClickable(false);
+        if (ivIcon != null){
+            ivIcon.setVisibility(View.GONE);
+        }
     }
 }

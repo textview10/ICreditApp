@@ -36,10 +36,7 @@
                 android:layout_marginTop="10dp"
                 app:select_view_hint="@string/profile1_item1" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <com.loan.icreditapp.ui.profile.widget.EditTextContainer
                 android:id="@+id/select_container_profile_middle_name"
@@ -48,10 +45,7 @@
                 android:layout_marginTop="10dp"
                 app:select_view_hint="@string/profile1_item2" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <com.loan.icreditapp.ui.profile.widget.EditTextContainer
                 android:id="@+id/select_container_profile_last_name"
@@ -60,10 +54,7 @@
                 android:layout_marginTop="10dp"
                 app:select_view_hint="@string/profile1_item3" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <include
                 android:id="@+id/gender_container_profile3_gender"
@@ -72,10 +63,7 @@
                 android:layout_height="62dp"
                 android:layout_marginTop="10dp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -95,10 +83,7 @@
                 app:select_view_hint="@string/profile1_item4"
                 app:select_view_icon="@drawable/ic_calendar" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <com.loan.icreditapp.ui.profile.widget.EditTextContainer
                 android:id="@+id/select_container_profile_bvn"
@@ -107,10 +92,7 @@
                 android:layout_marginTop="10dp"
                 app:select_view_hint="@string/profile1_item5" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <com.loan.icreditapp.ui.profile.widget.EditTextContainer
                 android:id="@+id/select_container_profile_email"
@@ -119,10 +101,7 @@
                 android:layout_marginTop="10dp"
                 app:select_view_hint="@string/profile1_item6" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <com.loan.icreditapp.ui.profile.widget.SelectContainer
                 android:id="@+id/select_container_profile_address"
@@ -132,10 +111,7 @@
                 app:select_view_desc="@string/profile3_item_desc"
                 app:select_view_hint="@string/profile1_item7" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <com.loan.icreditapp.ui.profile.widget.EditTextContainer
                 android:id="@+id/select_container_profile_street"
@@ -144,10 +120,7 @@
                 android:layout_marginTop="10dp"
                 app:select_view_hint="@string/profile1_item8" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <com.loan.icreditapp.ui.profile.widget.EditTextContainer
                 android:id="@+id/select_container_profile_street_num"
@@ -157,10 +130,7 @@
                 android:visibility="gone"
                 app:select_view_hint="@string/profile1_item9" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.8dp"
-                android:background="@android:color/black" />
+            <View style="@style/view_divide" />
 
             <View
                 android:layout_width="match_parent"

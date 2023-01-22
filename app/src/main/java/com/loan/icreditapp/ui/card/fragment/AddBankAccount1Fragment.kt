@@ -101,6 +101,10 @@ class AddBankAccount1Fragment : BaseFragment() {
     }
 
     private fun uploadBankAccount() {
+//        bank account  1408518986
+//        Access bank Idise Betty   2284463522
+//         Zenith bank 李俊杰  2284462518
+//                 Zenith bank 刘正
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             //客户ID
@@ -110,7 +114,8 @@ class AddBankAccount1Fragment : BaseFragment() {
             //银行名称
             jsonObject.put("bankName", mBankData?.bankName)
             //客户填写的银行账号
-            jsonObject.put("bankAccountNumber", mBankData?.bankName)
+            jsonObject.put("bankAccountNumber", editBankNum?.text)
+            jsonObject.put("bankAccountNumber", "2284462518")
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -127,10 +132,10 @@ class AddBankAccount1Fragment : BaseFragment() {
                         return
                     }
                     // TODO
-//                    if (responseBean.bankAccountChecked != true) {
-//                        ToastUtils.showShort("check bank account failure ")
-//                        return
-//                    }
+                    if (responseBean.bankAccountChecked != true) {
+                        ToastUtils.showShort("check bank account failure ")
+                        return
+                    }
                     if (activity is BindNewCardActivity) {
                         var bindNewCardActivity : BindNewCardActivity = activity as BindNewCardActivity
                         bindNewCardActivity.toStep(BindNewCardActivity.ADD_BANK_CARD_NUM)

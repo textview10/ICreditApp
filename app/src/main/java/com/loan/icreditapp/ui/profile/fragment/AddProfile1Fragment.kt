@@ -88,6 +88,20 @@ class AddProfile1Fragment : BaseFragment() {
         editStreetNum = view.findViewById(R.id.select_container_profile_street_num)
         flCommit = view.findViewById(R.id.fl_profile1_commit)
 
+        if (mShowMode){
+            editFirstName?.setShowMode()
+            editMiddleName?.setShowMode()
+            editLastName?.setShowMode()
+            mCheckBox?.setShowMode()
+            selectCalendar?.setShowMode()
+            editBvn?.setShowMode()
+            editEmail?.setShowMode()
+            selectAddress?.setShowMode()
+            editStreet?.setShowMode()
+            editStreetNum?.setShowMode()
+            flCommit?.visibility = View.GONE
+        }
+
         editBvn?.setInputNum()
 
         selectCalendar?.setOnClickListener(View.OnClickListener {
@@ -161,10 +175,12 @@ class AddProfile1Fragment : BaseFragment() {
     }
 
     private fun getProfile1() {
-        if (hasUpload) {
+        if (hasUpload && !Constant.mNeedRefreshProfile) {
+            bindData()
             return
         }
         hasUpload = true
+        Constant.mNeedRefreshProfile = false
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -390,5 +406,10 @@ class AddProfile1Fragment : BaseFragment() {
             stateItemList.addAll(value)
             stateList.add(stateItemList)
         }
+    }
+
+    var mShowMode :Boolean = false
+    fun setShowMode(){
+        mShowMode = true
     }
 }

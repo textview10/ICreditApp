@@ -13,6 +13,8 @@ class Constant {
 
         var mAccountId : String? = null
 
+        var mNeedRefreshProfile : Boolean = false
+
         var mLaunchOrderInfo: OrderInfoBean? = null
 
         var mFirebaseToken: String? = null

@@ -83,7 +83,19 @@ class AddProfile2Fragment : BaseFragment() {
         selectMobile2 = view.findViewById(R.id.select_container_profile_mobile2)
         selectRelationShip2 = view.findViewById(R.id.select_container_profile_relationship2)
 
+
         flCommit = view.findViewById(R.id.fl_contact2_commit)
+
+        if (mShowMode){
+            editLeagalName1?.setShowMode()
+            selectMobile1?.setShowMode()
+            selectRelationShip1?.setShowMode()
+            editLeagalName2?.setShowMode()
+            selectMobile2?.setShowMode()
+            selectRelationShip2?.setShowMode()
+            flCommit?.visibility = View.GONE
+        }
+
         selectMobile1?.setOnClickListener(View.OnClickListener {
             showContactDialog(object : OnSelectContactListener {
                 override fun onData(contactBean: ContactBean?) {
@@ -312,10 +324,12 @@ class AddProfile2Fragment : BaseFragment() {
     }
 
     private fun getContact2() {
-        if (hasUpload) {
+        if (hasUpload && !Constant.mNeedRefreshProfile) {
+            bindData()
             return
         }
         hasUpload = true
+        Constant.mNeedRefreshProfile = false
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -398,5 +412,10 @@ class AddProfile2Fragment : BaseFragment() {
 
     interface OnSelectContactListener {
         fun onData(contactBean: ContactBean?)
+    }
+
+    var mShowMode :Boolean = false
+    fun setShowMode(){
+        mShowMode = true
     }
 }

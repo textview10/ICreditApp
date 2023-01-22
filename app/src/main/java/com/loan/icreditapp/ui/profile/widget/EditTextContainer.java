@@ -77,6 +77,9 @@ public class EditTextContainer extends FrameLayout {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (isShowMode){
+                return;
+            }
             if (!TextUtils.isEmpty(s) && s.length() > 0) {
                 if (ivClear != null) {
                     ivClear.setVisibility(View.VISIBLE);
@@ -155,6 +158,19 @@ public class EditTextContainer extends FrameLayout {
         super.onDetachedFromWindow();
         if (editText != null) {
             editText.removeTextChangedListener(mTextWatcher);
+        }
+    }
+
+    private boolean isShowMode = false;
+    public void setShowMode(){
+        isShowMode = true;
+        if (editText != null){
+            editText.setFocusable(false);
+            editText.setEnabled(false);
+            editText.setClickable(false);
+        }
+        if (ivClear != null) {
+            ivClear.setVisibility(View.GONE);
         }
     }
 }

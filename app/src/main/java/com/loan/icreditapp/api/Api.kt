@@ -62,10 +62,14 @@ class Api {
         val GET_BANK_LIST: String = HOST + "/v1/account/bank/list"
         //获取自己银行卡列表
         val GET_CARD_LIST: String = HOST + "/v1/account/card/list"
-
+        //获取Access Code
+        val GET_ACCESS_CODE: String = HOST + "/v1/account/access/code"
+        //上传银行卡信息
+        val UPLOAD_CARD: String = HOST + "/v1/account/card/upload"
         //授权信息上报
         val UPLOAD_AUTH: String = HOST + "/v1/account/auth/upload"
-
+        //申请贷款
+        val LOAD_APPLY: String = HOST + "v1/loan/apply"
         //获取订单号
         val GET_ORDER_ID: String = HOST + "/v1/loan/check"
 

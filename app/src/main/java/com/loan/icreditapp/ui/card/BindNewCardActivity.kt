@@ -39,7 +39,7 @@ class BindNewCardActivity : BaseActivity() {
         ivBack = findViewById(R.id.iv_bind_new_card_back)
         tvTitle = findViewById(R.id.tv_bind_new_card_title)
 
-        toStepInternal(ADD_BANK_CARD_NUM)
+        toStepInternal(ADD_BANK_ACCOUNT)
     }
 
     fun toStep(step: Int){

@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.util.DisplayMetrics
+import co.paystack.android.PaystackSdk
 import com.blankj.utilcode.util.LanguageUtils
 import com.loan.icreditapp.collect.LocationMgr
 import com.lzy.okgo.OkGo
@@ -68,7 +69,9 @@ class MyApp : Application() {
 
 
     private fun initializeData() {
-        LocationMgr.getInstance().init(this);
+        LocationMgr.getInstance().init(this)
+
+        PaystackSdk.initialize(applicationContext)
 //        FireBaseMgr.getInstance().getToken()
     }
 
