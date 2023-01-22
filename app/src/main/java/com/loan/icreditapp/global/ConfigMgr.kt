@@ -4,12 +4,10 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.Pair
 import com.blankj.utilcode.util.GsonUtils
-import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.bank.BankResponseBean
 import com.loan.icreditapp.util.BuildRequestJsonUtils
-import com.loan.icreditapp.util.CheckResponseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -17,7 +15,6 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ConfigMgr {
 
@@ -30,7 +27,7 @@ class ConfigMgr {
         val mMaritalList = ArrayList<Pair<String, String>>()
         val mRelationShipList = ArrayList<Pair<String, String>>()
         val mWorkList = ArrayList<Pair<String, String>>()
-        val mAreaMap = HashMap<String, ArrayList<String>>()
+        val mAreaMap = HashMap<Pair<String, String>, ArrayList<Pair<String, String>>>()
 
         val mBankList = ArrayList<BankResponseBean.Bank>()
 
@@ -77,7 +74,7 @@ class ConfigMgr {
         fun getCityData(){
             //            stateArea:州地区地址联动,    state:州， area:地区，
             getCityConfig("stateArea", object : CallBack2{
-                override fun onGetData(map : HashMap<String, ArrayList<String>>) {
+                override fun onGetData(map: HashMap<Pair<String, String>, ArrayList<Pair<String, String>>>) {
                     mAreaMap.clear()
                     mAreaMap.putAll(map)
                 }
@@ -133,7 +130,7 @@ class ConfigMgr {
                         if (responseBean == null || responseBean.body == null){
                             return
                         }
-                        var map : HashMap<String, ArrayList<String>> = parseCityItem(responseBean.body!!)
+                        var map : HashMap<Pair<String, String>, ArrayList<Pair<String, String>>> = parseCityItem(responseBean.body!!)
                         if (map.size > 0) {
                             callBack.onGetData(map)
                         }
@@ -146,8 +143,8 @@ class ConfigMgr {
                 })
         }
 
-        private fun parseCityItem(obj: Any): HashMap<String, ArrayList<String>> {
-            val map: HashMap<String, ArrayList<String>> = HashMap<String, ArrayList<String>>()
+        private fun parseCityItem(obj: Any): HashMap<Pair<String, String>, ArrayList<Pair<String, String>>> {
+            val map: HashMap<Pair<String, String>, ArrayList<Pair<String, String>>> = HashMap<Pair<String, String>, ArrayList<Pair<String, String>>>()
             try {
                 val tempObj = JSONObject(GsonUtils.toJson(obj))
                 val dictMap =  tempObj.optJSONObject("dictMap")
@@ -159,17 +156,18 @@ class ConfigMgr {
                     val jsonObject: JSONObject = stateArray.optJSONObject(i)
                     val key = jsonObject.optString("key")
                     val value = jsonObject.optString("val")
+                    var pair = Pair(value, key)
                     if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(value)) {
-                        var tempList : ArrayList<String> = ArrayList<String>()
+                        var tempList : ArrayList<Pair<String, String>> = ArrayList<Pair<String, String>>()
 
                         var tempArray:JSONArray =  areaObject.optJSONArray(key)
                         for (i in 0 until tempArray.length()) {
                             val itemJsonObject: JSONObject = tempArray.optJSONObject(i)
                             val itemKey = itemJsonObject.optString("key")
                             val itemValue = itemJsonObject.optString("val")
-                            tempList.add(itemValue)
+                            tempList.add(Pair(itemValue, itemKey))
                         }
-                        map.put(value, tempList)
+                        map.put(pair, tempList)
 //                        list.add(Pair(value, key))
                     }
                 }
@@ -224,6 +222,6 @@ class ConfigMgr {
     }
 
     private interface CallBack2 {
-        fun onGetData(map : HashMap<String, ArrayList<String>>)
+        fun onGetData(map : HashMap<Pair<String, String>, ArrayList<Pair<String, String>>>)
     }
 }

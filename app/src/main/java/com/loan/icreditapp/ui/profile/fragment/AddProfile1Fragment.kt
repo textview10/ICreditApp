@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,6 @@ import com.loan.icreditapp.bean.profile.ModifyProfile1Bean
 import com.loan.icreditapp.bean.profile.Profile1Bean
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
-import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.ui.profile.widget.GenderCheckBox
@@ -55,8 +55,8 @@ class AddProfile1Fragment : BaseFragment() {
     private var genderPos: Int? = 0
     private var bvn: String? = null
     private var email: String? = null
-    private var state: String? = null
-    private var area: String? = null
+    private var state: android.util.Pair<String, String>? = null
+    private var area: android.util.Pair<String, String>? = null
     private var homeAddress: String? = null
     private var mBirthday: String? = null
 
@@ -117,6 +117,7 @@ class AddProfile1Fragment : BaseFragment() {
     private fun uploadProfile1() {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
+            genderPos = mCheckBox?.getCurPos()
             jsonObject.put("accountId", Constant.mAccountId)
             jsonObject.put("firstName", editFirstName?.text)
             jsonObject.put("middleName", editMiddleName?.text)
@@ -124,8 +125,8 @@ class AddProfile1Fragment : BaseFragment() {
             jsonObject.put("bvn", editBvn?.text)
             jsonObject.put("birthday", mBirthday)
             jsonObject.put("gender", genderPos)
-            jsonObject.put("home_state", state)
-            jsonObject.put("home_area", area)
+            jsonObject.put("home_state", state!!.second)
+            jsonObject.put("home_area", area!!.second)
             jsonObject.put("home_address", editStreet?.text)
             jsonObject.put("email", editEmail?.text)
         } catch (e: JSONException) {
@@ -215,11 +216,20 @@ class AddProfile1Fragment : BaseFragment() {
         if (TextUtils.isEmpty(email)) {
             email = profile1Bean.email
         }
-        if (TextUtils.isEmpty(state)) {
-            state = profile1Bean.homeState
+        if (state == null ) {
+            if (!TextUtils.isEmpty(profile1Bean.homeStateLabel)
+                && !TextUtils.isEmpty(profile1Bean.homeState)) {
+                state = android.util.Pair<String, String>(
+                    profile1Bean.homeStateLabel!!,
+                    profile1Bean.homeState!!
+                )
+            }
         }
-        if (TextUtils.isEmpty(area)) {
-            area = profile1Bean.homeArea
+        if (area == null ) {
+            if (!TextUtils.isEmpty(profile1Bean.homeAreaLabel)
+                && !TextUtils.isEmpty(profile1Bean.homeArea)) {
+                area = Pair<String, String>(profile1Bean.homeAreaLabel!!,profile1Bean.homeArea!!)
+            }
         }
         if (TextUtils.isEmpty(homeAddress)) {
             homeAddress = profile1Bean.homeAddress
@@ -249,8 +259,9 @@ class AddProfile1Fragment : BaseFragment() {
         if (!TextUtils.isEmpty(email)) {
             editEmail?.setEditTextAndSelection(email)
         }
-        if (!TextUtils.isEmpty(area) && !TextUtils.isEmpty(state)) {
-            selectAddress?.data = (state + ":" + area)
+        if (area != null && !TextUtils.isEmpty(area!!.first)
+            && state != null && !TextUtils.isEmpty(state!!.first)) {
+            selectAddress?.data = (state!!.first + ":" + area!!.first)
         }
         if (!TextUtils.isEmpty(homeAddress)) {
             editStreet?.setEditTextAndSelection(homeAddress)
@@ -280,7 +291,7 @@ class AddProfile1Fragment : BaseFragment() {
             ToastUtils.showShort("last name is null")
             return false
         }
-        if (TextUtils.isEmpty(state) || TextUtils.isEmpty(area)) {
+        if (state == null || area == null) {
             ToastUtils.showShort("Residential address is null")
             return false
         }
@@ -328,8 +339,8 @@ class AddProfile1Fragment : BaseFragment() {
             if (options1 != -1 && options2 != -1) {
                 area = stateList.get(options1).get(options2)
             }
-            if (selectAddress != null) {
-                selectAddress?.setData(state + "-" + area)
+            if (selectAddress != null && state != null && area != null) {
+                selectAddress?.setData(state!!.first + "-" + area!!.first)
             }
             Log.i(TAG, " select province = $state select state = $area")
         }
@@ -346,22 +357,36 @@ class AddProfile1Fragment : BaseFragment() {
             .setCyclic(false, false, false) //循环与否
             .isRestoreItem(true) //切换时是否还原，设置默认选中第一项。
             .build<Any>()
-        view.setPicker(provinceList as List<Nothing>?, stateList as List<Nothing>?)
+
+        var tempProvinceList : ArrayList<String> = ArrayList<String>()
+        var tempStateList :  ArrayList<ArrayList<String>> = ArrayList<ArrayList<String>>()
+        for (i in 0 until provinceList.size) {
+            tempProvinceList.add(provinceList[i].first)
+        }
+        for (i in 0 until stateList.size) {
+           var itemList = ArrayList<String>()
+            var temp1 : ArrayList<Pair<String, String>>  = stateList[i]
+            for (j in 0 until temp1.size) {
+                itemList.add(temp1[j].first)
+            }
+            tempStateList.add(itemList)
+        }
+        view.setPicker(tempProvinceList as List<Nothing>?, tempStateList as List<Nothing>?)
         view.setSelectOptions(0, 0, 0)
         view.show()
     }
 
-    private val provinceList = ArrayList<String>()
-    private val stateList = ArrayList<ArrayList<String>>()
+    private val provinceList = ArrayList<android.util.Pair<String, String>>()
+    private val stateList = ArrayList<ArrayList<android.util.Pair<String, String>>>()
     private fun initAreaPickerData() {
         provinceList.clear()
         stateList.clear()
-        val areaData: HashMap<String, java.util.ArrayList<String>> = ConfigMgr.mAreaMap
-        val iterator: Iterator<Map.Entry<String, ArrayList<String>>> = areaData.entries.iterator()
+        val areaData: HashMap<android.util.Pair<String, String>, ArrayList<android.util.Pair<String, String>>> = ConfigMgr.mAreaMap
+        val iterator: Iterator<Map.Entry<android.util.Pair<String, String>, ArrayList<android.util.Pair<String, String>>>> = areaData.entries.iterator()
         while (iterator.hasNext()) {
             val (key, value) = iterator.next()
             provinceList.add(key)
-            val stateItemList = java.util.ArrayList<String>()
+            val stateItemList = java.util.ArrayList<android.util.Pair<String, String>>()
             stateItemList.addAll(value)
             stateList.add(stateItemList)
         }

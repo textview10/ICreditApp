@@ -41,7 +41,7 @@ class AddProfileActivity : BaseActivity() {
 
         ivStep = findViewById(R.id.iv_add_profile_step)
 
-        toStepInternal(TO_STEP_3)
+        toStepInternal(TO_STEP_1)
     }
 
     fun toStep(step: Int) {
