@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.FrameLayout
 import com.loan.icreditapp.R
+import com.loan.icreditapp.event.UpdateLoanEvent
+import org.greenrobot.eventbus.EventBus
 
 class LoanDeclinedFragment : BaseLoanFragment() {
+
+    private var flCommit : FrameLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -16,5 +20,21 @@ class LoanDeclinedFragment : BaseLoanFragment() {
     ): View? {
         var view = inflater.inflate(R.layout.fragment_loan_declined, container, false)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        flCommit =  view.findViewById(R.id.fl_loan_declined_commit)
+        flCommit?.setOnClickListener(View.OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            EventBus.getDefault().post(UpdateLoanEvent())
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 }

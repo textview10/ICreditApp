@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "635911409924",
+    "project_id": "icreditng",
+    "storage_bucket": "icreditng.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635911409924:android:880b1fb123a6904790c051",
+        "android_client_info": {
+          "package_name": "com.kudicredit.loan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635911409924-1v1rle2tgjiq6cefs8iooeitl3lf5r5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfn0sMOnVhvZ6UP762gqjtjsDZybJvusE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635911409924-1v1rle2tgjiq6cefs8iooeitl3lf5r5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

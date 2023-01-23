@@ -15,6 +15,7 @@ import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.dialog.order.OrderInfoBean
+import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.loan.LoanApplyFragment
 import com.loan.icreditapp.ui.loan.LoanDeclinedFragment
@@ -23,6 +24,9 @@ import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -63,6 +67,9 @@ class MyLoanFragment : BaseFragment() {
         pbLoading = view.findViewById<ProgressBar>(R.id.pb_loan_loading)
         pbLoading?.visibility = View.VISIBLE
         mHandler.sendEmptyMessageDelayed(TYPE_DELAY, 500)
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
     }
 
     private fun getOrderInfo() {
@@ -143,8 +150,16 @@ class MyLoanFragment : BaseFragment() {
         transaction.commitAllowingStateLoss()
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
+    fun onEvent(event: UpdateLoanEvent) {
+        getOrderInfo()
+    }
+
     override fun onDestroy() {
         OkGo.getInstance().cancelTag(TAG)
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+        }
         super.onDestroy()
     }
 }

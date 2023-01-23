@@ -102,5 +102,6 @@
     <string name="loan_declined_5"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>
 
     <string name="load_apply_apply_now">apply now</string>
+    <string name="loan_declined_apply_again">apply again</string>
 
 </resources>

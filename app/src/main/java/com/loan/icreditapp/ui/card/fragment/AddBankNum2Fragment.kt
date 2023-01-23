@@ -78,11 +78,15 @@ class AddBankNum2Fragment : BaseFragment() {
         flCommit?.setOnClickListener(OnClickListener {
             if (checkBankNum()) {
                 var cardNum = editBankNum?.text
+                if (BuildConfig.DEBUG) {
+                    cardNum = "5399412019805634"
+                }
                 var cvv = etCvv?.text
                 var expireList = expireDate?.split("-")
                 if (expireList?.size == 2) {
-                    var year = Integer.getInteger(expireList[0])
-                    var month = Integer.getInteger(expireList[1])
+                    var year = Integer.parseInt(expireList[0])
+                    var month = Integer.parseInt(expireList[1])
+                    Log.e(TAG, " year = " + year + " month = " + month)
                     bindCardAccess(cardNum.toString(), cvv.toString(), month, year)
                 }
             }
@@ -150,6 +154,7 @@ class AddBankNum2Fragment : BaseFragment() {
 
     private fun chargeCard(charge: Charge , cardNum: String, cvc: String,
                            expiryMonth: Int, expiryYear: Int) {
+//        PaystackSdk.setPublicKey()
         PaystackSdk.chargeCard(requireActivity(), charge, object : Paystack.TransactionCallback {
             override fun onSuccess(transaction: Transaction) {
                 Log.e(TAG, "onSuccess:    " + transaction.getReference())
@@ -165,6 +170,7 @@ class AddBankNum2Fragment : BaseFragment() {
             override fun onError(error: Throwable, transaction: Transaction?) {
                 // If an access code has expired, simply ask your server for a new one
                 // and restart the charge instead of displaying error
+                Log.e(TAG, " = " + error.toString())
             }
         })
     }

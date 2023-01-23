@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_declined"
@@ -25,8 +25,81 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textStyle="bold"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:text="1.For various reasons, there may be overdue behaviors on multiple platforms. "
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:text="2.What's the reason? The reason is that I don't want to give it to you. "
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:text="3.For various reasons, there may be overdue behaviors on multiple platforms. "
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:text="4.What's the reason? The reason is that I don't want to give it to you. "
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:textColor="#666666"
+            android:textSize="14sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:text="5.For various reasons, there may be overdue behaviors on multiple platforms. 6.What's the reason? The reason is that I don't want to give it to you."
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_loan_declined_commit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/add_profile_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/loan_declined_apply_again"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="true"
+            android:textSize="16sp" />
+    </FrameLayout>
 
 </FrameLayout>
