@@ -45,7 +45,6 @@ class ProductTrialDialog : Dialog {
 
         flSubmit?.setOnClickListener {
             mListener?.onClickAgree()
-            dismiss()
         }
         flCancel?.setOnClickListener { dismiss() }
 

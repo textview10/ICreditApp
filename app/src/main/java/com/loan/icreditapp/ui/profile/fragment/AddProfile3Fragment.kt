@@ -197,6 +197,7 @@ class AddProfile3Fragment : BaseFragment() {
                         return
                     }
                     ToastUtils.showShort("modify other3 success")
+                    activity?.finish()
                 }
 
                 override fun onError(response: Response<String>) {

@@ -154,7 +154,7 @@ class AddProfile1Fragment : BaseFragment() {
                     val profile1Bean: ModifyProfile1Bean? =
                         checkResponseSuccess(response, ModifyProfile1Bean::class.java)
                     if (profile1Bean == null) {
-                        ToastUtils.showShort("modify profile 1 failure.")
+//                        ToastUtils.showShort("modify profile 1 failure.")
                         return
                     }
                     if (profile1Bean.bvnChecked == true) {

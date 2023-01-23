@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
@@ -149,6 +150,7 @@ class SignInFragment : BaseFragment() {
             if (!TextUtils.isEmpty(temp)) {
                 finalPhoneNum = temp + phoneNum
             }
+//            2348888888888
             jsonObject.put("mobile", finalPhoneNum)
             jsonObject.put("password", password)
         } catch (e: JSONException) {
@@ -160,8 +162,11 @@ class SignInFragment : BaseFragment() {
                 override fun onSuccess(response: Response<String>) {
                     val signInBean: SignInBean? =
                         checkResponseSuccess(response, SignInBean::class.java)
-                    if (signInBean == null || TextUtils.isEmpty(signInBean.token)) {
+                    if (signInBean == null) {
                         ToastUtils.showShort("sign in failure.")
+                        return
+                    }
+                    if (TextUtils.isEmpty(signInBean.token)){
                         return
                     }
                     Constant.mAccountId = signInBean.accountId

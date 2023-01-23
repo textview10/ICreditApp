@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.icredit.okash.loan.cash.opay.game"
+        applicationId "com.icredit.loan.cash.ng"
         minSdkVersion 19
         targetSdkVersion 31
         versionCode 3
@@ -37,9 +37,9 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('../loanapp.jks');
+            storeFile file('../icredit.jks');
             storePassword "123456"
-            keyAlias "loanapp"
+            keyAlias "key0"
             keyPassword "123456"
         }
     }

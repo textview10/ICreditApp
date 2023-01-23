@@ -115,9 +115,9 @@ class AddBankAccount1Fragment : BaseFragment() {
             jsonObject.put("bankName", mBankData?.bankName)
             //客户填写的银行账号
             jsonObject.put("bankAccountNumber", editBankNum?.text)
-            if (BuildConfig.DEBUG) {
-                jsonObject.put("bankAccountNumber", "2284463522")
-            }
+//            if (BuildConfig.DEBUG) {
+//                jsonObject.put("bankAccountNumber", "2284462518")
+//            }
         } catch (e: JSONException) {
             e.printStackTrace()
         }

@@ -19,13 +19,13 @@ import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
+import com.loan.icreditapp.bean.ApplyLoadResponse
 import com.loan.icreditapp.bean.loan.CheckLoanResponseBean
 import com.loan.icreditapp.bean.loan.ProductResponseBean
 import com.loan.icreditapp.bean.loan.TrialResponseBean
 import com.loan.icreditapp.dialog.producttrial.ProductTrialDialog
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.loan.adapter.LoanApplyAdapter
-import com.loan.icreditapp.ui.login.SignInActivity
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -54,6 +54,7 @@ class LoanApplyFragment : BaseLoanFragment() {
     private var mAdapter: LoanApplyAdapter? = null
 
     private var mTrialBean: TrialResponseBean? = null
+    private var mProduct: ProductResponseBean.Product? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -195,6 +196,7 @@ class LoanApplyFragment : BaseLoanFragment() {
             ) {
                 var product = products[i]
                 tvTitle?.text = product.prodName
+                mProduct = product
                 Log.e(TAG, "select pos 2 = " + i)
                 if (!TextUtils.isEmpty(product.prodId) && !TextUtils.isEmpty(product.amount)){
                     requestLoanTrial(product.prodId!!, product.amount!!)
@@ -264,13 +266,16 @@ class LoanApplyFragment : BaseLoanFragment() {
                         return
                     }
                     if (checkLoanBean.hasProfile != true || checkLoanBean.hasContact != true
+//                    if (checkLoanBean.hasProfile != true || checkLoanBean.hasContact != true
                         || checkLoanBean.hasOther != true){
                         var intent: Intent = Intent(context, AddProfileActivity::class.java)
                         context?.startActivity(intent)
                         return
                     }
-                    var trialDialog =  ProductTrialDialog(requireContext(), mTrialBean!!)
-                    trialDialog.show()
+                    if (TextUtils.isEmpty(checkLoanBean.orderId)){
+                        return
+                    }
+                    showTrialDialog(checkLoanBean.orderId!!)
                 }
 
                 override fun onError(response: Response<String>) {
@@ -282,6 +287,63 @@ class LoanApplyFragment : BaseLoanFragment() {
                         Log.e(TAG, " product list error ." + response.body())
                     }
                     ToastUtils.showShort("product list error")
+                }
+            })
+    }
+
+    private fun showTrialDialog(orderId : String){
+        var trialDialog =  ProductTrialDialog(requireContext(), mTrialBean!!)
+        trialDialog.setOnDialogClickListener(object : ProductTrialDialog.OnDialogClickListener() {
+            override fun onClickAgree() {
+                applyLoad(orderId, trialDialog)
+            }
+        })
+        trialDialog.show()
+    }
+
+    private fun applyLoad(orderId : String, trialDialog: ProductTrialDialog) {
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        try {
+            jsonObject.put("accountId", Constant.mAccountId)
+            jsonObject.put("orderId", orderId)  //订单ID
+            jsonObject.put("prodId", mProduct?.prodId)   //产品ID
+            jsonObject.put("prodName", mProduct?.prodName) //产品名称
+            jsonObject.put("amount", mProduct?.amount)   //申请金额
+            jsonObject.put("period", mProduct?.period)   //申请产品期限	91天
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        OkGo.post<String>(Api.LOAD_APPLY).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                        return
+                    }
+                    val applyLoadResponse: ApplyLoadResponse? =
+                        checkResponseSuccess(response, ApplyLoadResponse::class.java)
+                    if (applyLoadResponse == null ) {
+                        return
+                    }
+                    if (!TextUtils.equals(applyLoadResponse.status, "1")){
+                        ToastUtils.showShort("apply loan failure.")
+                        return
+                    }
+                    if (trialDialog != null ){
+                        trialDialog?.dismiss()
+                    }
+                    ToastUtils.showShort("apply load success")
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                        return
+                    }
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, " apply load error ." + response.body())
+                    }
+                    ToastUtils.showShort("apply load error")
                 }
             })
     }

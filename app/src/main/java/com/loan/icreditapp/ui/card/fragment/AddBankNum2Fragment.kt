@@ -78,9 +78,9 @@ class AddBankNum2Fragment : BaseFragment() {
         flCommit?.setOnClickListener(OnClickListener {
             if (checkBankNum()) {
                 var cardNum = editBankNum?.text
-                if (BuildConfig.DEBUG) {
-                    cardNum = "5399412019805634"
-                }
+//                if (BuildConfig.DEBUG) {
+//                    cardNum = "5399412019788483"
+//                }
                 var cvv = etCvv?.text
                 var expireList = expireDate?.split("-")
                 if (expireList?.size == 2) {
