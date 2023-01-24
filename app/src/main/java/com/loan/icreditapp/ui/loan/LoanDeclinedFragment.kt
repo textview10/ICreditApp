@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.loan.icreditapp.R
+import com.loan.icreditapp.event.ToApplyLoanEvent
 import com.loan.icreditapp.event.UpdateLoanEvent
 import org.greenrobot.eventbus.EventBus
 
@@ -29,7 +30,7 @@ class LoanDeclinedFragment : BaseLoanFragment() {
             if (checkClickFast()){
                 return@OnClickListener
             }
-            EventBus.getDefault().post(UpdateLoanEvent())
+            EventBus.getDefault().post(ToApplyLoanEvent())
         })
     }
 

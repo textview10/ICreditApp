@@ -30,8 +30,8 @@ class LoanActiveFragment : BaseLoanFragment() {
         flCommit = view.findViewById(R.id.fl_loan_active_apply_now_commit)
         tvTotalAmount = view.findViewById(R.id.tv_loan_active_total_amount)
 
-        flCommit?.setOnClickListener { OnClickListener{
-
-        } }
+        flCommit?.setOnClickListener ( OnClickListener{
+            clickRepayLoad()
+        } )
     }
 }

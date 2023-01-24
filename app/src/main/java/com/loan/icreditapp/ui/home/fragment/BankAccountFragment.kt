@@ -14,7 +14,7 @@ class BankAccountFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        inflater.inflate(R.layout.fragment_bank_acount, container, false)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        var view = inflater.inflate(R.layout.fragment_bank_acount, container, false)
+        return view
     }
 }

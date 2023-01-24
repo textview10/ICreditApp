@@ -9,6 +9,8 @@ import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatTextView
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.event.ToApplyLoanEvent
+import org.greenrobot.eventbus.EventBus
 
 class LoanPaidFragment : BaseLoanFragment(){
 
@@ -22,7 +24,7 @@ class LoanPaidFragment : BaseLoanFragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_loan_active, container, false)
+        var view = inflater.inflate(R.layout.fragment_loan_paid, container, false)
         return view
     }
 
@@ -31,8 +33,11 @@ class LoanPaidFragment : BaseLoanFragment(){
         tvTotalAmount =  view.findViewById(R.id.tv_loan_paid_total_amount)
         flCommit =  view.findViewById(R.id.fl_loan_paid_commit)
 
-        flCommit?.setOnClickListener { OnClickListener{
-
-        } }
+        flCommit?.setOnClickListener ( OnClickListener{
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            EventBus.getDefault().post(ToApplyLoanEvent())
+        } )
     }
 }

@@ -16,6 +16,7 @@ import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.dialog.order.OrderInfoBean
+import com.loan.icreditapp.event.ToApplyLoanEvent
 import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.MainActivity
@@ -114,16 +115,13 @@ class MyLoanFragment : BaseFragment() {
     private fun updatePageByStatus(orderInfoBean: OrderInfoBean) {
         //可以借款
         if (orderInfoBean.canApply == true || TextUtils.isEmpty(orderInfoBean.orderId) ||
-            TextUtils.equals(orderInfoBean.orderId, "0")) {
-//        if (true){
-//            val loanApplyFragment = LoanApplyFragment()
-//            setTitleInternal(R.string.setting_my_loan)
-//            toFragment(loanApplyFragment)
-
-            val loanActiveFragment = LoanActiveFragment()
-            loanActiveFragment.setOrderInfo(orderInfoBean)
-            toFragment(loanActiveFragment)
-            setTitleInternal(R.string.my_loan_title_active)
+            TextUtils.equals(orderInfoBean.orderId, "0")
+        ) {
+//            toLoanApplyFragment()
+            val loanPaidFragment = LoanPaidFragment()
+            loanPaidFragment.setOrderInfo(orderInfoBean)
+            toFragment(loanPaidFragment)
+            setTitleInternal(R.string.my_loan_title_paid)
             return
         }
         val status: String? = orderInfoBean.status
@@ -164,11 +162,17 @@ class MyLoanFragment : BaseFragment() {
         }
     }
 
-    fun setTitleInternal(@StringRes titleRes: Int){
+    fun setTitleInternal(@StringRes titleRes: Int) {
         if (activity is MainActivity) {
             var main: MainActivity = activity as MainActivity
             main.setTitle(titleRes)
         }
+    }
+
+    private fun toLoanApplyFragment() {
+        val loanApplyFragment = LoanApplyFragment()
+        setTitleInternal(R.string.setting_my_loan)
+        toFragment(loanApplyFragment)
     }
 
     fun toFragment(fragment: BaseFragment?) {
@@ -181,6 +185,11 @@ class MyLoanFragment : BaseFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
     fun onEvent(event: UpdateLoanEvent) {
         getOrderInfo()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
+    fun onEvent(event: ToApplyLoanEvent) {
+        toLoanApplyFragment()
     }
 
     override fun onDestroy() {
