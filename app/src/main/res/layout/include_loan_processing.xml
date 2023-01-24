@@ -23,8 +23,8 @@
         android:layout_width="match_parent"
         android:background="#09CAB3"
         android:layout_marginTop="5dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="5dp"
         android:layout_height="0.6dp"/>
 
@@ -59,7 +59,7 @@
             android:id="@+id/tv_loan_process_disburse_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20 May 2020"
+            android:text=""
             android:textColor="#666666"
             android:layout_marginEnd="5dp"
             android:textSize="18sp" />
@@ -97,7 +97,7 @@
             android:id="@+id/tv_loan_process_due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20 May 2020"
+            android:text=""
             android:textColor="#666666"
             android:layout_marginEnd="5dp"
             android:textSize="18sp" />
@@ -128,8 +128,8 @@
             android:id="@+id/tv_loan_process_loan_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="₦ 1200"
-            android:layout_marginEnd="5dp"
+            android:text="₦ 0"
+            android:layout_marginEnd="8dp"
             android:textColor="#666666"
             android:textSize="18sp" />
 
@@ -159,8 +159,8 @@
             android:id="@+id/tv_loan_process_loan_origin_fee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="₦ 18000"
-            android:layout_marginEnd="5dp"
+            android:text="₦ 0"
+            android:layout_marginEnd="8dp"
             android:textColor="#666666"
             android:textSize="18sp" />
 
@@ -191,7 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="₦ 0"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="8dp"
             android:textColor="#666666"
             android:textSize="18sp" />
 
@@ -222,8 +222,8 @@
             android:id="@+id/tv_loan_process_loan_total_amount_due"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="₦ 22,500"
-            android:layout_marginEnd="5dp"
+            android:text="₦ 0"
+            android:layout_marginEnd="8dp"
             android:textColor="#666666"
             android:textSize="18sp" />
 

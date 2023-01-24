@@ -9,4 +9,12 @@
     <corners
         android:radius="18dp" />
 
+    <size android:height="0.6dp" />
+
+    <stroke
+        android:width="0.6dp"
+        android:color="#09CAB3"
+        android:dashWidth="4dp"
+        android:dashGap="3dp" />
+
 </shape>
