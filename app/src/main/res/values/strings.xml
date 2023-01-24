@@ -103,5 +103,13 @@
 
     <string name="load_apply_apply_now">apply now</string>
     <string name="loan_declined_apply_again">apply again</string>
+    <string name="loan_active_make_repaymemt">make a repayment</string>
+    <string name="loan_active_apply_now">apply now</string>
+
+    <string name="my_loan_title_processing">Processing</string>
+    <string name="my_loan_title_active">Active</string>
+    <string name="my_loan_title_paid">Paid</string>
+    <string name="my_loan_title_overdue">Overdue</string>
+    <string name="my_loan_title_declined">Declined</string>
 
 </resources>

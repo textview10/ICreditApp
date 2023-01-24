@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.annotation.StringRes
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
@@ -17,9 +18,8 @@ import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.dialog.order.OrderInfoBean
 import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
-import com.loan.icreditapp.ui.loan.LoanApplyFragment
-import com.loan.icreditapp.ui.loan.LoanDeclinedFragment
-import com.loan.icreditapp.ui.loan.LoanProcessingFragment
+import com.loan.icreditapp.ui.home.MainActivity
+import com.loan.icreditapp.ui.loan.*
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -116,8 +116,14 @@ class MyLoanFragment : BaseFragment() {
         if (orderInfoBean.canApply == true || TextUtils.isEmpty(orderInfoBean.orderId) ||
             TextUtils.equals(orderInfoBean.orderId, "0")) {
 //        if (true){
-            val loanApplyFragment = LoanApplyFragment()
-            toFragment(loanApplyFragment)
+//            val loanApplyFragment = LoanApplyFragment()
+//            setTitleInternal(R.string.setting_my_loan)
+//            toFragment(loanApplyFragment)
+
+            val loanActiveFragment = LoanActiveFragment()
+            loanActiveFragment.setOrderInfo(orderInfoBean)
+            toFragment(loanActiveFragment)
+            setTitleInternal(R.string.my_loan_title_active)
             return
         }
         val status: String? = orderInfoBean.status
@@ -130,16 +136,38 @@ class MyLoanFragment : BaseFragment() {
                 val processingFragment = LoanProcessingFragment()
                 processingFragment.setOrderInfo(orderInfoBean)
                 toFragment(processingFragment)
+                setTitleInternal(R.string.my_loan_title_processing)
             }
-            "2", "3", "4" -> {
-                val repayDueFragment = LoanApplyFragment()
-                repayDueFragment.setOrderInfo(orderInfoBean)
-                toFragment(repayDueFragment)
+            "2" -> {
+                val loanActiveFragment = LoanActiveFragment()
+                loanActiveFragment.setOrderInfo(orderInfoBean)
+                toFragment(loanActiveFragment)
+                setTitleInternal(R.string.my_loan_title_active)
+            }
+            "3" -> {
+                val loanPaidFragment = LoanPaidFragment()
+                loanPaidFragment.setOrderInfo(orderInfoBean)
+                toFragment(loanPaidFragment)
+                setTitleInternal(R.string.my_loan_title_paid)
+            }
+            "4" -> {
+                val loanOverDueFragment = LoanOverDueFragment()
+                loanOverDueFragment.setOrderInfo(orderInfoBean)
+                toFragment(loanOverDueFragment)
+                setTitleInternal(R.string.my_loan_title_overdue)
             }
             "5" -> {
-                val loanApplyFragment = LoanDeclinedFragment()
-                toFragment(loanApplyFragment)
+                val loanDeclinedFragment = LoanDeclinedFragment()
+                toFragment(loanDeclinedFragment)
+                setTitleInternal(R.string.my_loan_title_declined)
             }
+        }
+    }
+
+    fun setTitleInternal(@StringRes titleRes: Int){
+        if (activity is MainActivity) {
+            var main: MainActivity = activity as MainActivity
+            main.setTitle(titleRes)
         }
     }
 
