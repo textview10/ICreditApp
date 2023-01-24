@@ -117,11 +117,11 @@ class MyLoanFragment : BaseFragment() {
         if (orderInfoBean.canApply == true || TextUtils.isEmpty(orderInfoBean.orderId) ||
             TextUtils.equals(orderInfoBean.orderId, "0")
         ) {
-//            toLoanApplyFragment()
-            val loanPaidFragment = LoanPaidFragment()
-            loanPaidFragment.setOrderInfo(orderInfoBean)
-            toFragment(loanPaidFragment)
-            setTitleInternal(R.string.my_loan_title_paid)
+            toLoanApplyFragment()
+//            val loanPaidFragment = LoanPaidFragment()
+//            loanPaidFragment.setOrderInfo(orderInfoBean)
+//            toFragment(loanPaidFragment)
+//            setTitleInternal(R.string.my_loan_title_paid)
             return
         }
         val status: String? = orderInfoBean.status
