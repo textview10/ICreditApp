@@ -79,8 +79,11 @@ class SetPwdFragment : BaseFragment() {
                 override fun onSuccess(response: Response<String>) {
                     val registerBean: RegisterBean? =
                         checkResponseSuccess(response, RegisterBean::class.java)
-                    if (registerBean == null || TextUtils.isEmpty(registerBean.token)) {
-                        ToastUtils.showShort("register failure.")
+                    if (registerBean == null ) {
+                        return
+                    }
+                    if (TextUtils.isEmpty(registerBean.token)){
+                        ToastUtils.showShort("register failure. token = null")
                         return
                     }
                     Constant.mToken = registerBean.token

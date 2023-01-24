@@ -7,6 +7,7 @@ import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
@@ -62,6 +63,7 @@ class LauncherActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BarUtils.setStatusBarColor(this, resources.getColor(R.color.white))
         setContentView(R.layout.activity_launcher)
         //        boolean openGuide = SPUtils.getInstance().getBoolean(KEY_GUIDE, true);
 //        boolean openGuide = false;

@@ -77,7 +77,7 @@ class AddBankNum2Fragment : BaseFragment() {
         })
         flCommit?.setOnClickListener(OnClickListener {
             if (checkBankNum()) {
-                var cardNum = editBankNum?.text
+                var cardNum = editBankNum?.getText()
 //                if (BuildConfig.DEBUG) {
 //                    cardNum = "5399412019788483"
 //                }
@@ -104,7 +104,7 @@ class AddBankNum2Fragment : BaseFragment() {
     }
 
     private fun checkBankNum(): Boolean {
-        if (editBankNum == null || TextUtils.isEmpty(editBankNum?.text)) {
+        if (editBankNum == null || TextUtils.isEmpty(editBankNum?.getText())) {
             ToastUtils.showShort("bank num = null")
             return false
         }

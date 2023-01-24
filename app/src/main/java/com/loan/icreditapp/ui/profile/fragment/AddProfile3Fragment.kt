@@ -82,7 +82,7 @@ class AddProfile3Fragment : BaseFragment() {
             showListDialog(ConfigMgr.mMaritalList, object : SelectDataDialog.Observer {
                 override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                     mMarital = content
-                    selectSpouse?.data = content?.first
+                    selectSpouse?.setData(content?.first!!)
                 }
             })
         })
@@ -90,7 +90,7 @@ class AddProfile3Fragment : BaseFragment() {
             showListDialog(ConfigMgr.mDebtList, object : SelectDataDialog.Observer {
                 override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                     mDebt = content
-                    selectDebt?.data = content?.first
+                    selectDebt?.setData(content?.first!!)
                 }
             })
         })
@@ -98,7 +98,7 @@ class AddProfile3Fragment : BaseFragment() {
             showListDialog(ConfigMgr.mSalaryList, object : SelectDataDialog.Observer {
                 override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                     mSalary = content
-                    selectSalary?.data = content?.first
+                    selectSalary?.setData(content?.first!!)
                 }
             })
         })
@@ -106,7 +106,7 @@ class AddProfile3Fragment : BaseFragment() {
             showListDialog(ConfigMgr.mWorkList, object : SelectDataDialog.Observer {
                 override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                     mWorkStatus = content
-                    selectWorkStatus?.data = content?.first
+                    selectWorkStatus?.setData(content?.first!!)
                 }
             })
         })
@@ -150,11 +150,11 @@ class AddProfile3Fragment : BaseFragment() {
             ToastUtils.showShort("unselect debt")
             return false
         }
-        if (TextUtils.isEmpty(editEmployName?.text)){
+        if (TextUtils.isEmpty(editEmployName?.getText())){
             ToastUtils.showShort("employ name == null")
             return false
         }
-        if (TextUtils.isEmpty(editEmployAddress?.text)){
+        if (TextUtils.isEmpty(editEmployAddress?.getText())){
             ToastUtils.showShort("employ address == null")
             return false
         }
@@ -175,9 +175,9 @@ class AddProfile3Fragment : BaseFragment() {
             //是否有外债
             jsonObject.put("hasOutstandingLoan", mDebt?.second)
             //工作单位名称
-            jsonObject.put("companyName", editEmployName?.text)
+            jsonObject.put("companyName", editEmployName?.getText())
             //工作地址-手填详细地址
-            jsonObject.put("companyAddress", editEmployAddress?.text)
+            jsonObject.put("companyAddress", editEmployAddress?.getText())
             jsonObject.put("education", "1")
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -288,16 +288,16 @@ class AddProfile3Fragment : BaseFragment() {
     }
 
     private fun bindData() {
-        selectDebt?.data = mDebt?.first
-        selectSalary?.data = mSalary?.first
-        selectWorkStatus?.data = mWorkStatus?.first
-        selectSpouse?.data = mMarital?.first
+        selectDebt?.setData(mDebt?.first)
+        selectSalary?.setData(mSalary?.first)
+        selectWorkStatus?.setData(mWorkStatus?.first)
+        selectSpouse?.setData(mMarital?.first)
 
         if (!TextUtils.isEmpty(employName)) {
-            editEmployName?.setEditTextAndSelection(employName)
+            editEmployName?.setEditTextAndSelection(employName!!)
         }
         if (!TextUtils.isEmpty(employAddress)) {
-            editEmployAddress?.setEditTextAndSelection(employAddress)
+            editEmployAddress?.setEditTextAndSelection(employAddress!!)
         }
     }
 

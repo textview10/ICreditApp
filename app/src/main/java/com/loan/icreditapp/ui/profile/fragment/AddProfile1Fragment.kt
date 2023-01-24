@@ -133,16 +133,16 @@ class AddProfile1Fragment : BaseFragment() {
         try {
             genderPos = mCheckBox?.getCurPos()
             jsonObject.put("accountId", Constant.mAccountId)
-            jsonObject.put("firstName", editFirstName?.text)
-            jsonObject.put("middleName", editMiddleName?.text)
-            jsonObject.put("lastName", editLastName?.text)
-            jsonObject.put("bvn", editBvn?.text)
+            jsonObject.put("firstName", editFirstName?.getText())
+            jsonObject.put("middleName", editMiddleName?.getText())
+            jsonObject.put("lastName", editLastName?.getText())
+            jsonObject.put("bvn", editBvn?.getText())
             jsonObject.put("birthday", mBirthday)
             jsonObject.put("gender", genderPos)
             jsonObject.put("home_state", state!!.second)
             jsonObject.put("home_area", area!!.second)
-            jsonObject.put("home_address", editStreet?.text)
-            jsonObject.put("email", editEmail?.text)
+            jsonObject.put("home_address", editStreet?.getText())
+            jsonObject.put("email", editEmail?.getText())
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -257,33 +257,33 @@ class AddProfile1Fragment : BaseFragment() {
 
     private fun bindData() {
         if (!TextUtils.isEmpty(firstName)) {
-            editFirstName?.setEditTextAndSelection(firstName)
+            editFirstName?.setEditTextAndSelection(firstName!!)
         }
         if (!TextUtils.isEmpty(middleName)) {
-            editMiddleName?.setEditTextAndSelection(middleName)
+            editMiddleName?.setEditTextAndSelection(middleName!!)
         }
         if (!TextUtils.isEmpty(lastName)) {
-            editLastName?.setEditTextAndSelection(lastName)
+            editLastName?.setEditTextAndSelection(lastName!!)
         }
         if (genderPos != 0) {
             mCheckBox?.setPos(genderPos!!)
         }
 //        private var selectCalendar : SelectContainer? = null
         if (!TextUtils.isEmpty(bvn)) {
-            editBvn?.setEditTextAndSelection(bvn)
+            editBvn?.setEditTextAndSelection(bvn!!)
         }
         if (!TextUtils.isEmpty(email)) {
-            editEmail?.setEditTextAndSelection(email)
+            editEmail?.setEditTextAndSelection(email!!)
         }
         if (area != null && !TextUtils.isEmpty(area!!.first)
             && state != null && !TextUtils.isEmpty(state!!.first)) {
-            selectAddress?.data = (state!!.first + ":" + area!!.first)
+            selectAddress?.setData((state!!.first + ":" + area!!.first))
         }
         if (!TextUtils.isEmpty(homeAddress)) {
-            editStreet?.setEditTextAndSelection(homeAddress)
+            editStreet?.setEditTextAndSelection(homeAddress!!)
         }
         if (!TextUtils.isEmpty(mBirthday)) {
-            selectCalendar?.data = mBirthday
+            selectCalendar?.setData(mBirthday)
         }
 //        if (!TextUtils.isEmpty(profile1Bean.homeAddress)) {
 //            selectStreetNum?.setEditTextAndSelection(profile1Bean.homeAddress)

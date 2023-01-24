@@ -78,7 +78,7 @@ class AddBankAccount1Fragment : BaseFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
     fun onEvent(event: BankListEvent) {
         mBankData = event.mData
-        selectBankList?.data = event.mData?.bankName
+        selectBankList?.setData(event.mData?.bankName)
     }
 
     override fun onDestroy() {
@@ -114,7 +114,7 @@ class AddBankAccount1Fragment : BaseFragment() {
             //银行名称
             jsonObject.put("bankName", mBankData?.bankName)
             //客户填写的银行账号
-            jsonObject.put("bankAccountNumber", editBankNum?.text)
+            jsonObject.put("bankAccountNumber", editBankNum?.getText())
 //            if (BuildConfig.DEBUG) {
 //                jsonObject.put("bankAccountNumber", "2284462518")
 //            }

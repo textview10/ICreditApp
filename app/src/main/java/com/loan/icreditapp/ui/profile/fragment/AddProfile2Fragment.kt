@@ -102,8 +102,8 @@ class AddProfile2Fragment : BaseFragment() {
                     if (contactBean != null) {
                         leagalName1 = contactBean.contactName
                         mobile1 = contactBean.number
-                        editLeagalName1?.setEditTextAndSelection(contactBean.contactName)
-                        selectMobile1?.data = contactBean.number
+                        editLeagalName1?.setEditTextAndSelection(contactBean.contactName!!)
+                        selectMobile1?.setData(contactBean.number!!)
                     }
                 }
             })
@@ -114,8 +114,8 @@ class AddProfile2Fragment : BaseFragment() {
                     if (contactBean != null) {
                         leagalName2 = contactBean.contactName
                         mobile2 = contactBean.number
-                        editLeagalName2?.setEditTextAndSelection(contactBean.contactName)
-                        selectMobile2?.data = contactBean.number
+                        editLeagalName2?.setEditTextAndSelection(contactBean.contactName!!)
+                        selectMobile2?.setData(contactBean.number!!)
                     }
                 }
             })
@@ -125,7 +125,7 @@ class AddProfile2Fragment : BaseFragment() {
             showListDialog(ConfigMgr.mRelationShipList, object : SelectDataDialog.Observer {
                 override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                     relationShip1 = content
-                    selectRelationShip1?.data = content?.first
+                    selectRelationShip1?.setData(content?.first)
                 }
             })
 
@@ -134,7 +134,7 @@ class AddProfile2Fragment : BaseFragment() {
             showListDialog(ConfigMgr.mRelationShipList, object : SelectDataDialog.Observer {
                 override fun onItemClick(content: Pair<String, String>?, pos: Int) {
                     relationShip2 = content
-                    selectRelationShip2?.data = content?.first
+                    selectRelationShip2?.setData(content?.first)
                 }
             })
         })
@@ -390,23 +390,23 @@ class AddProfile2Fragment : BaseFragment() {
 
     private fun bindData() {
         if (!TextUtils.isEmpty(leagalName1)){
-            editLeagalName1?.setEditTextAndSelection(leagalName1)
+            editLeagalName1?.setEditTextAndSelection(leagalName1!!)
         }
         if (!TextUtils.isEmpty(mobile1)){
-            selectMobile1?.data = mobile1
+            selectMobile1?.setData(mobile1!!)
         }
         if (!TextUtils.isEmpty(relationShip1?.first)){
-            selectRelationShip1?.data = relationShip1?.first
+            selectRelationShip1?.setData(relationShip1?.first!!)
         }
 
         if (!TextUtils.isEmpty(leagalName2)){
-            editLeagalName2?.setEditTextAndSelection(leagalName2)
+            editLeagalName2?.setEditTextAndSelection(leagalName2!!)
         }
         if (!TextUtils.isEmpty(mobile2)){
-            selectMobile2?.data = mobile2
+            selectMobile2?.setData(mobile2!!)
         }
         if (!TextUtils.isEmpty(relationShip2?.first)){
-            selectRelationShip2?.data = relationShip2?.first
+            selectRelationShip2?.setData(relationShip2?.first!!)
         }
     }
 
