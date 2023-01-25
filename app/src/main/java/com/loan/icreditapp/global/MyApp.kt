@@ -70,10 +70,9 @@ class MyApp : Application() {
 
     private fun initializeData() {
         LocationMgr.getInstance().init(this)
-
         PaystackSdk.initialize(applicationContext)
         PaystackSdk.setPublicKey("pk_live_eaeaf5fb4ed183a337f40008b7a9b3d663f7b34e")
-//        FireBaseMgr.getInstance().getToken()
+        FireBaseMgr.sInstance.getToken()
     }
 
     override fun onTerminate() {

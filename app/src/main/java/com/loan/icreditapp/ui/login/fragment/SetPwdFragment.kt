@@ -121,7 +121,7 @@ class SetPwdFragment : BaseFragment() {
     private fun modifyPwd(pwd: String){
         flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        jsonObject.put("mobile", mPhoneNum)
+        jsonObject.put("mobile", "3333333333")
         jsonObject.put("newPassword", pwd)
         OkGo.post<String>(Api.MODIFY_PSD).tag(TAG)
             .upJson(jsonObject)

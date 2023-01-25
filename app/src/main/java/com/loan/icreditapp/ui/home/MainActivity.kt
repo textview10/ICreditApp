@@ -19,6 +19,7 @@ import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.global.FireBaseMgr
 import com.loan.icreditapp.ui.home.fragment.*
 import com.loan.icreditapp.ui.setting.PageType
 import com.loan.icreditapp.ui.setting.SettingFragment
@@ -57,6 +58,8 @@ class MainActivity : BaseActivity() {
 
         SPUtils.getInstance().put(Constant.KEY_ACCOUNT_ID, Constant.mAccountId)
         SPUtils.getInstance().put(Constant.KEY_TOKEN, Constant.mToken)
+
+        FireBaseMgr.sInstance.reportFcmToken()
     }
 
     private fun initializeView() {

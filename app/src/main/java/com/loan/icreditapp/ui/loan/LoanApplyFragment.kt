@@ -24,6 +24,7 @@ import com.loan.icreditapp.bean.loan.CheckLoanResponseBean
 import com.loan.icreditapp.bean.loan.ProductResponseBean
 import com.loan.icreditapp.bean.loan.TrialResponseBean
 import com.loan.icreditapp.dialog.producttrial.ProductTrialDialog
+import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.loan.adapter.LoanApplyAdapter
 import com.loan.icreditapp.ui.profile.AddProfileActivity
@@ -31,6 +32,7 @@ import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -333,6 +335,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                         trialDialog?.dismiss()
                     }
                     ToastUtils.showShort("apply load success")
+                    EventBus.getDefault().post(UpdateLoanEvent())
                 }
 
                 override fun onError(response: Response<String>) {

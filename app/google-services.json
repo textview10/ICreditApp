@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "635911409924",
-    "project_id": "icreditng",
-    "storage_bucket": "icreditng.appspot.com"
+    "project_number": "625789599721",
+    "project_id": "icreditng-2e90c",
+    "storage_bucket": "icreditng-2e90c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:635911409924:android:880b1fb123a6904790c051",
+        "mobilesdk_app_id": "1:625789599721:android:8a3f9a94002623fb6ad578",
         "android_client_info": {
-          "package_name": "com.kudicredit.loan"
+          "package_name": "com.icredit.okash.loan.cash.opay.game"
         }
       },
       "oauth_client": [
         {
-          "client_id": "635911409924-1v1rle2tgjiq6cefs8iooeitl3lf5r5q.apps.googleusercontent.com",
+          "client_id": "625789599721-ca8lb2ovg9207tqacpqk5mlrjgjvv4ol.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAfn0sMOnVhvZ6UP762gqjtjsDZybJvusE"
+          "current_key": "AIzaSyBHc5T1ChLn-2ALyMpfk5GUsYCIcLF8Tbg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "635911409924-1v1rle2tgjiq6cefs8iooeitl3lf5r5q.apps.googleusercontent.com",
+              "client_id": "625789599721-ca8lb2ovg9207tqacpqk5mlrjgjvv4ol.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

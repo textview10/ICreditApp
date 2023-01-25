@@ -59,11 +59,12 @@ abstract class BaseLoanFragment : BaseFragment() {
                 tvDisburseDate?.text = stage.disburseTime.toString()
                 tvDueDate?.text =  stage.repayDate.toString()
 
-                tvLoanAMount?.text = stage.amount.toString()
-                tvOriginFee?.text = stage.fee.toString()
-                tvRolloverFee?.text = stage.feePrePaid.toString()
+                tvLoanAMount?.text = "₦ " + stage.amount.toString()
+                tvOriginFee?.text = "₦ " + stage.fee.toString()
+                tvRolloverFee?.text = "₦ " + stage.interest.toString()
             }
         }
+        tvTotalAmountDue?.text = "₦ " + mOrderInfo?.totalAmount.toString()
     }
 
     //点击还款

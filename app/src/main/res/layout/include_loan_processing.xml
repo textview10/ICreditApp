@@ -176,7 +176,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rollover fee:"
+            android:text="Interest fee:"
             android:layout_marginStart="5dp"
             android:textColor="#666666"
             android:textSize="18sp" />

@@ -28,7 +28,9 @@ class LoanActiveFragment : BaseLoanFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         flCommit = view.findViewById(R.id.fl_loan_active_apply_now_commit)
+
         tvTotalAmount = view.findViewById(R.id.tv_loan_active_total_amount)
+        tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
 
         flCommit?.setOnClickListener ( OnClickListener{
             clickRepayLoad()

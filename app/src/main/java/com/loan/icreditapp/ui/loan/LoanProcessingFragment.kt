@@ -14,6 +14,8 @@ class LoanProcessingFragment : BaseLoanFragment() {
 
     private val TAG = "LoanProcessingFragment"
 
+    private var tvTotalAmount : AppCompatTextView? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,7 +27,8 @@ class LoanProcessingFragment : BaseLoanFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        tvTotalAmount = view.findViewById(R.id.tv_loan_processing_total_amount)
+        tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
     }
 
 

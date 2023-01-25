@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.application'
-//    id 'com.google.firebase.firebase-perf'
-//    id 'com.google.gms.google-services'
-//    id 'com.google.firebase.crashlytics'
+    id 'com.google.firebase.firebase-perf'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
     id 'kotlin-android'
 }
 
@@ -11,7 +11,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.icredit.loan.cash.ng"
+        applicationId "com.icredit.okash.loan.cash.opay.game"
         minSdkVersion 19
         targetSdkVersion 31
         versionCode 3
@@ -60,20 +60,20 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
 ////     Import the Firebase BoM
-//    implementation platform('com.google.firebase:firebase-bom:28.4.1')
+    implementation platform('com.google.firebase:firebase-bom:28.4.1')
 //    // When using the BoM, you don't specify versions in Firebase library dependencies
 //    // Declare the dependency for the Firebase SDK for Google Analytics
-//    implementation 'com.google.firebase:firebase-analytics'
-//    implementation 'com.google.firebase:firebase-perf'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-perf'
 //
 ////     Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
 ////     When using the BoM, you don't specify versions in Firebase library dependencies
-//    implementation 'com.google.firebase:firebase-messaging'
-//    implementation 'com.google.firebase:firebase-analytics'
-//    implementation 'com.google.firebase:firebase-crashlytics'
-//
-//    implementation 'com.google.firebase:firebase-auth'
-//    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
+
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
 
     implementation 'org.greenrobot:eventbus:3.2.0'
 

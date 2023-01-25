@@ -26,6 +26,7 @@ class LoanOverDueFragment : BaseLoanFragment() {
         super.onViewCreated(view, savedInstanceState)
         flCommit = view.findViewById(R.id.fl_loan_overdue_commit)
         tvTotalAmount = view.findViewById(R.id.tv_loan_overdue_total_amount)
+        tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
 
         flCommit?.setOnClickListener(View.OnClickListener {
             clickRepayLoad()

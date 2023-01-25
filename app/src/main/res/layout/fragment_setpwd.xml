@@ -65,6 +65,7 @@
         android:id="@+id/fl_set_pwd_loading"
         android:layout_width="match_parent"
         android:visibility="gone"
+        android:clickable="true"
         android:layout_height="match_parent">
 
         <ProgressBar

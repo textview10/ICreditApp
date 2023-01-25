@@ -33,6 +33,8 @@ class LoanPaidFragment : BaseLoanFragment(){
         tvTotalAmount =  view.findViewById(R.id.tv_loan_paid_total_amount)
         flCommit =  view.findViewById(R.id.fl_loan_paid_commit)
 
+        tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
+
         flCommit?.setOnClickListener ( OnClickListener{
             if (checkClickFast()){
                 return@OnClickListener
