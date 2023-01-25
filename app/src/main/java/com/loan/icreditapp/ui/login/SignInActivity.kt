@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import com.blankj.utilcode.util.BarUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.ui.home.MainActivity
@@ -22,6 +23,8 @@ class SignInActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BarUtils.setStatusBarColor(this, resources.getColor(R.color.white))
+        BarUtils.setStatusBarLightMode(this, true)
         setContentView(R.layout.activity_siginin)
         initView()
         initData()

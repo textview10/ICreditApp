@@ -30,7 +30,7 @@ class Api {
         val LOGOUT: String = HOST + "/v1/account/logout"
 
         //修改密码
-        val MODIFY_PSD: String = HOST + "/api/v1/account/modify_password"
+        val MODIFY_PSD: String = HOST + "/v1/account/modify/password"
 
         //上传fcm token
         val UPLOAD_FCM_TOKEN: String = HOST + "/v1/account/fcmtoken"

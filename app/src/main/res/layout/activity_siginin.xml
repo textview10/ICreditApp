@@ -5,6 +5,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_marginTop="18dp"
         android:layout_height="56dp">
 
         <ImageView
@@ -28,6 +30,7 @@
     <FrameLayout
         android:id="@+id/fl_signin_container"
         android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
         android:layout_height="match_parent" />
 
 </FrameLayout>

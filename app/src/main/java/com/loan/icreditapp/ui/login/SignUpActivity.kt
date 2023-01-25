@@ -17,15 +17,25 @@ class SignUpActivity : BaseActivity() {
 
     private val TAG = "SignUpActivity"
     private var mMode = -1
+    private var mPhoneNum : String? = ""
 
     companion object {
         private val SIGNUP_KEY = "signup_key"
-        val SIGNUP_1 = 111
+        private val SIGNUP_MODIFY_PHONE_NUM_KEY = "signup_modify_phonenum"
+        val SIGNUP_NEW = 111
+        val SIGNUP_MODIFY = 112
         fun startActivity(context: Context, mode: Int) {
             var intent: Intent = Intent(context, SignUpActivity::class.java)
             intent.putExtra(SIGNUP_KEY, mode)
             context.startActivity(intent)
 
+        }
+
+        fun startActivity(context: Context, mode: Int, phoneNum: String) {
+            var intent: Intent = Intent(context, SignUpActivity::class.java)
+            intent.putExtra(SIGNUP_KEY, mode)
+            intent.putExtra(SIGNUP_MODIFY_PHONE_NUM_KEY, phoneNum)
+            context.startActivity(intent)
         }
     }
 
@@ -33,21 +43,30 @@ class SignUpActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
         mMode = intent.getIntExtra(SIGNUP_KEY, -1)
-        Log.d(TAG, " mode = " + mMode)
+        mPhoneNum = intent.getStringExtra(SIGNUP_MODIFY_PHONE_NUM_KEY)
+        Log.d(TAG, " mode = " + mMode + " phoneNum = " +  mPhoneNum)
         initData()
         initView()
     }
 
     private fun initData() {
-        if (mMode == SIGNUP_1) {
+        if (mMode == SIGNUP_NEW) {
             var fragment = SignUpFragment()
             toFragment(fragment)
+        } else if (mMode == SIGNUP_MODIFY){
+            toSignUpModify()
         }
     }
 
-    fun toSetPwdPage(phoneNum: String) {
+   fun toSignUpModify(){
+       var fragment = SignUpFragment()
+       fragment.setIsModify(mPhoneNum!!)
+       toFragment(fragment)
+    }
+
+    fun toSetPwdPage(phoneNum: String, isModify : Boolean) {
         var setPwdPage = SetPwdFragment()
-        setPwdPage.setPhoneNum(phoneNum)
+        setPwdPage.setPhoneNum(phoneNum, isModify)
         toFragment(setPwdPage)
     }
 
@@ -66,6 +85,11 @@ class SignUpActivity : BaseActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onDestroy() {
+
+        super.onDestroy()
     }
 
     override fun getFragmentContainerRes(): Int {

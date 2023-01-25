@@ -50,13 +50,16 @@ class SignUpFragment : BaseFragment() {
     private var flCommit: FrameLayout ? = null
 
     private var mPresenter: PhoneNumPresenter? = null
-    private var mPhoneNum: String? = null
 
     private val TYPE_TIME_REDUCE = 1111
     private val MAX_TIME = 60
     private var mCurTime: Int = MAX_TIME
 
     private var mHandler: Handler? = null
+    //是否是新修改密码
+    private var mIsModify : Boolean  = false
+    private var mPhoneNum : String?  = ""
+    private var mPrex : String?  = ""
 
     init {
         mHandler = Handler(Looper.getMainLooper()) { message ->
@@ -142,6 +145,7 @@ class SignUpFragment : BaseFragment() {
                         ToastUtils.showShort("verify code = null. please input again.")
                         return
                     }
+                    mPrex = mPresenter?.getSelectString(mSpinner?.getSelectedItemPosition()!!)
                     checkVerifySmsCode(false)
                 }
             }
@@ -173,6 +177,17 @@ class SignUpFragment : BaseFragment() {
     private fun initView() {
         mPresenter = PhoneNumPresenter(context)
         mPresenter?.initSpinner(mSpinner!!)
+        if (!TextUtils.isEmpty(mPhoneNum)){
+            mEtPhoneNum?.setText(mPhoneNum)
+        }
+    }
+
+    fun setIsModify(phoneNum : String){
+        mIsModify = true
+        mPhoneNum = phoneNum
+        if (!TextUtils.isEmpty(mPhoneNum)) {
+            mEtPhoneNum?.setText(mPhoneNum)
+        }
     }
 
     private fun checkAndVerifyPhoneNum(){
@@ -186,15 +201,18 @@ class SignUpFragment : BaseFragment() {
             mEtPhoneNum?.setSelection(0)
             return
         }
-        val prefix: String? = mPresenter?.getSelectString(mSpinner?.getSelectedItemPosition()!!)
-        mPhoneNum = prefix + mPhoneNum
+        mPrex = mPresenter?.getSelectString(mSpinner?.getSelectedItemPosition()!!)
         requestCheckPhoneNum()
+    }
+
+    private fun checkPrefix(){
+
     }
 
     private fun requestCheckPhoneNum() {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
-            jsonObject.put("mobile", mPhoneNum)
+            jsonObject.put("mobile", mPrex + mPhoneNum)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -233,7 +251,7 @@ class SignUpFragment : BaseFragment() {
         }
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
-            jsonObject.put("mobile", mPhoneNum)
+            jsonObject.put("mobile", mPrex + mPhoneNum)
             //“1”:注册，“2”：修改密码 3 设备更换
             jsonObject.put("captchaType", "1")
         } catch (e: JSONException) {
@@ -283,7 +301,7 @@ class SignUpFragment : BaseFragment() {
 //            verifyCodeView?.clearAll()
             return
         }
-        requestVerifySmsCode(mPhoneNum, verifyCode)
+        requestVerifySmsCode(mPrex + mPhoneNum, verifyCode)
     }
 
     private fun requestVerifySmsCode(mPhoneNum: String?, verifyCode: String?) {
@@ -293,7 +311,7 @@ class SignUpFragment : BaseFragment() {
         }
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
-            jsonObject.put("mobile", mPhoneNum)
+            jsonObject.put("mobile", mPrex + mPhoneNum)
             jsonObject.put("captchaCode", verifyCode)
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -326,7 +344,7 @@ class SignUpFragment : BaseFragment() {
     private fun verifySuccess(){
         if (activity is SignUpActivity) {
             var signUpActivity : SignUpActivity = activity as SignUpActivity
-            signUpActivity.toSetPwdPage(mPhoneNum!!)
+            signUpActivity.toSetPwdPage(mPrex + mPhoneNum, mIsModify)
         }
     }
 

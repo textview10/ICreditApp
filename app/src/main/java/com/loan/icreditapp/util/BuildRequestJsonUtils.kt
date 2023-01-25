@@ -68,7 +68,11 @@ class BuildRequestJsonUtils {
             httpHeaders.put("token", Constant.mToken)
             return httpHeaders
         }
-
+        fun clearHeaderToken(): HttpHeaders{
+            val httpHeaders = HttpHeaders()
+            httpHeaders.put("token", "")
+            return httpHeaders
+        }
         @SuppressLint("MissingPermission")
         fun buildHeaderImei(): HttpHeaders {
             val httpHeaders = HttpHeaders()

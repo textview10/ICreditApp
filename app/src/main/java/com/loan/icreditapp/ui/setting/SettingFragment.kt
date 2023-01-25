@@ -16,6 +16,7 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.setting.SettingBean
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.banklist.BankListActivity
 import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
@@ -23,6 +24,7 @@ import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
+import com.lzy.okgo.model.HttpHeaders
 import com.lzy.okgo.model.Response
 import org.json.JSONObject
 
@@ -173,6 +175,10 @@ class SettingFragment : BaseFragment() {
                         return
                     }
                     ToastUtils.showShort("logout success")
+                    Constant.mToken = null
+                    Constant.mAccountId = null
+                    val header = BuildRequestJsonUtils.clearHeaderToken()
+                    OkGo.getInstance().addCommonHeaders(header)
                     var intent: Intent = Intent(activity, WelcomeActivity::class.java)
                     activity?.startActivity(intent)
                     activity?.finish()

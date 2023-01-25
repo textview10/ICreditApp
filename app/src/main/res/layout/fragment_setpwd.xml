@@ -25,12 +25,16 @@
             android:layout_marginTop="10dp"
             app:select_view_hint="@string/signup_set_pwd_1" />
 
+        <View style="@style/view_divide" />
+
         <com.loan.icreditapp.ui.profile.widget.EditTextContainer
             android:id="@+id/edittext_confirm_pwd"
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:layout_marginTop="10dp"
             app:select_view_hint="@string/signup_set_pwd_2" />
+
+        <View style="@style/view_divide" />
 
     </LinearLayout>
 
@@ -54,6 +58,19 @@
             android:textAllCaps="true"
             android:textSize="16sp" />
         <!--        android:text="@string/signin_login"-->
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_set_pwd_loading"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
 
     </FrameLayout>
 

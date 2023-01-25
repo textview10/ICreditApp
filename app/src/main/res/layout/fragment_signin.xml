@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="81dp"
         android:orientation="vertical">
 
         <include
@@ -125,14 +125,22 @@
 
                 </FrameLayout>
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_signin_forgot_password"
+                    android:layout_width="wrap_content"
+                    android:text="Forgot password ? "
+                    android:layout_marginTop="15dp"
+                    android:textColor="#3865CB"
+                    android:textSize="16sp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_height="wrap_content"/>
+
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/pb_login_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
         </FrameLayout>
 
     </LinearLayout>
@@ -157,6 +165,21 @@
             android:textAllCaps="true"
             android:textSize="16sp" />
         <!--        android:text="@string/signin_login"-->
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_siginin_loading"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:indeterminateTint="@color/theme_color"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
 
     </FrameLayout>
 

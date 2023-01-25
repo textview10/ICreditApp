@@ -42,7 +42,7 @@ class WelcomeActivity : BaseActivity() {
         tvRegister?.setOnClickListener(View.OnClickListener {
             checkServerAvailable(object : CallBack {
                 override fun onEnd() {
-                    SignUpActivity.startActivity(this@WelcomeActivity, SignUpActivity.SIGNUP_1)
+                    SignUpActivity.startActivity(this@WelcomeActivity, SignUpActivity.SIGNUP_NEW)
                     finish()
                 }
             })

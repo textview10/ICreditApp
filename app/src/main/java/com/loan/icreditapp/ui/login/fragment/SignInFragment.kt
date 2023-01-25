@@ -22,7 +22,9 @@ import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.login.SignInBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
+import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.login.SignInActivity
+import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -42,6 +44,8 @@ class SignInFragment : BaseFragment() {
     private var etPhoneNum: AppCompatEditText? = null
     private var ivClear: ImageView? = null
     private var ivShowPwd: ImageView? = null
+    private var flLoading: FrameLayout? = null
+    private var tvForgetPsd: AppCompatTextView? = null
     private var mPresenter: PhoneNumPresenter? = null
 
     private var passwordMode = true
@@ -68,6 +72,8 @@ class SignInFragment : BaseFragment() {
         etPhoneNum = view.findViewById(R.id.et_signin_phone_num)
         ivClear = view.findViewById(R.id.iv_signin_phonenum_clear)
         ivShowPwd = view.findViewById(R.id.iv_signin_show_pwd)
+        flLoading = view.findViewById(R.id.fl_siginin_loading)
+        tvForgetPsd = view.findViewById(R.id.tv_signin_forgot_password)
 
         etPhoneNum?.setOnFocusChangeListener(View.OnFocusChangeListener { view, b ->
             run {
@@ -108,6 +114,23 @@ class SignInFragment : BaseFragment() {
                 ivShowPwd?.setImageResource(icLogo)
             }
         }
+        tvForgetPsd?.setOnClickListener(View.OnClickListener {
+            if (activity?.isDestroyed == true ||
+                activity?.isFinishing == true){
+                return@OnClickListener
+            }
+            if (activity is SignInActivity) {
+                var phoneNum: String = etPhoneNum?.getText().toString()
+                if (!TextUtils.isEmpty(phoneNum)) {
+                    SignUpActivity.startActivity(
+                        requireContext(),
+                        SignUpActivity.SIGNUP_MODIFY,
+                        phoneNum
+                    )
+                    requireActivity().finish()
+                }
+            }
+        })
         initView()
     }
 
@@ -143,6 +166,7 @@ class SignInFragment : BaseFragment() {
     }
 
     private fun signIn(phoneNum : String, password : String){
+        flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             var finalPhoneNum = phoneNum
@@ -160,6 +184,7 @@ class SignInFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    flLoading?.visibility = View.GONE
                     val signInBean: SignInBean? =
                         checkResponseSuccess(response, SignInBean::class.java)
                     if (signInBean == null) {
@@ -181,6 +206,7 @@ class SignInFragment : BaseFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    flLoading?.visibility = View.GONE
                     Log.e(TAG, "sign in error")
                     ToastUtils.showShort("sign in error..")
                 }

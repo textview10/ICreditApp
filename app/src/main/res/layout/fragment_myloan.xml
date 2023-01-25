@@ -12,6 +12,7 @@
         android:id="@+id/pb_loan_loading"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
+        android:indeterminateTint="@color/theme_color"
         android:layout_height="wrap_content"/>
 
 </FrameLayout>

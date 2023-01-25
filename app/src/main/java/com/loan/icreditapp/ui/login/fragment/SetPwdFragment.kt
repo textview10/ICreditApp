@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.bean.login.ModifyPwdBean
 import com.loan.icreditapp.bean.login.RegisterBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.login.SignUpActivity
@@ -28,8 +29,10 @@ class SetPwdFragment : BaseFragment() {
     private var flCommit: FrameLayout? = null
     private var etCreatePwd: EditTextContainer? = null
     private var etConfirmPwd: EditTextContainer? = null
+    private var flLoading: FrameLayout? = null
 
     private var mPhoneNum: String? = null
+    private var mIsModify: Boolean? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +49,8 @@ class SetPwdFragment : BaseFragment() {
         etCreatePwd = view.findViewById(R.id.edittext_create_pwd)
         etConfirmPwd = view.findViewById(R.id.edittext_confirm_pwd)
 
+        flLoading = view.findViewById(R.id.fl_set_pwd_loading)
+
         flCommit?.setOnClickListener {
             val strPassCode1: String = etCreatePwd?.getText().toString()
             val strPassCode2: String = etConfirmPwd?.getText().toString()
@@ -59,15 +64,21 @@ class SetPwdFragment : BaseFragment() {
                 etConfirmPwd?.setSelectionLast()
                 return@setOnClickListener
             }
-            register(strPassCode2)
+            if (mIsModify == true){
+                modifyPwd(strPassCode2)
+            } else {
+                register(strPassCode2)
+            }
         }
     }
 
-    fun setPhoneNum(phoneNum: String) {
+    fun setPhoneNum(phoneNum: String, isModify : Boolean) {
         mPhoneNum = phoneNum
+        mIsModify = isModify
     }
 
     private fun register(pwd: String) {
+        flLoading?.visibility = View.VISIBLE
         //password	String
         //mobile	String
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
@@ -77,6 +88,7 @@ class SetPwdFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    flLoading?.visibility = View.GONE
                     val registerBean: RegisterBean? =
                         checkResponseSuccess(response, RegisterBean::class.java)
                     if (registerBean == null ) {
@@ -95,6 +107,43 @@ class SetPwdFragment : BaseFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    flLoading?.visibility = View.GONE
+                    Log.e(TAG, " register error ... ")
+                    ToastUtils.showShort("register error.")
+                }
+            })
+    }
+
+    private fun modifyPwd(pwd: String){
+        flLoading?.visibility = View.VISIBLE
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        jsonObject.put("mobile", mPhoneNum)
+        jsonObject.put("newPassword", pwd)
+        OkGo.post<String>(Api.MODIFY_PSD).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    flLoading?.visibility = View.GONE
+                    val modifyBean: ModifyPwdBean? =
+                        checkResponseSuccess(response, ModifyPwdBean::class.java)
+                    if (modifyBean == null ) {
+                        return
+                    }
+                    if (TextUtils.isEmpty(modifyBean.token)){
+                        ToastUtils.showShort("register failure. token = null")
+                        return
+                    }
+                    Constant.mToken = modifyBean.token
+                    Constant.mAccountId = modifyBean.accountId
+                    if (activity is SignUpActivity) {
+                        var signUpActivity : SignUpActivity = activity as SignUpActivity
+                        signUpActivity.toHomePage()
+                    }
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    flLoading?.visibility = View.GONE
                     Log.e(TAG, " register error ... ")
                     ToastUtils.showShort("register error.")
                 }
