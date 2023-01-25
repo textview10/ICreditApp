@@ -50,8 +50,10 @@ class SignInFragment : BaseFragment() {
 
     private var passwordMode = true
 
-    val KEY_PHONE_NUM = "key_sign_in_phone_num"
-    val KEY_PASS_CODE = "key_sign_in_pass_code"
+    companion object {
+        val KEY_PHONE_NUM = "key_sign_in_phone_num"
+        val KEY_PASS_CODE = "key_sign_in_pass_code"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

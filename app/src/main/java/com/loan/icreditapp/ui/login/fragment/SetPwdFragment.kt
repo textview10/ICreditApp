@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
@@ -99,6 +100,9 @@ class SetPwdFragment : BaseFragment() {
                         return
                     }
                     Constant.mToken = registerBean.token
+                    Constant.mAccountId = registerBean.accountId
+                    SPUtils.getInstance().put(SignInFragment.KEY_PHONE_NUM, mPhoneNum)
+                    SPUtils.getInstance().put(SignInFragment.KEY_PASS_CODE, pwd)
                     if (activity is SignUpActivity) {
                         var signUpActivity : SignUpActivity = activity as SignUpActivity
                         signUpActivity.toHomePage()
@@ -135,6 +139,8 @@ class SetPwdFragment : BaseFragment() {
                     }
                     Constant.mToken = modifyBean.token
                     Constant.mAccountId = modifyBean.accountId
+                    SPUtils.getInstance().put(SignInFragment.KEY_PHONE_NUM, mPhoneNum)
+                    SPUtils.getInstance().put(SignInFragment.KEY_PASS_CODE, pwd)
                     if (activity is SignUpActivity) {
                         var signUpActivity : SignUpActivity = activity as SignUpActivity
                         signUpActivity.toHomePage()
