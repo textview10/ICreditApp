@@ -84,11 +84,20 @@ abstract class BaseLoanFragment : BaseFragment() {
             ToastUtils.showShort("repay load total amount == null .")
             return
         }
-        uploadReplayLoad(mOrderInfo?.orderId!!, mOrderInfo?.totalAmount!!)
+        var amount:String? = null
+        if (mOrderInfo?.stageList != null) {
+            var stage: OrderInfoBean.Stage? = mOrderInfo?.stageList!![0]
+            if (stage != null) {
+                amount = stage.amount.toString()
+            }
+        }
+        if (!TextUtils.isEmpty(amount)) {
+            uploadReplayLoad(mOrderInfo?.orderId!!, amount!!)
+        }
     }
 
     //订单ID ,申请金额
-    private fun uploadReplayLoad(orderId : String, amount: Double){
+    private fun uploadReplayLoad(orderId : String, amount: String){
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
