@@ -50,14 +50,14 @@ class WelcomeActivity : BaseActivity() {
             checkServerAvailable(object : CallBack {
                 override fun onEnd() {
                     if (hasShowTerm){
-                        SignInActivity.startActivity(this@WelcomeActivity)
+                        SignUpActivity.startActivity(this@WelcomeActivity, SignUpActivity.SIGNUP_NEW)
                         finish()
                         return
                     }
                     showTermDialog( object :TermsDialog.OnClickAgreeListener{
                         override fun onClickAgree() {
                             SPUtils.getInstance().put(KEY_SHOW_TERM, true)
-                            SignInActivity.startActivity(this@WelcomeActivity)
+                            SignUpActivity.startActivity(this@WelcomeActivity, SignUpActivity.SIGNUP_NEW)
                             finish()
                         }
                     })

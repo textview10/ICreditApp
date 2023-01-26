@@ -112,4 +112,7 @@
     <string name="my_loan_title_overdue">Overdue</string>
     <string name="my_loan_title_declined">Declined</string>
 
+    <string name="term_1">I agree to the</string>
+    <string name="term_2">terms &amp; condition</string>
+
 </resources>

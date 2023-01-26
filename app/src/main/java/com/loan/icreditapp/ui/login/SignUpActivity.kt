@@ -4,20 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.loan.icreditapp.R
+import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
 import com.loan.icreditapp.ui.login.fragment.SetPwdFragment
 import com.loan.icreditapp.ui.login.fragment.SignUpFragment
+import com.loan.icreditapp.ui.webview.WebViewFragment
 
 class SignUpActivity : BaseActivity() {
 
     private val TAG = "SignUpActivity"
     private var mMode = -1
     private var mPhoneNum : String? = ""
+    private var flWebView : FrameLayout? = null
+
+    private var webViewFragment : WebViewFragment? = null
 
     companion object {
         private val SIGNUP_KEY = "signup_key"
@@ -79,6 +86,7 @@ class SignUpActivity : BaseActivity() {
     private fun initView() {
         var ivBack: ImageView = findViewById(R.id.iv_signup_back)
         var tvTitle: TextView = findViewById(R.id.tv_signin_title)
+        flWebView = findViewById(R.id.fl_signup_webview)
 
         ivBack.setOnClickListener {
             var intent: Intent = Intent(this@SignUpActivity, WelcomeActivity::class.java)
@@ -87,10 +95,40 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
-    override fun onDestroy() {
-
-        super.onDestroy()
+    fun toWebView(){
+        flWebView?.visibility = View.VISIBLE
+        if (webViewFragment == null) {
+            webViewFragment = WebViewFragment()
+        }
+        webViewFragment?.setUrl(Api.GET_POLICY)
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction() // 开启一个事务
+        transaction.replace(R.id.fl_signup_webview, webViewFragment!!)
+        transaction.commitAllowingStateLoss()
     }
+
+    override fun onBackPressed() {
+        backPress()
+    }
+
+    fun backPress() {
+        if (flWebView != null) {
+            if (flWebView!!.visibility == View.VISIBLE) {
+                flWebView!!.visibility = View.GONE
+                return
+            }
+        }
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
+
+
 
     override fun getFragmentContainerRes(): Int {
         return R.id.fl_signup_container

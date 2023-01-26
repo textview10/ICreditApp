@@ -16,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -28,6 +29,7 @@ import com.loan.icreditapp.bean.login.VerifySmsCodeBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
 import com.loan.icreditapp.ui.login.SignUpActivity
+import com.loan.icreditapp.ui.webview.WebViewFragment
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -48,6 +50,8 @@ class SignUpFragment : BaseFragment() {
     private var ivClear: ImageView? = null
     private var verifyCodeView: InputVerifyCodeView? = null
     private var flCommit: FrameLayout ? = null
+    private var ivAgree: AppCompatImageView ? = null
+    private var tvTerm: AppCompatTextView ? = null
 
     private var mPresenter: PhoneNumPresenter? = null
 
@@ -60,6 +64,8 @@ class SignUpFragment : BaseFragment() {
     private var mIsModify : Boolean  = false
     private var mPhoneNum : String?  = ""
     private var mPrex : String?  = ""
+
+    private var isAgree : Boolean  = false
 
     init {
         mHandler = Handler(Looper.getMainLooper()) { message ->
@@ -108,6 +114,8 @@ class SignUpFragment : BaseFragment() {
 
         ivClear = view.findViewById(R.id.iv_signup_phonenum_clear)
         verifyCodeView = view.findViewById(R.id.view_input_verify_code_verify_code)
+        ivAgree = view.findViewById(R.id.iv_signup_agree_state)
+        tvTerm = view.findViewById(R.id.tv_signup_term)
 
         mEtPhoneNum?.setOnFocusChangeListener(OnFocusChangeListener { view, b ->
             run {
@@ -169,7 +177,22 @@ class SignUpFragment : BaseFragment() {
         mEtPhoneNum?.requestFocus()
 
         flCommit?.setOnClickListener {
+            if (!isAgree){
+                ToastUtils.showShort("must agree term.")
+                return@setOnClickListener
+            }
             checkVerifySmsCode(true)
+        }
+
+        ivAgree?.setOnClickListener {
+            isAgree = !isAgree
+            updateState()
+        }
+        tvTerm?.setOnClickListener {
+            if (activity is SignUpActivity) {
+                var signUpActivity : SignUpActivity = activity as SignUpActivity
+                signUpActivity.toWebView()
+            }
         }
         initView()
     }
@@ -180,6 +203,11 @@ class SignUpFragment : BaseFragment() {
         if (!TextUtils.isEmpty(mPhoneNum)){
             mEtPhoneNum?.setText(mPhoneNum)
         }
+        updateState()
+    }
+
+    private fun updateState(){
+        ivAgree?.setImageResource(if (isAgree) R.drawable.btn_agree else R.drawable.btn_disagree)
     }
 
     fun setIsModify(phoneNum : String){
