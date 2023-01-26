@@ -6,11 +6,13 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.bean.ServerLiveBean
+import com.loan.icreditapp.dialog.term.TermsDialog
 import com.loan.icreditapp.ui.login.SignInActivity
 import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
@@ -26,6 +28,10 @@ class WelcomeActivity : BaseActivity() {
     private var tvRegister: AppCompatTextView? = null
     private var tvSignIn: AppCompatTextView? = null
 
+    private val KEY_SHOW_TERM = "key_show_term"
+
+    private var hasShowTerm = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BarUtils.setStatusBarColor(this, resources.getColor(android.R.color.transparent))
@@ -38,23 +44,50 @@ class WelcomeActivity : BaseActivity() {
     private fun initializeView() {
         tvRegister = findViewById(R.id.tv_splash_register)
         tvSignIn = findViewById(R.id.tv_splash_signin)
+        hasShowTerm = SPUtils.getInstance().getBoolean(KEY_SHOW_TERM)
 
         tvRegister?.setOnClickListener(View.OnClickListener {
             checkServerAvailable(object : CallBack {
                 override fun onEnd() {
-                    SignUpActivity.startActivity(this@WelcomeActivity, SignUpActivity.SIGNUP_NEW)
-                    finish()
+                    if (hasShowTerm){
+                        SignInActivity.startActivity(this@WelcomeActivity)
+                        finish()
+                        return
+                    }
+                    showTermDialog( object :TermsDialog.OnClickAgreeListener{
+                        override fun onClickAgree() {
+                            SPUtils.getInstance().put(KEY_SHOW_TERM, true)
+                            SignInActivity.startActivity(this@WelcomeActivity)
+                            finish()
+                        }
+                    })
                 }
             })
         })
         tvSignIn?.setOnClickListener(View.OnClickListener {
             checkServerAvailable(object : CallBack {
                 override fun onEnd() {
-                    SignInActivity.startActivity(this@WelcomeActivity)
-                    finish()
+                    if (hasShowTerm){
+                        SignInActivity.startActivity(this@WelcomeActivity)
+                        finish()
+                        return
+                    }
+                    showTermDialog( object :TermsDialog.OnClickAgreeListener{
+                        override fun onClickAgree() {
+                            SPUtils.getInstance().put(KEY_SHOW_TERM, true)
+                            SignInActivity.startActivity(this@WelcomeActivity)
+                            finish()
+                        }
+                    })
                 }
             })
         })
+    }
+
+    private fun showTermDialog(listener: TermsDialog.OnClickAgreeListener) {
+        var dialog = TermsDialog(this)
+        dialog.setOnClickListener(listener)
+        dialog.show()
     }
 
     private fun checkServerAvailable(callBack: CallBack?) {

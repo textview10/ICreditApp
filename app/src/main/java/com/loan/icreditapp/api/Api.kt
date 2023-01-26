@@ -78,9 +78,9 @@ class Api {
         //获取订单详情
         val GET_ORDER_INFO: String = HOST + "/v1/loan/detail"
 
-        val WEB_VIEW_POLICY: String = HOST + "/html/Privacy.html"
+        val GET_POLICY: String = "https://www.icredit.ng/privacy.html"
 
-        val WEB_VIEW_TERM: String = HOST + "/html/terms.html"
+        val GET_TERMS: String = "https://www.icredit.ng/terms.html"
 
         val REQUEST_MESSAGE_LIST: String = HOST + "/v1/station/list"
     }
