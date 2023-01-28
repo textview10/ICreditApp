@@ -61,6 +61,7 @@ class SignInActivity : BaseActivity(){
     private fun onBackPressedInternal(){
         var intent = Intent(this@SignInActivity, WelcomeActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_left_my, R.anim.slide_out_right_my)
         finish()
     }
 }

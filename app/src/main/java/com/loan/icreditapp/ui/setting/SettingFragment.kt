@@ -182,6 +182,7 @@ class SettingFragment : BaseFragment() {
                     OkGo.getInstance().addCommonHeaders(header)
                     var intent: Intent = Intent(activity, WelcomeActivity::class.java)
                     activity?.startActivity(intent)
+                    activity?.overridePendingTransition(R.anim.slide_in_left_my, R.anim.slide_out_right_my)
                     activity?.finish()
                 }
 
