@@ -76,6 +76,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:background="@null"
+                                    android:maxLines="1"
                                     android:textCursorDrawable="@drawable/et_cursor_color" />
 
                                 <ImageView

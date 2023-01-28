@@ -177,6 +177,7 @@ class SettingFragment : BaseFragment() {
                     ToastUtils.showShort("logout success")
                     Constant.mToken = null
                     Constant.mAccountId = null
+                    Constant.mLaunchOrderInfo = null
                     val header = BuildRequestJsonUtils.clearHeaderToken()
                     OkGo.getInstance().addCommonHeaders(header)
                     var intent: Intent = Intent(activity, WelcomeActivity::class.java)

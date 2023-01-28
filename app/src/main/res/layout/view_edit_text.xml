@@ -32,6 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:lines="1"
+            android:maxLines="1"
             android:textColor="#999999"
             android:textCursorDrawable="@drawable/et_cursor_color"
             android:textColorHint="#999999" />
