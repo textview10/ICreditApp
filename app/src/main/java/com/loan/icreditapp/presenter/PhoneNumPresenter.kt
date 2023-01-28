@@ -1,18 +1,18 @@
 package com.loan.icreditapp.presenter
 
-import android.R
 import android.content.Context
 import android.text.TextUtils
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.blankj.utilcode.util.ToastUtils
+import com.loan.icreditapp.R
 
 class PhoneNumPresenter constructor(context: Context?) {
     private var mContext: Context?
 
     private val mPhoneNumMap = HashMap<String, Int>()
 
-    private val mItems = arrayOf("234")
+    private val mItems = arrayOf(" 234 ")
 
     init {
         mContext = context
@@ -42,8 +42,8 @@ class PhoneNumPresenter constructor(context: Context?) {
     }
 
     fun initSpinner(spinner: Spinner) {
-        val adapter = ArrayAdapter(mContext!!, R.layout.simple_spinner_item, mItems)
-        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        val adapter = ArrayAdapter(mContext!!, R.layout.item_login_dropdown, mItems)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
     }
 
@@ -69,6 +69,6 @@ class PhoneNumPresenter constructor(context: Context?) {
     fun getSelectString(selectedItemPosition: Int): String? {
         return if (selectedItemPosition >= mItems.size) {
             ""
-        } else mItems[selectedItemPosition]
+        } else mItems[selectedItemPosition].trim()
     }
 }

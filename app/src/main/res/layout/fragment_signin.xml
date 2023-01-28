@@ -57,12 +57,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:text="+"
-                                android:textSize="14sp" />
+                                android:gravity="center_vertical"
+                                android:textSize="20sp" />
 
                             <Spinner
                                 android:id="@+id/spinner_signin_input"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:background="@drawable/spinner_loan_logo_arrow"
                                 android:layout_gravity="center_vertical" />
 
                             <FrameLayout
@@ -77,7 +80,9 @@
                                     android:layout_weight="1"
                                     android:background="@null"
                                     android:maxLines="1"
+                                    android:textColor="#333333"
                                     android:maxLength="24"
+                                    android:textSize="18sp"
                                     android:textCursorDrawable="@drawable/et_cursor_color" />
 
                                 <ImageView

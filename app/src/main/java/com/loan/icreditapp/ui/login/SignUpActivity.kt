@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import com.blankj.utilcode.util.BarUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
@@ -48,6 +49,9 @@ class SignUpActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BarUtils.setStatusBarVisibility(this,true)
+        BarUtils.setStatusBarColor(this, resources.getColor(R.color.white))
+        BarUtils.setStatusBarLightMode(this, true)
         setContentView(R.layout.activity_signup)
         mMode = intent.getIntExtra(SIGNUP_KEY, -1)
         mPhoneNum = intent.getStringExtra(SIGNUP_MODIFY_PHONE_NUM_KEY)

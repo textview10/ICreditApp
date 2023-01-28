@@ -11,15 +11,15 @@
             <solid android:color="#004686f2" />
             <padding
                 android:bottom="5dp"
-                android:left="5dp"
+                android:left="2dp"
                 android:right="5dp"
-                android:top="5dp"></padding>
+                android:top="5dp"/>
         </shape>
         <!-- 第二组item：设置spinner箭头图片 -->
     </item>
     <item>
         <bitmap
             android:gravity="end"
-            android:src="@drawable/ic_profile_bottom_arrow"></bitmap>
+            android:src="@drawable/ic_arrow_bottom"/>
     </item>
 </layer-list>

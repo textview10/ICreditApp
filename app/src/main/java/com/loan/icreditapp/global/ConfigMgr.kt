@@ -32,43 +32,71 @@ class ConfigMgr {
         val mBankList = ArrayList<BankResponseBean.Bank>()
 
         fun getAllConfig() {
-            mDebtList.add(Pair("yes","0"))
-            mDebtList.add(Pair("no","1"))
-            //学历等级，
-            getItemConfig("education", object : CallBack{
-                override fun onGetData(list : ArrayList<Pair<String, String>>) {
-                    mEducationList.clear()
-                    mEducationList.addAll(list)
-                }
-            })
-            //工资区间,
-            getItemConfig("salary", object : CallBack{
-                override fun onGetData(list : ArrayList<Pair<String, String>>) {
-                    mSalaryList.clear()
-                    mSalaryList.addAll(list)
-                }
-            })
+            mDebtList.clear()
+            mDebtList.add(Pair("yes", "0"))
+            mDebtList.add(Pair("no", "1"))
+
+            if (mEducationList.size > 0) {
+                Log.i(TAG, " has request education")
+            } else {
+                //学历等级，
+                getItemConfig("education", object : CallBack {
+                    override fun onGetData(list: ArrayList<Pair<String, String>>) {
+                        mEducationList.clear()
+                        mEducationList.addAll(list)
+                    }
+                })
+            }
+
+            if (mSalaryList.size > 0) {
+                Log.i(TAG, " has request salary")
+            } else {
+                //工资区间,
+                getItemConfig("salary", object : CallBack {
+                    override fun onGetData(list: ArrayList<Pair<String, String>>) {
+                        mSalaryList.clear()
+                        mSalaryList.addAll(list)
+                    }
+                })
+            }
+            if (mMaritalList.size > 0) {
+                Log.i(TAG, " has request marital")
+            } else {
             //婚姻状况，
-            getItemConfig("marital", object : CallBack{
-                override fun onGetData(list : ArrayList<Pair<String, String>>) {
-                    mMaritalList.clear()
-                    mMaritalList.addAll(list)
-                }
-            })
-            //关系，，
-            getItemConfig("relationship", object : CallBack{
-                override fun onGetData(list : ArrayList<Pair<String, String>>) {
-                    mRelationShipList.clear()
-                    mRelationShipList.addAll(list)
-                }
-            })
-            getItemConfig("work", object : CallBack{
-                override fun onGetData(list : ArrayList<Pair<String, String>>) {
-                    mWorkList.clear()
-                    mWorkList.addAll(list)
-                }
-            })
-            getCityData()
+                getItemConfig("marital", object : CallBack {
+                    override fun onGetData(list: ArrayList<Pair<String, String>>) {
+                        mMaritalList.clear()
+                        mMaritalList.addAll(list)
+                    }
+                })
+            }
+            if (mRelationShipList.size > 0) {
+                Log.i(TAG, " has request relationship")
+            } else {
+                //关系，，
+                getItemConfig("relationship", object : CallBack {
+                    override fun onGetData(list: ArrayList<Pair<String, String>>) {
+                        mRelationShipList.clear()
+                        mRelationShipList.addAll(list)
+                    }
+                })
+            }
+            if (mWorkList.size > 0) {
+                Log.i(TAG, " has request work")
+            } else {
+                getItemConfig("work", object : CallBack{
+                    override fun onGetData(list : ArrayList<Pair<String, String>>) {
+                        mWorkList.clear()
+                        mWorkList.addAll(list)
+                    }
+                })
+            }
+            if (!mAreaMap.isEmpty()){
+                Log.i(TAG, " has request area .")
+            } else {
+                getCityData()
+            }
+
         }
 
         fun getCityData(){

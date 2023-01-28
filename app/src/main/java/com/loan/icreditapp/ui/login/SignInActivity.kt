@@ -23,6 +23,7 @@ class SignInActivity : BaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        BarUtils.setStatusBarVisibility(this,true)
         BarUtils.setStatusBarColor(this, resources.getColor(R.color.white))
         BarUtils.setStatusBarLightMode(this, true)
         setContentView(R.layout.activity_siginin)

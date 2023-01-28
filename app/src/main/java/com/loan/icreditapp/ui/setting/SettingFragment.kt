@@ -167,7 +167,6 @@ class SettingFragment : BaseFragment() {
                         }
                     }
                     if (responseBean == null) {
-                        ToastUtils.showShort("logout failure.")
                         return
                     }
                     if (!responseBean.isRequestSuccess()) {

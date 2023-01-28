@@ -21,7 +21,7 @@ class Constant {
 
         var isNewToken = false
 
-        val TEST_SEND_MSG = false
+        val TEST_SEND_MSG = true
     }
 
 }

@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:maxLines="1"
-            android:textColor="#999999"
+            android:textColor="#333333"
             android:maxLength="24"
             android:textColorHint="#999999" />
 

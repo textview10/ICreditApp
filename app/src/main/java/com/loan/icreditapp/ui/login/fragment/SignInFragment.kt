@@ -158,6 +158,9 @@ class SignInFragment : BaseFragment() {
 
     private fun checkAndSignIn(){
         var phoneNum: String = etPhoneNum?.getText().toString()
+        if (!TextUtils.isEmpty(phoneNum)) {
+            phoneNum = phoneNum?.replace(" ", "")
+        }
         if (TextUtils.isEmpty(phoneNum)) {
             ToastUtils.showShort("phone num = null")
             return

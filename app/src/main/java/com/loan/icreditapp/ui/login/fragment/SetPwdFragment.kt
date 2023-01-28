@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.appcompat.widget.AppCompatImageView
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
@@ -31,10 +32,15 @@ class SetPwdFragment : BaseFragment() {
     private var etCreatePwd: EditTextContainer? = null
     private var etConfirmPwd: EditTextContainer? = null
     private var flLoading: FrameLayout? = null
+    private var ivCreatePwd: AppCompatImageView? = null
+    private var ivModifyPwd: AppCompatImageView? = null
 
     private var mPhoneNum: String? = null
     private var mPrefix: String? = null
     private var mIsModify: Boolean? = null
+
+    private var pwMode1 = true
+    private var pwMode2 = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +56,8 @@ class SetPwdFragment : BaseFragment() {
         flCommit = view.findViewById(R.id.fl_setpwd_commit)
         etCreatePwd = view.findViewById(R.id.edittext_create_pwd)
         etConfirmPwd = view.findViewById(R.id.edittext_confirm_pwd)
+        ivCreatePwd = view.findViewById(R.id.iv_create_pwd)
+        ivModifyPwd = view.findViewById(R.id.iv_confirm_pwd)
 
         flLoading = view.findViewById(R.id.fl_set_pwd_loading)
 
@@ -72,6 +80,25 @@ class SetPwdFragment : BaseFragment() {
                 register(strPassCode2)
             }
         }
+        ivCreatePwd?.setOnClickListener(View.OnClickListener {
+            pwMode1 = !pwMode1
+            etCreatePwd?.setPassWordMode(pwMode1)
+            if (ivCreatePwd != null) {
+                var icLogo:Int = if (pwMode1) R.drawable.ic_show_pwd else R.drawable.ic_hide_pwd
+                ivCreatePwd?.setImageResource(icLogo)
+            }
+        })
+        etCreatePwd?.setPassWordMode(pwMode1)
+
+        ivModifyPwd?.setOnClickListener(View.OnClickListener {
+            pwMode2 = !pwMode2
+            etConfirmPwd?.setPassWordMode(pwMode2)
+            if (ivModifyPwd != null) {
+                var icLogo:Int = if (pwMode2) R.drawable.ic_show_pwd else R.drawable.ic_hide_pwd
+                ivModifyPwd?.setImageResource(icLogo)
+            }
+        })
+        etConfirmPwd?.setPassWordMode(pwMode2)
     }
 
     fun setPhoneNum(phoneNum: String, prefix: String, isModify: Boolean) {
@@ -156,5 +183,10 @@ class SetPwdFragment : BaseFragment() {
                     ToastUtils.showShort("register error.")
                 }
             })
+    }
+
+    override fun onDestroy() {
+        OkGo.getInstance().cancelTag(TAG)
+        super.onDestroy()
     }
 }

@@ -157,7 +157,7 @@ class SignUpFragment : BaseFragment() {
                         ToastUtils.showShort("verify code = null. please input again.")
                         return
                     }
-                    mPrex = mPresenter?.getSelectString(mSpinner?.getSelectedItemPosition()!!)
+                    fillPhoneOrPrefix()
                     checkVerifySmsCode(false)
                 }
             }
@@ -175,6 +175,7 @@ class SignUpFragment : BaseFragment() {
         tvResend?.setOnClickListener {
 //            mEtPhoneNum?.setText("")
 //            mEtPhoneNum?.setSelection(0)
+            fillPhoneOrPrefix()
             checkAndVerifyPhoneNum()
 //            requestSendSms()
         }
@@ -183,6 +184,10 @@ class SignUpFragment : BaseFragment() {
         flCommit?.setOnClickListener {
             if (!isAgree){
                 ToastUtils.showShort("must agree term.")
+                return@setOnClickListener
+            }
+            if (TextUtils.isEmpty(mPhoneNum)) {
+                ToastUtils.showShort("must send sms.")
                 return@setOnClickListener
             }
             checkVerifySmsCode(true)
@@ -234,12 +239,10 @@ class SignUpFragment : BaseFragment() {
         requestCheckPhoneNum()
     }
 
-    private fun checkPrefix(){
+    private fun fillPhoneOrPrefix(){
         mPhoneNum = mEtPhoneNum?.text.toString()
-        if (TextUtils.isEmpty(mPhoneNum)) {
-            ToastUtils.showShort(" phone num is null")
-            mEtPhoneNum?.setSelection(0)
-            return
+        if (!TextUtils.isEmpty(mPhoneNum)) {
+            mPhoneNum = mPhoneNum?.replace(" ", "")
         }
         mPrex = mPresenter?.getSelectString(mSpinner?.getSelectedItemPosition()!!)
     }
@@ -259,7 +262,6 @@ class SignUpFragment : BaseFragment() {
                     val verifyPhoneNumBean: VerifyPhoneNumBean? =
                         checkResponseSuccess(response, VerifyPhoneNumBean::class.java)
                     if (verifyPhoneNumBean == null) {
-                        ToastUtils.showShort("verify phone num data = null.")
                         return
                     }
                     if (verifyPhoneNumBean.hasRegisted) {
