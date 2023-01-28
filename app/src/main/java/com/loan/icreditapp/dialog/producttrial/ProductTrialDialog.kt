@@ -52,7 +52,7 @@ class ProductTrialDialog : Dialog {
             tvRepayDate?.text = response.repayDate
         }
         if (!TextUtils.isEmpty(response.totalRepaymentAmount)) {
-            tvRepayDate?.text = response.repayDate
+            tvAmount?.text = response.totalRepaymentAmount
         }
     }
 

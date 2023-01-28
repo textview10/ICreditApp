@@ -55,7 +55,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="35dp"
-                android:text="15   May  2020"
+                android:text=""
                 android:textColor="#666666"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -89,7 +89,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="35dp"
-                android:text="₦  1,170"
+                android:text="₦  0"
                 android:textColor="#666666"
                 android:textSize="18sp"
                 android:textStyle="bold" />

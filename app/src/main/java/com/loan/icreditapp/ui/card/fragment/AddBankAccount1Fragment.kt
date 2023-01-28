@@ -82,6 +82,7 @@ class AddBankAccount1Fragment : BaseFragment() {
     }
 
     override fun onDestroy() {
+        OkGo.getInstance().cancelTag(TAG)
         super.onDestroy()
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
@@ -133,14 +134,13 @@ class AddBankAccount1Fragment : BaseFragment() {
                         }
                         return
                     }
-                    // TODO
-//                    if (responseBean.bankAccountChecked != true) {
-//                        ToastUtils.showShort("check bank account failure ")
-//                        return
-//                    }
+                    if (responseBean.bankAccountChecked != true) {
+                        ToastUtils.showShort("check bank account failure ")
+                        return
+                    }
                     if (activity is BindNewCardActivity) {
                         var bindNewCardActivity : BindNewCardActivity = activity as BindNewCardActivity
-                        bindNewCardActivity.toStep(BindNewCardActivity.ADD_BANK_CARD_NUM)
+                        bindNewCardActivity.toStep(BindNewCardActivity.SUCCESS)
                     }
                 }
 

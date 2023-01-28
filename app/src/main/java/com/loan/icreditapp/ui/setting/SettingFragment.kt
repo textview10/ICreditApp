@@ -201,11 +201,11 @@ class SettingFragment : BaseFragment() {
                     val baseResponseBean: BaseResponseBean? =
                         checkResponseSuccess(response, BaseResponseBean::class.java)
                     if (baseResponseBean == null) {
-                        ToastUtils.showShort("logout failure.")
+//                        ToastUtils.showShort("logout failure.")
                         return
                     }
                     if (!baseResponseBean.isRequestSuccess()) {
-                        ToastUtils.showShort("request logout failure.")
+//                        ToastUtils.showShort("request logout failure.")
                         return
                     }
                 }

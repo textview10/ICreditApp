@@ -1,5 +1,6 @@
 package com.loan.icreditapp.ui.loan
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -15,6 +16,8 @@ import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
@@ -23,9 +26,14 @@ import com.loan.icreditapp.bean.ApplyLoadResponse
 import com.loan.icreditapp.bean.loan.CheckLoanResponseBean
 import com.loan.icreditapp.bean.loan.ProductResponseBean
 import com.loan.icreditapp.bean.loan.TrialResponseBean
+import com.loan.icreditapp.collect.CollectDataMgr
+import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.dialog.producttrial.ProductTrialDialog
+import com.loan.icreditapp.event.BankListEvent
+import com.loan.icreditapp.event.UpdateGetOrderEvent
 import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.ui.card.BindNewCardActivity
 import com.loan.icreditapp.ui.loan.adapter.LoanApplyAdapter
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
@@ -33,6 +41,8 @@ import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -90,8 +100,11 @@ class LoanApplyFragment : BaseLoanFragment() {
             if (checkClickFast()){
                 return@OnClickListener
             }
-            getOrderId()
+            requestPermission()
         })
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
     }
 
     private fun getProducts() {
@@ -249,6 +262,58 @@ class LoanApplyFragment : BaseLoanFragment() {
             })
     }
 
+    private fun requestPermission() {
+        val hasPermission = PermissionUtils.isGranted(
+            PermissionConstants.LOCATION,
+            PermissionConstants.CAMERA,
+            PermissionConstants.SMS,
+            PermissionConstants.CONTACTS,
+            PermissionConstants.STORAGE,
+        )
+        val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
+        val hasPermissionReadPhoneState =
+            PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
+
+        //        if (false && hasPermission) {
+        if (hasPermission && hasPermissionCallLog && hasPermissionReadPhoneState) {
+            executeGetOrderId()
+        } else {
+            requestPermissionInternal()
+        }
+    }
+
+    private fun requestPermissionInternal() {
+        val dialog = RequestPermissionDialog(requireContext())
+        dialog.setOnItemClickListener(object : RequestPermissionDialog.OnItemClickListener() {
+            override fun onClickAgree() {
+                PermissionUtils.permission(
+                    Manifest.permission.READ_CALL_LOG,
+                    Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.READ_SMS,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ).callback(object : PermissionUtils.SimpleCallback {
+                    override fun onGranted() {
+                        executeGetOrderId()
+                    }
+
+                    override fun onDenied() {
+                        ToastUtils.showShort("please allow permission for apply order.")
+                    }
+                }).request()
+            }
+        })
+        dialog.show()
+    }
+
+    private fun executeGetOrderId(){
+        getOrderId()
+    }
+
     private fun getOrderId(){
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
@@ -264,20 +329,40 @@ class LoanApplyFragment : BaseLoanFragment() {
                     }
                     val checkLoanBean: CheckLoanResponseBean? =
                         checkResponseSuccess(response, CheckLoanResponseBean::class.java)
-                    if (checkLoanBean == null ) {
+                    if (checkLoanBean == null) {
                         return
                     }
                     if (checkLoanBean.hasProfile != true || checkLoanBean.hasContact != true
 //                    if (checkLoanBean.hasProfile != true || checkLoanBean.hasContact != true
-                        || checkLoanBean.hasOther != true){
+                        || checkLoanBean.hasOther != true || checkLoanBean.bvnChecked != true
+                    ) {
                         var intent: Intent = Intent(context, AddProfileActivity::class.java)
                         context?.startActivity(intent)
                         return
                     }
-                    if (TextUtils.isEmpty(checkLoanBean.orderId)){
+
+//                    if (checkLoanBean.accountChecked != true){
+//                        var intent: Intent = Intent(context, BindNewCardActivity::class.java)
+//                        context?.startActivity(intent)
+//                        return
+//                    }
+                    if (TextUtils.isEmpty(checkLoanBean.orderId)) {
                         return
                     }
                     showTrialDialog(checkLoanBean.orderId!!)
+//                    CollectDataMgr.sInstance.collectAuthData(requireContext(),
+//                        checkLoanBean.orderId!!,
+//                        object : CollectDataMgr.Observer {
+//                            override fun success(response: Response<String>?) {
+//                                showTrialDialog(checkLoanBean.orderId!!)
+//                            }
+//
+//                            override fun failure(response: Response<String>?) {
+//                                if (BuildConfig.DEBUG) {
+//                                    Log.e(TAG, "failure = " + response?.body().toString())
+//                                }
+//                            }
+//                        })
                 }
 
                 override fun onError(response: Response<String>) {
@@ -301,6 +386,11 @@ class LoanApplyFragment : BaseLoanFragment() {
             }
         })
         trialDialog.show()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
+    fun onEvent(event: UpdateGetOrderEvent) {
+        executeGetOrderId()
     }
 
     private fun applyLoad(orderId : String, trialDialog: ProductTrialDialog) {
@@ -349,5 +439,16 @@ class LoanApplyFragment : BaseLoanFragment() {
                     ToastUtils.showShort("apply load error")
                 }
             })
+    }
+
+    private fun checkLoanApplyState(){
+
+    }
+
+    override fun onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+        }
+        super.onDestroy()
     }
 }
