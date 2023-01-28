@@ -34,6 +34,7 @@ class SetPwdFragment : BaseFragment() {
     private var flLoading: FrameLayout? = null
     private var ivCreatePwd: AppCompatImageView? = null
     private var ivModifyPwd: AppCompatImageView? = null
+    private var logoContainer: ViewGroup ? = null
 
     private var mPhoneNum: String? = null
     private var mPrefix: String? = null
@@ -60,6 +61,7 @@ class SetPwdFragment : BaseFragment() {
         ivModifyPwd = view.findViewById(R.id.iv_confirm_pwd)
 
         flLoading = view.findViewById(R.id.fl_set_pwd_loading)
+        logoContainer = view.findViewById(R.id.include_logo_container)
 
         flCommit?.setOnClickListener {
             val strPassCode1: String = etCreatePwd?.getText().toString()
@@ -99,6 +101,9 @@ class SetPwdFragment : BaseFragment() {
             }
         })
         etConfirmPwd?.setPassWordMode(pwMode2)
+        if (mIsModify == true){
+            logoContainer?.visibility = View.GONE
+        }
     }
 
     fun setPhoneNum(phoneNum: String, prefix: String, isModify: Boolean) {
@@ -150,7 +155,7 @@ class SetPwdFragment : BaseFragment() {
     private fun modifyPwd(pwd: String){
         flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        jsonObject.put("mobile", "3333333333")
+        jsonObject.put("mobile", mPrefix + mPhoneNum)
         jsonObject.put("newPassword", pwd)
         OkGo.post<String>(Api.MODIFY_PSD).tag(TAG)
             .upJson(jsonObject)

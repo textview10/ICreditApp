@@ -24,6 +24,7 @@ class SignUpActivity : BaseActivity() {
     private var mMode = -1
     private var mPhoneNum : String? = ""
     private var flWebView : FrameLayout? = null
+    private var tvTitle : TextView? = null
 
     private var webViewFragment : WebViewFragment? = null
 
@@ -89,7 +90,7 @@ class SignUpActivity : BaseActivity() {
 
     private fun initView() {
         var ivBack: ImageView = findViewById(R.id.iv_signup_back)
-        var tvTitle: TextView = findViewById(R.id.tv_signin_title)
+        tvTitle = findViewById(R.id.tv_signup_title)
         flWebView = findViewById(R.id.fl_signup_webview)
 
         ivBack.setOnClickListener {
@@ -133,7 +134,9 @@ class SignUpActivity : BaseActivity() {
 
     }
 
-
+    fun setTitle(title : String){
+        tvTitle?.setText(title)
+    }
 
     override fun getFragmentContainerRes(): Int {
         return R.id.fl_signup_container

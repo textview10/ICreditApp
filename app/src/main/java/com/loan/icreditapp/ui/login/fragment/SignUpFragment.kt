@@ -53,6 +53,7 @@ class SignUpFragment : BaseFragment() {
     private var flCommit: FrameLayout ? = null
     private var ivAgree: AppCompatImageView ? = null
     private var tvTerm: AppCompatTextView ? = null
+    private var logoContainer: ViewGroup ? = null
 
     private var mPresenter: PhoneNumPresenter? = null
 
@@ -112,6 +113,7 @@ class SignUpFragment : BaseFragment() {
         tvVerifyCode = view.findViewById(R.id.tv_signup_verify_code)
         tvResend = view.findViewById(R.id.tv_signin_resend)
         flCommit = view.findViewById(R.id.fl_signup_commit)
+        logoContainer = view.findViewById(R.id.include_logo_container)
 
         ivClear = view.findViewById(R.id.iv_signup_phonenum_clear)
         verifyCodeView = view.findViewById(R.id.view_input_verify_code_verify_code)
@@ -173,11 +175,12 @@ class SignUpFragment : BaseFragment() {
             }
         })
         tvResend?.setOnClickListener {
-//            mEtPhoneNum?.setText("")
-//            mEtPhoneNum?.setSelection(0)
             fillPhoneOrPrefix()
-            checkAndVerifyPhoneNum()
-//            requestSendSms()
+            if (mIsModify){
+                requestSendSms()
+            } else {
+                checkAndVerifyPhoneNum()
+            }
         }
         mEtPhoneNum?.requestFocus()
 
@@ -213,6 +216,13 @@ class SignUpFragment : BaseFragment() {
             mEtPhoneNum?.setText(mPhoneNum)
         }
         updateState()
+        if (mIsModify){
+            if (activity is SignUpActivity) {
+                var signUpActivity = activity as SignUpActivity
+                signUpActivity.setTitle("Password Reset")
+            }
+            logoContainer?.visibility = View.GONE
+        }
     }
 
     private fun updateState(){

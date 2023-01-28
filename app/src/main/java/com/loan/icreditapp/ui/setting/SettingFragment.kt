@@ -170,7 +170,7 @@ class SettingFragment : BaseFragment() {
                         return
                     }
                     if (!responseBean.isRequestSuccess()) {
-                        ToastUtils.showShort("request logout failure.")
+//                        ToastUtils.showShort("request logout failure.")
                         return
                     }
                     ToastUtils.showShort("logout success")

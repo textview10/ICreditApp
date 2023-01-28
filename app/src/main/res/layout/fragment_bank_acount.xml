@@ -4,15 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
 
-        <com.loan.icreditapp.ui.profile.widget.EditTextContainer
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginTop="10dp"
-            app:select_view_hint="@string/profile1_item2" />
-    </LinearLayout>
+<!--        <com.loan.icreditapp.ui.profile.widget.EditTextContainer-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="62dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            app:select_view_hint="@string/profile1_item2" />-->
+<!--    </LinearLayout>-->
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:text="等接口文档更新了才有。"
+        android:layout_height="wrap_content"/>
 </FrameLayout>
