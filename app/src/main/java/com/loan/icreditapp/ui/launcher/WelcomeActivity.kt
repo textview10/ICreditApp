@@ -27,6 +27,7 @@ class WelcomeActivity : BaseActivity() {
 
     private var tvRegister: AppCompatTextView? = null
     private var tvSignIn: AppCompatTextView? = null
+    private var dialog : TermsDialog? = null
 
     private val KEY_SHOW_TERM = "key_show_term"
 
@@ -46,6 +47,7 @@ class WelcomeActivity : BaseActivity() {
         tvSignIn = findViewById(R.id.tv_splash_signin)
         hasShowTerm = SPUtils.getInstance().getBoolean(KEY_SHOW_TERM)
 
+        dialog = TermsDialog(this)
         tvRegister?.setOnClickListener(View.OnClickListener {
             checkServerAvailable(object : CallBack {
                 override fun onEnd() {
@@ -57,6 +59,7 @@ class WelcomeActivity : BaseActivity() {
                     showTermDialog( object :TermsDialog.OnClickAgreeListener{
                         override fun onClickAgree() {
                             SPUtils.getInstance().put(KEY_SHOW_TERM, true)
+                            hasShowTerm = true
                             SignUpActivity.startActivity(this@WelcomeActivity, SignUpActivity.SIGNUP_NEW)
                             finish()
                         }
@@ -75,6 +78,7 @@ class WelcomeActivity : BaseActivity() {
                     showTermDialog( object :TermsDialog.OnClickAgreeListener{
                         override fun onClickAgree() {
                             SPUtils.getInstance().put(KEY_SHOW_TERM, true)
+                            hasShowTerm = true
                             SignInActivity.startActivity(this@WelcomeActivity)
                             finish()
                         }
@@ -85,9 +89,14 @@ class WelcomeActivity : BaseActivity() {
     }
 
     private fun showTermDialog(listener: TermsDialog.OnClickAgreeListener) {
-        var dialog = TermsDialog(this)
-        dialog.setOnClickListener(listener)
-        dialog.show()
+        if (dialog == null){
+            dialog = TermsDialog(this)
+        }
+        dialog?.setOnClickListener(listener)
+        if (dialog?.isShowing == true){
+            return
+        }
+        dialog?.show()
     }
 
     private fun checkServerAvailable(callBack: CallBack?) {
