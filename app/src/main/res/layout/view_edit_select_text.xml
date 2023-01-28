@@ -24,6 +24,7 @@
             android:background="@null"
             android:maxLines="1"
             android:textColor="#999999"
+            android:maxLength="24"
             android:textColorHint="#999999" />
 
     </com.google.android.material.textfield.TextInputLayout>

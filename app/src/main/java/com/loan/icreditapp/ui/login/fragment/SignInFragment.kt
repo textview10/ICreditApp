@@ -26,6 +26,7 @@ import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.login.SignInActivity
 import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
+import com.loan.icreditapp.ui.widget.BlankTextWatcher
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -100,6 +101,8 @@ class SignInFragment : BaseFragment() {
                 }
             }
         })
+        var et = BlankTextWatcher(etPhoneNum!!)
+        etPhoneNum?.addTextChangedListener(et)
         ivClear?.setOnClickListener {
             etPhoneNum?.setText("")
             etPhoneNum?.setSelection(0)

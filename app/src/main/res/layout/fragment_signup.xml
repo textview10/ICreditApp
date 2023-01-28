@@ -74,6 +74,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:maxLines="1"
+                                    android:maxLength="24"
                                     android:background="@null"
                                     android:textCursorDrawable="@drawable/et_cursor_color" />
 
@@ -198,6 +199,7 @@
                 android:id="@+id/iv_signup_agree_state"
                 android:layout_width="wrap_content"
                 android:src="@drawable/btn_disagree"
+                android:padding="5dp"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"/>
 

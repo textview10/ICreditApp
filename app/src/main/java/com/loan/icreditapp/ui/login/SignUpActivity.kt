@@ -71,9 +71,9 @@ class SignUpActivity : BaseActivity() {
        toFragment(fragment)
     }
 
-    fun toSetPwdPage(phoneNum: String, isModify : Boolean) {
+    fun toSetPwdPage(phoneNum: String, prefix: String ,isModify : Boolean) {
         var setPwdPage = SetPwdFragment()
-        setPwdPage.setPhoneNum(phoneNum, isModify)
+        setPwdPage.setPhoneNum(phoneNum, prefix, isModify)
         toFragment(setPwdPage)
     }
 

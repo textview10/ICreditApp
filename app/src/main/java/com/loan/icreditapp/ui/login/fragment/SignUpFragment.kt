@@ -30,6 +30,7 @@ import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
 import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.ui.webview.WebViewFragment
+import com.loan.icreditapp.ui.widget.BlankTextWatcher
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -140,6 +141,9 @@ class SignUpFragment : BaseFragment() {
                 }
             }
         })
+        var tw1 = BlankTextWatcher(mEtPhoneNum!!)
+        mEtPhoneNum?.addTextChangedListener(tw1)
+
         ivClear?.setOnClickListener {
             mEtPhoneNum?.setText("")
             mEtPhoneNum?.setSelection(0)
@@ -223,6 +227,14 @@ class SignUpFragment : BaseFragment() {
             ToastUtils.showShort("please click later")
             return
         }
+        if (TextUtils.isEmpty(mPhoneNum) || TextUtils.isEmpty(mPrex)){
+            ToastUtils.showShort("phone num == null, need send sms")
+            return
+        }
+        requestCheckPhoneNum()
+    }
+
+    private fun checkPrefix(){
         mPhoneNum = mEtPhoneNum?.text.toString()
         if (TextUtils.isEmpty(mPhoneNum)) {
             ToastUtils.showShort(" phone num is null")
@@ -230,11 +242,6 @@ class SignUpFragment : BaseFragment() {
             return
         }
         mPrex = mPresenter?.getSelectString(mSpinner?.getSelectedItemPosition()!!)
-        requestCheckPhoneNum()
-    }
-
-    private fun checkPrefix(){
-
     }
 
     private fun requestCheckPhoneNum() {
@@ -372,7 +379,7 @@ class SignUpFragment : BaseFragment() {
     private fun verifySuccess(){
         if (activity is SignUpActivity) {
             var signUpActivity : SignUpActivity = activity as SignUpActivity
-            signUpActivity.toSetPwdPage(mPrex + mPhoneNum, mIsModify)
+            signUpActivity.toSetPwdPage(mPhoneNum!!, mPrex!!, mIsModify)
         }
     }
 

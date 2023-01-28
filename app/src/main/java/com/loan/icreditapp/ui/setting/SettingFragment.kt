@@ -116,10 +116,10 @@ class SettingFragment : BaseFragment() {
 //                true
 //            )
 //        )
-        mList.add(SettingBean(R.drawable.ic_help, R.string.setting_help, PageType.HELP, true))
+//        mList.add(SettingBean(R.drawable.ic_help, R.string.setting_help, PageType.HELP, true))
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG && false) {
             mList.add(
                 SettingBean(
                     R.drawable.ic_out,

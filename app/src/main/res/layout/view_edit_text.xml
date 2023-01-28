@@ -35,6 +35,7 @@
             android:lines="1"
             android:maxLines="1"
             android:textColor="#999999"
+            android:maxLength="24"
             android:textCursorDrawable="@drawable/et_cursor_color"
             android:textColorHint="#999999" />
 

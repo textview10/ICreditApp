@@ -33,6 +33,7 @@ class SetPwdFragment : BaseFragment() {
     private var flLoading: FrameLayout? = null
 
     private var mPhoneNum: String? = null
+    private var mPrefix: String? = null
     private var mIsModify: Boolean? = null
 
     override fun onCreateView(
@@ -73,8 +74,9 @@ class SetPwdFragment : BaseFragment() {
         }
     }
 
-    fun setPhoneNum(phoneNum: String, isModify : Boolean) {
+    fun setPhoneNum(phoneNum: String, prefix: String, isModify: Boolean) {
         mPhoneNum = phoneNum
+        mPrefix = prefix
         mIsModify = isModify
     }
 
@@ -83,7 +85,7 @@ class SetPwdFragment : BaseFragment() {
         //password	String
         //mobile	String
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        jsonObject.put("mobile", mPhoneNum)
+        jsonObject.put("mobile", mPrefix + mPhoneNum)
         jsonObject.put("password", pwd)
         OkGo.post<String>(Api.REGISTER).tag(TAG)
             .upJson(jsonObject)
