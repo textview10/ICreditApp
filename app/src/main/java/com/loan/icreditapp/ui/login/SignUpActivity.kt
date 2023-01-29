@@ -88,6 +88,12 @@ class SignUpActivity : BaseActivity() {
         finish()
     }
 
+    fun toSignInPage() {
+        var intent: Intent = Intent(this, SignInActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun initView() {
         var ivBack: ImageView = findViewById(R.id.iv_signup_back)
         tvTitle = findViewById(R.id.tv_signup_title)

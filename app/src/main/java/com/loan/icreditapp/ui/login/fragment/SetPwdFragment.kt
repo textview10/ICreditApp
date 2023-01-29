@@ -172,13 +172,13 @@ class SetPwdFragment : BaseFragment() {
                         ToastUtils.showShort("register failure. token = null")
                         return
                     }
-                    Constant.mToken = modifyBean.token
-                    Constant.mAccountId = modifyBean.accountId
+//                    Constant.mToken = modifyBean.token
+//                    Constant.mAccountId = modifyBean.accountId
                     SPUtils.getInstance().put(SignInFragment.KEY_PHONE_NUM, mPhoneNum)
                     SPUtils.getInstance().put(SignInFragment.KEY_PASS_CODE, pwd)
                     if (activity is SignUpActivity) {
                         var signUpActivity : SignUpActivity = activity as SignUpActivity
-                        signUpActivity.toHomePage()
+                        signUpActivity.toSignInPage()
                     }
                 }
 
