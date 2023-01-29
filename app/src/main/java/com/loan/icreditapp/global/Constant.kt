@@ -25,8 +25,6 @@ class Constant {
         var mFirebaseToken: String? = null
 
         var isNewToken = false
-
-        val TEST_SEND_MSG = BuildConfig.DEBUG
     }
 
 }

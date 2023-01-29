@@ -20,6 +20,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
@@ -68,6 +69,7 @@ class SignUpFragment : BaseFragment() {
     private var mPrex : String?  = ""
 
     private var isAgree : Boolean  = false
+    private var isCheckSms : Boolean  = false
 
     init {
         mHandler = Handler(Looper.getMainLooper()) { message ->
@@ -80,6 +82,8 @@ class SignUpFragment : BaseFragment() {
                             tvResend?.setTextColor(Color.parseColor("#0EC6A2"))
                             mHandler?.sendEmptyMessageDelayed(TYPE_TIME_REDUCE, 1000)
                         } else if (mCurTime == 0) {
+                            isCheckSms = false
+                            mHandler?.removeMessages(TYPE_TIME_REDUCE)
                             tvResend?.setText(StringUtils.getString(R.string.Resent_now))
                             tvResend?.setTextColor(Color.parseColor("#0EC6A2"))
                             mCurTime = MAX_TIME
@@ -153,6 +157,9 @@ class SignUpFragment : BaseFragment() {
 
         verifyCodeView?.setObserver(object : InputVerifyCodeView.Observer {
             override fun onEnd() {
+                if (isAgree != true){
+                    return
+                }
                 if (verifyCodeView != null) {
                     val verifyCode: String? = verifyCodeView?.getVerifyCode()
                     if (TextUtils.isEmpty(verifyCode)) {
@@ -175,6 +182,13 @@ class SignUpFragment : BaseFragment() {
             }
         })
         tvResend?.setOnClickListener {
+            if (checkClickFast()){
+                return@setOnClickListener
+            }
+            if (isCheckSms){
+                ToastUtils.showShort("please send message later")
+                return@setOnClickListener
+            }
             fillPhoneOrPrefix()
             if (mIsModify){
                 requestSendSms()
@@ -193,6 +207,7 @@ class SignUpFragment : BaseFragment() {
                 ToastUtils.showShort("must send sms.")
                 return@setOnClickListener
             }
+            fillPhoneOrPrefix()
             checkVerifySmsCode(true)
         }
 
@@ -258,6 +273,7 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun requestCheckPhoneNum() {
+        isCheckSms = true
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("mobile", mPrex + mPhoneNum)
@@ -272,9 +288,11 @@ class SignUpFragment : BaseFragment() {
                     val verifyPhoneNumBean: VerifyPhoneNumBean? =
                         checkResponseSuccess(response, VerifyPhoneNumBean::class.java)
                     if (verifyPhoneNumBean == null) {
+                        isCheckSms = false
                         return
                     }
                     if (verifyPhoneNumBean.hasRegisted) {
+                        isCheckSms = false
                         ToastUtils.showShort("phone num has registed.")
                         return
                     }
@@ -282,6 +300,7 @@ class SignUpFragment : BaseFragment() {
                 }
 
                 override fun onError(response: Response<String>) {
+                    isCheckSms = false
                     super.onError(response)
                     Log.e(TAG, "verify phone num data error")
                     ToastUtils.showShort("verify phone num data error .")
@@ -291,16 +310,12 @@ class SignUpFragment : BaseFragment() {
 
     //申请发送短信
     private fun requestSendSms() {
-        if (Constant.TEST_SEND_MSG) {
-            verifyCodeView?.clearAll()
-            mHandler?.sendEmptyMessage(TYPE_TIME_REDUCE)
-            return
-        }
+        isCheckSms = true
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("mobile", mPrex + mPhoneNum)
             //“1”:注册，“2”：修改密码 3 设备更换
-            jsonObject.put("captchaType", "1")
+            jsonObject.put("captchaType", if (mIsModify) "2" else "1")
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -309,14 +324,24 @@ class SignUpFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    val baseResponseBean: BaseResponseBean? =
-                        checkResponseSuccess(response, BaseResponseBean::class.java)
-                    if (baseResponseBean == null) {
-                        ToastUtils.showShort("request send sms failure.")
+                    var responseBean: BaseResponseBean? = null
+                    try {
+                        responseBean = com.alibaba.fastjson.JSONObject.parseObject(
+                            response.body().toString(),
+                            BaseResponseBean::class.java
+                        )
+                    } catch (e: Exception) {
+                        if (BuildConfig.DEBUG) {
+                            throw e
+                        }
+                    }
+                    if (response == null){
+                        ToastUtils.showShort(" send sms failure.")
                         return
                     }
-                    if (!baseResponseBean.isRequestSuccess()) {
-                        ToastUtils.showShort("request send sms failure 2.")
+                    if (responseBean!!.isRequestSuccess() != true) {
+                        ToastUtils.showShort("" + responseBean.getMessage())
+                        isCheckSms = false
                         return
                     }
                     ToastUtils.showShort(" send sms success.")
@@ -326,6 +351,7 @@ class SignUpFragment : BaseFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    isCheckSms = false
                     Log.e(TAG, "request send sms error")
                     ToastUtils.showShort("request send sms error ...")
                 }
@@ -348,14 +374,10 @@ class SignUpFragment : BaseFragment() {
 //            verifyCodeView?.clearAll()
             return
         }
-        requestVerifySmsCode(mPrex + mPhoneNum, verifyCode)
+        requestVerifySmsCode(mPhoneNum, verifyCode)
     }
 
     private fun requestVerifySmsCode(mPhoneNum: String?, verifyCode: String?) {
-        if (Constant.TEST_SEND_MSG) {
-            verifySuccess()
-            return
-        }
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("mobile", mPrex + mPhoneNum)
@@ -370,7 +392,6 @@ class SignUpFragment : BaseFragment() {
                     val baseResponseBean: VerifySmsCodeBean? =
                         checkResponseSuccess(response, VerifySmsCodeBean::class.java)
                     if (baseResponseBean == null) {
-                        ToastUtils.showShort("request check sms code failure.")
                         return
                     }
                     if (!baseResponseBean.verifyed) {
