@@ -74,7 +74,7 @@ class Api {
         val GET_ORDER_ID: String = HOST + "/v1/loan/check"
         //还款
         val LOAN_REPAY: String = HOST + "/v1/loan/repay"
-
+        //获取银行账号详情
         val GET_BANK_DETAIL: String = HOST + "/v1/account/bank/detail"
 
         //获取订单详情

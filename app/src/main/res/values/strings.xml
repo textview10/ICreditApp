@@ -115,4 +115,10 @@
     <string name="term_1">I agree to the</string>
     <string name="term_2">terms &amp; condition</string>
 
+    <string name="bank_account_bank_name">Bank Name</string>
+    <string name="bank_account_bank_account_num">Bank Account Number</string>
+    <string name="bank_account_phone_num">Phone Number</string>
+    <string name="bank_account_bank_name_desc">Please input bank name.</string>
+    <string name="bank_account_bank_account_num_desc">Please input bank account number.</string>
+    <string name="bank_account_phone_num_desc">Please input phone number.</string>
 </resources>

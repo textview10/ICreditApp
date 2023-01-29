@@ -1,5 +1,6 @@
 package com.loan.icreditapp.global
 
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.dialog.order.OrderInfoBean
 
 class Constant {
@@ -25,7 +26,7 @@ class Constant {
 
         var isNewToken = false
 
-        val TEST_SEND_MSG = true
+        val TEST_SEND_MSG = BuildConfig.DEBUG
     }
 
 }

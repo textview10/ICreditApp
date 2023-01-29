@@ -20,6 +20,7 @@
             app:select_view_hint="@string/bind_new_card_desc1"
             app:select_view_icon="@drawable/ic_profile_bottom_arrow" />
 
+        <View style="@style/view_divide" />
 
         <com.loan.icreditapp.ui.profile.widget.EditTextContainer
             android:id="@+id/edit_container_add_bank_account_banknum"
@@ -27,6 +28,8 @@
             android:layout_height="62dp"
             android:layout_marginTop="10dp"
             app:select_view_hint="@string/bind_new_card_desc2" />
+
+        <View style="@style/view_divide" />
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.loan.icreditapp.ui.profile.widget
 
 import android.content.Context
+import android.graphics.Color
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import com.loan.icreditapp.R
 
@@ -18,6 +20,7 @@ class SelectContainer : FrameLayout {
     private var ivIcon: ImageView? = null
     private var hint: String? = null
     private var desc: String? = null
+    private var textColor : Int? = null
 
     @DrawableRes
     private var drawableRes = 0
@@ -60,10 +63,16 @@ class SelectContainer : FrameLayout {
             ivIcon?.setImageResource(drawableRes)
         }
         addView(view)
+
+        textColor = Color.parseColor("#333333")
+
     }
 
     fun setData(data: String?) {
-        tvDesc?.setText(data)
+        tvDesc?.text = data
+        if (textColor != null){
+            tvDesc?.setTextColor(textColor!!)
+        }
     }
 
     fun getData(): String {

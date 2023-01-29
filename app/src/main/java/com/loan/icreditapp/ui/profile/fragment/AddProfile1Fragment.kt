@@ -194,7 +194,6 @@ class AddProfile1Fragment : BaseFragment() {
                     val profile1Bean: Profile1Bean? =
                         checkResponseSuccess(response, Profile1Bean::class.java)
                     if (profile1Bean == null) {
-                        ToastUtils.showShort("get profile 1 failure.")
                         return
                     }
                     updateData(profile1Bean)
