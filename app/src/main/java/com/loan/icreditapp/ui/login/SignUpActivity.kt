@@ -94,9 +94,7 @@ class SignUpActivity : BaseActivity() {
         flWebView = findViewById(R.id.fl_signup_webview)
 
         ivBack.setOnClickListener {
-            var intent: Intent = Intent(this@SignUpActivity, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            backPressInternal()
         }
     }
 
@@ -113,10 +111,10 @@ class SignUpActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        backPress()
+        backPressInternal()
     }
 
-    fun backPress() {
+    fun backPressInternal() {
         if (flWebView != null) {
             if (flWebView!!.visibility == View.VISIBLE) {
                 flWebView!!.visibility = View.GONE

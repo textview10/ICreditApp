@@ -34,6 +34,7 @@
             android:background="@null"
             android:lines="1"
             android:maxLines="1"
+            android:singleLine="true"
             android:textColor="#333333"
             android:maxLength="24"
             android:textCursorDrawable="@drawable/et_cursor_color"

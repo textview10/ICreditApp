@@ -22,7 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:lines="1"
             android:maxLines="1"
+            android:singleLine="true"
             android:textColor="#333333"
             android:maxLength="24"
             android:textColorHint="#999999" />

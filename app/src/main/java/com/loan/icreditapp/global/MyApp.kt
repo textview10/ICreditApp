@@ -5,6 +5,7 @@ import android.app.Application
 import co.paystack.android.PaystackSdk
 import com.blankj.utilcode.util.LanguageUtils
 import com.loan.icreditapp.collect.LocationMgr
+import com.loan.icreditapp.util.EncodeUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.cookie.CookieJarImpl
 import com.lzy.okgo.cookie.store.DBCookieStore
@@ -62,6 +63,7 @@ class MyApp : Application() {
         httpHeaders.put("Accept", "application/json")
         httpHeaders.put("User-Agent", "retrofit")
         OkGo.getInstance().addCommonHeaders(httpHeaders)
+//        EncodeUtils.mainTest()
     }
 
 
