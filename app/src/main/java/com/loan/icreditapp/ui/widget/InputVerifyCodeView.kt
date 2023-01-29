@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -107,7 +108,9 @@ class InputVerifyCodeView : LinearLayout {
         })
         etNum3?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+            }
             override fun afterTextChanged(editable: Editable) {
                 onTextChange(etNum3, etNum4, etNum2)
             }
@@ -187,7 +190,12 @@ class InputVerifyCodeView : LinearLayout {
             if (length > 0) {
                 if (length > 1) {
                     cur.setText(text.substring(0, 1))
+                    if (length == 2) {
+                        next?.setText(text.substring(1, 2))
+                        next?.setSelection(1)
+                    }
                 } else {
+//                    cur?.setSelection()
                 }
                 next?.requestFocus()
             }
