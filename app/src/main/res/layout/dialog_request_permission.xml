@@ -78,13 +78,15 @@
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/request_permission_container">
+                <LinearLayout style="@style/request_permission_container"
+                    android:visibility="gone">
 
                     <ImageView
                         style="@style/request_permission_iv"
                         android:src="@drawable/ic_request_permission_camera" />
 
-                    <LinearLayout style="@style/request_permission_tv_container">
+                    <LinearLayout style="@style/request_permission_tv_container"
+                        >
 
                         <TextView
                             style="@style/request_permission_tv_top"
@@ -174,7 +176,8 @@
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/request_permission_container">
+                <LinearLayout style="@style/request_permission_container"
+                    android:visibility="gone">
 
                     <ImageView
                         style="@style/request_permission_iv"

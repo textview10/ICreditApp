@@ -291,7 +291,7 @@ class AddProfile1Fragment : BaseFragment() {
 
     private fun checkProfileParams(): Boolean {
         if (editFirstName == null || TextUtils.isEmpty(editFirstName!!.getText())) {
-            ToastUtils.showShort("fist name is null")
+            ToastUtils.showShort("Please fill correct fist name")
             return false
         }
 //        if (editMiddleName == null || TextUtils.isEmpty(editMiddleName!!.getText())) {
@@ -299,27 +299,28 @@ class AddProfile1Fragment : BaseFragment() {
 //            return false
 //        }
         if (mBirthday == null) {
-            ToastUtils.showShort("birthday is null")
+            ToastUtils.showShort("Please select birthday")
             return false
         }
         if (editLastName == null || TextUtils.isEmpty(editLastName!!.getText())) {
-            ToastUtils.showShort("last name is null")
+            ToastUtils.showShort("Please fill correct last name")
             return false
         }
         if (state == null || area == null) {
-            ToastUtils.showShort("Residential address is null")
+            ToastUtils.showShort("Please fill correct Residential address")
             return false
         }
         if (editBvn == null || TextUtils.isEmpty(editBvn!!.getText())) {
-            ToastUtils.showShort("bvn is null")
+            ToastUtils.showShort("Please fill correct bvn")
             return false
         }
         if (editEmail == null || TextUtils.isEmpty(editEmail!!.getText())) {
-            ToastUtils.showShort("email is null")
+            ToastUtils.showShort("Please fill correct email")
             return false
         }
         if (editStreet == null || TextUtils.isEmpty(editStreet!!.getText())) {
             ToastUtils.showShort("street is null")
+            ToastUtils.showShort("Please fill correct street")
             return false
         }
         return true

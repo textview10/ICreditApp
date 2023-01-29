@@ -89,7 +89,7 @@ class MainActivity : BaseActivity() {
     private fun requestPermission() {
         val hasPermission = PermissionUtils.isGranted(
             PermissionConstants.LOCATION,
-            PermissionConstants.CAMERA,
+//            PermissionConstants.CAMERA,
             PermissionConstants.SMS,
             PermissionConstants.CONTACTS,
             PermissionConstants.STORAGE,
@@ -97,8 +97,7 @@ class MainActivity : BaseActivity() {
         val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
         val hasPermissionReadPhoneState =
             PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
-
-        //        if (false && hasPermission) {
+//                if (false && hasPermission) {
         if (hasPermission && hasPermissionCallLog && hasPermissionReadPhoneState) {
             executeNext()
         } else {
@@ -117,7 +116,7 @@ class MainActivity : BaseActivity() {
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.CAMERA,
+//                    Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 ).callback(object : PermissionUtils.SimpleCallback {
