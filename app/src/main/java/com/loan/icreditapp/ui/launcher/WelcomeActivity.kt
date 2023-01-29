@@ -130,4 +130,12 @@ class WelcomeActivity : BaseActivity() {
     interface CallBack {
         fun onEnd()
     }
+
+    override fun onDestroy() {
+        if (dialog != null){
+            dialog?.onDestroyDialog()
+        }
+        OkGo.getInstance().cancelTag(TAG)
+        super.onDestroy()
+    }
 }

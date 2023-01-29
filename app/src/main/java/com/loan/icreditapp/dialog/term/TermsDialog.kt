@@ -95,9 +95,11 @@ class TermsDialog : Dialog {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        webView?.destroy()
     }
 
+    fun onDestroyDialog(){
+        webView?.destroy()
+    }
 
     fun setOnClickListener(listener: OnClickAgreeListener){
         mListener = listener
