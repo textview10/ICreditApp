@@ -5,8 +5,10 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
+import android.view.View.OnKeyListener
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatEditText
 import com.blankj.utilcode.util.ColorUtils
@@ -134,6 +136,44 @@ class InputVerifyCodeView : LinearLayout {
         selectedColor = ColorUtils.getColor(R.color.verify_sms_select)
         unselectedColor = ColorUtils.getColor(R.color.verify_sms_unselect)
         etNum1?.requestFocus()
+//        if (true){
+//            return
+//        }
+        etNum1?.setOnKeyListener(OnKeyListener { view, i, keyEvent ->
+            onDeleteText(i, etNum1, null)
+            false
+        })
+        etNum2?.setOnKeyListener(OnKeyListener { view, i, keyEvent ->
+            onDeleteText(i, etNum2, etNum1)
+            false
+        })
+        etNum3?.setOnKeyListener(OnKeyListener { view, i, keyEvent ->
+            onDeleteText(i, etNum3, etNum2)
+            false
+        })
+        etNum4?.setOnKeyListener(OnKeyListener { view, i, keyEvent ->
+            onDeleteText(i, etNum4, etNum3)
+            false
+        })
+        etNum5?.setOnKeyListener(OnKeyListener { view, i, keyEvent ->
+            onDeleteText(i, etNum5, etNum4)
+            false
+        })
+        etNum6?.setOnKeyListener(OnKeyListener { view, i, keyEvent ->
+            onDeleteText(i, etNum6, etNum5)
+            false
+        })
+    }
+
+    private fun onDeleteText(keyCode : Int, cur: AppCompatEditText?, pre: AppCompatEditText?){
+        if (keyCode == KeyEvent.KEYCODE_DEL) {
+            val text = cur!!.text.toString()
+            if (TextUtils.isEmpty(text)){
+                if (pre != null){
+                    pre.requestFocus()
+                }
+            }
+        }
     }
 
     private fun onTextChange(
