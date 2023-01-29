@@ -26,6 +26,7 @@
                 android:layout_marginTop="15dp"
                 android:text="@string/add_profile_title_2"
                 android:textColor="#333333"
+                android:textStyle="bold"
                 android:textSize="20sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -35,6 +36,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/add_profile_title_2_2"
                 android:textColor="#333333"
+                android:textStyle="bold"
                 android:textSize="20sp" />
 
             <com.loan.icreditapp.ui.profile.widget.EditTextContainer
@@ -74,6 +76,7 @@
                 android:layout_marginTop="15dp"
                 android:text="@string/add_profile_title_2_3"
                 android:textColor="#333333"
+                android:textStyle="bold"
                 android:textSize="20sp" />
 
             <com.loan.icreditapp.ui.profile.widget.EditTextContainer

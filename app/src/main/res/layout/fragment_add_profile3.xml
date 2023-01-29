@@ -26,6 +26,7 @@
                 android:textSize="20sp"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
+                android:textStyle="bold"
                 android:text="@string/add_profile_title_3"
                 android:layout_height="wrap_content" />
 
