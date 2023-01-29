@@ -265,7 +265,6 @@ class LoanApplyFragment : BaseLoanFragment() {
     private fun requestPermission() {
         val hasPermission = PermissionUtils.isGranted(
             PermissionConstants.LOCATION,
-            PermissionConstants.CAMERA,
             PermissionConstants.SMS,
             PermissionConstants.CONTACTS,
             PermissionConstants.STORAGE,
@@ -293,7 +292,6 @@ class LoanApplyFragment : BaseLoanFragment() {
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE
                 ).callback(object : PermissionUtils.SimpleCallback {

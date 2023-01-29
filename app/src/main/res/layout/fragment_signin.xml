@@ -85,6 +85,7 @@
                                     android:textColor="#333333"
                                     android:maxLength="24"
                                     android:textSize="18sp"
+                                    android:inputType="number"
                                     android:textCursorDrawable="@drawable/et_cursor_color" />
 
                                 <ImageView
