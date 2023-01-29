@@ -135,6 +135,7 @@ class SetPwdFragment : BaseFragment() {
                     }
                     Constant.mToken = registerBean.token
                     Constant.mAccountId = registerBean.accountId
+                    Constant.mMobile = registerBean.mobile
                     SPUtils.getInstance().put(SignInFragment.KEY_PHONE_NUM, mPhoneNum)
                     SPUtils.getInstance().put(SignInFragment.KEY_PASS_CODE, pwd)
                     if (activity is SignUpActivity) {

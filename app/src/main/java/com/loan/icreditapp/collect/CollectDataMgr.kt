@@ -15,13 +15,11 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.collect.bean.AppInfoRequest
 import com.loan.icreditapp.collect.bean.ContactRequest
 import com.loan.icreditapp.collect.bean.SmsRequest
-import com.loan.icreditapp.global.AppManager
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
-import org.json.JSONException
 import org.json.JSONObject
 
 class CollectDataMgr {

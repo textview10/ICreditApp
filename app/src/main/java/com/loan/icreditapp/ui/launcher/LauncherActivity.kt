@@ -74,22 +74,24 @@ class LauncherActivity : BaseActivity() {
         OkGo.getInstance().addCommonHeaders(httpHeaders)
         val accountId = SPUtils.getInstance().getString(Constant.KEY_ACCOUNT_ID)
         val token = SPUtils.getInstance().getString(Constant.KEY_TOKEN)
+        val mobile = SPUtils.getInstance().getString(Constant.KEY_MOBILE)
 
         Constant.mToken = token
 //        Log.e(TAG, " token = " + token)
 
-        if (TextUtils.isEmpty(accountId) || TextUtils.isEmpty(token)) {
+        if (TextUtils.isEmpty(accountId) || TextUtils.isEmpty(token)
+            || TextUtils.isEmpty(mobile)) {
 //        if (BuildConfig.DEBUG) {
             mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 1000)
         } else {
             val httpHeaders = BuildRequestJsonUtils.buildHeaderToken()
             OkGo.getInstance().addCommonHeaders(httpHeaders)
-            requestDetail(accountId!!, token!!)
+            requestDetail(accountId!!, token!!, mobile!!)
             mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 3000)
         }
     }
 
-    private fun requestDetail(accountId: String, token: String) {
+    private fun requestDetail(accountId: String, token: String, mobile : String) {
         requestTime = System.currentTimeMillis()
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
@@ -97,7 +99,9 @@ class LauncherActivity : BaseActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        Log.e(TAG, " launcher activity ... = " + jsonObject.toString())
+        if (BuildConfig.DEBUG) {
+            Log.i(TAG, " launcher activity ... = " + jsonObject.toString())
+        }
         OkGo.post<String>(Api.GET_ORDER_INFO).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
@@ -116,6 +120,7 @@ class LauncherActivity : BaseActivity() {
                             successEnter = true
                             Constant.mAccountId = accountId
                             Constant.mToken = token
+                            Constant.mMobile = mobile
                         }
                     }
                     mHandler?.sendEmptyMessageDelayed(if (successEnter) TO_MAIN_PAGE else TO_WELCOME_PAGE,100)

@@ -9,9 +9,13 @@ class Constant {
 
         const val KEY_TOKEN = "key_sign_in_token"
 
+        const val KEY_MOBILE = "key_sign_in_mobile"
+
         var mToken : String? = null
 
         var mAccountId : String? = null
+
+        var mMobile : String? = null
 
         var mNeedRefreshProfile : Boolean = false
 

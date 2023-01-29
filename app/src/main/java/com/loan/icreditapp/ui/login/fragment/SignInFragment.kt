@@ -204,6 +204,7 @@ class SignInFragment : BaseFragment() {
                     }
                     Constant.mAccountId = signInBean.accountId
                     Constant.mToken = signInBean.token
+                    Constant.mMobile = signInBean.mobile
                     SPUtils.getInstance().put(KEY_PHONE_NUM, phoneNum)
                     SPUtils.getInstance().put(KEY_PASS_CODE, password)
                     if (activity is SignInActivity) {

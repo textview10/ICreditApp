@@ -2,9 +2,6 @@ package com.loan.icreditapp.global
 
 import android.R
 import android.app.Application
-import android.content.res.Configuration
-import android.content.res.Resources
-import android.util.DisplayMetrics
 import co.paystack.android.PaystackSdk
 import com.blankj.utilcode.util.LanguageUtils
 import com.loan.icreditapp.collect.LocationMgr
