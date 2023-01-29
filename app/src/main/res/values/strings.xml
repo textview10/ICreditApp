@@ -2,7 +2,7 @@
     <string name="app_name">Creditng</string>
 
     <string name="request_permission_title">Welcome to ICredit!</string>
-    <string name="request_permission_desc">Your data is well protected and used for assessment only. Without your consent, we will not share your personal information  and data with any third party. The platform will ensure 100% security of your information. All the information will be uploaded to our server (url https://srv.icredit.ng/ ) as the input of our credit model.</string>
+    <string name="request_permission_desc">To assess your profile and create tailored loan products, we need to get your permissions for accessing information on your Phone, SMS, Contacts, Location, Mobile phone status and SD card. Your data is well protected and used for assessment only. Without your consent, we will not share your personal information  and data with any third party. The platform will ensure 100% security of your information. All the information will be uploaded to our server (url https://srv.icredit.ng/ ) as the input of our credit model.</string>
     <string name="request_permission_phone_title">Mobile phone status</string>
     <string name="request_permission_phone_desc">We use applist data to distinguish fraudulent customers. Your information will be stored encrypted icredit.ng. Your data will be uploaded to our server (https://srv.icredit.ng/).</string>
     <string name="request_permission_camera_title">Camera</string>

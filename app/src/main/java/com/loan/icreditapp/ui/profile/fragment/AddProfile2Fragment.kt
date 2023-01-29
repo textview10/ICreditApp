@@ -248,27 +248,27 @@ class AddProfile2Fragment : BaseFragment() {
 
     private fun checkContactAvailable() : Boolean {
         if (TextUtils.isEmpty(leagalName1)){
-            ToastUtils.showShort("contact name1 = null")
+            ToastUtils.showShort("Please select contact1 name")
             return false
         }
         if (TextUtils.isEmpty(mobile1)){
-            ToastUtils.showShort("mobile1 = null")
+            ToastUtils.showShort("Please select contact1 mobile")
             return false
         }
         if (relationShip1 == null){
-            ToastUtils.showShort("relationship1 = null")
+            ToastUtils.showShort("Please select contact1 relationship")
             return false
         }
         if (TextUtils.isEmpty(leagalName2)){
-            ToastUtils.showShort("contact name1 = null")
+            ToastUtils.showShort("Please select contact2 name")
             return false
         }
         if (TextUtils.isEmpty(mobile2)){
-            ToastUtils.showShort("mobile1 = null")
+            ToastUtils.showShort("Please select contact2 mobile")
             return false
         }
         if (relationShip2 == null){
-            ToastUtils.showShort("relationShip2 = null")
+            ToastUtils.showShort("Please select contact2 relationship")
             return false
         }
         return true

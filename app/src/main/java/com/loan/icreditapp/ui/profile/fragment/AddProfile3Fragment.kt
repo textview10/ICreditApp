@@ -135,27 +135,27 @@ class AddProfile3Fragment : BaseFragment() {
 
     private fun checkOtherAvailable() : Boolean{
         if (mMarital == null){
-            ToastUtils.showShort("unselect spouse")
+            ToastUtils.showShort("Please select spouse")
             return false
         }
         if (mWorkStatus == null){
-            ToastUtils.showShort("work status == null")
+            ToastUtils.showShort("Please select work status")
             return false
         }
         if (mSalary == null){
-            ToastUtils.showShort("unselect salary")
+            ToastUtils.showShort("Please select salary")
             return false
         }
         if (mDebt == null){
-            ToastUtils.showShort("unselect debt")
+            ToastUtils.showShort("Please select debt")
             return false
         }
         if (TextUtils.isEmpty(editEmployName?.getText())){
-            ToastUtils.showShort("employ name == null")
+            ToastUtils.showShort("Please fill employ name")
             return false
         }
         if (TextUtils.isEmpty(editEmployAddress?.getText())){
-            ToastUtils.showShort("employ address == null")
+            ToastUtils.showShort("Please fill employ address")
             return false
         }
         return true
