@@ -164,10 +164,10 @@ public class LocationMgr {
         }
     }
 
-    private double gpsLongitude = Double.NaN;
-    private double gpsLatitude = Double.NaN;
-    private double netWorkLongitude = Double.NaN;
-    private double netWorkLatitude = Double.NaN;
+    private double gpsLongitude = 0;
+    private double gpsLatitude = 0;
+    private double netWorkLongitude = 0;
+    private double netWorkLatitude = 0;
     private StringBuffer extra = new StringBuffer();
     private ArrayList<String> mBSSIDs = new ArrayList<>();
 

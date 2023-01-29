@@ -142,7 +142,7 @@ class MainActivity : BaseActivity() {
         LocationMgr.getInstance().getLocation()
 
 //        CollectDataMgr.sInstance.collectAuthData(this,
-//            "1111test",
+//            "230125150200000481",
 //            object : CollectDataMgr.Observer {
 //                override fun success(response: Response<String>?) {
 //

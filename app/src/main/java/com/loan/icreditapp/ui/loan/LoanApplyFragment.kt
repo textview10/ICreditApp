@@ -345,22 +345,23 @@ class LoanApplyFragment : BaseLoanFragment() {
                         return
                     }
                     if (TextUtils.isEmpty(checkLoanBean.orderId)) {
+                        ToastUtils.showShort("need loan apply orderId")
                         return
                     }
-                    showTrialDialog(checkLoanBean.orderId!!)
-//                    CollectDataMgr.sInstance.collectAuthData(requireContext(),
-//                        checkLoanBean.orderId!!,
-//                        object : CollectDataMgr.Observer {
-//                            override fun success(response: Response<String>?) {
-//                                showTrialDialog(checkLoanBean.orderId!!)
-//                            }
-//
-//                            override fun failure(response: Response<String>?) {
-//                                if (BuildConfig.DEBUG) {
-//                                    Log.e(TAG, "failure = " + response?.body().toString())
-//                                }
-//                            }
-//                        })
+                    CollectDataMgr.sInstance.collectAuthData(requireContext(),
+                        checkLoanBean.orderId!!,
+                        object : CollectDataMgr.Observer {
+                            override fun success(response: Response<String>?) {
+                                showTrialDialog(checkLoanBean.orderId!!)
+                            }
+
+                            override fun failure(response: Response<String>?) {
+                                if (BuildConfig.DEBUG) {
+                                    Log.e(TAG, "failure = " + response?.body().toString())
+                                }
+                                ToastUtils.showShort("upload auth information failure.")
+                            }
+                        })
                 }
 
                 override fun onError(response: Response<String>) {
