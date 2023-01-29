@@ -1,5 +1,6 @@
 package com.loan.icreditapp;
 
+import android.text.InputFilter;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,7 +46,7 @@ public class Test {
             }
         });
 
-
+        et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
     }
 
 //    private void chargeCard() {

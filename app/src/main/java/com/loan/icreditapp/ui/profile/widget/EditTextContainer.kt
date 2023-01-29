@@ -91,6 +91,10 @@ class EditTextContainer : FrameLayout {
         } else editText!!.text.toString()
     }
 
+    fun getEditText() : TextInputEditText?{
+        return editText
+    }
+
     fun setEditTextAndSelection(editTextStr: String) {
         post {
             if (editText != null) {

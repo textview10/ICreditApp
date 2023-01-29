@@ -2,6 +2,8 @@ package com.loan.icreditapp.ui.profile.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.text.TextUtils
 import android.util.Log
 import android.util.Pair
@@ -15,6 +17,7 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.google.android.material.textfield.TextInputEditText
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
@@ -103,7 +106,11 @@ class AddProfile1Fragment : BaseFragment() {
         }
 
         editBvn?.setInputNum()
-
+        var etBvn : TextInputEditText? =  editBvn?.getEditText()
+        if (etBvn != null) {
+            etBvn.setFilters(arrayOf<InputFilter>(LengthFilter(11)))
+//            etBvn.addTextChangedListener(BvnTextWatcher(etBvn))
+        }
         selectCalendar?.setOnClickListener(View.OnClickListener {
             showTimePicker { date, v ->
                 val sdf = SimpleDateFormat("yyyy-MM-dd")
