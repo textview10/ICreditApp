@@ -174,7 +174,7 @@
                 android:layout_gravity="center"
                 android:text="submit"
                 android:textAllCaps="true"
-                android:textColor="#3865CB"
+                android:textColor="@color/theme_color"
                 android:textSize="16sp" />
 
         </FrameLayout>

@@ -139,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:text="Forgot password ? "
                     android:layout_marginTop="15dp"
-                    android:textColor="#3865CB"
+                    android:textColor="@color/theme_color"
                     android:textSize="16sp"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"

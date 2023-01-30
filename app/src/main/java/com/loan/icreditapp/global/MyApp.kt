@@ -12,7 +12,7 @@ import com.lzy.okgo.cookie.store.DBCookieStore
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor
 import com.lzy.okgo.model.HttpHeaders
 import com.scwang.smart.refresh.footer.ClassicsFooter
-import com.scwang.smart.refresh.header.ClassicsHeader
+import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import okhttp3.OkHttpClient
 import java.util.*
@@ -27,7 +27,7 @@ class MyApp : Application() {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
             //                layout.setPrimaryColorsId(R.color.bg_color, android.R.color.white);//全局设置主题颜色
             layout.setPrimaryColorsId(R.color.white, R.color.white) //全局设置主题颜色
-            ClassicsHeader(context) //.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+            MaterialHeader(context) //.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
         }
         //设置全局的Footer构建器
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout -> //指定为经典Footer，默认是 BallPulseFooter
