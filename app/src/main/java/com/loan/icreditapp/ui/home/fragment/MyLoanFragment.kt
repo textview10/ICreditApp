@@ -25,6 +25,8 @@ import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -38,6 +40,7 @@ class MyLoanFragment : BaseFragment() {
     private val TYPE_DELAY = 111
 
     private var pbLoading: ProgressBar? = null
+    private var refreshLayout: SmartRefreshLayout? = null
 
     private val mHandler = Handler(
         Looper.getMainLooper()
@@ -66,14 +69,21 @@ class MyLoanFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pbLoading = view.findViewById<ProgressBar>(R.id.pb_loan_loading)
+        refreshLayout = view.findViewById(R.id.refresh_Layout_my_loan)
         pbLoading?.visibility = View.VISIBLE
         mHandler.sendEmptyMessageDelayed(TYPE_DELAY, 500)
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
+        refreshLayout?.setEnableLoadMore(false)
+        refreshLayout?.setEnableRefresh(true)
+        refreshLayout?.setOnRefreshListener(OnRefreshListener {
+            getOrderInfo()
+        })
     }
 
     private fun getOrderInfo() {
+        pbLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -86,6 +96,7 @@ class MyLoanFragment : BaseFragment() {
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
                     pbLoading?.visibility = View.GONE
+                    refreshLayout?.finishRefresh()
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
@@ -101,6 +112,7 @@ class MyLoanFragment : BaseFragment() {
                 override fun onError(response: Response<String>) {
                     super.onError(response)
                     pbLoading?.visibility = View.GONE
+                    refreshLayout?.finishRefresh()
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }

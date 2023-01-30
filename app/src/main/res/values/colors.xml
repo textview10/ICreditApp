@@ -10,7 +10,7 @@
 
     <color name="signin_unselect">#999999</color>
     <color name="verify_sms_unselect">#EBEBEB</color>
-    <color name="verify_sms_select">#3364CD</color>
+    <color name="verify_sms_select">@color/theme_color</color>
     <color name="theme_color">#03A6B9</color>
 
     <color name="view_line_unselect">#EBEBEB</color>

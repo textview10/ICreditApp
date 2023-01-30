@@ -196,7 +196,7 @@ class SignInFragment : BaseFragment() {
                     val signInBean: SignInBean? =
                         checkResponseSuccess(response, SignInBean::class.java)
                     if (signInBean == null) {
-                        ToastUtils.showShort("sign in failure.")
+//                        ToastUtils.showShort("sign in failure.")
                         return
                     }
                     if (TextUtils.isEmpty(signInBean.token)){
