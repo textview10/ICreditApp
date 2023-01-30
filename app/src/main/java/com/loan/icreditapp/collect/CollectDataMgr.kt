@@ -274,6 +274,10 @@ class CollectDataMgr {
             })
     }
 
+    private fun getHardwareData(){
+
+    }
+
     fun encodeData(s: String): String? {
         if (StringUtils.isEmpty(s)) {
             return null

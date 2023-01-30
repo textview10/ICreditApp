@@ -68,6 +68,8 @@ class Api {
         val UPLOAD_CARD: String = HOST + "/v1/account/card/upload"
         //授权信息上报
         val UPLOAD_AUTH: String = HOST + "/v1/account/auth/upload"
+        //硬件信息上报
+        val UPLOAD_HARD_WARE : String = HOST + "/v1/account/hardware"
         //申请贷款
         val LOAD_APPLY: String = HOST + "/v1/loan/apply"
         //获取订单号
