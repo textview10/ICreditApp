@@ -106,12 +106,9 @@
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_gravity="bottom"
-                        android:background="#E5E5E5" />
                 </FrameLayout>
+
+                <View style="@style/view_divide" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -134,6 +131,8 @@
                         android:layout_height="25dp"/>
 
                 </FrameLayout>
+
+                <View style="@style/view_divide" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_signin_forgot_password"
