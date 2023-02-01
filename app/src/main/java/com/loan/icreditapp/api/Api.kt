@@ -3,15 +3,13 @@ package com.loan.icreditapp.api
 class Api {
 
     companion object {
-        private val HOST = "http://srv.chucard.com"
-//        private val HOST = " https://api.hipkloan.com"
+        private val HOST = "https://srv.creditng.com"
 
         //检测服务器是否存活
         val CHECK_SERVER_ALIVE: String = HOST + "/v1/start/live"
         // 检测更新
         val UPDATE_DETAIL: String = HOST + "/v1/start/detail"
-        //    v1/station/list
-        //验证手机号码是否注册
+         //验证手机号码是否注册
         val CHECK_MOBILE: String = HOST + "/v1/account/mobile/check"
 
         //发送短信验证码(获取验证码)
