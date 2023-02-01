@@ -16,7 +16,7 @@
     <!--        android:layout_width="match_parent"-->
     <!--        android:layout_height="match_parent"-->
     <!--        android:orientation="horizontal">-->
-    <com.google.android.material.textfield.TextInputLayout
+    <com.loan.icreditapp.ui.widget.MyTextInputLayout
         android:id="@+id/edit_view_input_layout"
         style="@style/Widget.Design.TextInputLayout"
         android:layout_width="0dp"
@@ -40,7 +40,7 @@
             android:textCursorDrawable="@drawable/et_cursor_color"
             android:textColorHint="#999999" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.loan.icreditapp.ui.widget.MyTextInputLayout>
 
 
     <ImageView

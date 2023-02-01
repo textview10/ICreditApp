@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -16,13 +17,14 @@ import android.widget.ImageView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.loan.icreditapp.R
+import com.loan.icreditapp.ui.widget.MyTextInputLayout
 
 class EditTextContainer : FrameLayout {
 
     private var editText: TextInputEditText? = null
     private var ivClear: ImageView? = null
     private var hint: String? = null
-    private var layout: TextInputLayout? = null
+    private var layout: MyTextInputLayout? = null
 
     constructor(context: Context) : super(context) {
         initializeView(context, null)
@@ -50,6 +52,7 @@ class EditTextContainer : FrameLayout {
         editText = view.findViewById(R.id.edit_view_edit_text)
         ivClear = view.findViewById(R.id.edit_view_clear)
         layout?.setHint(hint)
+        layout?.saveText(hint)
         ivClear?.setOnClickListener(OnClickListener {
             if (editText != null) {
                 editText!!.setText("")
@@ -136,6 +139,7 @@ class EditTextContainer : FrameLayout {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
+        layout?.setHint("")
         if (editText != null) {
             editText!!.removeTextChangedListener(mTextWatcher)
         }

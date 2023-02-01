@@ -373,8 +373,8 @@ class AddProfile1Fragment : BaseFragment() {
             .setSubCalSize(18) //确定和取消文字大小
             .setTitleSize(20) //标题文字大小
             .setTitleColor(Color.BLACK) //标题文字颜色
-            .setSubmitColor(Color.BLUE) //确定按钮文字颜色
-            .setCancelColor(Color.BLUE) //取消按钮文字颜色
+            .setSubmitColor(resources.getColor(R.color.theme_color)) //确定按钮文字颜色
+            .setCancelColor(resources.getColor(R.color.theme_color)) //取消按钮文字颜色
             .setContentTextSize(18) //滚轮文字大小
             .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
             .setCyclic(false, false, false) //循环与否
