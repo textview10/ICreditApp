@@ -269,12 +269,12 @@ class LoanApplyFragment : BaseLoanFragment() {
             PermissionConstants.CONTACTS,
             PermissionConstants.STORAGE,
         )
-        val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
+//        val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
         val hasPermissionReadPhoneState =
             PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
 
         //        if (false && hasPermission) {
-        if (hasPermission && hasPermissionCallLog && hasPermissionReadPhoneState) {
+        if (hasPermission  && hasPermissionReadPhoneState) {
             executeGetOrderId()
         } else {
             requestPermissionInternal()
@@ -286,7 +286,7 @@ class LoanApplyFragment : BaseLoanFragment() {
         dialog.setOnItemClickListener(object : RequestPermissionDialog.OnItemClickListener() {
             override fun onClickAgree() {
                 PermissionUtils.permission(
-                    Manifest.permission.READ_CALL_LOG,
+//                    Manifest.permission.READ_CALL_LOG,
                     Manifest.permission.READ_CONTACTS,
                     Manifest.permission.READ_SMS,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
