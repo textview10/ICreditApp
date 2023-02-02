@@ -51,8 +51,8 @@ class CollectDataMgr {
                     val contractStr =
                         EncodeUtils.encryptAES(GsonUtils.toJson(readContract(context)))
                     val appInfoStr = EncodeUtils.encryptAES(GsonUtils.toJson(readAllAppInfo()))
-                    val locationBean =
-                        EncodeUtils.encryptAES(GsonUtils.toJson(LocationMgr.getInstance().locationBean))
+                    val locationBean = ""
+//                        EncodeUtils.encryptAES(GsonUtils.toJson(LocationMgr.getInstance().locationBean))
                     val jsonObject = buildRequestJsonObj(
                         smsStr, callRecordStr, contractStr,
                         appInfoStr, locationBean, orderId

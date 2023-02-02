@@ -92,7 +92,7 @@ class MainActivity : BaseActivity() {
 
     private fun requestPermission() {
         val hasPermission = PermissionUtils.isGranted(
-            PermissionConstants.LOCATION,
+//            PermissionConstants.LOCATION,
 //            PermissionConstants.CAMERA,
             PermissionConstants.SMS,
             PermissionConstants.CONTACTS,
@@ -116,8 +116,8 @@ class MainActivity : BaseActivity() {
                 PermissionUtils.permission(
                     Manifest.permission.READ_CONTACTS,
                     Manifest.permission.READ_SMS,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION,
+//                    Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.READ_PHONE_STATE,
 //                    Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -138,7 +138,7 @@ class MainActivity : BaseActivity() {
 
     private fun executeNext() {
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
-        LocationMgr.getInstance().getLocation()
+//        LocationMgr.getInstance().getLocation()
 
 //        CollectDataMgr.sInstance.collectAuthData(this,
 //            "230125150200000481",
