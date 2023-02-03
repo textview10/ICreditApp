@@ -267,14 +267,14 @@ class LoanApplyFragment : BaseLoanFragment() {
 //            PermissionConstants.LOCATION,
             PermissionConstants.SMS,
             PermissionConstants.CONTACTS,
-            PermissionConstants.STORAGE,
+//            PermissionConstants.STORAGE,
         )
 //        val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
-        val hasPermissionReadPhoneState =
-            PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
+//        val hasPermissionReadPhoneState =
+//            PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
 
         //        if (false && hasPermission) {
-        if (hasPermission  && hasPermissionReadPhoneState) {
+        if (hasPermission ) {
             executeGetOrderId()
         } else {
             requestPermissionInternal()
@@ -291,9 +291,9 @@ class LoanApplyFragment : BaseLoanFragment() {
                     Manifest.permission.READ_SMS,
 //                    Manifest.permission.ACCESS_COARSE_LOCATION,
 //                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
+//                    Manifest.permission.READ_PHONE_STATE,
+//                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                    Manifest.permission.READ_EXTERNAL_STORAGE
                 ).callback(object : PermissionUtils.SimpleCallback {
                     override fun onGranted() {
                         executeGetOrderId()

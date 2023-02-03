@@ -76,7 +76,7 @@ class BuildRequestJsonUtils {
         @SuppressLint("MissingPermission")
         fun buildHeaderImei(): HttpHeaders {
             val httpHeaders = HttpHeaders()
-            httpHeaders.put("imei", PhoneUtils.getIMEI())        //imei
+//            httpHeaders.put("imei", PhoneUtils.getIMEI())        //imei
             return httpHeaders
         }
 

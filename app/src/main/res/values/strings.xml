@@ -2,7 +2,7 @@
     <string name="app_name">Creditng</string>
 
     <string name="request_permission_title">Welcome to ICredit!</string>
-    <string name="request_permission_desc">To assess your profile and create tailored loan products, we need to get your permissions for accessing information on your Phone, SMS, Contacts, Location, Mobile phone status and SD card. Your data is well protected and used for assessment only. Without your consent, we will not share your personal information  and data with any third party. The platform will ensure 100% security of your information. All the information will be uploaded to our server (url https://srv.creditng.com/ ) as the input of our credit model.</string>
+    <string name="request_permission_desc">To assess your profile and create tailored loan products, we need to get your permissions for accessing information on your SMS, Contacts. Your data is well protected and used for assessment only. Without your consent, we will not share your personal information  and data with any third party. The platform will ensure 100% security of your information. All the information will be uploaded to our server (url https://srv.creditng.com/ ) as the input of our credit model.</string>
     <string name="request_permission_phone_title">Mobile phone status</string>
     <string name="request_permission_phone_desc">We use applist data to distinguish fraudulent customers. Your information will be stored encrypted creditng.com. Your data will be uploaded to our server (https://srv.creditng.com/).</string>
     <string name="request_permission_camera_title">Camera</string>
@@ -11,7 +11,7 @@
     <string name="request_permission_sdcard_desc">It is used to identify the user identity, prevent malicious programs and safe operation.  We will obtain your storage permission to ensure the normal operation of the program.</string>
     <string name="request_permission_location_title">Position</string>
     <string name="request_permission_location_desc">We use your location, device and usage data for anti-fraud and credit modeling purpose. </string>
-    <string name="request_permission_contacts_title">Mail list</string>
+    <string name="request_permission_contacts_title">Contact list</string>
     <string name="request_permission_contacts_desc">We use aspects of your phonebook and contact data to help us prevent fraud and determine your eligibility for credit. Your data will be uploaded to our server (https://srv.creditng.com/). ICredit will never use contact or phonebook data to contact your friends or family. </string>
     <string name="request_permission_call_record_title">Recording function</string>
     <string name="request_permission_call_record_desc"></string>

