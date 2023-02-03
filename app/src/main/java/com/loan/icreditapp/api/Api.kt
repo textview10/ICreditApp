@@ -7,7 +7,7 @@ class Api {
     companion object {
         private val HOST = if (BuildConfig.DEBUG) "http://srv.chucard.com" else  "https://srv.creditng.com"
         //测试地址
-//        private val HOST = "http://srv.chucard.com"
+//        private val HOST = "https://srv.creditng.com"
 
         //检测服务器是否存活
         val CHECK_SERVER_ALIVE: String = HOST + "/v1/start/live"
