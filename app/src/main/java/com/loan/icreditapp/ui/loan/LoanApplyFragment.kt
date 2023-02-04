@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.constant.PermissionConstants
@@ -67,6 +68,7 @@ class LoanApplyFragment : BaseLoanFragment() {
 
     private var mTrialBean: TrialResponseBean? = null
     private var mProduct: ProductResponseBean.Product? = null
+    private var scrollView: NestedScrollView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,6 +86,7 @@ class LoanApplyFragment : BaseLoanFragment() {
         tvTitle = view.findViewById(R.id.tv_loan_apply_title)
         rvContent = view.findViewById(R.id.rv_loan_apply_container)
         flCommit = view.findViewById(R.id.fl_loan_apply_commit)
+        scrollView = view.findViewById(R.id.sv_load_apply)
 
         var manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvContent?.layoutManager = manager
