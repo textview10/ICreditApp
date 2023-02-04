@@ -12,14 +12,15 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.loan.RepayLoanResponseBean
 import com.loan.icreditapp.dialog.order.OrderInfoBean
+import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONException
 import org.json.JSONObject
-import java.time.temporal.TemporalAmount
 
 abstract class BaseLoanFragment : BaseFragment() {
 
@@ -126,6 +127,7 @@ abstract class BaseLoanFragment : BaseFragment() {
                        return
                    }
                     ToastUtils.showShort("repay loan success.")
+                    EventBus.getDefault().post(UpdateLoanEvent())
                 }
 
                 override fun onError(response: Response<String>) {

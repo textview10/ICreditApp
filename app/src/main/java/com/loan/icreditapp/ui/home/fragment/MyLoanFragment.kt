@@ -196,7 +196,11 @@ class MyLoanFragment : BaseFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
     fun onEvent(event: UpdateLoanEvent) {
-        getOrderInfo()
+        if (refreshLayout != null){
+            if ( !refreshLayout!!.isRefreshing){
+                refreshLayout!!.autoRefresh(200)
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
