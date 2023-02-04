@@ -63,7 +63,8 @@ class LauncherActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BarUtils.setStatusBarColor(this, resources.getColor(R.color.white))
+        BarUtils.setStatusBarColor(this, resources.getColor(R.color.theme_color))
+        BarUtils.setStatusBarLightMode(this, false)
         setContentView(R.layout.activity_launcher)
         //        boolean openGuide = SPUtils.getInstance().getBoolean(KEY_GUIDE, true);
 //        boolean openGuide = false;
