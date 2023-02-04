@@ -113,7 +113,9 @@
     <string name="my_loan_title_declined">Declined</string>
 
     <string name="term_1">I agree to the</string>
-    <string name="term_2">terms &amp; condition</string>
+    <string name="term_2">terms </string>
+    <string name="term_and">&amp;</string>
+    <string name="privacy_2">privacy</string>
 
     <string name="bank_account_bank_name">Bank Name</string>
     <string name="bank_account_bank_account_num">Bank Account Number</string>
@@ -121,4 +123,6 @@
     <string name="bank_account_bank_name_desc">Please input bank name.</string>
     <string name="bank_account_bank_account_num_desc">Please input bank account number.</string>
     <string name="bank_account_phone_num_desc">Please input phone number.</string>
+
+    <string name="update_content">After update faster approve and more amount. \n \n For better user experience update app as soon as possible.</string>
 </resources>

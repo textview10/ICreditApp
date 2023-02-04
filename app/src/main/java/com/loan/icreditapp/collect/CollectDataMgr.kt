@@ -32,8 +32,6 @@ class CollectDataMgr {
 
     private val TAG = "CollectDataMgr"
 
-    private var mManager: CollectDataMgr? = null
-
     companion object {
         val sInstance by lazy(LazyThreadSafetyMode.NONE) {
             CollectDataMgr()

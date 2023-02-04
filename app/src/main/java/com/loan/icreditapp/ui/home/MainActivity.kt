@@ -18,8 +18,10 @@ import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.bean.UpdateResponseBean
 import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.collect.LocationMgr
+import com.loan.icreditapp.collect.UpdateMgr
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
@@ -65,6 +67,13 @@ class MainActivity : BaseActivity() {
         SPUtils.getInstance().put(Constant.KEY_MOBILE, Constant.mMobile)
 
         FireBaseMgr.sInstance.reportFcmToken()
+
+        UpdateMgr.sInstance.setOnShowUpdateListener(object : UpdateMgr.OnShowUpdateListener{
+            override fun onShowDialog(updateBean: UpdateResponseBean) {
+
+            }
+        })
+        UpdateMgr.sInstance.checkUpdate()
     }
 
     private fun initializeView() {

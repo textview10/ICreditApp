@@ -54,6 +54,7 @@ class SignUpFragment : BaseFragment() {
     private var flCommit: FrameLayout ? = null
     private var ivAgree: AppCompatImageView ? = null
     private var tvTerm: AppCompatTextView ? = null
+    private var tvPrivacy: AppCompatTextView ? = null
     private var logoContainer: ViewGroup ? = null
 
     private var mPresenter: PhoneNumPresenter? = null
@@ -123,6 +124,7 @@ class SignUpFragment : BaseFragment() {
         verifyCodeView = view.findViewById(R.id.view_input_verify_code_verify_code)
         ivAgree = view.findViewById(R.id.iv_signup_agree_state)
         tvTerm = view.findViewById(R.id.tv_signup_term)
+        tvPrivacy = view.findViewById(R.id.tv_signup_privact)
 
         mEtPhoneNum?.setOnFocusChangeListener(OnFocusChangeListener { view, b ->
             run {
@@ -218,7 +220,13 @@ class SignUpFragment : BaseFragment() {
         tvTerm?.setOnClickListener {
             if (activity is SignUpActivity) {
                 var signUpActivity : SignUpActivity = activity as SignUpActivity
-                signUpActivity.toWebView()
+                signUpActivity.toWebView(Api.GET_TERMS)
+            }
+        }
+        tvPrivacy?.setOnClickListener{
+            if (activity is SignUpActivity) {
+                var signUpActivity : SignUpActivity = activity as SignUpActivity
+                signUpActivity.toWebView(Api.GET_POLICY)
             }
         }
         initView()

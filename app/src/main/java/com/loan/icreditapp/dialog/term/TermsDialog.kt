@@ -22,7 +22,7 @@ class TermsDialog : Dialog {
     private var tvAgree : AppCompatTextView? = null
     private var tvCancel : AppCompatTextView? = null
 
-    private var URL : String = Api.GET_TERMS
+    private var URL : String = Api.GET_ALL
     private var mListener: OnClickAgreeListener? = null
 
     constructor(context: Context) : super(context, R.style.TermDialogTheme) {

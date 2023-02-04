@@ -104,12 +104,12 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
-    fun toWebView(){
+    fun toWebView(url : String){
         flWebView?.visibility = View.VISIBLE
         if (webViewFragment == null) {
             webViewFragment = WebViewFragment()
         }
-        webViewFragment?.setUrl(Api.GET_POLICY)
+        webViewFragment?.setUrl(url)
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction() // 开启一个事务
         transaction.replace(R.id.fl_signup_webview, webViewFragment!!)
