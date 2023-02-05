@@ -2,10 +2,10 @@ package com.loan.icreditapp.global
 
 import android.R
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import co.paystack.android.PaystackSdk
 import com.blankj.utilcode.util.LanguageUtils
 import com.loan.icreditapp.collect.LocationMgr
-import com.loan.icreditapp.util.EncodeUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.cookie.CookieJarImpl
 import com.lzy.okgo.cookie.store.DBCookieStore
@@ -22,7 +22,11 @@ import java.util.logging.Level
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
+        try {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } catch (e : Exception) {
 
+        }
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
             //                layout.setPrimaryColorsId(R.color.bg_color, android.R.color.white);//全局设置主题颜色

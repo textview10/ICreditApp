@@ -5,6 +5,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <item name="hintTextAppearance">@style/hintTextAppearance</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
     <style name="TextInputLayout" parent="Widget.Design.TextInputLayout">
