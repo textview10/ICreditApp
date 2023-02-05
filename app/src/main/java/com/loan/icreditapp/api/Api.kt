@@ -5,7 +5,7 @@ import com.loan.icreditapp.BuildConfig
 class Api {
 
     companion object {
-        private val USE_TEST_HOST_FLAG : Boolean = true
+        private val USE_TEST_HOST_FLAG : Boolean = false
 
         private val HOST = if (BuildConfig.DEBUG || USE_TEST_HOST_FLAG) "http://srv.chucard.com" else  "https://srv.creditng.com"
 
