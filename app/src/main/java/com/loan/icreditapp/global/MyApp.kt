@@ -2,6 +2,7 @@ package com.loan.icreditapp.global
 
 import android.R
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import co.paystack.android.PaystackSdk
 import com.blankj.utilcode.util.LanguageUtils
 import com.loan.icreditapp.collect.LocationMgr
@@ -38,6 +39,7 @@ class MyApp : Application() {
         //        CrashHandler.getInstance().init(this);  //捕获异常, 并杀掉app
         initializeData()
         LanguageUtils.applyLanguage(Locale.ENGLISH, false)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     private fun initOkGo() {
