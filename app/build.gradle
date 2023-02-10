@@ -14,8 +14,8 @@ android {
         applicationId "com.icredit.okash.loan.cash.opay.game"
         minSdkVersion 19
         targetSdkVersion 31
-        versionCode 20067
-        versionName "Version 2.0.7"
+        versionCode 20068
+        versionName "Version 2.0.8"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,6 +24,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [APP_NAME: "@string/app_name"]
+        }
+        debug {
+            manifestPlaceholders = [APP_NAME: "@string/app_name_debug"]
         }
     }
     compileOptions {

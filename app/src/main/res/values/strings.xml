@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Creditng</string>
+    <string name="app_name_debug">Creditng测试版</string>
 
     <string name="request_permission_title">Welcome to ICredit!</string>
     <string name="request_permission_desc">To assess your profile and create tailored loan products, we need to get your permissions for accessing information on your SMS, Contacts. Your data is well protected and used for assessment only. Without your consent, we will not share your personal information  and data with any third party. The platform will ensure 100% security of your information. All the information will be uploaded to our server (url https://srv.creditng.com/ ) as the input of our credit model.</string>

@@ -124,6 +124,9 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
+                    if (isRemoving || isDetached) {
+                        return
+                    }
                     val productBean: ProductResponseBean? =
                         checkResponseSuccess(response, ProductResponseBean::class.java)
                     if (productBean == null || productBean.products?.isEmpty() == true) {
@@ -169,11 +172,14 @@ class LoanApplyFragment : BaseLoanFragment() {
     }
 
     private fun updateSpinner() {
+        if (context == null){
+            return
+        }
         val mItem1s = arrayOfNulls<String>(mAmountList.size)
         for (i in 0 until mAmountList.size) {
             mItem1s[i] = "₦ " + mAmountList[i].first + " "
         }
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mItem1s)
+        val adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, mItem1s)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         adapter.setNotifyOnChange(true)
         spinnerAmount?.adapter = adapter
@@ -362,7 +368,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                                 if (BuildConfig.DEBUG) {
                                     Log.e(TAG, "failure = " + response?.body().toString())
                                 }
-                                ToastUtils.showShort("upload auth information failure.")
+                                ToastUtils.showShort("upload auth information failure." + response?.body().toString())
                             }
                         })
                 }
