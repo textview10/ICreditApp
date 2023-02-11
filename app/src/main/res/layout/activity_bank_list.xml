@@ -39,22 +39,41 @@
             android:background="@color/white"
             android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_bank_list"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
 
-            <com.loan.icreditapp.ui.banklist.WaveSideBar
-                android:id="@+id/sidebar_bank_list"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_bank_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.loan.icreditapp.ui.banklist.WaveSideBar
+                    android:id="@+id/sidebar_bank_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingRight="8dp"
+                    app:sidebar_lazy_respond="false"
+                    app:sidebar_max_offset="80dp"
+                    app:sidebar_position="right"
+                    app:sidebar_text_alignment="center"
+                    app:sidebar_text_color="#8D6E63"
+                    app:sidebar_text_size="14sp" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_banklist_loading"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingRight="8dp"
-                app:sidebar_lazy_respond="false"
-                app:sidebar_max_offset="80dp"
-                app:sidebar_position="right"
-                app:sidebar_text_alignment="center"
-                app:sidebar_text_color="#8D6E63"
-                app:sidebar_text_size="14sp" />
+                android:visibility="gone"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"/>
+
+            </FrameLayout>
 
         </FrameLayout>
 

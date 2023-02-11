@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.util.Pair
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +35,7 @@ class BankListActivity : BaseActivity() {
     private val mBankList = ArrayList<BankResponseBean.Bank>()
     private var mAdapter: BankListAdapter? = null
     private var sideBar: WaveSideBar? = null
+    private var flLoading: FrameLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +56,7 @@ class BankListActivity : BaseActivity() {
         rvBankList = findViewById(R.id.rv_bank_list)
         ivBack = findViewById(R.id.iv_bank_list_back)
         sideBar = findViewById(R.id.sidebar_bank_list)
+        flLoading = findViewById(R.id.fl_banklist_loading)
         ivBack?.setOnClickListener(View.OnClickListener { finish() })
 
         val manager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -75,6 +78,7 @@ class BankListActivity : BaseActivity() {
     }
 
     private fun getBankList() {
+        flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
         } catch (e: JSONException) {
@@ -84,6 +88,10 @@ class BankListActivity : BaseActivity() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    if (isFinishing || isDestroyed){
+                        return
+                    }
+                    flLoading?.visibility = View.GONE
                     val responseBean: BankResponseBean? =
                         checkResponseSuccess(response, BankResponseBean::class.java)
                     if (responseBean == null || responseBean.banklist == null) {
@@ -119,6 +127,7 @@ class BankListActivity : BaseActivity() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    flLoading?.visibility = View.GONE
                     Log.e(TAG, "get bank list = " + response.body())
                 }
             })
@@ -126,5 +135,10 @@ class BankListActivity : BaseActivity() {
 
     fun updateList(){
         mAdapter?.notifyDataSetChanged()
+    }
+
+    override fun onDestroy() {
+        OkGo.getInstance().cancelTag(TAG)
+        super.onDestroy()
     }
 }

@@ -2,6 +2,7 @@ package com.loan.icreditapp.global
 
 import android.R
 import android.app.Application
+import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import co.paystack.android.PaystackSdk
 import com.blankj.utilcode.util.LanguageUtils
@@ -21,9 +22,13 @@ import java.util.concurrent.TimeUnit
 import java.util.logging.Level
 
 class MyApp : Application() {
+
+    companion object {
+        var mContext: Context? = null
+    }
     override fun onCreate() {
         super.onCreate()
-
+        mContext = this
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
             //                layout.setPrimaryColorsId(R.color.bg_color, android.R.color.white);//全局设置主题颜色
