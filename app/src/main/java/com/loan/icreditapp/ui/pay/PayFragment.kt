@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
+import android.view.View.*
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.bean.pay.MonifyResponseBean
 import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.ui.pay.presenter.*
+import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.lzy.okgo.model.Response
 import org.greenrobot.eventbus.EventBus
 
@@ -26,18 +29,24 @@ class PayFragment : BaseFragment() {
     private var amount: String? = null
     private var curPresenter: BasePresenter? = null
 
-    private var flNor : FrameLayout? = null
-    private var flPayStack : RelativeLayout? = null
-    private var flFlutterware : FrameLayout? = null
-    private var flRedocly : FrameLayout? = null
-    private var flMonify : FrameLayout? = null
-    private var flLoading : FrameLayout? = null
+    private var flNor: FrameLayout? = null
+    private var flPayStack: RelativeLayout? = null
+    private var flFlutterware: FrameLayout? = null
+    private var flRedocly: FrameLayout? = null
+    private var flMonify: FrameLayout? = null
+    private var flLoading: FrameLayout? = null
 
-    private var norPresenter : NorLoanPresenter? = null
-    private var payStackPresenter : PayStackPresenter? = null
-    private var flutterwarePresenter : FlutterwarePresenter? = null
-    private var redoclyPresenter : RedoclyPresenter? = null
-    private var monifyPresenter : MonifyPresenter? = null
+    private var norPresenter: NorLoanPresenter? = null
+    private var payStackPresenter: PayStackPresenter? = null
+    private var flutterwarePresenter: FlutterwarePresenter? = null
+    private var redoclyPresenter: RedoclyPresenter? = null
+    private var monifyPresenter: MonifyPresenter? = null
+
+    private var llMonifyResult: LinearLayout? = null
+    private var selectBankName: EditTextContainer? = null
+    private var selectBankCode: EditTextContainer? = null
+    private var selectAccountName: EditTextContainer? = null
+    private var selectAccountNumber: EditTextContainer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,11 +68,22 @@ class PayFragment : BaseFragment() {
         flPayStack = view.findViewById(R.id.fl_pay_paystack)
         flFlutterware = view.findViewById(R.id.fl_pay_flutterware)
         flRedocly = view.findViewById(R.id.fl_pay_redocly)
-        flMonify= view.findViewById(R.id.fl_pay_monify)
-        flLoading= view.findViewById(R.id.fl_pay_loading)
+        flMonify = view.findViewById(R.id.fl_pay_monify)
+        flLoading = view.findViewById(R.id.fl_pay_loading)
+
+        llMonifyResult = view.findViewById(R.id.ll_play_monify_result)
+        selectBankName = view.findViewById(R.id.select_container_pay_bank_name)
+        selectBankCode = view.findViewById(R.id.select_container_pay_bank_code)
+        selectAccountName = view.findViewById(R.id.select_container_pay_account_name)
+        selectAccountNumber = view.findViewById(R.id.select_container_pay_account_number)
+
+        selectBankName?.setShowMode()
+        selectBankCode?.setShowMode()
+        selectAccountName?.setShowMode()
+        selectAccountNumber?.setShowMode()
 
         flNor?.setOnClickListener(View.OnClickListener {
-            if (checkClickFast()){
+            if (checkClickFast()) {
                 return@OnClickListener
             }
             curPresenter = norPresenter
@@ -71,28 +91,28 @@ class PayFragment : BaseFragment() {
         })
 
         flPayStack?.setOnClickListener(View.OnClickListener {
-            if (checkClickFast()){
+            if (checkClickFast()) {
                 return@OnClickListener
             }
             curPresenter = payStackPresenter
             startLoading()
         })
         flFlutterware?.setOnClickListener(View.OnClickListener {
-            if (checkClickFast()){
+            if (checkClickFast()) {
                 return@OnClickListener
             }
             curPresenter = flutterwarePresenter
             startLoading()
         })
         flRedocly?.setOnClickListener(View.OnClickListener {
-            if (checkClickFast()){
+            if (checkClickFast()) {
                 return@OnClickListener
             }
             curPresenter = redoclyPresenter
             startLoading()
         })
         flMonify?.setOnClickListener(View.OnClickListener {
-            if (checkClickFast()){
+            if (checkClickFast()) {
                 return@OnClickListener
             }
             curPresenter = monifyPresenter
@@ -101,34 +121,35 @@ class PayFragment : BaseFragment() {
     }
 
     private fun initData() {
-        if (norPresenter == null){
+        if (norPresenter == null) {
             norPresenter = NorLoanPresenter(this)
             norPresenter?.setObserver(MyObserver())
         }
-        if (payStackPresenter == null){
+        if (payStackPresenter == null) {
             payStackPresenter = PayStackPresenter(this)
             payStackPresenter?.setObserver(MyObserver())
         }
-        if (flutterwarePresenter == null){
+        if (flutterwarePresenter == null) {
             flutterwarePresenter = FlutterwarePresenter(this)
             flutterwarePresenter?.setObserver(MyObserver())
         }
-        if (redoclyPresenter == null){
+        if (redoclyPresenter == null) {
             redoclyPresenter = RedoclyPresenter(this)
             redoclyPresenter?.setObserver(MyObserver())
         }
-        if (monifyPresenter == null){
+        if (monifyPresenter == null) {
             monifyPresenter = MonifyPresenter(this)
             monifyPresenter?.setObserver(MyObserver())
         }
     }
 
-    private fun startLoading(){
-        if (curPresenter == null){
+    private fun startLoading() {
+        if (curPresenter == null) {
             return
         }
         curPresenter?.requestUrl(orderId, amount)
-        flLoading?.visibility = View.VISIBLE
+        flLoading?.visibility = VISIBLE
+        llMonifyResult?.visibility = GONE
     }
 
     fun setData(orderId: String?, amount: String?) {
@@ -141,7 +162,7 @@ class PayFragment : BaseFragment() {
         curPresenter?.updateResult()
     }
 
-    private fun toWebViewInternal(url : String){
+    private fun toWebViewInternal(url: String) {
         flLoading?.visibility = View.GONE
         if (activity is PayActivity) {
             var payActivity = activity as PayActivity
@@ -149,35 +170,52 @@ class PayFragment : BaseFragment() {
         }
     }
 
-   private inner class MyObserver : BasePresenter.Observer {
+    private inner class MyObserver : BasePresenter.Observer {
 
         override fun toWebView(url: String) {
             toWebViewInternal(url)
         }
 
-       override fun repaySuccess() {
-           flLoading?.visibility = View.GONE
-           activity?.finish()
-           ToastUtils.showShort("repay success")
-           EventBus.getDefault().post(UpdateLoanEvent())
-       }
+        override fun repaySuccess() {
+            flLoading?.visibility = View.GONE
+            activity?.finish()
+            ToastUtils.showShort("repay success")
+            EventBus.getDefault().post(UpdateLoanEvent())
+        }
 
-       override fun repayFailure(response: Response<String>, needTip: Boolean, desc : String?) {
-           flLoading?.visibility = View.GONE
-           if (needTip){
-               var responseStr  = StringBuffer()
-               if (!TextUtils.isEmpty(desc)){
-                   responseStr.append(desc)
-               }
-               if (response != null) {
-                   var body = response.body()
-                   if (body != null) {
-                       responseStr.append(body.toString())
-                   }
-               }
-               ToastUtils.showShort(responseStr.toString())
-           }
-       }
-   }
+        override fun repayFailure(response: Response<String>, needTip: Boolean, desc: String?) {
+            flLoading?.visibility = View.GONE
+            if (needTip) {
+                var responseStr = StringBuffer()
+                if (!TextUtils.isEmpty(desc)) {
+                    responseStr.append(desc)
+                }
+                if (response != null) {
+                    var body = response.body()
+                    if (body != null) {
+                        responseStr.append(body.toString())
+                    }
+                }
+                ToastUtils.showShort(responseStr.toString())
+            }
+        }
+
+        override fun showMonifyPage(bean: MonifyResponseBean) {
+            flLoading?.visibility = View.GONE
+            llMonifyResult?.visibility = VISIBLE
+            if (!TextUtils.isEmpty(bean.bankName)) {
+                selectBankName?.setEditTextAndSelection(bean.bankName!!)
+            }
+            if (!TextUtils.isEmpty(bean.bankCode)) {
+                selectBankCode?.setEditTextAndSelection(bean.bankCode!!)
+            }
+            if (!TextUtils.isEmpty(bean.accountName)) {
+                selectAccountName?.setEditTextAndSelection(bean.accountName!!)
+            }
+            if (!TextUtils.isEmpty(bean.accountNumber)) {
+                selectAccountNumber?.setEditTextAndSelection(bean.accountNumber!!)
+            }
+        }
+    }
 
 }

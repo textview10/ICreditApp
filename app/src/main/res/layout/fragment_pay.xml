@@ -1,170 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="15dp"
-            android:text="My bank account:"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <FrameLayout
-            android:id="@+id/fl_pay_nor"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_marginTop="10dp">
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Pay loan "
+                android:layout_marginTop="20dp"
+                android:text="My bank account:"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fl_pay_nor"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground">
 
-        <View style="@style/view_divide" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Pay loan "
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="15dp"
-            android:text="Other channel:"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            </FrameLayout>
 
-        <RelativeLayout
-            android:id="@+id/fl_pay_paystack"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_marginTop="20dp">
+            <View style="@style/view_divide" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_pay_paystack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="PayStack"
+                android:layout_marginTop="20dp"
+                android:text="Other channel:"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/fl_pay_paystack"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:foreground="?attr/selectableItemBackground">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pay_paystack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="PayStack"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_toEndOf="@id/tv_pay_paystack"
+                    android:background="@drawable/shape_hot_red_bg"
+                    android:gravity="center"
+                    android:paddingStart="8dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="3dp"
+                    android:text="hot"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_divide" />
+
+            <FrameLayout
+                android:id="@+id/fl_pay_flutterware"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Flutterware"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
+            <FrameLayout
+                android:id="@+id/fl_pay_redocly"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Redocly"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
+            <FrameLayout
+                android:id="@+id/fl_pay_monify"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Monify"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
+            <LinearLayout
+                android:id="@+id/ll_play_monify_result"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/tv_pay_paystack"
-                android:background="@drawable/shape_hot_red_bg"
-                android:paddingStart="8dp"
-                android:textAllCaps="true"
-                android:gravity="center"
-                android:layout_marginStart="15dp"
-                android:paddingEnd="8dp"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:text="hot"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-        </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="monify bank information:"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        <View style="@style/view_divide" />
+                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                    android:id="@+id/select_container_pay_bank_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    app:select_view_hint="Bank name" />
 
-        <FrameLayout
-            android:id="@+id/fl_pay_flutterware"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_marginTop="10dp">
+                <View style="@style/view_divide" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Flutterware"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-        </FrameLayout>
-
-        <View style="@style/view_divide" />
-
-        <FrameLayout
-            android:id="@+id/fl_pay_redocly"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Redocly"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-        </FrameLayout>
-
-        <View style="@style/view_divide" />
-
-        <FrameLayout
-            android:id="@+id/fl_pay_monify"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:layout_marginTop="10dp">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Monify"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-        </FrameLayout>
-
-        <View style="@style/view_divide" />
+                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                    android:id="@+id/select_container_pay_bank_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    app:select_view_hint="Bank code" />
 
 
-    </LinearLayout>
+                <View style="@style/view_divide" />
+
+                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                    android:id="@+id/select_container_pay_account_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    app:select_view_hint="Account name" />
+
+                <View style="@style/view_divide" />
+
+                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                    android:id="@+id/select_container_pay_account_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    app:select_view_hint="Account number" />
+
+                <View style="@style/view_divide" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
     <FrameLayout
         android:id="@+id/fl_pay_loading"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:layout_height="match_parent"
         android:clickable="true"
-        android:layout_height="match_parent">
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="40dp"
-            android:layout_height="wrap_content"/>
+            android:layout_marginBottom="40dp" />
 
     </FrameLayout>
 

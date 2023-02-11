@@ -1,5 +1,6 @@
 package com.loan.icreditapp.ui.pay.presenter
 
+import com.loan.icreditapp.bean.pay.MonifyResponseBean
 import com.loan.icreditapp.ui.pay.PayFragment
 import com.lzy.okgo.model.Response
 
@@ -42,6 +43,8 @@ open abstract class BasePresenter {
         fun repaySuccess()
 
         fun repayFailure(response : Response<String>, needTip : Boolean, desc : String?)
+
+        fun showMonifyPage(bean : MonifyResponseBean)
     }
 
     fun setObserver(observer: Observer){

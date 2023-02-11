@@ -1,5 +1,6 @@
 package com.loan.icreditapp.ui.pay.presenter
 
+import android.text.TextUtils
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.pay.MonifyResponseBean
 import com.loan.icreditapp.global.Constant
@@ -40,7 +41,9 @@ class MonifyPresenter : BasePresenter {
                         mObserver?.repayFailure(response, false, null)
                         return
                     }
-
+                    if (TextUtils.equals(monifyBean.reserved, "1")) {
+                        mObserver?.showMonifyPage(monifyBean)
+                    }
                 }
 
                 override fun onError(response: Response<String>) {

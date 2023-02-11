@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Creditng</string>
+    <string name="app_name">Creditng测试版</string>
     <string name="app_name_debug">Creditng测试版</string>
 
     <string name="request_permission_title">Welcome to ICredit!</string>
