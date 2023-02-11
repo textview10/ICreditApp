@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatTextView
 import com.loan.icreditapp.R
+import com.loan.icreditapp.ui.pay.PayActivity
 
 class LoanActiveFragment : BaseLoanFragment() {
 

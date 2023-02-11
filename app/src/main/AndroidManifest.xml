@@ -91,6 +91,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.pay.PayActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <service
             android:name=".service.FcmService"
             android:exported="false">
