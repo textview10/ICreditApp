@@ -19,6 +19,7 @@ import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -138,6 +139,7 @@ class SetPwdFragment : BaseFragment() {
                     Constant.mMobile = registerBean.mobile
                     SPUtils.getInstance().put(SignInFragment.KEY_PHONE_NUM, mPhoneNum)
                     SPUtils.getInstance().put(SignInFragment.KEY_PASS_CODE, pwd)
+                    FirebaseUtils.logEvent("firebase_register")
                     if (activity is SignUpActivity) {
                         var signUpActivity : SignUpActivity = activity as SignUpActivity
                         signUpActivity.toHomePage()

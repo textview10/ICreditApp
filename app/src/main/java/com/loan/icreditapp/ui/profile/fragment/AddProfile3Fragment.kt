@@ -22,6 +22,7 @@ import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.ui.profile.widget.SelectContainer
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -196,6 +197,7 @@ class AddProfile3Fragment : BaseFragment() {
                         ToastUtils.showShort("upload other 3 failure.")
                         return
                     }
+                    FirebaseUtils.logEvent("firebase_data3")
                     ToastUtils.showShort("modify other3 success")
                     activity?.finish()
                 }

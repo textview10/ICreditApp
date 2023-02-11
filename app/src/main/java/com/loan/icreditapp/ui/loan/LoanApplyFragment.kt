@@ -38,6 +38,7 @@ import com.loan.icreditapp.ui.card.BindNewCardActivity
 import com.loan.icreditapp.ui.loan.adapter.LoanApplyAdapter
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -59,6 +60,7 @@ class LoanApplyFragment : BaseLoanFragment() {
     private var tvTitle: AppCompatTextView? = null
     private var rvContent: RecyclerView? = null
     private var flCommit: FrameLayout? = null
+    private var flLoading: FrameLayout? = null
 
     private var mAmountList: ArrayList<Pair<String, ArrayList<ProductResponseBean.Product>>> =
         ArrayList()
@@ -86,6 +88,7 @@ class LoanApplyFragment : BaseLoanFragment() {
         tvTitle = view.findViewById(R.id.tv_loan_apply_title)
         rvContent = view.findViewById(R.id.rv_loan_apply_container)
         flCommit = view.findViewById(R.id.fl_loan_apply_commit)
+        flLoading = view.findViewById(R.id.fl_apply_load_loading)
         scrollView = view.findViewById(R.id.sv_load_apply)
 
         var manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -122,6 +125,9 @@ class LoanApplyFragment : BaseLoanFragment() {
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                        return
+                    }
+                    if (isRemoving || isDetached) {
                         return
                     }
                     val productBean: ProductResponseBean? =
@@ -169,11 +175,14 @@ class LoanApplyFragment : BaseLoanFragment() {
     }
 
     private fun updateSpinner() {
+        if (context == null){
+            return
+        }
         val mItem1s = arrayOfNulls<String>(mAmountList.size)
         for (i in 0 until mAmountList.size) {
             mItem1s[i] = "₦ " + mAmountList[i].first + " "
         }
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mItem1s)
+        val adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, mItem1s)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         adapter.setNotifyOnChange(true)
         spinnerAmount?.adapter = adapter
@@ -185,7 +194,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                 l: Long
             ) {
                 selectPos(i)
-                Log.e(TAG, "select pos 1 = " + i)
+//                Log.e(TAG, "select pos 1 = " + i)
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>?) {}
@@ -316,6 +325,7 @@ class LoanApplyFragment : BaseLoanFragment() {
     }
 
     private fun getOrderId(){
+        flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
         } catch (e: JSONException) {
@@ -328,6 +338,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
+                    flLoading?.visibility = View.GONE
                     val checkLoanBean: CheckLoanResponseBean? =
                         checkResponseSuccess(response, CheckLoanResponseBean::class.java)
                     if (checkLoanBean == null) {
@@ -351,18 +362,25 @@ class LoanApplyFragment : BaseLoanFragment() {
                         ToastUtils.showShort("need loan apply orderId")
                         return
                     }
+                    FirebaseUtils.logEvent("firebase_apply")
+//                    if (checkLoanBean.hasProfile) {
+//
+//                    }
+                    flLoading?.visibility = View.VISIBLE
                     CollectDataMgr.sInstance.collectAuthData(requireContext(),
                         checkLoanBean.orderId!!,
                         object : CollectDataMgr.Observer {
                             override fun success(response: Response<String>?) {
+                                flLoading?.visibility = View.GONE
                                 showTrialDialog(checkLoanBean.orderId!!)
                             }
 
                             override fun failure(response: Response<String>?) {
+                                flLoading?.visibility = View.GONE
                                 if (BuildConfig.DEBUG) {
                                     Log.e(TAG, "failure = " + response?.body().toString())
                                 }
-                                ToastUtils.showShort("upload auth information failure.")
+                                ToastUtils.showShort("upload auth information failure." + response?.body().toString())
                             }
                         })
                 }
@@ -372,6 +390,10 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
+                    if (isRemoving || isDetached){
+                        return
+                    }
+                    flLoading?.visibility = View.GONE
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, " product list error ." + response.body())
                     }
@@ -426,6 +448,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (trialDialog != null ){
                         trialDialog?.dismiss()
                     }
+                    FirebaseUtils.logEvent("firebase_apply_confirm")
                     ToastUtils.showShort("apply load success")
                     EventBus.getDefault().post(UpdateLoanEvent())
                 }

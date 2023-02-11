@@ -14,8 +14,8 @@ android {
         applicationId "com.icredit.okash.loan.cash.opay.game"
         minSdkVersion 19
         targetSdkVersion 31
-        versionCode 20066
-        versionName "Version 2.0.6"
+        versionCode 20068
+        versionName "Version 2.0.8"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,6 +24,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [APP_NAME: "@string/app_name"]
+        }
+        debug {
+            manifestPlaceholders = [APP_NAME: "@string/app_name_debug"]
         }
     }
     compileOptions {
@@ -65,15 +69,11 @@ dependencies {
 //    // Declare the dependency for the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-perf'
-//
-////     Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
-////     When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-messaging'
-    implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-crashlytics'
-
-    implementation 'com.google.firebase:firebase-auth'
-    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     implementation 'org.greenrobot:eventbus:3.3.1'
 

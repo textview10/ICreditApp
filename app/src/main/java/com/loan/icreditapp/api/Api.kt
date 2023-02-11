@@ -5,9 +5,10 @@ import com.loan.icreditapp.BuildConfig
 class Api {
 
     companion object {
-        private val USE_TEST_HOST_FLAG : Boolean = false
+        private val USE_TEST_HOST_FLAG : Boolean = true
 
         private val HOST = if (BuildConfig.DEBUG || USE_TEST_HOST_FLAG) "http://srv.chucard.com" else  "https://srv.creditng.com"
+//        private val HOST =  "https://srv.creditng.com"
 
         //检测服务器是否存活
         val CHECK_SERVER_ALIVE: String = HOST + "/v1/start/live"
@@ -93,6 +94,76 @@ class Api {
         val REQUEST_MESSAGE_LIST: String = HOST + "/v1/station/list"
 
         val CHECK_UPDATE: String = HOST + "/v1/start/detail"
+
+//        @POST("/v1/loan/uploadJson")
+//        fun uploadJsonon(@Body params: flutterWaveParams?): Observable<BaseRep<verifyFlutterBean?>?>?
+        //* 上传后端校验Flutterwave
+        val UPLOAD_JSON : String = "/v1/loan/uploadJson"
+
+        //* 获取Flutterwave参数
+        // * chargeType // 1 绑卡 2 主动还款
+//        @Query("account_id") account_id: String?,
+//        @Query("token") token: String?,
+//        @Query("orderId") orderId: String?,
+//        @Query("chargeType") chargeType: String?
+        val GET_TEXT_REF : String = "/v1/loan/getTxRef"
+
+//        /**
+//         * 查询flutter订单状态
+//         * @param accountId
+//         * @param orderId
+//         * @param txRef
+//         * @return
+//         */
+//        @POST("/v1/loan/getFlutterwaveResult")
+//        fun getFlutterStatus(
+//            @Query("accountId") accountId: String?,
+//            @Query("orderId") orderId: String?,
+//            @Query("txRef") txRef: String?
+//        ): Observable<BaseRep<OrderStatus?>?>?
+        val GET_FLUTTER_WAVE_RESULT = "/v1/loan/getFlutterwaveResult"
+
+        //* 获取 url
+        // * @return
+        // */
+        //@POST("/v1/loan/repay/paystack")
+        //fun getPayStackUrl(
+        //    @Query("accountId") accountId: String?,
+        //    @Query("orderId") orderId: String?
+        //): Observable<BaseRep<PayStackBean?>?>?
+        val PAY_STACK = "/v1/loan/repay/paystack"
+
+//        /***
+//         * 查询paystck还款结果
+//         * @return
+//         */
+//        @POST("/v1/loan/repay/paystack/result")
+//        fun payStackResult(
+//            @Query("accountId") accountId: String?,
+//            @Query("orderId") orderId: String?,
+//            @Query("reference") reference: String?
+//        ): Observable<BaseRep<PayStackResult?>?>?
+        val PAY_STACK_RESULT = "/v1/loan/repay/paystack/result"
+
+//        /***
+//         * Monify虚拟账号
+//         * @return
+//         */
+//        @POST("/v1/loan/get/reserved/account")
+//        fun queryMonify(@Query("accountId") accountId: String?): Observable<BaseRep<MonifyResult?>?>?
+        val GET_RESERVED_ACCOUNT = HOST + "/v1/loan/get/reserved/account"
+
+        ///***
+        // * redocly
+        // * @return
+        // */
+        //@POST("/v1/loan/get/redocly/repay/page")
+        //fun queryRedocly(
+        //    @Query("accountId") accountId: String?,
+        //    @Query("orderId") orderId: String?,
+        //    @Query("amount") amount: String?
+        //): Observable<BaseRep<RedoclyBean?>?>?
+        val REDOCLY_REPAY_PAGE = "/v1/loan/get/redocly/repay/page"
     }
 
 }

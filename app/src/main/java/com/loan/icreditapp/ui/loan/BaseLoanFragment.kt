@@ -14,6 +14,7 @@ import com.loan.icreditapp.bean.loan.RepayLoanResponseBean
 import com.loan.icreditapp.dialog.order.OrderInfoBean
 import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.ui.pay.PayActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -92,9 +93,10 @@ abstract class BaseLoanFragment : BaseFragment() {
                 amount = stage.amount.toString()
             }
         }
-        if (!TextUtils.isEmpty(amount)) {
-            uploadReplayLoad(mOrderInfo?.orderId!!, amount!!)
-        }
+        PayActivity.showMe(requireContext(), mOrderInfo?.orderId!!, amount!!)
+//        if (!TextUtils.isEmpty(amount)) {
+//            uploadReplayLoad(mOrderInfo?.orderId!!, amount!!)
+//        }
     }
 
     //订单ID ,申请金额

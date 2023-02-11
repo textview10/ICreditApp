@@ -23,6 +23,7 @@ import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.ui.profile.widget.SelectContainer
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -138,6 +139,7 @@ class AddBankAccount1Fragment : BaseFragment() {
                         ToastUtils.showShort("check bank account failure ")
                         return
                     }
+                    FirebaseUtils.logEvent("firebase_bank")
                     if (activity is BindNewCardActivity) {
                         var bindNewCardActivity : BindNewCardActivity = activity as BindNewCardActivity
                         bindNewCardActivity.toStep(BindNewCardActivity.SUCCESS)

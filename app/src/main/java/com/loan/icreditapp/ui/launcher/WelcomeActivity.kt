@@ -16,6 +16,7 @@ import com.loan.icreditapp.dialog.term.TermsDialog
 import com.loan.icreditapp.ui.login.SignInActivity
 import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.ToGooglePlayUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -47,6 +48,7 @@ class WelcomeActivity : BaseActivity() {
         tvSignIn = findViewById(R.id.tv_splash_signin)
         hasShowTerm = SPUtils.getInstance().getBoolean(KEY_SHOW_TERM)
 
+//        ToGooglePlayUtils.transferToGooglePlay(WelcomeActivity@this)
         dialog = TermsDialog(this)
         tvRegister?.setOnClickListener(View.OnClickListener {
             checkServerAvailable(object : CallBack {

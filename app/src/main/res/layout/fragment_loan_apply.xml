@@ -178,4 +178,17 @@
 
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/fl_apply_load_loading"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+
 </FrameLayout>

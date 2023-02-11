@@ -30,6 +30,7 @@ import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.ui.profile.widget.GenderCheckBox
 import com.loan.icreditapp.ui.profile.widget.SelectContainer
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -169,6 +170,7 @@ class AddProfile1Fragment : BaseFragment() {
                             var addProfileActivity : AddProfileActivity = activity as AddProfileActivity
                             addProfileActivity.toStep(AddProfileActivity.TO_STEP_2)
                         }
+                        FirebaseUtils.logEvent("firebase_data1")
                         ToastUtils.showShort("modify profile1 success")
                     }
                 }
