@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.ui.pay.presenter.*
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
 
 class PayFragment : BaseFragment() {
 
@@ -23,11 +26,14 @@ class PayFragment : BaseFragment() {
     private var amount: String? = null
     private var curPresenter: BasePresenter? = null
 
+    private var flNor : FrameLayout? = null
     private var flPayStack : RelativeLayout? = null
     private var flFlutterware : FrameLayout? = null
     private var flRedocly : FrameLayout? = null
     private var flMonify : FrameLayout? = null
+    private var flLoading : FrameLayout? = null
 
+    private var norPresenter : NorLoanPresenter? = null
     private var payStackPresenter : PayStackPresenter? = null
     private var flutterwarePresenter : FlutterwarePresenter? = null
     private var redoclyPresenter : RedoclyPresenter? = null
@@ -49,10 +55,20 @@ class PayFragment : BaseFragment() {
     }
 
     private fun initView(view: View) {
+        flNor = view.findViewById(R.id.fl_pay_nor)
         flPayStack = view.findViewById(R.id.fl_pay_paystack)
         flFlutterware = view.findViewById(R.id.fl_pay_flutterware)
         flRedocly = view.findViewById(R.id.fl_pay_redocly)
         flMonify= view.findViewById(R.id.fl_pay_monify)
+        flLoading= view.findViewById(R.id.fl_pay_loading)
+
+        flNor?.setOnClickListener(View.OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            curPresenter = norPresenter
+            startLoading()
+        })
 
         flPayStack?.setOnClickListener(View.OnClickListener {
             if (checkClickFast()){
@@ -85,6 +101,10 @@ class PayFragment : BaseFragment() {
     }
 
     private fun initData() {
+        if (norPresenter == null){
+            norPresenter = NorLoanPresenter(this)
+            norPresenter?.setObserver(MyObserver())
+        }
         if (payStackPresenter == null){
             payStackPresenter = PayStackPresenter(this)
             payStackPresenter?.setObserver(MyObserver())
@@ -108,6 +128,7 @@ class PayFragment : BaseFragment() {
             return
         }
         curPresenter?.requestUrl(orderId, amount)
+        flLoading?.visibility = View.VISIBLE
     }
 
     fun setData(orderId: String?, amount: String?) {
@@ -116,10 +137,12 @@ class PayFragment : BaseFragment() {
     }
 
     fun onWebViewEnd() {
+        flLoading?.visibility = View.VISIBLE
         curPresenter?.updateResult()
     }
 
     private fun toWebViewInternal(url : String){
+        flLoading?.visibility = View.GONE
         if (activity is PayActivity) {
             var payActivity = activity as PayActivity
             payActivity.toWebView(url)
@@ -133,19 +156,26 @@ class PayFragment : BaseFragment() {
         }
 
        override fun repaySuccess() {
-
+           flLoading?.visibility = View.GONE
+           activity?.finish()
+           ToastUtils.showShort("repay success")
+           EventBus.getDefault().post(UpdateLoanEvent())
        }
 
        override fun repayFailure(response: Response<String>, needTip: Boolean, desc : String?) {
+           flLoading?.visibility = View.GONE
            if (needTip){
                var responseStr  = StringBuffer()
                if (!TextUtils.isEmpty(desc)){
                    responseStr.append(desc)
                }
                if (response != null) {
-                   responseStr.append(response.body().toString())
+                   var body = response.body()
+                   if (body != null) {
+                       responseStr.append(body.toString())
+                   }
                }
-               ToastUtils.showShort(responseStr)
+               ToastUtils.showShort(responseStr.toString())
            }
        }
    }

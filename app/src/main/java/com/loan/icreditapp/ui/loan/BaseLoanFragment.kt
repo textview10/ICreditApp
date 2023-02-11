@@ -99,52 +99,6 @@ abstract class BaseLoanFragment : BaseFragment() {
 //        }
     }
 
-    //订单ID ,申请金额
-    private fun uploadReplayLoad(orderId : String, amount: String){
-        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        try {
-            jsonObject.put("accountId", Constant.mAccountId)
-            jsonObject.put("orderId", orderId)
-            jsonObject.put("amount", amount.toString())
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        //        Log.e(TAG, "111 id = " + Constant.mAccountId);
-        OkGo.post<String>(Api.LOAN_REPAY).tag(TAG)
-            .upJson(jsonObject)
-            .execute(object : StringCallback() {
-                override fun onSuccess(response: Response<String>) {
-                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
-                        return
-                    }
-                    val loanResponse: RepayLoanResponseBean? =
-                        checkResponseSuccess(response, RepayLoanResponseBean::class.java)
-                    if (loanResponse == null) {
-                        Log.e(TAG, " repay loan failure ." + response.body())
-                        return
-                    }
-                   if (!TextUtils.equals(loanResponse.status, "1")){
-                       ToastUtils.showShort("repay loan failure 1.")
-                       Log.e(TAG, " repay loan failure 1 ." + response.body())
-                       return
-                   }
-                    ToastUtils.showShort("repay loan success.")
-                    EventBus.getDefault().post(UpdateLoanEvent())
-                }
-
-                override fun onError(response: Response<String>) {
-                    super.onError(response)
-                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
-                        return
-                    }
-                    if (BuildConfig.DEBUG) {
-                        Log.e(TAG, " repay loan failure = " + response.body())
-                    }
-                    ToastUtils.showShort(" repay loan failure")
-                }
-            })
-    }
-
     override fun onDestroy() {
         OkGo.getInstance().cancelTag(TAG)
         super.onDestroy()
