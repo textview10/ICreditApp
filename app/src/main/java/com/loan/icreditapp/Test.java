@@ -7,6 +7,11 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+
+import com.loan.icreditapp.ui.pay.PayFragment;
+import com.loan.icreditapp.ui.pay.fragment.BasePresenter;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -47,6 +52,17 @@ public class Test {
         });
 
         et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+    }
+    private void toWebViewInternal1(String url) {
+
+    }
+
+    private class MyObserver1 implements BasePresenter.Observer {
+
+        @Override
+        public void toWebView(@NonNull String url) {
+            toWebViewInternal1(url);
+        }
     }
 
 //    private void chargeCard() {

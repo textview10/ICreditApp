@@ -24,5 +24,6 @@
     <color name="custom_dialog_check_text_color_light">#666666</color>
 
     <color name="blue">#0077f4</color>
+    <color name="red">#DF0000</color>
 
 </resources>

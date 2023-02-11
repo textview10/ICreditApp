@@ -11,7 +11,7 @@ import com.lzy.okgo.model.Response
 import org.json.JSONException
 import org.json.JSONObject
 
-class MonifyPresenter : BasePresenter {
+class FlutterwarePresenter : BasePresenter {
 
     constructor(payFragment: PayFragment) : super(payFragment) {
 
@@ -21,17 +21,19 @@ class MonifyPresenter : BasePresenter {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
+            jsonObject.put("orderId", orderId)
+            jsonObject.put("amount", amount)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        OkGo.post<String>(Api.GET_RESERVED_ACCOUNT).tag(PayFragment.TAG)
+        OkGo.post<String>(Api.REDOCLY_REPAY_PAGE).tag(PayFragment.TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
                     if (isDestroy()){
                         return
                     }
-                    Log.e(PayFragment.TAG, " monify presenter response = " + response.body().toString())
+                    Log.e(PayFragment.TAG, " redocly presenter response = " + response.body().toString())
                 }
 
                 override fun onError(response: Response<String>) {

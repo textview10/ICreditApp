@@ -6,6 +6,11 @@ import com.loan.icreditapp.ui.pay.PayFragment
 open abstract class BasePresenter {
     private var mPayFragment: PayFragment? = null
 
+    var orderId: String? = null
+    var amount: String? = null
+
+    var mObserver : Observer? = null
+
     constructor(payFragment: PayFragment) {
         mPayFragment = payFragment
     }
@@ -13,6 +18,11 @@ open abstract class BasePresenter {
     abstract fun requestUrl(orderId: String?, amount: String?)
 
     abstract fun updateResult()
+
+    fun setData(orderId: String?, amount: String?) {
+        this.orderId = orderId
+        this.amount = amount
+    }
 
     fun isDestroy(): Boolean {
         if (mPayFragment == null) {
@@ -24,5 +34,15 @@ open abstract class BasePresenter {
             return true
         }
         return activity.isFinishing || activity.isDestroyed
+    }
+
+    interface Observer {
+        fun toWebView(url : String)
+
+
+    }
+
+    fun setObserver(observer: Observer){
+        mObserver = observer
     }
 }

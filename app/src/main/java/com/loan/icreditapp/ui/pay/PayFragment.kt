@@ -1,24 +1,14 @@
 package com.loan.icreditapp.ui.pay
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.blankj.utilcode.util.ToastUtils
-import com.loan.icreditapp.BuildConfig
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import com.loan.icreditapp.R
-import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
-import com.loan.icreditapp.dialog.order.OrderInfoBean
-import com.loan.icreditapp.global.Constant
-import com.loan.icreditapp.util.BuildRequestJsonUtils
-import com.lzy.okgo.OkGo
-import com.lzy.okgo.callback.StringCallback
-import com.lzy.okgo.model.Response
-import org.json.JSONException
-import org.json.JSONObject
+import com.loan.icreditapp.ui.pay.fragment.*
 
 class PayFragment : BaseFragment() {
 
@@ -28,6 +18,17 @@ class PayFragment : BaseFragment() {
 
     private var orderId: String? = null
     private var amount: String? = null
+    private var curPresenter: BasePresenter? = null
+
+    private var flPayStack : RelativeLayout? = null
+    private var flFlutterware : FrameLayout? = null
+    private var flRedocly : FrameLayout? = null
+    private var flMonify : FrameLayout? = null
+
+    private var payStackPresenter : PayStackPresenter? = null
+    private var flutterwarePresenter : FlutterwarePresenter? = null
+    private var redoclyPresenter : RedoclyPresenter? = null
+    private var monifyPresenter : MonifyPresenter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,40 +41,93 @@ class PayFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requestMonify()
+        initView(view)
+        initData()
     }
 
-    private fun requestMonify() {
-        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        try {
-            jsonObject.put("accountId", Constant.mAccountId)
-        } catch (e: JSONException) {
-            e.printStackTrace()
+    private fun initView(view: View) {
+        flPayStack = view.findViewById(R.id.fl_pay_paystack)
+        flFlutterware = view.findViewById(R.id.fl_pay_flutterware)
+        flRedocly = view.findViewById(R.id.fl_pay_redocly)
+        flMonify= view.findViewById(R.id.fl_pay_monify)
+
+        flPayStack?.setOnClickListener(View.OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            curPresenter = payStackPresenter
+            startLoading()
+        })
+        flFlutterware?.setOnClickListener(View.OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            curPresenter = flutterwarePresenter
+            startLoading()
+        })
+        flRedocly?.setOnClickListener(View.OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            curPresenter = redoclyPresenter
+            startLoading()
+        })
+        flMonify?.setOnClickListener(View.OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            curPresenter = monifyPresenter
+            startLoading()
+        })
+    }
+
+    private fun initData() {
+        if (payStackPresenter == null){
+            payStackPresenter = PayStackPresenter(this)
+            payStackPresenter?.setObserver(MyObserver())
         }
-        OkGo.post<String>(Api.GET_RESERVED_ACCOUNT).tag(TAG)
-            .upJson(jsonObject)
-            .execute(object : StringCallback() {
-                override fun onSuccess(response: Response<String>) {
-                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
-                        return
-                    }
-                    if (isRemoving || isDetached) {
-                        return
-                    }
-                    Log.e(TAG, " response = " + response.body().toString())
-                }
-
-                override fun onError(response: Response<String>) {
-                    super.onError(response)
-
-                }
-            })
+        if (flutterwarePresenter == null){
+            flutterwarePresenter = FlutterwarePresenter(this)
+            flutterwarePresenter?.setObserver(MyObserver())
+        }
+        if (redoclyPresenter == null){
+            redoclyPresenter = RedoclyPresenter(this)
+            redoclyPresenter?.setObserver(MyObserver())
+        }
+        if (monifyPresenter == null){
+            monifyPresenter = MonifyPresenter(this)
+            monifyPresenter?.setObserver(MyObserver())
+        }
     }
 
-    // @Query("orderId") orderId: String?,
-//        //    @Query("amount") amount: String?
+    private fun startLoading(){
+        if (curPresenter == null){
+            return
+        }
+        curPresenter?.requestUrl(orderId, amount)
+    }
+
     fun setData(orderId: String?, amount: String?) {
         this.orderId = orderId
         this.amount = amount
     }
+
+    fun onWebViewEnd() {
+        curPresenter?.updateResult()
+    }
+
+    private fun toWebViewInternal(url : String){
+        if (activity is PayActivity) {
+            var payActivity = activity as PayActivity
+            payActivity.toWebView(url)
+        }
+    }
+
+   private inner class MyObserver : BasePresenter.Observer {
+
+        override fun toWebView(url: String) {
+            toWebViewInternal(url)
+        }
+    }
+
 }

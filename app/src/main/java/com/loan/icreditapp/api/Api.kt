@@ -131,7 +131,7 @@ class Api {
         //    @Query("accountId") accountId: String?,
         //    @Query("orderId") orderId: String?
         //): Observable<BaseRep<PayStackBean?>?>?
-        val PAY_STACK = "/v1/loan/repay/paystack"
+        val PAY_STACK = HOST + "/v1/loan/repay/paystack"
 
 //        /***
 //         * 查询paystck还款结果
@@ -143,7 +143,7 @@ class Api {
 //            @Query("orderId") orderId: String?,
 //            @Query("reference") reference: String?
 //        ): Observable<BaseRep<PayStackResult?>?>?
-        val PAY_STACK_RESULT = "/v1/loan/repay/paystack/result"
+        val PAY_STACK_RESULT = HOST + "/v1/loan/repay/paystack/result"
 
 //        /***
 //         * Monify虚拟账号
@@ -163,7 +163,7 @@ class Api {
         //    @Query("orderId") orderId: String?,
         //    @Query("amount") amount: String?
         //): Observable<BaseRep<RedoclyBean?>?>?
-        val REDOCLY_REPAY_PAGE = "/v1/loan/get/redocly/repay/page"
+        val REDOCLY_REPAY_PAGE = HOST + "/v1/loan/get/redocly/repay/page"
     }
 
 }
