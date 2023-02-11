@@ -98,15 +98,11 @@ class Api {
 //        @POST("/v1/loan/uploadJson")
 //        fun uploadJsonon(@Body params: flutterWaveParams?): Observable<BaseRep<verifyFlutterBean?>?>?
         //* 上传后端校验Flutterwave
-        val UPLOAD_JSON : String = "/v1/loan/uploadJson"
+        val UPLOAD_JSON : String = HOST + "/v1/loan/uploadJson"
 
         //* 获取Flutterwave参数
         // * chargeType // 1 绑卡 2 主动还款
-//        @Query("account_id") account_id: String?,
-//        @Query("token") token: String?,
-//        @Query("orderId") orderId: String?,
-//        @Query("chargeType") chargeType: String?
-        val GET_TEXT_REF : String = "/v1/loan/getTxRef"
+        val GET_TEXT_REF : String = HOST + "/v1/loan/getTxRef"
 
 //        /**
 //         * 查询flutter订单状态
@@ -121,48 +117,18 @@ class Api {
 //            @Query("orderId") orderId: String?,
 //            @Query("txRef") txRef: String?
 //        ): Observable<BaseRep<OrderStatus?>?>?
-        val GET_FLUTTER_WAVE_RESULT = "/v1/loan/getFlutterwaveResult"
+        val GET_FLUTTER_WAVE_RESULT = HOST + "/v1/loan/getFlutterwaveResult"
 
         //* 获取 url
-        // * @return
-        // */
-        //@POST("/v1/loan/repay/paystack")
-        //fun getPayStackUrl(
-        //    @Query("accountId") accountId: String?,
-        //    @Query("orderId") orderId: String?
-        //): Observable<BaseRep<PayStackBean?>?>?
         val PAY_STACK = HOST + "/v1/loan/repay/paystack"
 
-//        /***
 //         * 查询paystck还款结果
-//         * @return
-//         */
-//        @POST("/v1/loan/repay/paystack/result")
-//        fun payStackResult(
-//            @Query("accountId") accountId: String?,
-//            @Query("orderId") orderId: String?,
-//            @Query("reference") reference: String?
-//        ): Observable<BaseRep<PayStackResult?>?>?
         val PAY_STACK_RESULT = HOST + "/v1/loan/repay/paystack/result"
 
-//        /***
 //         * Monify虚拟账号
-//         * @return
-//         */
-//        @POST("/v1/loan/get/reserved/account")
-//        fun queryMonify(@Query("accountId") accountId: String?): Observable<BaseRep<MonifyResult?>?>?
         val GET_RESERVED_ACCOUNT = HOST + "/v1/loan/get/reserved/account"
 
-        ///***
         // * redocly
-        // * @return
-        // */
-        //@POST("/v1/loan/get/redocly/repay/page")
-        //fun queryRedocly(
-        //    @Query("accountId") accountId: String?,
-        //    @Query("orderId") orderId: String?,
-        //    @Query("amount") amount: String?
-        //): Observable<BaseRep<RedoclyBean?>?>?
         val REDOCLY_REPAY_PAGE = HOST + "/v1/loan/get/redocly/repay/page"
     }
 

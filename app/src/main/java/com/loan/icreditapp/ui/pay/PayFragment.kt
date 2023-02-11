@@ -1,14 +1,17 @@
 package com.loan.icreditapp.ui.pay
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseFragment
-import com.loan.icreditapp.ui.pay.fragment.*
+import com.loan.icreditapp.ui.pay.presenter.*
+import com.lzy.okgo.model.Response
 
 class PayFragment : BaseFragment() {
 
@@ -128,6 +131,23 @@ class PayFragment : BaseFragment() {
         override fun toWebView(url: String) {
             toWebViewInternal(url)
         }
-    }
+
+       override fun repaySuccess() {
+
+       }
+
+       override fun repayFailure(response: Response<String>, needTip: Boolean, desc : String?) {
+           if (needTip){
+               var responseStr  = StringBuffer()
+               if (!TextUtils.isEmpty(desc)){
+                   responseStr.append(desc)
+               }
+               if (response != null) {
+                   responseStr.append(response.body().toString())
+               }
+               ToastUtils.showShort(responseStr)
+           }
+       }
+   }
 
 }

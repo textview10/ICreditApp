@@ -1,10 +1,9 @@
-package com.loan.icreditapp.ui.pay.fragment
+package com.loan.icreditapp.ui.pay.presenter
 
 import android.text.TextUtils
-import android.util.Log
-import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.pay.PayStackResponseBean
+import com.loan.icreditapp.bean.pay.PayStackResultBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.pay.PayFragment
 import com.loan.icreditapp.util.BuildRequestJsonUtils
@@ -40,12 +39,14 @@ class PayStackPresenter : BasePresenter {
                     }
                     var payStackBean = CheckResponseUtils.checkResponseSuccess(response,  PayStackResponseBean::class.java)
                     if (payStackBean == null){
+                        mObserver?.repayFailure(response, false, null)
                         return
                     }
                     mPayStackBean = payStackBean
                     if (!TextUtils.isEmpty(mPayStackBean!!.authorizationURL)){
                         mObserver?.toWebView(mPayStackBean!!.authorizationURL!!)
-                        Log.e(PayFragment.TAG, " pay stack presenter response = " + response.body().toString())
+                    } else {
+                        mObserver?.repayFailure(response, true, "request payStack failure")
                     }
                 }
 
@@ -54,7 +55,7 @@ class PayStackPresenter : BasePresenter {
                     if (isDestroy()){
                         return
                     }
-                    ToastUtils.showShort("pay stack failure " + response.body().toString())
+                    mObserver?.repayFailure(response, true, "request payStack error")
                 }
             })
     }
@@ -77,8 +78,20 @@ class PayStackPresenter : BasePresenter {
                     if (isDestroy()){
                         return
                     }
-
-                    Log.e(PayFragment.TAG, " pay stack presenter response = " + response.body().toString())
+                    var payStackResult = CheckResponseUtils.checkResponseSuccess(response, PayStackResultBean::class.java)
+                    if (payStackResult == null){
+                        mObserver?.repayFailure(response, false, null)
+                        return
+                    }
+                    if (TextUtils.isEmpty(payStackResult.status)){
+                        mObserver?.repayFailure(response, true, "update payStack result failure")
+                        return
+                    }
+                    if (!TextUtils.equals(payStackResult.status, "1")){
+                        mObserver?.repayFailure(response, true, "update payStack result status not correct")
+                        return
+                    }
+                    mObserver?.repaySuccess()
                 }
 
                 override fun onError(response: Response<String>) {
@@ -86,7 +99,7 @@ class PayStackPresenter : BasePresenter {
                     if (isDestroy()){
                         return
                     }
-
+                    mObserver?.repayFailure(response, true, "update payStack result error")
                 }
             })
     }

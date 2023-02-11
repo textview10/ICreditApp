@@ -85,4 +85,7 @@ dependencies {
     implementation 'top.zibin:Luban:1.1.8'
     //银行卡支付
     implementation 'co.paystack.android:paystack:3.1.2'
+    implementation ('com.github.flutterwave.rave-android:rave_android:2.1.39'){
+        exclude module:'logging-interceptor'
+    }
 }

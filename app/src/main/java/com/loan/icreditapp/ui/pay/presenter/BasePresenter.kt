@@ -1,7 +1,7 @@
-package com.loan.icreditapp.ui.pay.fragment
+package com.loan.icreditapp.ui.pay.presenter
 
-import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.ui.pay.PayFragment
+import com.lzy.okgo.model.Response
 
 open abstract class BasePresenter {
     private var mPayFragment: PayFragment? = null
@@ -39,7 +39,9 @@ open abstract class BasePresenter {
     interface Observer {
         fun toWebView(url : String)
 
+        fun repaySuccess()
 
+        fun repayFailure(response : Response<String>, needTip : Boolean, desc : String?)
     }
 
     fun setObserver(observer: Observer){
