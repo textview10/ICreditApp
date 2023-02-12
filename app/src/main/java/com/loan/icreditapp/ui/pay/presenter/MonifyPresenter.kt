@@ -15,6 +15,8 @@ import org.json.JSONObject
 
 class MonifyPresenter : BasePresenter {
 
+    private var mMonifyBean : MonifyResponseBean? = null
+
     constructor(payFragment: PayFragment) : super(payFragment) {
 
     }
@@ -43,6 +45,7 @@ class MonifyPresenter : BasePresenter {
                     }
                     if (TextUtils.equals(monifyBean.reserved, "1")) {
                         mObserver?.showMonifyPage(monifyBean)
+                        mMonifyBean = monifyBean
                     }
                 }
 
@@ -54,6 +57,17 @@ class MonifyPresenter : BasePresenter {
                     mObserver?.repayFailure(response, false, "monify error")
                 }
             })
+    }
+
+    fun getCLipBoardText() : String?{
+        if (mMonifyBean == null){
+            return null
+        }
+        var sb = StringBuffer()
+        if (!TextUtils.isEmpty(mMonifyBean!!.accountNumber)){
+            sb.append(mMonifyBean!!.accountNumber)
+        }
+       return sb.toString()
     }
 
     override fun updateResult() {

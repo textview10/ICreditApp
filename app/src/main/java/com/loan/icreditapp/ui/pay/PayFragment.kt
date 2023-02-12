@@ -1,5 +1,7 @@
 package com.loan.icreditapp.ui.pay
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -9,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseFragment
@@ -18,6 +22,9 @@ import com.loan.icreditapp.ui.pay.presenter.*
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.lzy.okgo.model.Response
 import org.greenrobot.eventbus.EventBus
+import androidx.core.content.ContextCompat.getSystemService
+import com.blankj.utilcode.util.ClipboardUtils
+
 
 class PayFragment : BaseFragment() {
 
@@ -33,8 +40,8 @@ class PayFragment : BaseFragment() {
     private var flPayStack: RelativeLayout? = null
     private var flFlutterware: FrameLayout? = null
     private var flRedocly: FrameLayout? = null
-    private var flMonify: FrameLayout? = null
     private var flLoading: FrameLayout? = null
+    private var tvCopy: AppCompatTextView? = null
 
     private var norPresenter: NorLoanPresenter? = null
     private var payStackPresenter: PayStackPresenter? = null
@@ -61,6 +68,10 @@ class PayFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initView(view)
         initData()
+
+        curPresenter = monifyPresenter
+        llMonifyResult?.visibility = GONE
+        startLoading()
     }
 
     private fun initView(view: View) {
@@ -68,8 +79,8 @@ class PayFragment : BaseFragment() {
         flPayStack = view.findViewById(R.id.fl_pay_paystack)
         flFlutterware = view.findViewById(R.id.fl_pay_flutterware)
         flRedocly = view.findViewById(R.id.fl_pay_redocly)
-        flMonify = view.findViewById(R.id.fl_pay_monify)
         flLoading = view.findViewById(R.id.fl_pay_loading)
+        tvCopy = view.findViewById(R.id.tv_pay_copy_account_num)
 
         llMonifyResult = view.findViewById(R.id.ll_play_monify_result)
         selectBankName = view.findViewById(R.id.select_container_pay_bank_name)
@@ -111,12 +122,18 @@ class PayFragment : BaseFragment() {
             curPresenter = redoclyPresenter
             startLoading()
         })
-        flMonify?.setOnClickListener(View.OnClickListener {
-            if (checkClickFast()) {
+        tvCopy?.setOnClickListener(OnClickListener {
+            if (checkClickFast()){
                 return@OnClickListener
             }
-            curPresenter = monifyPresenter
-            startLoading()
+            if (monifyPresenter == null){
+                return@OnClickListener
+            }
+            var text = monifyPresenter!!.getCLipBoardText()
+            if (!TextUtils.isEmpty(text)){
+                ClipboardUtils.copyText(text)
+                ToastUtils.showShort("Copy " + text + " to clipboard success")
+            }
         })
     }
 
@@ -149,7 +166,6 @@ class PayFragment : BaseFragment() {
         }
         curPresenter?.requestUrl(orderId, amount)
         flLoading?.visibility = VISIBLE
-        llMonifyResult?.visibility = GONE
     }
 
     fun setData(orderId: String?, amount: String?) {
