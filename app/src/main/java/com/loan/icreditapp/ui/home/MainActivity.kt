@@ -2,6 +2,8 @@ package com.loan.icreditapp.ui.home
 
 import android.Manifest
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
@@ -30,6 +32,7 @@ import com.loan.icreditapp.ui.home.fragment.*
 import com.loan.icreditapp.ui.setting.PageType
 import com.loan.icreditapp.ui.setting.SettingFragment
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.RateUsUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -44,6 +47,8 @@ class MainActivity : BaseActivity() {
     private var flSetting: FrameLayout? = null
     private var ivMenu: ImageView? = null
     private var tvTitle: AppCompatTextView? = null
+
+    private var handler: Handler = Handler(Looper.getMainLooper())
 
     @PageType
     private
@@ -68,7 +73,7 @@ class MainActivity : BaseActivity() {
 
         FireBaseMgr.sInstance.reportFcmToken()
 
-        UpdateMgr.sInstance.setOnShowUpdateListener(object : UpdateMgr.OnShowUpdateListener{
+        UpdateMgr.sInstance.setOnShowUpdateListener(object : UpdateMgr.OnShowUpdateListener {
             override fun onShowDialog(updateBean: UpdateResponseBean) {
 
             }
@@ -111,7 +116,7 @@ class MainActivity : BaseActivity() {
 //        val hasPermissionReadPhoneState =
 //            PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
 //                if (false && hasPermission) {
-        if (hasPermission ) {
+        if (hasPermission) {
             executeNext()
         } else {
             requestPermissionInternal()
@@ -162,6 +167,24 @@ class MainActivity : BaseActivity() {
 //                    }
 //                }
 //            })
+        handler.postDelayed(Runnable {
+            checkAndShowRateUs()
+        }, 500)
+    }
+
+    private fun checkAndShowRateUs() {
+        var hasShowRate = SPUtils.getInstance().getBoolean(Constant.KEY_HAS_SHOW_RATE)
+        if (!hasShowRate) {
+            var count = SPUtils.getInstance().getInt(Constant.KEY_SHOW_RATE_COUNT, 0)
+            if (count >= 2) {
+                var rateUs = RateUsUtils()
+                rateUs.showRate(this)
+                SPUtils.getInstance().put(Constant.KEY_HAS_SHOW_RATE, true)
+            } else {
+                count++
+                SPUtils.getInstance().put(Constant.KEY_SHOW_RATE_COUNT, count)
+            }
+        }
     }
 
     fun updatePageByType(@PageType type: Int) {
@@ -245,15 +268,20 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-       onBackPressedInternal()
+        onBackPressedInternal()
     }
 
-    private fun onBackPressedInternal() : Boolean{
-        if (drawerLayout?.isDrawerVisible(GravityCompat.START) == true){
+    private fun onBackPressedInternal(): Boolean {
+        if (drawerLayout?.isDrawerVisible(GravityCompat.START) == true) {
             drawerLayout?.closeDrawer(GravityCompat.START)
             return true
         }
         finish()
         return false
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacksAndMessages(null)
+        super.onDestroy()
     }
 }
