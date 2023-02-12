@@ -43,6 +43,7 @@
     <string name="setting_help">Help</string>
     <string name="setting_about">About</string>
     <string name="setting_logout">Logout</string>
+    <string name="setting_rate_us">RateUs</string>
     <string name="setting_test1">to test profile</string>
 
     <string name="add_profile_title_1">Basic information about you</string>

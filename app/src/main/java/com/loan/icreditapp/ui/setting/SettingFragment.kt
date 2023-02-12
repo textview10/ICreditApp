@@ -22,6 +22,7 @@ import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.RateUsUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.HttpHeaders
@@ -36,6 +37,7 @@ class SettingFragment : BaseFragment() {
     private var mAdater: SettingAdapter? = null
 
     private var mList: ArrayList<SettingBean> = ArrayList()
+    private var rateUsUtils: RateUsUtils? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +51,9 @@ class SettingFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvContent = view.findViewById(R.id.rv_setting_content)
-
+        if (rateUsUtils == null){
+            rateUsUtils = RateUsUtils()
+        }
         buildSettingList()
         var manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvContent?.layoutManager = manager
@@ -75,6 +79,10 @@ class SettingFragment : BaseFragment() {
                     PageType.TEST_TO_PROFILE -> {
                         var intent: Intent = Intent(activity, AddProfileActivity::class.java)
                         activity?.startActivity(intent)
+                        closeSlide()
+                    }
+                    PageType.RATE_US -> {
+                        activity?.let { rateUsUtils?.showRate(it) }
                         closeSlide()
                     }
                 }
@@ -119,6 +127,8 @@ class SettingFragment : BaseFragment() {
 //        mList.add(SettingBean(R.drawable.ic_help, R.string.setting_help, PageType.HELP, true))
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
+
+        mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
         if (BuildConfig.DEBUG && false) {
             mList.add(
                 SettingBean(
