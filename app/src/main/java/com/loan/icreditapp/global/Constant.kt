@@ -1,6 +1,5 @@
 package com.loan.icreditapp.global
 
-import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.dialog.order.OrderInfoBean
 
 class Constant {
@@ -25,6 +24,8 @@ class Constant {
         var mFirebaseToken: String? = null
 
         var isNewToken = false
+
+        const val KEY_FIREBASE_DATA : String = "key_firebase_data"
     }
 
 }

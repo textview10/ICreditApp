@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatTextView
 import com.loan.icreditapp.R
+import com.loan.icreditapp.util.FirebaseUtils
 
 class LoanOverDueFragment : BaseLoanFragment() {
 
@@ -27,6 +28,10 @@ class LoanOverDueFragment : BaseLoanFragment() {
         flCommit = view.findViewById(R.id.fl_loan_overdue_commit)
         tvTotalAmount = view.findViewById(R.id.tv_loan_overdue_total_amount)
         tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
+
+        if (checkNeedShowLog()){
+            FirebaseUtils.logEvent("firebase_overdue")
+        }
 
         flCommit?.setOnClickListener(View.OnClickListener {
             clickRepayLoad()

@@ -18,7 +18,9 @@ import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.constant.PermissionConstants
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
@@ -28,6 +30,7 @@ import com.loan.icreditapp.bean.loan.CheckLoanResponseBean
 import com.loan.icreditapp.bean.loan.ProductResponseBean
 import com.loan.icreditapp.bean.loan.TrialResponseBean
 import com.loan.icreditapp.collect.CollectDataMgr
+import com.loan.icreditapp.data.FirebaseData
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.dialog.producttrial.ProductTrialDialog
 import com.loan.icreditapp.event.BankListEvent
@@ -449,6 +452,11 @@ class LoanApplyFragment : BaseLoanFragment() {
                         trialDialog?.dismiss()
                     }
                     FirebaseUtils.logEvent("firebase_apply_confirm")
+
+                    var data = FirebaseData()
+                    data.orderId = orderId
+                    data.status = 1
+                    SPUtils.getInstance().put(Constant.KEY_FIREBASE_DATA, GsonUtils.toJson(data))
                     ToastUtils.showShort("apply load success")
                     EventBus.getDefault().post(UpdateLoanEvent())
                 }

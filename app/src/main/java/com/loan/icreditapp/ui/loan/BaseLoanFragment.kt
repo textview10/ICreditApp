@@ -2,26 +2,18 @@ package com.loan.icreditapp.ui.loan
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
+import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
-import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
-import com.loan.icreditapp.bean.loan.RepayLoanResponseBean
+import com.loan.icreditapp.data.FirebaseData
 import com.loan.icreditapp.dialog.order.OrderInfoBean
-import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.pay.PayActivity
-import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
-import com.lzy.okgo.callback.StringCallback
-import com.lzy.okgo.model.Response
-import org.greenrobot.eventbus.EventBus
-import org.json.JSONException
-import org.json.JSONObject
 
 abstract class BaseLoanFragment : BaseFragment() {
 
@@ -97,6 +89,26 @@ abstract class BaseLoanFragment : BaseFragment() {
 //        if (!TextUtils.isEmpty(amount)) {
 //            uploadReplayLoad(mOrderInfo?.orderId!!, amount!!)
 //        }
+    }
+
+    fun checkNeedShowLog() : Boolean{
+        if (mOrderInfo == null){
+            return false
+        }
+        var orderId : String? = mOrderInfo!!.orderId
+        var dataStr = SPUtils.getInstance().getString(Constant.KEY_FIREBASE_DATA)
+        if (!TextUtils.isEmpty(dataStr)){
+            var firebaseData = GsonUtils.fromJson(dataStr, FirebaseData::class.java)
+            if (firebaseData != null){
+                if (TextUtils.equals(firebaseData.orderId, orderId)) {
+                    if (firebaseData.status == 1){
+                        SPUtils.getInstance().put(Constant.KEY_FIREBASE_DATA, "")
+                        return true
+                    }
+                }
+            }
+        }
+        return false
     }
 
     override fun onDestroy() {
