@@ -97,7 +97,6 @@
                 android:id="@+id/fl_pay_flutterware"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:foreground="?attr/selectableItemBackground">
 
@@ -137,8 +136,8 @@
                 android:id="@+id/ll_play_monify_result"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-               >
+                android:visibility="gone"
+                android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"

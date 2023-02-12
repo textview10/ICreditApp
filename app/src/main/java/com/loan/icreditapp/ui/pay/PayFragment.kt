@@ -93,6 +93,8 @@ class PayFragment : BaseFragment() {
         selectAccountName?.setShowMode()
         selectAccountNumber?.setShowMode()
 
+        flFlutterware?.visibility = GONE
+
         flNor?.setOnClickListener(View.OnClickListener {
             if (checkClickFast()) {
                 return@OnClickListener
