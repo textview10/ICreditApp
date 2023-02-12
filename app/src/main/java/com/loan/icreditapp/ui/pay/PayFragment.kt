@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.ToastUtils
@@ -24,6 +25,8 @@ import com.lzy.okgo.model.Response
 import org.greenrobot.eventbus.EventBus
 import androidx.core.content.ContextCompat.getSystemService
 import com.blankj.utilcode.util.ClipboardUtils
+import com.blankj.utilcode.util.GsonUtils
+import net.entity.bean.FlutterWaveResult
 
 
 class PayFragment : BaseFragment() {
@@ -93,7 +96,7 @@ class PayFragment : BaseFragment() {
         selectAccountName?.setShowMode()
         selectAccountNumber?.setShowMode()
 
-        flFlutterware?.visibility = GONE
+//        flFlutterware?.visibility = GONE
 
         flNor?.setOnClickListener(View.OnClickListener {
             if (checkClickFast()) {
@@ -178,6 +181,30 @@ class PayFragment : BaseFragment() {
     fun onWebViewEnd() {
         flLoading?.visibility = View.VISIBLE
         curPresenter?.updateResult()
+    }
+
+    fun onFlutterWaveResult(isSuccess : Boolean , bean : FlutterWaveResult?) {
+        var statusOk = false
+        if (bean != null){
+            statusOk = TextUtils.equals(bean.status, "success")
+        }
+        if (!isSuccess || !statusOk){
+            var sb = StringBuffer()
+            sb.append("Flutterware result error")
+            if (bean != null){
+                if (!isSuccess && bean.data != null){
+                    sb.append(bean!!.data!!.vbvrespmessage)
+                } else {
+                    sb.append(GsonUtils.toJson(bean))
+                }
+            }
+            flLoading?.visibility = View.GONE
+            ToastUtils.showShort( sb.toString())
+            return
+        }
+        flLoading?.visibility = View.VISIBLE
+        flutterwarePresenter?.setFlutterwareBean(bean!!)
+        flutterwarePresenter?.updateResult()
     }
 
     private fun toWebViewInternal(url: String) {

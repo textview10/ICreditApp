@@ -83,11 +83,11 @@ dependencies {
     implementation 'io.github.scwang90:refresh-header-material:2.0.5'
 
     implementation 'com.alibaba:fastjson:1.2.76'
-    implementation 'top.zibin:Luban:1.1.8'
+//    implementation 'top.zibin:Luban:1.1.8'
     //银行卡支付
     implementation 'co.paystack.android:paystack:3.1.2'
     implementation('com.github.flutterwave.rave-android:rave_android:2.1.39') {
-        exclude module: 'logging-interceptor'
+
     }
 
 }

@@ -3,23 +3,31 @@ package com.loan.icreditapp.ui.pay
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.Toast
 import com.blankj.utilcode.util.BarUtils
+import com.flutterwave.raveandroid.RavePayActivity
+import com.flutterwave.raveandroid.rave_java_commons.RaveConstants
+import com.google.gson.Gson
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
 import com.loan.icreditapp.ui.webview.WebViewFragment
+import net.entity.bean.FlutterWaveResult
 
 class PayActivity : BaseActivity() {
+
+    private var TAG = "PayActivity"
 
     private var mAmount: String? = null
     private var mOrderId: String? = null
 
-    private var webViewFragment : WebViewFragment? = null
-    private var payFragment : PayFragment? = null
+    private var webViewFragment: WebViewFragment? = null
+    private var payFragment: PayFragment? = null
     private var flWebView: FrameLayout? = null
     private var ivBack: ImageView? = null
 
@@ -27,7 +35,7 @@ class PayActivity : BaseActivity() {
         const val EXTRA_ORDER_ID = "extra_order_id"
         const val EXTRA_AMOUNT = "extra_amount"
 
-        fun showMe(context: Context, orderId : String, amount : String){
+        fun showMe(context: Context, orderId: String, amount: String) {
             var intent = Intent(context, PayActivity::class.java)
             intent.putExtra(EXTRA_AMOUNT, amount)
             intent.putExtra(EXTRA_ORDER_ID, orderId)
@@ -50,7 +58,7 @@ class PayActivity : BaseActivity() {
         toFragment(payFragment)
     }
 
-    private fun handleIntent(){
+    private fun handleIntent() {
         mAmount = intent.getStringExtra(EXTRA_AMOUNT)
         mOrderId = intent.getStringExtra(EXTRA_ORDER_ID)
     }
@@ -67,7 +75,7 @@ class PayActivity : BaseActivity() {
         return R.id.fl_pay_container
     }
 
-    fun toWebView(url : String){
+    fun toWebView(url: String) {
         flWebView?.visibility = View.VISIBLE
         if (webViewFragment == null) {
             webViewFragment = WebViewFragment()
@@ -97,4 +105,20 @@ class PayActivity : BaseActivity() {
         finish()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RaveConstants.RAVE_REQUEST_CODE && data != null) {
+            var mJsonString = data.getStringExtra("response")
+            val bean = Gson().fromJson(
+                mJsonString, FlutterWaveResult::class.java
+            )
+            var resultFlag : Boolean = false
+            if (resultCode == RavePayActivity.RESULT_SUCCESS) {
+                resultFlag = true
+            } else if (resultCode == RavePayActivity.RESULT_ERROR) {
+
+            }
+            payFragment?.onFlutterWaveResult(resultFlag, bean)
+        }
+    }
 }

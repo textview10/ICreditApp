@@ -1,6 +1,8 @@
 package com.loan.icreditapp.ui.pay.presenter
 
 import android.text.TextUtils
+import com.blankj.utilcode.util.GsonUtils
+import com.flutterwave.raveandroid.RaveUiManager
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.pay.FlutterwareResponse1Bean
 import com.loan.icreditapp.bean.pay.FlutterwareResponse2Bean
@@ -12,12 +14,14 @@ import com.loan.icreditapp.util.CheckResponseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import net.entity.bean.FlutterWaveResult
 import org.json.JSONException
 import org.json.JSONObject
 
 class FlutterwarePresenter : BasePresenter {
 
-    private var txRef : String? = null
+    private var mTxRef : String? = null
+    private var mBean : FlutterWaveResult? = null
 
     constructor(payFragment: PayFragment) : super(payFragment) {
 
@@ -49,7 +53,28 @@ class FlutterwarePresenter : BasePresenter {
                         mObserver?.repayFailure(response, true, "request getTextRef = null")
                         return
                     }
-                    uploadJson(flutterware1Bean!!.txRef!!, "")
+                    var card = flutterware1Bean.card
+                    if (card == null){
+                        card = true
+                    }
+                    var account = flutterware1Bean.account
+                    if (account == null){
+                        account = false
+                    }
+                    var transfer = flutterware1Bean.transfer
+                    if (transfer == null){
+                        transfer = false
+                    }
+                    var ussd = flutterware1Bean.ussd
+                    if (ussd == null){
+                        ussd = false
+                    }
+                    mTxRef = flutterware1Bean.txRef
+                    RaveUiManager(mPayFragment!!.activity).acceptAccountPayments(account).acceptCardPayments(card)
+                        .acceptBankTransferPayments(transfer).acceptUssdPayments(ussd)
+                        .setAmount(flutterware1Bean.amount!!.toDouble()).setCurrency(flutterware1Bean.currency).setfName(flutterware1Bean.firstName)
+                        .setlName(flutterware1Bean.lastName).setEmail(flutterware1Bean.email).setPublicKey(flutterware1Bean.publicKey)
+                        .setEncryptionKey(flutterware1Bean.encryptionKey).setTxRef(flutterware1Bean.txRef).onStagingEnv(false).initialize()
                 }
 
                 override fun onError(response: Response<String>) {
@@ -62,15 +87,20 @@ class FlutterwarePresenter : BasePresenter {
             })
     }
 
-    private fun uploadJson(txRef : String, jsonStr : String){
+
+    fun setFlutterwareBean(bean: FlutterWaveResult) {
+        mBean = bean
+        uploadJson()
+    }
+
+    private fun uploadJson(){
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        this.txRef = txRef
         try {
             jsonObject.put("accountId", Constant.mAccountId)
             jsonObject.put("orderId", orderId)
             jsonObject.put("chargeType", "2")
-            jsonObject.put("txRef", txRef)
-            jsonObject.put("jsonStr", jsonStr)
+            jsonObject.put("txRef", mTxRef)
+            jsonObject.put("jsonStr", GsonUtils.toJson(mBean))
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -87,8 +117,7 @@ class FlutterwarePresenter : BasePresenter {
                         return
                     }
                     if (TextUtils.equals(flutterware2Bean.status, "1")){
-                        // TODO
-//                        mObserver?.repaySuccess()
+                        updateResult()
                     } else {
                         mObserver?.repayFailure(response, true, "flutterware uploadJson status != 1")
                     }
@@ -109,7 +138,7 @@ class FlutterwarePresenter : BasePresenter {
         try {
             jsonObject.put("accountId", Constant.mAccountId)
             jsonObject.put("orderId", orderId)
-            jsonObject.put("txRef", txRef)
+            jsonObject.put("txRef", mTxRef)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -141,6 +170,4 @@ class FlutterwarePresenter : BasePresenter {
                 }
             })
     }
-
-
 }

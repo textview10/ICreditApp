@@ -5,7 +5,7 @@ import com.loan.icreditapp.ui.pay.PayFragment
 import com.lzy.okgo.model.Response
 
 open abstract class BasePresenter {
-    private var mPayFragment: PayFragment? = null
+    var mPayFragment: PayFragment? = null
 
     var orderId: String? = null
     var amount: String? = null
