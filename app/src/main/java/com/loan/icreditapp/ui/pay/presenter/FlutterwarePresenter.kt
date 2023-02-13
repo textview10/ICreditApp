@@ -3,6 +3,7 @@ package com.loan.icreditapp.ui.pay.presenter
 import android.text.TextUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.flutterwave.raveandroid.RaveUiManager
+import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.pay.FlutterwareResponse1Bean
 import com.loan.icreditapp.bean.pay.FlutterwareResponse2Bean
@@ -74,7 +75,8 @@ class FlutterwarePresenter : BasePresenter {
                         .acceptBankTransferPayments(transfer).acceptUssdPayments(ussd)
                         .setAmount(flutterware1Bean.amount!!.toDouble()).setCurrency(flutterware1Bean.currency).setfName(flutterware1Bean.firstName)
                         .setlName(flutterware1Bean.lastName).setEmail(flutterware1Bean.email).setPublicKey(flutterware1Bean.publicKey)
-                        .setEncryptionKey(flutterware1Bean.encryptionKey).setTxRef(flutterware1Bean.txRef).onStagingEnv(false).initialize()
+                        .setEncryptionKey(flutterware1Bean.encryptionKey).setTxRef(flutterware1Bean.txRef).onStagingEnv(false).
+                        withTheme(R.style.MyCustomTheme).initialize()
                 }
 
                 override fun onError(response: Response<String>) {

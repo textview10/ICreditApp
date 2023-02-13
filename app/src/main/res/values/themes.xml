@@ -40,4 +40,21 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
     </style>
+
+    <style name="MyCustomTheme" parent="RaveAppTheme.NoActionBar">
+        <item name="colorPrimary">@color/theme_color</item>
+        <item name="colorPrimaryDark">@color/theme_color</item>
+        <item name="colorAccent">@color/theme_color</item>
+<!--        <item name="OTPButtonStyle">@style/myOtpBtnStyle</item>-->
+<!--        <item name="PayButtonStyle">@style/myBtnStyle</item>-->
+<!--        <item name="PinButtonStyle">@style/myPinButtonStyle</item>-->
+<!--        <item name="OTPHeaderStyle">@style/myOtpHeaderStyle</item>-->
+<!--        <item name="TabLayoutStyle">@style/myTabLayoutStyle</item>-->
+<!--        <item name="PinHeaderStyle">@style/myPinHeaderStyle</item>-->
+<!--        <item name="PaymentTileStyle">@style/myPaymentTileStyle</item>-->
+<!--        <item name="PaymentTileTextStyle">@style/myPaymentTileTextStyle</item>-->
+<!--        <item name="PaymentTileDividerStyle">@style/myPaymentTileDividerStyle</item>-->
+    </style>
+
+    <style name="myBtnStyle">value</style>
 </resources>

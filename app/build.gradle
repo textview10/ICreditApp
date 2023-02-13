@@ -41,7 +41,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('../icredit.jks');
+            storeFile file('D:\\code\\icreditapp\\app\\icredit.jks')
             storePassword "123456"
             keyAlias "key0"
             keyPassword "123456"
