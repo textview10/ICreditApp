@@ -167,9 +167,9 @@ class MainActivity : BaseActivity() {
 //                    }
 //                }
 //            })
-        handler.postDelayed(Runnable {
-            checkAndShowRateUs()
-        }, 500)
+//        handler.postDelayed(Runnable {
+//            checkAndShowRateUs()
+//        }, 500)
     }
 
     private fun checkAndShowRateUs() {

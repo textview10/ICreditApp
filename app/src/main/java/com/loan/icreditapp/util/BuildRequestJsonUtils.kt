@@ -39,7 +39,7 @@ class BuildRequestJsonUtils {
                 // lang	String	Y	语言
                 httpHeaders.put("lang", "en")
                 //  innerVersionCode	Integer	Y	内部版本号
-                httpHeaders.put("innerVersionCode", "20066")   //内部版本号
+                httpHeaders.put("innerVersionCode", AppUtils.getAppVersionCode().toString())   //内部版本号
                 //   appVersion	String	Y	APP版本号
                 httpHeaders.put("appVersion", AppUtils.getAppVersionCode().toString())   //APP版本号
                 //  channel	String	Y	安装包发布的渠道

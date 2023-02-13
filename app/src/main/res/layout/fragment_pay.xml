@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Other channel:"
+                android:text="Online repayment:"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -144,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Bank information:"
+                    android:text="Offline transfer:"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -162,6 +162,7 @@
                     android:id="@+id/select_container_pay_bank_code"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
+                    android:visibility="gone"
                     android:layout_marginTop="10dp"
                     app:select_view_hint="Bank code" />
 
