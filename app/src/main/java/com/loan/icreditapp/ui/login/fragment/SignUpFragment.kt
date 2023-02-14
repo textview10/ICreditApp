@@ -284,7 +284,11 @@ class SignUpFragment : BaseFragment() {
         isCheckSms = true
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
-            jsonObject.put("mobile", mPrex + mPhoneNum)
+            var realNum = mPhoneNum
+            if (mPhoneNum!!.startsWith("0")){
+                realNum = mPhoneNum!!.substring(1, mPhoneNum!!.length)
+            }
+            jsonObject.put("mobile", mPrex + realNum)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -321,7 +325,11 @@ class SignUpFragment : BaseFragment() {
         isCheckSms = true
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
-            jsonObject.put("mobile", mPrex + mPhoneNum)
+            var realNum = mPhoneNum
+            if (mPhoneNum!!.startsWith("0")){
+                realNum = mPhoneNum!!.substring(1, mPhoneNum!!.length)
+            }
+            jsonObject.put("mobile", mPrex + realNum)
             //“1”:注册，“2”：修改密码 3 设备更换
             jsonObject.put("captchaType", if (mIsModify) "2" else "1")
         } catch (e: JSONException) {

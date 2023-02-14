@@ -180,8 +180,13 @@ class SignInFragment : BaseFragment() {
             var finalPhoneNum = phoneNum
             var temp: String? = mPresenter?.getSelectString(0)
             if (!TextUtils.isEmpty(temp)) {
-                finalPhoneNum = temp + phoneNum
+                var realNum = phoneNum
+                if (phoneNum.startsWith("0")){
+                    realNum = phoneNum.substring(1, phoneNum.length)
+                }
+                finalPhoneNum = temp + realNum
             }
+            Log.e("Test", " num = " + finalPhoneNum)
 //            2348888888888
             jsonObject.put("mobile", finalPhoneNum)
             jsonObject.put("password", password)
