@@ -15,14 +15,13 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.loan.icreditapp.BuildConfig
+import com.icredit.loancash.utils.Md5Mgr
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.login.SignInBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
-import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.login.SignInActivity
 import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
@@ -186,10 +185,9 @@ class SignInFragment : BaseFragment() {
                 }
                 finalPhoneNum = temp + realNum
             }
-            Log.e("Test", " num = " + finalPhoneNum)
 //            2348888888888
             jsonObject.put("mobile", finalPhoneNum)
-            jsonObject.put("password", password)
+            jsonObject.put("password", Md5Mgr.encodeMd5(password))
         } catch (e: JSONException) {
             e.printStackTrace()
         }

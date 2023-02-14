@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatImageView
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.icredit.loancash.utils.Md5Mgr
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
@@ -119,7 +120,7 @@ class SetPwdFragment : BaseFragment() {
         //mobile	String
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         jsonObject.put("mobile", mPrefix + mPhoneNum)
-        jsonObject.put("password", pwd)
+        jsonObject.put("password", Md5Mgr.encodeMd5(pwd))
         OkGo.post<String>(Api.REGISTER).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
