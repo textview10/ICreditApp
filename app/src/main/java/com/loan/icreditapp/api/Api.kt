@@ -130,6 +130,8 @@ class Api {
 
         // * redocly
         val REDOCLY_REPAY_PAGE = HOST + "/v1/loan/get/redocly/repay/page"
+
+        val GET_TEXT_INFO = HOST + "/v1/text/info"
     }
 
 }

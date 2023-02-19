@@ -26,6 +26,7 @@ import org.greenrobot.eventbus.EventBus
 import androidx.core.content.ContextCompat.getSystemService
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.GsonUtils
+import com.loan.icreditapp.global.Constant.Companion.IS_AAB_BUILD
 import net.entity.bean.FlutterWaveResult
 
 
@@ -235,13 +236,15 @@ class PayFragment : BaseFragment() {
                 if (!TextUtils.isEmpty(desc)) {
                     responseStr.append(desc)
                 }
-                if (response != null) {
+                if (response != null && !IS_AAB_BUILD) {
                     var body = response.body()
                     if (body != null) {
                         responseStr.append(body.toString())
                     }
                 }
-                ToastUtils.showShort(responseStr.toString())
+                if (!TextUtils.isEmpty(responseStr.toString())) {
+                    ToastUtils.showShort(responseStr.toString())
+                }
             }
         }
 
