@@ -65,7 +65,7 @@ class SettingFragment : BaseFragment() {
                 when (settingBean.type) {
                     PageType.MY_LOAN, PageType.MY_PROFILE, PageType.CARD,
                     PageType.BANK_ACCOUNT, PageType.MESSAGE, PageType.HELP,
-                    PageType.ABOUT -> {
+                    PageType.ABOUT , PageType.CONTACT_US -> {
                         updateMainPage(settingBean.type)
                         closeSlide()
                     }
@@ -125,6 +125,7 @@ class SettingFragment : BaseFragment() {
 //            )
 //        )
 //        mList.add(SettingBean(R.drawable.ic_help, R.string.setting_help, PageType.HELP, true))
+        mList.add(SettingBean(R.drawable.ic_about, R.string.setting_contact_us, PageType.CONTACT_US, true))
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
 

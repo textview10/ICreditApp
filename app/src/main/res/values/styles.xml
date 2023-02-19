@@ -83,4 +83,13 @@
         <item name="android:layout_marginEnd">15dp</item>
     </style>
 
+    <style name="contact_us_right_textview">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:layout_gravity">end|center_vertical</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>

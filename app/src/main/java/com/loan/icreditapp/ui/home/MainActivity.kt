@@ -236,6 +236,10 @@ class MainActivity : BaseActivity() {
                 setTitle(R.string.setting_message)
                 curFragment = MessageFragment()
             }
+            PageType.CONTACT_US -> {
+                setTitle(R.string.setting_contact_us)
+                curFragment = ContactUsFragment()
+            }
             PageType.HELP -> {
                 setTitle(R.string.setting_help)
                 curFragment = HelpFragment()

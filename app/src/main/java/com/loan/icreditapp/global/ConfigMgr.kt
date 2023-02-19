@@ -6,8 +6,10 @@ import android.util.Pair
 import com.blankj.utilcode.util.GsonUtils
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.BaseResponseBean
+import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.bank.BankResponseBean
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.CheckResponseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -97,6 +99,9 @@ class ConfigMgr {
                 getCityData()
             }
 
+            if (Constant.textInfoResponse == null){
+                getTextInfo(null)
+            }
         }
 
         fun getCityData(){
@@ -243,6 +248,32 @@ class ConfigMgr {
             })
             return list
         }
+
+
+        fun getTextInfo(callBack3: CallBack3?){
+            if (Constant.textInfoResponse != null){
+                callBack3?.onGetData(Constant.textInfoResponse)
+                return
+            }
+            val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+            OkGo.post<String>(Api.GET_TEXT_INFO).tag(TAG)
+                .upJson(jsonObject)
+                .execute(object : StringCallback() {
+                    override fun onSuccess(response: Response<String>) {
+                        val textInfo : TextInfoResponse? = CheckResponseUtils.checkResponseSuccess(response,
+                            TextInfoResponse::class.java)
+                        if (textInfo != null){
+                            Constant.textInfoResponse = textInfo
+                            callBack3?.onGetData(Constant.textInfoResponse)
+                        }
+                    }
+
+                    override fun onError(response: Response<String>) {
+                        super.onError(response)
+
+                    }
+                })
+        }
     }
 
      private interface CallBack {
@@ -251,5 +282,9 @@ class ConfigMgr {
 
     private interface CallBack2 {
         fun onGetData(map : HashMap<Pair<String, String>, ArrayList<Pair<String, String>>>)
+    }
+
+   interface CallBack3 {
+        fun onGetData(textInfoResponse: TextInfoResponse?)
     }
 }

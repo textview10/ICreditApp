@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:text="ICredit"
+        android:text="@string/app_name_creaditing"
         android:textColor="#333333"
         android:textSize="20sp" />
 

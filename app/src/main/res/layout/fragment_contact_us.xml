@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="vertical">
+
+            <include layout="@layout/include_logo" />
+
+            <FrameLayout
+                android:id="@+id/fl_contact_us_phone1"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="gone">
+
+                <com.loan.icreditapp.ui.profile.widget.SelectContainer
+                    android:id="@+id/select_container_contact_us_phone1"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    app:select_view_hint="Phone1:" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/contact_us_right_textview"
+                    android:text="Call Us" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
+            <FrameLayout
+                android:id="@+id/fl_contact_us_phone2"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="gone">
+
+                <com.loan.icreditapp.ui.profile.widget.SelectContainer
+                    android:id="@+id/select_container_contact_us_phone2"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    app:select_view_hint="Phone2:" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/contact_us_right_textview"
+                    android:text="Call Us" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
+            <FrameLayout
+                android:id="@+id/fl_contact_us_whatapp1"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="gone">
+
+                <com.loan.icreditapp.ui.profile.widget.SelectContainer
+                    android:id="@+id/select_container_contact_us_whatapp1"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    app:select_view_hint="WhatApp1:" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/contact_us_right_textview"
+                    android:text="Let,s Chat" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
+            <FrameLayout
+                android:id="@+id/fl_contact_us_whatapp2"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="gone">
+
+                <com.loan.icreditapp.ui.profile.widget.SelectContainer
+                    android:id="@+id/select_container_contact_us_whatapp2"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    app:select_view_hint="WhatApp2:" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/contact_us_right_textview"
+                    android:text="Let,s Chat" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
+            <FrameLayout
+                android:id="@+id/fl_contact_us_email"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:visibility="gone">
+
+                <com.loan.icreditapp.ui.profile.widget.SelectContainer
+                    android:id="@+id/select_container_contact_us_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    app:select_view_hint="Email:" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/contact_us_right_textview"
+                    android:text="Send Email" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
