@@ -43,10 +43,10 @@ class MonifyPresenter : BasePresenter {
                         mObserver?.repayFailure(response, false, null)
                         return
                     }
-                    if (TextUtils.equals(monifyBean.reserved, "1")) {
+//                    if (TextUtils.equals(monifyBean.reserved, "1")) {
                         mObserver?.showMonifyPage(monifyBean)
                         mMonifyBean = monifyBean
-                    }
+//                    }
                 }
 
                 override fun onError(response: Response<String>) {

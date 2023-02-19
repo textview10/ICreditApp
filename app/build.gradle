@@ -14,8 +14,8 @@ android {
         applicationId "com.icredit.okash.loan.cash.opay.game"
         minSdkVersion 19
         targetSdkVersion 31
-        versionCode 20069
-        versionName "Version 2.0.9"
+        versionCode 20070
+        versionName "Version 2.0.91"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,7 +41,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('D:\\code\\icreditapp\\app\\icredit.jks')
+//            storeFile file('D:\\code\\icrediteditapp\\app\\icredit.jks')
             storePassword "123456"
             keyAlias "key0"
             keyPassword "123456"

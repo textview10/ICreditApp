@@ -50,11 +50,11 @@ class MyApp : Application() {
     private fun initOkGo() {
         val builder = OkHttpClient.Builder()
         //全局的读取超时时间
-        builder.readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
+        builder.readTimeout(20000, TimeUnit.MILLISECONDS)
         //全局的写入超时时间
-        builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
+        builder.writeTimeout(20000, TimeUnit.MILLISECONDS)
         //全局的连接超时时间
-        builder.connectTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS)
+        builder.connectTimeout(20000, TimeUnit.MILLISECONDS)
         //使用数据库保持cookie，如果cookie不过期，则一直有效
         builder.cookieJar(CookieJarImpl(DBCookieStore(this)))
         val loggingInterceptor = HttpLoggingInterceptor("OkHttpClient")
