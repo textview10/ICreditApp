@@ -108,7 +108,7 @@ class SettingFragment : BaseFragment() {
                 PageType.MY_PROFILE, true
             )
         )
-        mList.add(SettingBean(R.drawable.ic_card, R.string.setting_card, PageType.CARD, true))
+//        mList.add(SettingBean(R.drawable.ic_card, R.string.setting_card, PageType.CARD, true))
         mList.add(
             SettingBean(
                 R.drawable.ic_account,

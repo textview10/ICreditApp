@@ -3,6 +3,7 @@ package com.loan.icreditapp.ui.home.fragment
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -20,6 +21,7 @@ import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.ui.profile.widget.SelectContainer
+import com.loan.icreditapp.util.JumpUtils
 import com.lzy.okgo.OkGo
 
 
@@ -41,6 +43,8 @@ class ContactUsFragment : BaseFragment() {
 
     private var phoneNum1 : String? = null
     private var phoneNum2 : String? = null
+    private var whatApp1 : String? = null
+    private var whatApp2 : String? = null
     private var email : String? = null
 
     override fun onCreateView(
@@ -100,13 +104,21 @@ class ContactUsFragment : BaseFragment() {
             if (checkClickFast()){
                 return@OnClickListener
             }
-
+            if (TextUtils.isEmpty(whatApp1)){
+                ToastUtils.showShort("whatApp1 is empty")
+                return@OnClickListener
+            }
+            checkAndToWhatApp(context, whatApp1!!)
         })
         flWhatApp2?.setOnClickListener(View.OnClickListener {
             if (checkClickFast()){
                 return@OnClickListener
             }
-
+            if (TextUtils.isEmpty(whatApp2)){
+                ToastUtils.showShort("whatApp2 is empty")
+                return@OnClickListener
+            }
+            checkAndToWhatApp(context, whatApp2!!)
         })
         flEmail?.setOnClickListener(View.OnClickListener {
             if (checkClickFast()){
@@ -136,6 +148,16 @@ class ContactUsFragment : BaseFragment() {
             }
         })
         requestUrl()
+    }
+
+    private fun checkAndToWhatApp(context : Context?, mobile : String){
+        if (context == null){
+            return
+        }
+        var isInstall = JumpUtils.isAppInstall(context, "com.whatsapp")
+        if (isInstall){
+            JumpUtils.chatInWhatsApp(context, mobile)
+        }
     }
 
     private fun executeCallPhone( phoneNum : String){
@@ -193,10 +215,12 @@ class ContactUsFragment : BaseFragment() {
         }
         if (!TextUtils.isEmpty(textInfo.whatsApp)){
             flWhatApp1?.visibility = View.VISIBLE
+            whatApp1 = textInfo.whatsApp
             selectWhatApp1?.setData(textInfo.whatsApp)
         }
         if (!TextUtils.isEmpty(textInfo.whatsApp1)){
             flWhatApp2?.visibility = View.VISIBLE
+            whatApp2 = textInfo.whatsApp1
             selectWhatApp2?.setData(textInfo.whatsApp1)
         }
         if (!TextUtils.isEmpty(textInfo.email)){
