@@ -94,9 +94,9 @@
     <string name="bind_new_card_title1">Bank Account</string>
     <string name="bind_new_card_title2">Bank Card</string>
     <string name="bind_new_card_title3">Verification</string>
-    <string name="bind_new_card2_expitydate">Expiry date YY/MM</string>
+    <string name="bind_new_card2_expitydate">Expiry date</string>
     <string name="bind_new_card2_cvv">CVV</string>
-    <string name="bind_new_card2_choose_date">Choose Date</string>
+    <string name="bind_new_card2_choose_date">Expiry date</string>
 
     <string name="loan_declined_1"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>
     <string name="loan_declined_2"> 1.For various reasons, there may be overdue behaviors on multiple platforms</string>

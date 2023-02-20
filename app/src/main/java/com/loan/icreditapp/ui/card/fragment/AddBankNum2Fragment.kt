@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
@@ -28,6 +29,8 @@ import com.loan.icreditapp.bean.bank.AccessCodeResponseBean
 import com.loan.icreditapp.bean.bank.UploadCardResponseBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
+import com.loan.icreditapp.ui.widget.BlankTextWatcher
+import com.loan.icreditapp.ui.widget.ExpiryTextWatcher
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -43,12 +46,12 @@ class AddBankNum2Fragment : BaseFragment() {
 
     private var editBankNum: EditTextContainer? = null
     private var flChooseDate: FrameLayout? = null
-    private var tvChooseDate: AppCompatTextView? = null
+    private var etChooseDate: AppCompatEditText? = null
     private var etCvv: AppCompatEditText? = null
 
     private var flCommit: FrameLayout? = null
 
-    private var expireDate: String? = null
+//    private var expireDate: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,31 +66,41 @@ class AddBankNum2Fragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         editBankNum = view.findViewById(R.id.edit_container_add_bank_card_banknum)
         flChooseDate = view.findViewById(R.id.fl_add_bank_card_choose_date)
-        tvChooseDate = view.findViewById(R.id.tv_add_bank_card_choose_date)
+        etChooseDate = view.findViewById(R.id.et_add_bank_card_choose_date)
         etCvv = view.findViewById(R.id.et_add_bank_card_cvv)
         flCommit = view.findViewById(R.id.fl_add_bank_num_commit)
 
-        flChooseDate?.setOnClickListener(OnClickListener {
-            showTimePicker { date, v ->
-                val sdf = SimpleDateFormat("yy-MM")
-                val datef = sdf.format(date)
-                expireDate = datef
-                tvChooseDate?.text = expireDate
-            }
-        })
+        var expiryTextWatcher = ExpiryTextWatcher(etChooseDate)
+        etChooseDate?.addTextChangedListener(expiryTextWatcher)
+
+        val editText : AppCompatEditText? = editBankNum?.getEditText()
+        if (editText != null){
+            var blankTextWatcher = BlankTextWatcher(editText)
+            editText.addTextChangedListener(blankTextWatcher)
+        }
+        editBankNum?.setInputNum()
+//
         flCommit?.setOnClickListener(OnClickListener {
             if (checkBankNum()) {
-                var cardNum = editBankNum?.getText()
-//                if (BuildConfig.DEBUG) {
-//                    cardNum = "5399412019788483"
-//                }
-                var cvv = etCvv?.text
-                var expireList = expireDate?.split("-")
+                val cardNum = editBankNum?.getText()
+                val expireDate = etChooseDate?.text
+                val cvv = etCvv?.text
+                val expireList = expireDate?.split("/")
                 if (expireList?.size == 2) {
-                    var year = Integer.parseInt(expireList[0])
-                    var month = Integer.parseInt(expireList[1])
-                    Log.e(TAG, " year = " + year + " month = " + month)
-                    bindCardAccess(cardNum.toString(), cvv.toString(), month, year)
+                    var first : Int? = null
+                    var second : Int? = null
+                    try {
+                        first = Integer.parseInt(expireList[0])
+                        second = Integer.parseInt(expireList[1])
+                    } catch (e : Exception) {
+
+                    }
+                    if (first == null || second == null) {
+                        ToastUtils.showShort("expiry date is not correct")
+                        return@OnClickListener
+                    }
+                    Log.e(TAG, " first = " + first + " second = " + second)
+                    bindCardAccess(cardNum.toString(), cvv.toString(), first, second)
                 }
             }
         })
@@ -95,25 +108,25 @@ class AddBankNum2Fragment : BaseFragment() {
 
     private fun bindCardAccess(
         cardNum: String, cvc: String,
-        expiryMonth: Int, expiryYear: Int
+        first: Int, second: Int
     ) {
-        val card: Card = Card.Builder(cardNum, expiryMonth, expiryYear, cvc).build()
+        val card: Card = Card.Builder(cardNum, first, second, cvc).build()
         val charge = Charge()
         charge.card = card
-        getAccessCode(charge, cardNum, cvc, expiryMonth, expiryYear)
+        getAccessCode(charge, cardNum, cvc, first, second)
     }
 
     private fun checkBankNum(): Boolean {
         if (editBankNum == null || TextUtils.isEmpty(editBankNum?.getText())) {
-            ToastUtils.showShort("bank num = null")
+            ToastUtils.showShort("card num is empty")
+            return false
+        }
+        if (etChooseDate == null || TextUtils.isEmpty(etChooseDate?.getText())) {
+            ToastUtils.showShort("bank num is empty")
             return false
         }
         if (etCvv == null || TextUtils.isEmpty(etCvv?.text)) {
-            ToastUtils.showShort("bank cvv = null")
-            return false
-        }
-        if (TextUtils.isEmpty(expireDate)) {
-            ToastUtils.showShort("unselect expire date = null")
+            ToastUtils.showShort("bank cvv is empty")
             return false
         }
 
@@ -122,7 +135,7 @@ class AddBankNum2Fragment : BaseFragment() {
     }
 
     fun getAccessCode(charge: Charge,  cardNum: String, cvc: String,
-                      expiryMonth: Int, expiryYear: Int) {
+                      first: Int, second: Int) {
         var jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -142,7 +155,7 @@ class AddBankNum2Fragment : BaseFragment() {
                         return
                     }
                     charge.accessCode = responseBean.accessCode
-                    chargeCard(charge, cardNum, cvc, expiryMonth, expiryYear)
+                    chargeCard(charge, cardNum, cvc, first, second)
                 }
 
                 override fun onError(response: Response<String>) {
@@ -153,13 +166,13 @@ class AddBankNum2Fragment : BaseFragment() {
     }
 
     private fun chargeCard(charge: Charge , cardNum: String, cvc: String,
-                           expiryMonth: Int, expiryYear: Int) {
+                           first: Int, second: Int) {
 //        PaystackSdk.setPublicKey()
         PaystackSdk.chargeCard(requireActivity(), charge, object : Paystack.TransactionCallback {
             override fun onSuccess(transaction: Transaction) {
                 Log.e(TAG, "onSuccess:    " + transaction.getReference())
 //                verifyOnServer(transaction.getReference())
-                uploadCard(transaction.getReference(), cardNum, cvc, expiryMonth, expiryYear)
+                uploadCard(transaction.getReference(), cardNum, cvc, first, second)
             }
 
             //此函数只在请求OTP保存引用之前调用，如果需要，可以解除otp验证

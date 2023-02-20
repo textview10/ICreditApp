@@ -53,8 +53,11 @@ class BankCardFragment : BaseFragment() {
         mAdapter = CardListAdapter(mBankList)
 
         llAddCard?.setOnClickListener(OnClickListener {
-            var intent: Intent = Intent(activity, BindNewCardActivity::class.java)
-            startActivity(intent)
+            if (context == null){
+                return@OnClickListener
+            }
+            BindNewCardActivity.launchAddBankCard(requireContext())
+
         })
 //        getBankList()
     }

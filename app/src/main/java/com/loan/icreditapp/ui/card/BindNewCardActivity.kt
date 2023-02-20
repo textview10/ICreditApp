@@ -1,5 +1,7 @@
 package com.loan.icreditapp.ui.card
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -18,6 +20,7 @@ import org.greenrobot.eventbus.EventBus
 class BindNewCardActivity : BaseActivity() {
 
     companion object {
+        const val EXTRA_ADD_BANK_CARD = "extra_add_bank_card"
         //添加银行账号
         const val ADD_BANK_ACCOUNT = 111
         //增加银行卡号
@@ -25,15 +28,30 @@ class BindNewCardActivity : BaseActivity() {
 
         const val SUCCESS = 113
 
+        fun launchAddBankAccount(context: Context){
+            val intent = Intent(context, BindNewCardActivity::class.java)
+            intent.putExtra(EXTRA_ADD_BANK_CARD, ADD_BANK_ACCOUNT)
+            context.startActivity(intent)
+        }
+
+        fun launchAddBankCard(context: Context){
+            val intent = Intent(context, BindNewCardActivity::class.java)
+            intent.putExtra(EXTRA_ADD_BANK_CARD, ADD_BANK_CARD_NUM)
+            context.startActivity(intent)
+        }
+
     }
 
     private var ivBack :ImageView? = null
     private var tvTitle :TextView? = null
+    private var mType : Int = ADD_BANK_CARD_NUM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BarUtils.setStatusBarColor(this, resources.getColor(R.color.white))
         BarUtils.setStatusBarLightMode(this, true)
+        mType = intent.getIntExtra(EXTRA_ADD_BANK_CARD, ADD_BANK_CARD_NUM)
+
         setContentView(R.layout.activity_bind_new_card)
         ivBack = findViewById(R.id.iv_bind_new_card_back)
         tvTitle = findViewById(R.id.tv_bind_new_card_title)
@@ -41,7 +59,8 @@ class BindNewCardActivity : BaseActivity() {
         ivBack?.setOnClickListener(View.OnClickListener {
             finish()
         })
-        toStepInternal(ADD_BANK_ACCOUNT)
+        toStepInternal(if (mType == ADD_BANK_CARD_NUM ) ADD_BANK_CARD_NUM
+            else ADD_BANK_ACCOUNT)
     }
 
     fun toStep(step: Int){

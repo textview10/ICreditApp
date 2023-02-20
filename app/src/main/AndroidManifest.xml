@@ -111,5 +111,6 @@
     <!--银行 pk_test_0d2d864f1b049603d4aac329583ac5a8ff7753c0  卡公钥  pk_live_eaeaf5fb4ed183a337f40008b7a9b3d663f7b34e -->
     <meta-data
         android:name="co.paystack.android.PublicKey"
-        android:value="pk_live_eaeaf5fb4ed183a337f40008b7a9b3d663f7b34e" />
+        android:value="pk_test_0d2d864f1b049603d4aac329583ac5a8ff7753c0" />
+<!--        android:value="pk_live_eaeaf5fb4ed183a337f40008b7a9b3d663f7b34e" />-->
 </manifest>

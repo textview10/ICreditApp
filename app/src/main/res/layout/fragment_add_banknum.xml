@@ -46,12 +46,15 @@
                     android:layout_weight="2"
                     android:paddingEnd="12dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_add_bank_card_choose_date"
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_add_bank_card_choose_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/bind_new_card2_choose_date"
+                        android:inputType="number"
+                        android:background="@null"
+                        android:maxLength="5"
+                        android:hint="@string/bind_new_card2_choose_date"
                         android:textColor="#CCCCCC"
                         android:textSize="18sp" />
 
@@ -75,6 +78,7 @@
                         android:layout_gravity="center_vertical"
                         android:background="@null"
                         android:hint="@string/bind_new_card2_cvv"
+                        android:inputType="number"
                         android:textColor="#999999"
                         android:textColorHint="#CCCCCC"
                         android:textCursorDrawable="@drawable/et_cursor_color" />

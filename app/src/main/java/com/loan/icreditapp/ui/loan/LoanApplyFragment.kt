@@ -357,8 +357,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     }
                     // TODO
                     if (checkLoanBean.accountChecked != true){
-                        var intent: Intent = Intent(context, BindNewCardActivity::class.java)
-                        context?.startActivity(intent)
+                        BindNewCardActivity.launchAddBankAccount(context!!)
                         return
                     }
                     if (TextUtils.isEmpty(checkLoanBean.orderId)) {
