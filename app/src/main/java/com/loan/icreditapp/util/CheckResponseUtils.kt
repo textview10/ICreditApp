@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONObject
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.bean.BaseResponseBean
+import com.loan.icreditapp.event.LogTimeOut
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
 
 class CheckResponseUtils {
 
@@ -42,6 +44,10 @@ class CheckResponseUtils {
             //        BaseResponseBean responseBean = gson.fromJson(response.body().toString(), BaseResponseBean.class);
             if (responseBean == null) {
                 ToastUtils.showShort("request failure.")
+                return null
+            }
+            if (responseBean.isLogout()){
+                EventBus.getDefault().post(LogTimeOut())
                 return null
             }
             if (!responseBean.isRequestSuccess()) {

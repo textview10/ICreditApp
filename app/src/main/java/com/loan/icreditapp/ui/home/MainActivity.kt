@@ -4,25 +4,23 @@ import android.Manifest
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.*
-import com.loan.icreditapp.BuildConfig
+import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.UpdateResponseBean
-import com.loan.icreditapp.collect.CollectDataMgr
-import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.collect.UpdateMgr
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.global.ConfigMgr
@@ -157,6 +155,9 @@ class MainActivity : BaseActivity() {
 //        handler.postDelayed(Runnable {
 //            checkAndShowRateUs()
 //        }, 500)
+//                handler.postDelayed(Runnable {
+//                    EventBus.getDefault().post(LogTimeOut())
+//        }, 6000)
     }
 
     private fun checkAndShowRateUs() {
@@ -274,5 +275,9 @@ class MainActivity : BaseActivity() {
     override fun onDestroy() {
         handler.removeCallbacksAndMessages(null)
         super.onDestroy()
+    }
+
+    override fun useLogout() : Boolean{
+        return true
     }
 }

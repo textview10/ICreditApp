@@ -15,6 +15,16 @@ class BaseResponseBean {
     fun isRequestSuccess(): Boolean {
         return head != null && head?.code == "200"
     }
+
+    fun isLogout() : Boolean {
+        if (head != null){
+           if (head!!.code == "401" || head!!.code == "405"){
+               return true
+           }
+        }
+        return false;
+    }
+
     fun getMessage(): String? {
         var msg = head?.msg
         return msg
