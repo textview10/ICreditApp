@@ -34,6 +34,7 @@ class Constant {
 
         const val KEY_SHOW_RATE_COUNT : String = "key_show_rate_count"
         const val KEY_HAS_SHOW_RATE : String = "key_has_show_rate"
+
     }
 
 }

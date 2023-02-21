@@ -13,6 +13,7 @@ import com.lzy.okgo.cookie.CookieJarImpl
 import com.lzy.okgo.cookie.store.DBCookieStore
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor
 import com.lzy.okgo.model.HttpHeaders
+import com.newton.utils.GooglePlaySdk
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -71,6 +72,7 @@ class MyApp : Application() {
         httpHeaders.put("User-Agent", "retrofit")
         OkGo.getInstance().addCommonHeaders(httpHeaders)
 //        EncodeUtils.mainTest()
+        GooglePlaySdk.getInstance(this)?.start()
     }
 
 

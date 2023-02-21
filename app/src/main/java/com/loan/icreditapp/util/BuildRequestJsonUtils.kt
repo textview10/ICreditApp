@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.DeviceUtils
-import com.blankj.utilcode.util.LanguageUtils
-import com.blankj.utilcode.util.PhoneUtils
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.global.Constant
 import com.lzy.okgo.model.HttpHeaders
 import org.json.JSONException
@@ -24,6 +23,8 @@ class BuildRequestJsonUtils {
         fun buildHeadersNonLogin(): HttpHeaders {
             val httpHeaders = HttpHeaders()
             try {
+                // device	String	Y	设备型号
+                httpHeaders.put("APP-Name", BuildConfig.APPLICATION_ID)  //设备型号
                 //platform	String	Y	应用平台
                 httpHeaders.put("platform", "Google play")      //应用平台
                 // device	String	Y	设备型号
@@ -77,6 +78,13 @@ class BuildRequestJsonUtils {
         fun buildHeaderImei(): HttpHeaders {
             val httpHeaders = HttpHeaders()
 //            httpHeaders.put("imei", PhoneUtils.getIMEI())        //imei
+            return httpHeaders
+        }
+
+        fun buildAppId(appId : String): HttpHeaders {
+            val httpHeaders = HttpHeaders()
+            httpHeaders.put("APP-ID", appId)      //应用平台
+//            Log.e("Test", " build app id = " + appId)
             return httpHeaders
         }
 

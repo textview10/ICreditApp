@@ -154,19 +154,6 @@ class MainActivity : BaseActivity() {
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
 //        LocationMgr.getInstance().getLocation()
 
-//        CollectDataMgr.sInstance.collectAuthData(this,
-//            "230125150200000481",
-//            object : CollectDataMgr.Observer {
-//                override fun success(response: Response<String>?) {
-//
-//                }
-//
-//                override fun failure(response: Response<String>?) {
-//                    if (BuildConfig.DEBUG) {
-//                        Log.e(TAG, "failure = " + response?.body().toString())
-//                    }
-//                }
-//            })
 //        handler.postDelayed(Runnable {
 //            checkAndShowRateUs()
 //        }, 500)

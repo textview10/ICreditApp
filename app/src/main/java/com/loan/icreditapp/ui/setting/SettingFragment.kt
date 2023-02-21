@@ -16,6 +16,7 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.setting.SettingBean
+import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.banklist.BankListActivity
 import com.loan.icreditapp.ui.home.MainActivity
@@ -77,8 +78,7 @@ class SettingFragment : BaseFragment() {
                         closeSlide()
                     }
                     PageType.TEST_TO_PROFILE -> {
-                        var intent: Intent = Intent(activity, AddProfileActivity::class.java)
-                        activity?.startActivity(intent)
+                        test()
                         closeSlide()
                     }
                     PageType.RATE_US -> {
@@ -124,13 +124,13 @@ class SettingFragment : BaseFragment() {
 //                true
 //            )
 //        )
-//        mList.add(SettingBean(R.drawable.ic_help, R.string.setting_help, PageType.HELP, true))
+        mList.add(SettingBean(R.drawable.ic_help, R.string.setting_help, PageType.HELP, true))
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_contact_us, PageType.CONTACT_US, true))
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
 
 //        mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
-        if (BuildConfig.DEBUG && false) {
+        if (BuildConfig.DEBUG ) {
             mList.add(
                 SettingBean(
                     R.drawable.ic_out,
@@ -153,6 +153,22 @@ class SettingFragment : BaseFragment() {
             var main: MainActivity = activity as MainActivity
             main.closeSlide()
         }
+    }
+
+    private fun test(){
+        CollectDataMgr.sInstance.collectAuthData(requireContext(),
+            "230125150200000481",
+            object : CollectDataMgr.Observer {
+                override fun success(response: Response<String>?) {
+
+                }
+
+                override fun failure(response: Response<String>?) {
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "failure = " + response?.body().toString())
+                    }
+                }
+            })
     }
 
     override fun onDestroy() {

