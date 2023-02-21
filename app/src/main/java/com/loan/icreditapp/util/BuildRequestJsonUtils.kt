@@ -83,7 +83,7 @@ class BuildRequestJsonUtils {
 
         fun buildAppId(appId : String): HttpHeaders {
             val httpHeaders = HttpHeaders()
-            httpHeaders.put("APP-ID", appId)      //应用平台
+            httpHeaders.put("APP-ID", appId)      //广告来源
 //            Log.e("Test", " build app id = " + appId)
             return httpHeaders
         }
