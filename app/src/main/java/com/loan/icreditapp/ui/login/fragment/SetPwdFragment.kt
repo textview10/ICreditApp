@@ -160,7 +160,7 @@ class SetPwdFragment : BaseFragment() {
         flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         jsonObject.put("mobile", mPrefix + mPhoneNum)
-        jsonObject.put("newPassword", pwd)
+        jsonObject.put("newPassword", Md5Mgr.encodeMd5(pwd))
         OkGo.post<String>(Api.MODIFY_PSD).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
