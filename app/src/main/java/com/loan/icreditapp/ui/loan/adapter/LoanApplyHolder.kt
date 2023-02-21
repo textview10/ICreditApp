@@ -12,10 +12,12 @@ class LoanApplyHolder : RecyclerView.ViewHolder {
     var tvOrigin: AppCompatTextView? = null
     var tvAmount: AppCompatTextView? = null
     var tvPurpose: AppCompatTextView? = null
+    var tvInterest: AppCompatTextView? = null
 
     constructor(itemView : View) : super(itemView) {
         tvTitle = itemView.findViewById(R.id.tv_item_loan_apply_title)
         tvOrigin = itemView.findViewById(R.id.tv_item_loan_apply_origin_fee)
+        tvInterest = itemView.findViewById(R.id.tv_item_loan_apply_interest)
         tvAmount = itemView.findViewById(R.id.tv_item_loan_apply_amount_fee)
         tvPurpose = itemView.findViewById(R.id.tv_item_loan_apply_loan_purpose)
     }
