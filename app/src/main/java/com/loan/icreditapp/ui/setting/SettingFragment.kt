@@ -130,7 +130,7 @@ class SettingFragment : BaseFragment() {
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
 
 //        mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
-        if (BuildConfig.DEBUG ) {
+        if (BuildConfig.DEBUG && false) {
             mList.add(
                 SettingBean(
                     R.drawable.ic_out,

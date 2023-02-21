@@ -132,11 +132,14 @@ class ContactUsFragment : BaseFragment() {
                 return@OnClickListener
             }
             try {
-                val data = Intent(Intent.ACTION_SENDTO)
+                val data = Intent(Intent.ACTION_SEND)
                 data.data = Uri.parse(email)
+                data.setType("text/plain")
+                val tos = arrayOf<String>(email!!)
+                data.putExtra(Intent.EXTRA_EMAIL, tos)
                 data.putExtra(Intent.EXTRA_SUBJECT, "Crediting Feedback")
                 data.putExtra(Intent.EXTRA_TEXT, "")
-                activity?.startActivity(data)
+                activity?.startActivity(Intent.createChooser(data, "Crediting Feedback"))
             } catch (e : Exception){
                 if ((e is ActivityNotFoundException)){
                     ToastUtils.showShort(" not exist email app")
