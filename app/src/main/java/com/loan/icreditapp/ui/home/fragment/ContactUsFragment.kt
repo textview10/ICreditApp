@@ -157,6 +157,8 @@ class ContactUsFragment : BaseFragment() {
         var isInstall = JumpUtils.isAppInstall(context, "com.whatsapp")
         if (isInstall){
             JumpUtils.chatInWhatsApp(context, mobile)
+        } else {
+            ToastUtils.showShort("not exist whatsapp.")
         }
     }
 
