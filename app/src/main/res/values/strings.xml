@@ -128,4 +128,7 @@
     <string name="bank_account_phone_num_desc">Please input phone number.</string>
 
     <string name="update_content">After update faster approve and more amount. \n \n For better user experience update app as soon as possible.</string>
+
+    <string name="about_terms">Terms of Service</string>
+    <string name="about_privacy">Privacy Policy</string>
 </resources>
