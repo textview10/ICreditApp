@@ -17,6 +17,7 @@ import com.loan.icreditapp.bean.profile.GetContact2Bean
 import com.loan.icreditapp.bean.profile.GetOther3Bean
 import com.loan.icreditapp.bean.profile.ModifyOther3Bean
 import com.loan.icreditapp.dialog.selectdata.SelectDataDialog
+import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
@@ -26,6 +27,7 @@ import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -199,6 +201,7 @@ class AddProfile3Fragment : BaseFragment() {
                     }
                     FirebaseUtils.logEvent("fireb_data3")
                     ToastUtils.showShort("modify other3 success")
+                    EventBus.getDefault().post(UpdateLoanEvent())
                     activity?.finish()
                 }
 

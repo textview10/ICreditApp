@@ -16,6 +16,7 @@ import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.bank.BankAccountResponseBean
 import com.loan.icreditapp.bean.bank.BankResponseBean
 import com.loan.icreditapp.event.BankListEvent
+import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.banklist.BankListActivity
 import com.loan.icreditapp.ui.card.BindNewCardActivity
@@ -143,6 +144,7 @@ class AddBankAccount1Fragment : BaseFragment() {
                     if (activity is BindNewCardActivity) {
                         var bindNewCardActivity : BindNewCardActivity = activity as BindNewCardActivity
                         bindNewCardActivity.toStep(BindNewCardActivity.SUCCESS)
+                        EventBus.getDefault().post(UpdateLoanEvent())
                     }
                 }
 

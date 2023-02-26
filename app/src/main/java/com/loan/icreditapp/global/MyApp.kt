@@ -6,6 +6,8 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import co.paystack.android.PaystackSdk
 import com.blankj.utilcode.util.LanguageUtils
+import com.drojian.alpha.toolslib.log.LogSaver
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.util.EncodeUtils
 import com.lzy.okgo.OkGo
@@ -46,6 +48,11 @@ class MyApp : Application() {
         initializeData()
         LanguageUtils.applyLanguage(Locale.ENGLISH, false)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        LogSaver.init(this)
+        if (BuildConfig.DEBUG) {
+            LogSaver.enableDebug()
+        }
     }
 
     private fun initOkGo() {

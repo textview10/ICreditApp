@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
@@ -35,6 +36,7 @@ import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
 import org.json.JSONObject
+import java.io.File
 
 class MainActivity : BaseActivity() {
 
@@ -149,6 +151,10 @@ class MainActivity : BaseActivity() {
     }
 
     private fun executeNext() {
+        LogSaver.logToFile("execute next...")
+        LogSaver.logToFile("execute next111...")
+
+
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
 //        LocationMgr.getInstance().getLocation()
 
@@ -160,20 +166,20 @@ class MainActivity : BaseActivity() {
 //        }, 6000)
     }
 
-    private fun checkAndShowRateUs() {
-        var hasShowRate = SPUtils.getInstance().getBoolean(Constant.KEY_HAS_SHOW_RATE)
-        if (!hasShowRate) {
-            var count = SPUtils.getInstance().getInt(Constant.KEY_SHOW_RATE_COUNT, 0)
-            if (count >= 2) {
-                var rateUs = RateUsUtils()
-                rateUs.showRate(this)
-                SPUtils.getInstance().put(Constant.KEY_HAS_SHOW_RATE, true)
-            } else {
-                count++
-                SPUtils.getInstance().put(Constant.KEY_SHOW_RATE_COUNT, count)
-            }
-        }
-    }
+//    private fun checkAndShowRateUs() {
+//        var hasShowRate = SPUtils.getInstance().getBoolean(Constant.KEY_HAS_SHOW_RATE)
+//        if (!hasShowRate) {
+//            var count = SPUtils.getInstance().getInt(Constant.KEY_SHOW_RATE_COUNT, 0)
+//            if (count >= 2) {
+//                var rateUs = RateUsUtils()
+//                rateUs.showRate(this)
+//                SPUtils.getInstance().put(Constant.KEY_HAS_SHOW_RATE, true)
+//            } else {
+//                count++
+//                SPUtils.getInstance().put(Constant.KEY_SHOW_RATE_COUNT, count)
+//            }
+//        }
+//    }
 
     fun updatePageByType(@PageType type: Int) {
         if (type == mCurPageType) {

@@ -185,7 +185,7 @@ class LoanApplyFragment : BaseLoanFragment() {
         for (i in 0 until mAmountList.size) {
             mItem1s[i] = "₦ " + mAmountList[i].first + " "
         }
-        val adapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, mItem1s)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, mItem1s)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         adapter.setNotifyOnChange(true)
         spinnerAmount?.adapter = adapter
@@ -377,12 +377,12 @@ class LoanApplyFragment : BaseLoanFragment() {
                                 showTrialDialog(checkLoanBean.orderId!!)
                             }
 
-                            override fun failure(response: Response<String>?) {
+                            override fun failure(errorMsg: String?) {
                                 flLoading?.visibility = View.GONE
                                 if (BuildConfig.DEBUG) {
-                                    Log.e(TAG, "failure = " + response?.body().toString())
+                                    Log.e(TAG, "failure = " + errorMsg)
                                 }
-                                ToastUtils.showShort("upload auth information failure." + response?.body().toString())
+                                ToastUtils.showShort("upload auth information failure." + errorMsg)
                             }
                         })
                 }

