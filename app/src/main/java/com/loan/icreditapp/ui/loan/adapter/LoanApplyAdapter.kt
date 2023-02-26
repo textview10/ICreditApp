@@ -37,6 +37,9 @@ class LoanApplyAdapter : RecyclerView.Adapter<LoanApplyHolder> {
 
         holder.tvTitle?.text = getTitleByPos(position)
 
+        if (!TextUtils.isEmpty(trial.disburseAmount)) {
+            holder.tvOriginAmount?.text = trial.disburseAmount
+        }
         if (!TextUtils.isEmpty(trial.fee)) {
             holder.tvOrigin?.text = trial.fee
         }
