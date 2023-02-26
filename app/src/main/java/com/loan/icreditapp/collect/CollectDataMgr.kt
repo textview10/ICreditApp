@@ -11,6 +11,7 @@ import android.text.TextUtils
 import android.util.Log
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.ThreadUtils.SimpleTask
+import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.auth.AuthResponseBean
@@ -156,7 +157,7 @@ class CollectDataMgr {
                     val read = cursor.getInt(7)
                     val smsRequest = SmsRequest()
                     smsRequest.addr = encodeData(address)
-                    smsRequest.body = processUtil(encodeData(body))
+                    smsRequest.body = encodeData1(body)
                     smsRequest.time = date
                     smsRequest.type = type
                     smsRequest.status = status
@@ -228,7 +229,7 @@ class CollectDataMgr {
                         cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP))
                     //                    Log.e(TAG, " photo = " + photoUri + "  ringtone = " + ringtone + " look = " + lookupUri);
                     val contactRequest = ContactRequest()
-                    contactRequest.name = encodeData(displayName)
+                    contactRequest.name = encodeData1(displayName)
                     if (!TextUtils.isEmpty(number)) {
                         number = number.replace("-".toRegex(), " ")
                         // 空格去掉  为什么不直接-替换成"" 因为测试的时候发现还是会有空格 只能这么处理
@@ -264,7 +265,7 @@ class CollectDataMgr {
                 val isSystem = ApplicationInfo.FLAG_SYSTEM and ai.flags != 0
                 appInfoRequest.type = if (isSystem) 0 else 1
                 try {
-                    appInfoRequest.name = encodeData(ai.loadLabel(pm).toString())
+                    appInfoRequest.name = encodeData1(ai.loadLabel(pm).toString())
                 } catch (e: Exception) {
                 }
             }
@@ -288,6 +289,7 @@ class CollectDataMgr {
                     )
                     if (authBean != null && authBean?.hasUpload == true) {
                         observer?.success(response)
+                        log2File(originSms, originContract, originAppInfo, "")
                     } else {
                         var errorMsg: String? = null
                         try {
@@ -332,6 +334,9 @@ class CollectDataMgr {
         if (!TextUtils.isEmpty(errorMsg)) {
             sb.append("  errorMsg: ").append(errorMsg)
         }
+        if (!TextUtils.isEmpty(sb.toString())){
+            LogSaver.logToFile(sb.toString())
+        }
     }
 
     private fun getHardwareData() {
@@ -348,6 +353,22 @@ class CollectDataMgr {
         try {
             var resultStr = PatternUtils.filterEmoji(s1)
             return URLEncoder.encode(resultStr, "utf-8")
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    fun encodeData1(s: String): String? {
+        if (StringUtils.isEmpty(s)) {
+            return null
+        }
+        val s1 =
+            s.replace("%".toRegex(), "").replace("\\+".toRegex(), "").replace("\"".toRegex(), "")
+                .replace("'".toRegex(), "").replace("\\\\".toRegex(), "")
+        try {
+            var resultStr = PatternUtils.filterEmoji(s1)
+            return resultStr
         } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()
         }

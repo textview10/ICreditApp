@@ -173,7 +173,8 @@ class ContactUsFragment : BaseFragment() {
                 data.putExtra(Intent.EXTRA_CC, addressCC)
             }
             data.putExtra(Intent.EXTRA_SUBJECT, "Crediting Feedback")
-            data.putExtra(Intent.EXTRA_TEXT, "Hi:")
+            val mobile = SPUtils.getInstance().getString(Constant.KEY_MOBILE)
+            data.putExtra(Intent.EXTRA_TEXT, "Hi:  num " + mobile + ",")
             if (!TextUtils.isEmpty(traceFile)) {
                 data.putExtra(
                     Intent.EXTRA_STREAM,
