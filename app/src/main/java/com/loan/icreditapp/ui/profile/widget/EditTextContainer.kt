@@ -100,9 +100,9 @@ class EditTextContainer : FrameLayout {
 
     fun setEditTextAndSelection(editTextStr: String) {
         post {
-            if (editText != null) {
+            if (editText != null && !TextUtils.isEmpty(editTextStr)) {
                 editText!!.setText(editTextStr)
-                editText!!.setSelection(editTextStr.length)
+                editText!!.setSelection(editText!!.text!!.length)
             }
         }
     }
@@ -112,7 +112,7 @@ class EditTextContainer : FrameLayout {
             val editTextStr = editText!!.text.toString()
             if (!TextUtils.isEmpty(editTextStr)) {
                 editText!!.setText(editTextStr)
-                editText!!.setSelection(editTextStr.length)
+                editText!!.setSelection(editText!!.text!!.length)
             }
         }
     }

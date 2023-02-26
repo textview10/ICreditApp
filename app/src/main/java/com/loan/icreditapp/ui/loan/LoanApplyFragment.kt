@@ -364,7 +364,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                         ToastUtils.showShort("need loan apply orderId")
                         return
                     }
-                    FirebaseUtils.logEvent("firebase_apply")
+                    FirebaseUtils.logEvent("fireb_apply")
 //                    if (checkLoanBean.hasProfile) {
 //
 //                    }
@@ -450,7 +450,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (trialDialog != null ){
                         trialDialog?.dismiss()
                     }
-                    FirebaseUtils.logEvent("firebase_apply_confirm")
+                    FirebaseUtils.logEvent("fireb_apply_confirm")
 
                     var data = FirebaseData()
                     data.orderId = orderId

@@ -34,7 +34,7 @@ class LoanActiveFragment : BaseLoanFragment() {
         tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
 
         if (checkNeedShowLog()){
-            FirebaseUtils.logEvent("firebase_activity")
+            FirebaseUtils.logEvent("fireb_activity")
         }
 
         flCommit?.setOnClickListener ( OnClickListener{

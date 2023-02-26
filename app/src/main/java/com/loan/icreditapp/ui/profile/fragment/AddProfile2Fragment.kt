@@ -309,7 +309,7 @@ class AddProfile2Fragment : BaseFragment() {
                     }
                     if (modifyContact2Bean.hasContact == true){
                         ToastUtils.showShort("modify contact success")
-                        FirebaseUtils.logEvent("firebase_data2")
+                        FirebaseUtils.logEvent("fireb_data2")
                         if (activity is AddProfileActivity) {
                             var addProfileActivity : AddProfileActivity = activity as AddProfileActivity
                             addProfileActivity.toStep(AddProfileActivity.TO_STEP_3)

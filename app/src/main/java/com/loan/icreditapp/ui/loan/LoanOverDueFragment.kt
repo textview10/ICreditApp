@@ -30,7 +30,7 @@ class LoanOverDueFragment : BaseLoanFragment() {
         tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
 
         if (checkNeedShowLog()){
-            FirebaseUtils.logEvent("firebase_overdue")
+            FirebaseUtils.logEvent("fireb_overdue")
         }
 
         flCommit?.setOnClickListener(View.OnClickListener {

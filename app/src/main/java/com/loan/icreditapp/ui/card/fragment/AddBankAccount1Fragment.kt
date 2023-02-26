@@ -139,7 +139,7 @@ class AddBankAccount1Fragment : BaseFragment() {
                         ToastUtils.showShort("check bank account failure ")
                         return
                     }
-                    FirebaseUtils.logEvent("firebase_bank")
+                    FirebaseUtils.logEvent("fireb_bank")
                     if (activity is BindNewCardActivity) {
                         var bindNewCardActivity : BindNewCardActivity = activity as BindNewCardActivity
                         bindNewCardActivity.toStep(BindNewCardActivity.SUCCESS)
