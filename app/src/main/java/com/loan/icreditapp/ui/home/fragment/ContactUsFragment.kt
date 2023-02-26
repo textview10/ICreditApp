@@ -22,6 +22,7 @@ import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.global.ConfigMgr
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.profile.widget.SelectContainer
 import com.loan.icreditapp.util.JumpUtils
 import com.lzy.okgo.OkGo
@@ -166,9 +167,11 @@ class ContactUsFragment : BaseFragment() {
             data.data = Uri.parse(email)
             data.setType("text/plain")
             val addressEmail = arrayOf<String>(email!!)
-            val addressCC = arrayOf<String>("hanjierui@126.com")
             data.putExtra(Intent.EXTRA_EMAIL, addressEmail)
-//            data.putExtra(Intent.EXTRA_CC, addressCC)
+            if (!Constant.IS_AAB_BUILD){
+                val addressCC = arrayOf<String>("wang867103701@gmail.com")
+                data.putExtra(Intent.EXTRA_CC, addressCC)
+            }
             data.putExtra(Intent.EXTRA_SUBJECT, "Crediting Feedback")
             data.putExtra(Intent.EXTRA_TEXT, "Hi:")
             if (!TextUtils.isEmpty(traceFile)) {
