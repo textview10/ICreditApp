@@ -45,7 +45,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AppManager.sInstance.addActivity(this)
         super.onCreate(savedInstanceState)
-        if (useLogout()){
+        if (useLogout()) {
             if (!EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().register(this)
             }
@@ -55,7 +55,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onDestroy() {
         AppManager.sInstance.finishActivity(this)
         super.onDestroy()
-        if (useLogout()){
+        if (useLogout()) {
             if (EventBus.getDefault().isRegistered(this)) {
                 EventBus.getDefault().unregister(this)
             }
@@ -72,7 +72,7 @@ abstract class BaseActivity : AppCompatActivity() {
         OkGo.getInstance().addCommonHeaders(header)
 
         AppManager.sInstance.finishAllActivity()
-        val intent =  Intent(this, SignInActivity::class.java)
+        val intent = Intent(this, SignInActivity::class.java)
         startActivity(intent)
     }
 
@@ -85,7 +85,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    open fun useLogout() : Boolean{
+    open fun useLogout(): Boolean {
         return false
     }
 }

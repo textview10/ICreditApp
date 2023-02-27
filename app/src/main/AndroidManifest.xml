@@ -98,6 +98,11 @@
 
         </activity>
 
+        <activity android:name=".ui.webview.WebViewActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
         <service
             android:name=".service.FcmService"
             android:exported="false">

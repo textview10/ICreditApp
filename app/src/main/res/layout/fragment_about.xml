@@ -5,25 +5,61 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:layout_height="wrap_content">
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:orientation="vertical">
 
-        <include
-            layout="@layout/include_logo"/>
+        <include layout="@layout/include_logo" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_abount_version"
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="version 1.0.0"
             android:textColor="#666666"
-            android:textSize="16sp"
-            android:text="version 1.0.0" />
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_about_terms"
+            android:layout_marginTop="15dp"
+            android:foreground="?attr/selectableItemBackground"
+            style="@style/setting_container">
+
+            <TextView
+                android:id="@+id/tv_setting_left_title"
+                style="@style/setting_middle_text"
+                android:text="Terms of Service" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+        <View style="@style/view_divide" />
+
+        <LinearLayout
+            android:id="@+id/ll_about_privacy"
+            android:layout_marginTop="10dp"
+            android:foreground="?attr/selectableItemBackground"
+            style="@style/setting_container">
+
+            <TextView
+                android:id="@+id/tv_setting_left_title"
+                style="@style/setting_middle_text"
+                android:text="Privacy Policy" />
+
+            <ImageView
+                style="@style/setting_right_arrow"
+                android:src="@drawable/ic_setting_arrow" />
+        </LinearLayout>
+
+        <View style="@style/view_divide" />
 
     </LinearLayout>
-
 
 
 </FrameLayout>
