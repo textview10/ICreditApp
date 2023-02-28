@@ -30,7 +30,6 @@
             style="@style/setting_container">
 
             <TextView
-                android:id="@+id/tv_setting_left_title"
                 style="@style/setting_middle_text"
                 android:text="Terms of Service" />
 
@@ -48,7 +47,6 @@
             style="@style/setting_container">
 
             <TextView
-                android:id="@+id/tv_setting_left_title"
                 style="@style/setting_middle_text"
                 android:text="Privacy Policy" />
 
