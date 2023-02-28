@@ -92,6 +92,7 @@ class AddProfile1Fragment : BaseFragment() {
         editStreetNum = view.findViewById(R.id.select_container_profile_street_num)
         flCommit = view.findViewById(R.id.fl_profile1_commit)
 
+        editEmail?.notLimitEdittextLength()
         editStreet?.notLimitEdittextLength()
         editStreetNum?.notLimitEdittextLength()
 

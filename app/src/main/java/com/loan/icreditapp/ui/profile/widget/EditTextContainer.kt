@@ -160,9 +160,9 @@ class EditTextContainer : FrameLayout {
 
     private var mMaxLength = 24
     fun notLimitEdittextLength(){
-        mMaxLength = 50
+        mMaxLength = 100
         if (editText != null) {
-            editText!!.filters = arrayOf<InputFilter>(LengthFilter(50))
+            editText!!.filters = arrayOf<InputFilter>(LengthFilter(mMaxLength))
         }
     }
 }
