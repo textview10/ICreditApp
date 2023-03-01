@@ -26,6 +26,7 @@ abstract class BaseLoanFragment : BaseFragment() {
     private var tvLoanAMount: AppCompatTextView? = null
     private var tvOriginFee: AppCompatTextView? = null
     private var tvRolloverFee: AppCompatTextView? = null
+    private var tvOverdueFee: AppCompatTextView? = null
     private var tvTotalAmountDue: AppCompatTextView? = null
 
     open fun setOrderInfo(orderInfoBean: OrderInfoBean) {
@@ -39,6 +40,7 @@ abstract class BaseLoanFragment : BaseFragment() {
         tvLoanAMount = view.findViewById(R.id.tv_loan_process_loan_amount)
         tvOriginFee = view.findViewById(R.id.tv_loan_process_loan_origin_fee)
         tvRolloverFee = view.findViewById(R.id.tv_loan_process_loan_fee)
+        tvOverdueFee = view.findViewById(R.id.tv_loan_process_loan_overdue_fee)
         tvTotalAmountDue = view.findViewById(R.id.tv_loan_process_loan_total_amount_due)
         bindDataInternal()
     }
@@ -56,6 +58,9 @@ abstract class BaseLoanFragment : BaseFragment() {
                 tvLoanAMount?.text = "₦ " + stage.amount.toString()
                 tvOriginFee?.text = "₦ " + stage.fee.toString()
                 tvRolloverFee?.text = "₦ " + stage.interest.toString()
+                if (tvOverdueFee != null) {
+                    tvOverdueFee?.text = "₦ " + stage.penalty.toString()
+                }
             }
         }
         tvTotalAmountDue?.text = "₦ " + mOrderInfo?.totalAmount.toString()
