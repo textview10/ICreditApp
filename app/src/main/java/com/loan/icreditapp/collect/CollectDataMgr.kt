@@ -69,7 +69,7 @@ class CollectDataMgr {
                         smsStr, callRecordStr, contractStr,
                         appInfoStr, locationBean, orderId,
                     )
-                    getAuthData(jsonObject, observer, originSms, originContract, originAppInfo)
+                    getAuthData(jsonObject, observer, smsStr, contractStr, appInfoStr)
                 } catch (e: Exception) {
                     if (BuildConfig.DEBUG) {
                         throw e
