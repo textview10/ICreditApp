@@ -17,6 +17,9 @@ import androidx.annotation.Nullable;
 
 import com.loan.icreditapp.R;
 import com.loan.icreditapp.base.BaseFragment;
+import com.loan.icreditapp.bean.TextInfoResponse;
+import com.loan.icreditapp.global.Constant;
+import com.loan.icreditapp.ui.pay.PayActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -77,8 +80,30 @@ public class WebViewFragment extends BaseFragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+
+            if (!TextUtils.isEmpty(url) && url.contains(getCallBackMethod())){
+                if (getActivity().isFinishing() || getActivity().isDestroyed()){
+                    return;
+                }
+                if (getActivity() instanceof PayActivity){
+                    PayActivity payActivity = (PayActivity) getActivity();
+                    payActivity.payStackSuccess();
+                }
+            }
         }
     };
+
+    private String getCallBackMethod(){
+        TextInfoResponse response = Constant.Companion.getTextInfoResponse();
+        String resultUrl = null;
+        if (response != null && !TextUtils.isEmpty(response.getPaystackCallbackAddress())){
+            resultUrl = response.getPaystackCallbackAddress();
+        }
+        if (TextUtils.isEmpty(resultUrl)){
+            resultUrl = "callback.icredit.ng";
+        }
+        return resultUrl;
+    }
 
     public void setUrl(String url) {
         mUrl = url;

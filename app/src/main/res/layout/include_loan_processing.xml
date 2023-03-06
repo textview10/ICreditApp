@@ -202,6 +202,37 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Overdue fee:"
+            android:layout_marginStart="5dp"
+            android:textColor="#666666"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_loan_process_loan_overdue_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₦ 0"
+            android:layout_marginEnd="8dp"
+            android:textColor="#666666"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 

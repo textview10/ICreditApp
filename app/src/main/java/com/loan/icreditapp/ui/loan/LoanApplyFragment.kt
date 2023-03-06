@@ -405,6 +405,9 @@ class LoanApplyFragment : BaseLoanFragment() {
     }
 
     private fun showTrialDialog(orderId : String){
+        if (!isAdded || isDetached || isRemoving){
+            return
+        }
         var trialDialog =  ProductTrialDialog(requireContext(), mTrialBean!!)
         trialDialog.setOnDialogClickListener(object : ProductTrialDialog.OnDialogClickListener() {
             override fun onClickAgree() {

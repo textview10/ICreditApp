@@ -91,6 +91,15 @@ class PayActivity : BaseActivity() {
         backPressInternal()
     }
 
+    public fun payStackSuccess(){
+        if (flWebView != null) {
+            if (flWebView!!.visibility == View.VISIBLE) {
+                flWebView!!.visibility = View.GONE
+                payFragment?.onWebViewEnd()
+            }
+        }
+    }
+
     fun backPressInternal() {
         if (flWebView != null) {
             if (flWebView!!.visibility == View.VISIBLE) {

@@ -71,6 +71,8 @@ class AddProfile3Fragment : BaseFragment() {
         selectWorkStatus = view.findViewById(R.id.select_container_profile_work_status)
         flCommit = view.findViewById(R.id.fl_profile_other3_commit)
 
+        editEmployName?.notLimitEdittextLength()
+        editEmployAddress?.notLimitEdittextLength()
         if (mShowMode){
             selectSpouse?.setShowMode()
             selectDebt?.setShowMode()

@@ -1,23 +1,21 @@
 package com.loan.icreditapp.ui.profile.widget
 
+import android.R.attr.maxLength
 import android.content.Context
-import android.text.Editable
-import android.text.InputType
-import android.text.TextUtils
-import android.text.TextWatcher
+import android.text.*
+import android.text.InputFilter.LengthFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.loan.icreditapp.R
 import com.loan.icreditapp.ui.widget.MyTextInputLayout
+
 
 class EditTextContainer : FrameLayout {
 
@@ -102,7 +100,8 @@ class EditTextContainer : FrameLayout {
         post {
             if (editText != null && !TextUtils.isEmpty(editTextStr)) {
                 editText!!.setText(editTextStr)
-                editText!!.setSelection(editText!!.text!!.length)
+                var endLength = Math.min(editText!!.text!!.length, maxLength)
+                editText!!.setSelection(endLength)
             }
         }
     }
@@ -112,7 +111,8 @@ class EditTextContainer : FrameLayout {
             val editTextStr = editText!!.text.toString()
             if (!TextUtils.isEmpty(editTextStr)) {
                 editText!!.setText(editTextStr)
-                editText!!.setSelection(editText!!.text!!.length)
+                var endLength = Math.min(editText!!.text!!.length, maxLength)
+                editText!!.setSelection(endLength)
             }
         }
     }
@@ -155,6 +155,14 @@ class EditTextContainer : FrameLayout {
         }
         if (ivClear != null) {
             ivClear!!.visibility = GONE
+        }
+    }
+
+    private var mMaxLength = 24
+    fun notLimitEdittextLength(){
+        mMaxLength = 100
+        if (editText != null) {
+            editText!!.filters = arrayOf<InputFilter>(LengthFilter(mMaxLength))
         }
     }
 }

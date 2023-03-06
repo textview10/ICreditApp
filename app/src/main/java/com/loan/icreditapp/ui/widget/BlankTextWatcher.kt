@@ -18,6 +18,15 @@ class BlankTextWatcher : TextWatcher {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        try {
+            onTextChangedInternal(s, start, before, count)
+        } catch (e: Exception){
+
+        }
+
+    }
+
+    private fun onTextChangedInternal(s: CharSequence?, start: Int, before: Int, count: Int){
         if (s == null || s?.length == 0)
             return;
         val sbLength = sb.length
