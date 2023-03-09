@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.DeviceUtils
+import com.blankj.utilcode.util.PhoneUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.global.Constant
 import com.lzy.okgo.model.HttpHeaders
@@ -77,7 +78,7 @@ class BuildRequestJsonUtils {
         @SuppressLint("MissingPermission")
         fun buildHeaderImei(): HttpHeaders {
             val httpHeaders = HttpHeaders()
-//            httpHeaders.put("imei", PhoneUtils.getIMEI())        //imei
+            httpHeaders.put("imei", PhoneUtils.getIMEI())        //imei
             return httpHeaders
         }
 
