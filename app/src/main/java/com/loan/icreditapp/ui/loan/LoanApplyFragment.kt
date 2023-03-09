@@ -285,11 +285,11 @@ class LoanApplyFragment : BaseLoanFragment() {
 //            PermissionConstants.STORAGE,
         )
 //        val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
-//        val hasPermissionReadPhoneState =
-//            PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
+        val hasPermissionReadPhoneState =
+            PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
 
         //        if (false && hasPermission) {
-        if (hasPermission ) {
+        if (hasPermission && hasPermissionReadPhoneState) {
             executeGetOrderId()
         } else {
             requestPermissionInternal()
