@@ -35,7 +35,7 @@ class RateUsUtils {
 //            } else {
 //
 //            }
-//            //跳转googlePlay评分
+            //跳转googlePlay评分
 //            GooglePlayUtils.getInstance()
 //                .goToGooglePlay(activity, GooglePlayUtils.MY_APP_MARKTE_URL)
 //            //点击了"评星"，表示评分已经操作过
