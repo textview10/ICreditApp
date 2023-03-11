@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.ToastUtils
@@ -19,15 +18,11 @@ import com.loan.icreditapp.bean.setting.SettingBean
 import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.global.Constant
-import com.loan.icreditapp.ui.banklist.BankListActivity
 import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
-import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
-import com.loan.icreditapp.util.RateUsUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
-import com.lzy.okgo.model.HttpHeaders
 import com.lzy.okgo.model.Response
 import org.json.JSONObject
 
@@ -103,7 +98,7 @@ class SettingFragment : BaseFragment() {
             }
         }
         rateUsDialog =  RateUsDialog(requireContext())
-        rateUsDialog!!.show()
+        rateUsDialog?.show()
     }
 
     private fun buildSettingList() {
@@ -187,6 +182,11 @@ class SettingFragment : BaseFragment() {
 
     override fun onDestroy() {
         OkGo.getInstance().cancelTag(TAG)
+        if (rateUsDialog != null){
+            if (rateUsDialog!!.isShowing){
+                rateUsDialog!!.dismiss()
+            }
+        }
         super.onDestroy()
     }
 
@@ -257,4 +257,5 @@ class SettingFragment : BaseFragment() {
                 }
             })
     }
+
 }

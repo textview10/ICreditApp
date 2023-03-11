@@ -23,6 +23,7 @@ import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.UpdateResponseBean
 import com.loan.icreditapp.collect.UpdateMgr
+import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
@@ -31,12 +32,10 @@ import com.loan.icreditapp.ui.home.fragment.*
 import com.loan.icreditapp.ui.setting.PageType
 import com.loan.icreditapp.ui.setting.SettingFragment
 import com.loan.icreditapp.util.BuildRequestJsonUtils
-import com.loan.icreditapp.util.RateUsUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
 import org.json.JSONObject
-import java.io.File
 
 class MainActivity : BaseActivity() {
 
@@ -56,6 +55,7 @@ class MainActivity : BaseActivity() {
 
     var mMyLoanFragment: MyLoanFragment? = null
     var mMyProfileFragment: MyProfileFragment? = null
+    private var rateUsDialog : RateUsDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,28 +154,36 @@ class MainActivity : BaseActivity() {
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
 //        LocationMgr.getInstance().getLocation()
 
-//        handler.postDelayed(Runnable {
-//            checkAndShowRateUs()
-//        }, 500)
+        handler.postDelayed(Runnable {
+            checkAndShowRateUs()
+        }, 500)
 //                handler.postDelayed(Runnable {
 //                    EventBus.getDefault().post(LogTimeOut())
 //        }, 6000)
     }
 
-//    private fun checkAndShowRateUs() {
-//        var hasShowRate = SPUtils.getInstance().getBoolean(Constant.KEY_HAS_SHOW_RATE)
-//        if (!hasShowRate) {
-//            var count = SPUtils.getInstance().getInt(Constant.KEY_SHOW_RATE_COUNT, 0)
-//            if (count >= 2) {
-//                var rateUs = RateUsUtils()
-//                rateUs.showRate(this)
-//                SPUtils.getInstance().put(Constant.KEY_HAS_SHOW_RATE, true)
-//            } else {
-//                count++
-//                SPUtils.getInstance().put(Constant.KEY_SHOW_RATE_COUNT, count)
-//            }
-//        }
-//    }
+    private fun checkAndShowRateUs() {
+        if (isFinishing || isDestroyed){
+            return
+        }
+        var hasShowRate = SPUtils.getInstance().getBoolean(Constant.KEY_HAS_SHOW_RATE)
+        if (!hasShowRate) {
+            var count = SPUtils.getInstance().getInt(Constant.KEY_SHOW_RATE_COUNT, 0)
+            if (count >= 2) {
+                if (rateUsDialog != null){
+                    if (rateUsDialog!!.isShowing){
+                        rateUsDialog!!.dismiss()
+                    }
+                }
+                rateUsDialog =  RateUsDialog(this@MainActivity)
+                rateUsDialog?.show()
+                SPUtils.getInstance().put(Constant.KEY_HAS_SHOW_RATE, true)
+            } else {
+                count++
+                SPUtils.getInstance().put(Constant.KEY_SHOW_RATE_COUNT, count)
+            }
+        }
+    }
 
     fun updatePageByType(@PageType type: Int) {
         if (type == mCurPageType) {
