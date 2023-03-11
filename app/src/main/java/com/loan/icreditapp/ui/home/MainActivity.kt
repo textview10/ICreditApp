@@ -283,7 +283,14 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        handler.removeCallbacksAndMessages(null)
+        if (rateUsDialog != null){
+            if (rateUsDialog!!.isShowing){
+                rateUsDialog!!.dismiss()
+            }
+        }
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null)
+        }
         super.onDestroy()
     }
 
