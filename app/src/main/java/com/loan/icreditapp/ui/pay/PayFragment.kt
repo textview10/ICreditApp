@@ -26,6 +26,7 @@ import org.greenrobot.eventbus.EventBus
 import androidx.core.content.ContextCompat.getSystemService
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.GsonUtils
+import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.global.Constant.Companion.IS_AAB_BUILD
 import net.entity.bean.FlutterWaveResult
 
@@ -240,6 +241,7 @@ class PayFragment : BaseFragment() {
                     var body = response.body()
                     if (body != null) {
                         responseStr.append(body.toString())
+                        LogSaver.logToFile("repay failure = " + responseStr.toString())
                     }
                 }
                 if (!TextUtils.isEmpty(responseStr.toString())) {

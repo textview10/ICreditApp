@@ -1,6 +1,7 @@
 package com.loan.icreditapp.ui.pay.presenter
 
 import android.text.TextUtils
+import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.pay.PayStackResponseBean
 import com.loan.icreditapp.bean.pay.PayStackResultBean
@@ -84,11 +85,13 @@ class PayStackPresenter : BasePresenter {
                         return
                     }
                     if (TextUtils.isEmpty(payStackResult.status)){
-                        mObserver?.repayFailure(response, true, "update payStack result failure")
+                        mObserver?.repayFailure(response, true, "update payStack result failure" )
+                        LogSaver.logToFile(" pay stack error = " + jsonObject.toString())
                         return
                     }
                     if (!TextUtils.equals(payStackResult.status, "1")){
                         mObserver?.repayFailure(response, true, "update payStack result status not correct")
+                        LogSaver.logToFile(" pay stack not correct = " + jsonObject.toString())
                         return
                     }
                     mObserver?.repaySuccess()
