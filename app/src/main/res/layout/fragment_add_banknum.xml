@@ -5,115 +5,135 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:orientation="vertical">
-
-        <com.loan.icreditapp.ui.profile.widget.EditTextContainer
-            android:id="@+id/edit_container_add_bank_card_banknum"
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginTop="10dp"
-            app:select_view_hint="@string/add_bank_num_desc1" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bind_new_card2_expitydate"
-                android:textColor="#999999"
-                android:textSize="16sp" />
+            <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                android:id="@+id/edit_container_add_bank_card_banknum"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                app:select_view_hint="@string/add_bank_num_desc1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
-                <FrameLayout
-                    android:id="@+id/fl_add_bank_card_choose_date"
-                    android:layout_width="0dp"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bind_new_card2_expitydate"
+                    android:textColor="#999999"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:paddingEnd="12dp">
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_add_bank_card_choose_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:inputType="number"
-                        android:background="@null"
-                        android:maxLength="5"
-                        android:hint="@string/bind_new_card2_choose_date"
-                        android:textColor="#CCCCCC"
-                        android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.6dp"
-                        android:layout_gravity="bottom"
-                        android:background="#EBEBEB" />
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_add_bank_card_cvv"
-                        android:layout_width="match_parent"
+                    <FrameLayout
+                        android:id="@+id/fl_add_bank_card_choose_date"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:background="@null"
-                        android:hint="@string/bind_new_card2_cvv"
-                        android:inputType="number"
-                        android:textColor="#999999"
-                        android:textColorHint="#CCCCCC"
-                        android:textCursorDrawable="@drawable/et_cursor_color" />
+                        android:layout_weight="2"
+                        android:paddingEnd="12dp">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.6dp"
-                        android:layout_gravity="bottom"
-                        android:background="#EBEBEB" />
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_add_bank_card_choose_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:inputType="number"
+                            android:background="@null"
+                            android:maxLength="5"
+                            android:hint="@string/bind_new_card2_choose_date"
+                            android:textColor="#CCCCCC"
+                            android:textSize="18sp" />
 
-                </FrameLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.6dp"
+                            android:layout_gravity="bottom"
+                            android:background="#EBEBEB" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_add_bank_card_cvv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:background="@null"
+                            android:hint="@string/bind_new_card2_cvv"
+                            android:inputType="number"
+                            android:textColor="#999999"
+                            android:textColorHint="#CCCCCC"
+                            android:textCursorDrawable="@drawable/et_cursor_color" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.6dp"
+                            android:layout_gravity="bottom"
+                            android:background="#EBEBEB" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
-
         </LinearLayout>
-    </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_add_bank_num_commit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="70dp"
+            android:background="@drawable/add_profile_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/profile1_submit"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+    </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/fl_add_bank_num_commit"
+        android:id="@+id/fl_add_bank_num_loading"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="70dp"
-        android:background="@drawable/add_profile_bg">
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_height="match_parent">
 
-        <TextView
+        <ProgressBar
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/theme_color"
             android:layout_gravity="center"
-            android:text="@string/profile1_submit"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content"/>
+
     </FrameLayout>
 
 </FrameLayout>

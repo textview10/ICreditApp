@@ -1,6 +1,9 @@
 package com.loan.icreditapp.ui.card.fragment
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,8 +53,24 @@ class AddBankNum2Fragment : BaseFragment() {
     private var etCvv: AppCompatEditText? = null
 
     private var flCommit: FrameLayout? = null
+    private var flLoading: FrameLayout? = null
 
-//    private var expireDate: String? = null
+    private val TYPE_SHOW_LOADING = 111
+    private val TYPE_HIDE_LOADING = 112
+    private val mHandler = Handler(Looper.getMainLooper(), object : Handler.Callback {
+        override fun handleMessage(msg: Message): Boolean {
+            when (msg.what){
+                TYPE_SHOW_LOADING ->{
+                    flLoading?.visibility = View.VISIBLE
+                }
+                TYPE_HIDE_LOADING ->{
+                    flLoading?.visibility = View.GONE
+                }
+            }
+           return false
+        }
+
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,6 +88,7 @@ class AddBankNum2Fragment : BaseFragment() {
         etChooseDate = view.findViewById(R.id.et_add_bank_card_choose_date)
         etCvv = view.findViewById(R.id.et_add_bank_card_cvv)
         flCommit = view.findViewById(R.id.fl_add_bank_num_commit)
+        flLoading = view.findViewById(R.id.fl_add_bank_num_loading)
 
         var expiryTextWatcher = ExpiryTextWatcher(etChooseDate)
         etChooseDate?.addTextChangedListener(expiryTextWatcher)
@@ -82,7 +102,7 @@ class AddBankNum2Fragment : BaseFragment() {
 //
         flCommit?.setOnClickListener(OnClickListener {
             if (checkBankNum()) {
-                val cardNum = editBankNum?.getText()
+                val cardNum = editBankNum?.getText()?.replace(" ", "")
                 val expireDate = etChooseDate?.text
                 val cvv = etCvv?.text
                 val expireList = expireDate?.split("/")
@@ -99,7 +119,8 @@ class AddBankNum2Fragment : BaseFragment() {
                         ToastUtils.showShort("expiry date is not correct")
                         return@OnClickListener
                     }
-                    Log.e(TAG, " first = " + first + " second = " + second)
+                    Log.e(TAG, " first = " + first + " second = " + second
+                            + " cardNum = " + cardNum)
                     bindCardAccess(cardNum.toString(), cvv.toString(), first, second)
                 }
             }
@@ -108,12 +129,13 @@ class AddBankNum2Fragment : BaseFragment() {
 
     private fun bindCardAccess(
         cardNum: String, cvc: String,
-        first: Int, second: Int
+        mouth: Int, year: Int
     ) {
-        val card: Card = Card.Builder(cardNum, first, second, cvc).build()
+        val card: Card = Card.Builder(cardNum, mouth, year, cvc).build()
+        Log.e(TAG, " is valid = " + card.isValid)
         val charge = Charge()
         charge.card = card
-        getAccessCode(charge, cardNum, cvc, first, second)
+        getAccessCode(charge, cardNum, cvc, mouth, year)
     }
 
     private fun checkBankNum(): Boolean {
@@ -135,7 +157,8 @@ class AddBankNum2Fragment : BaseFragment() {
     }
 
     fun getAccessCode(charge: Charge,  cardNum: String, cvc: String,
-                      first: Int, second: Int) {
+                      mouth: Int, year: Int) {
+        mHandler?.sendEmptyMessage(TYPE_SHOW_LOADING)
         var jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -146,6 +169,8 @@ class AddBankNum2Fragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
+
                     val responseBean: AccessCodeResponseBean? =
                         checkResponseSuccess(response, AccessCodeResponseBean::class.java)
                     if (responseBean == null) {
@@ -155,11 +180,13 @@ class AddBankNum2Fragment : BaseFragment() {
                         return
                     }
                     charge.accessCode = responseBean.accessCode
-                    chargeCard(charge, cardNum, cvc, first, second)
+                    Log.e(TAG, "access code = " + charge.accessCode)
+                    chargeCard(charge, cardNum, cvc, mouth, year)
                 }
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
                     Log.e(TAG, "get bank list = " + response.body())
                 }
             })
@@ -168,8 +195,10 @@ class AddBankNum2Fragment : BaseFragment() {
     private fun chargeCard(charge: Charge , cardNum: String, cvc: String,
                            first: Int, second: Int) {
 //        PaystackSdk.setPublicKey()
+        mHandler?.sendEmptyMessage(TYPE_SHOW_LOADING)
         PaystackSdk.chargeCard(requireActivity(), charge, object : Paystack.TransactionCallback {
             override fun onSuccess(transaction: Transaction) {
+                mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
                 Log.e(TAG, "onSuccess:    " + transaction.getReference())
 //                verifyOnServer(transaction.getReference())
                 uploadCard(transaction.getReference(), cardNum, cvc, first, second)
@@ -183,7 +212,8 @@ class AddBankNum2Fragment : BaseFragment() {
             override fun onError(error: Throwable, transaction: Transaction?) {
                 // If an access code has expired, simply ask your server for a new one
                 // and restart the charge instead of displaying error
-                Log.e(TAG, " = " + error.toString())
+                mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
+                Log.e(TAG, " = " + transaction.toString(), error)
             }
         })
     }
@@ -194,6 +224,7 @@ class AddBankNum2Fragment : BaseFragment() {
 //                expireDate	String	Y	过期日	格式 MM/YY
 //                	String	Y	CVV-卡片背面后三位数字
 //        reference	String	Y	交易号
+        mHandler?.sendEmptyMessage(TYPE_SHOW_LOADING)
         var jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -208,6 +239,7 @@ class AddBankNum2Fragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
                     val responseBean: UploadCardResponseBean? =
                         checkResponseSuccess(response, UploadCardResponseBean::class.java)
                     if (responseBean == null) {
@@ -224,6 +256,7 @@ class AddBankNum2Fragment : BaseFragment() {
                 }
 
                 override fun onError(response: Response<String>) {
+                    mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
                     super.onError(response)
                     Log.e(TAG, "get bank list = " + response.body())
                 }
