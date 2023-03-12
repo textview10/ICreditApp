@@ -237,12 +237,13 @@ class PayFragment : BaseFragment() {
                 if (!TextUtils.isEmpty(desc)) {
                     responseStr.append(desc)
                 }
-                if (response != null && !IS_AAB_BUILD) {
-                    var body = response.body()
-                    if (body != null) {
+                if (response != null) {
+                    val body = response.body()
+                    if (!TextUtils.isEmpty(body) && !IS_AAB_BUILD) {
                         responseStr.append(body.toString())
-                        LogSaver.logToFile("repay failure = " + responseStr.toString())
                     }
+                    LogSaver.logToFile("repay failure = " + responseStr.toString() + " body = "
+                        + body)
                 }
                 if (!TextUtils.isEmpty(responseStr.toString())) {
                     ToastUtils.showShort(responseStr.toString())

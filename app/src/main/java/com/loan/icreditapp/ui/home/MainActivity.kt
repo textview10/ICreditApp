@@ -246,6 +246,10 @@ class MainActivity : BaseActivity() {
                 setTitle(R.string.setting_about)
                 curFragment = AboutFragment()
             }
+            PageType.OFFLINE_REPAY -> {
+                setTitle(R.string.setting_offline_repay)
+                curFragment = OfflineRepayFragment()
+            }
         }
         if (curFragment != null) {
             replaceFragment(curFragment, R.id.fl_main_content)
