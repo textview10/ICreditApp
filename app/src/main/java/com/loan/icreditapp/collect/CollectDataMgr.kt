@@ -177,7 +177,7 @@ class CollectDataMgr {
                     //                    public int read;
 //                    public int status;
                     smsRequest.addr = address
-                    if (list.size <= 3000) {
+                    if (list.size < 1000) {
                         list.add(smsRequest)
                     }
                 }
