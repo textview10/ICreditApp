@@ -16,6 +16,8 @@ import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.bank.CardResponseBean
+import com.loan.icreditapp.event.UpdateBindCardResult
+import com.loan.icreditapp.event.UpdateGetOrderEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.banklist.BankListActivity
 import com.loan.icreditapp.ui.card.BindNewCardActivity
@@ -26,6 +28,9 @@ import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -70,7 +75,9 @@ class BankCardFragment : BaseFragment() {
             BindNewCardActivity.launchAddBankCard(requireContext())
 
         })
-
+        if (!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this)
+        }
         refreshLayout?.setEnableLoadMore(false)
         refreshLayout?.setEnableRefresh(true)
         refreshLayout?.setOnRefreshListener(OnRefreshListener {
@@ -130,8 +137,19 @@ class BankCardFragment : BaseFragment() {
             })
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
+    fun onEvent(event: UpdateBindCardResult) {
+        if (isRemoving || isDetached){
+            return
+        }
+        refreshLayout?.autoRefresh()
+    }
+
     override fun onDestroy() {
         OkGo.getInstance().cancelTag(TAG)
+        if (EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this)
+        }
         super.onDestroy()
     }
 }

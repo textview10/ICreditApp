@@ -24,13 +24,16 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.bank.AccessCodeResponseBean
 import com.loan.icreditapp.bean.bank.UploadCardResponseBean
+import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.ui.card.BindNewCardActivity
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.ui.widget.BlankTextWatcher
 import com.loan.icreditapp.ui.widget.ExpiryTextWatcher
@@ -38,6 +41,8 @@ import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Logger
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -57,6 +62,9 @@ class AddBankNum2Fragment : BaseFragment() {
 
     private val TYPE_SHOW_LOADING = 111
     private val TYPE_HIDE_LOADING = 112
+    private val TYPE_SHOW_TOAST = 113
+    private var toastMsg : String? = null
+
     private val mHandler = Handler(Looper.getMainLooper(), object : Handler.Callback {
         override fun handleMessage(msg: Message): Boolean {
             when (msg.what){
@@ -65,6 +73,11 @@ class AddBankNum2Fragment : BaseFragment() {
                 }
                 TYPE_HIDE_LOADING ->{
                     flLoading?.visibility = View.GONE
+                }
+                TYPE_SHOW_TOAST ->{
+                    if (!TextUtils.isEmpty(toastMsg)){
+                        ToastUtils.showShort(toastMsg)
+                    }
                 }
             }
            return false
@@ -170,24 +183,29 @@ class AddBankNum2Fragment : BaseFragment() {
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
                     mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
-
                     val responseBean: AccessCodeResponseBean? =
                         checkResponseSuccess(response, AccessCodeResponseBean::class.java)
                     if (responseBean == null) {
                         if (BuildConfig.DEBUG) {
                             Log.e(TAG, " get access code ." + response.body())
                         }
+                        errorMsg("get access code failure", response, jsonObject)
                         return
                     }
                     charge.accessCode = responseBean.accessCode
-                    Log.e(TAG, "access code = " + charge.accessCode)
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "access code = " + charge.accessCode)
+                    }
                     chargeCard(charge, cardNum, cvc, mouth, year)
                 }
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
                     mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
-                    Log.e(TAG, "get bank list = " + response.body())
+                    errorMsg("get access code error", response, jsonObject)
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "get bank list = " + response.body())
+                    }
                 }
             })
     }
@@ -206,21 +224,25 @@ class AddBankNum2Fragment : BaseFragment() {
 
             //此函数只在请求OTP保存引用之前调用，如果需要，可以解除otp验证
             override fun beforeValidate(transaction: Transaction) {
-                Log.e(TAG, "beforeValidate: " + transaction.getReference())
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "beforeValidate: " + transaction.getReference())
+                }
             }
 
             override fun onError(error: Throwable, transaction: Transaction?) {
                 // If an access code has expired, simply ask your server for a new one
                 // and restart the charge instead of displaying error
                 mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
-                Log.e(TAG, " = " + transaction.toString(), error)
+                errorMsg("bind card failure pay stack error " + error.message, error.message)
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, " = " + transaction.toString(), error)
+                }
             }
         })
     }
 
     private fun uploadCard(reference : String, cardNum: String, cvc: String,
                            expiryMonth: Int, expiryYear: Int){
-//                	String	Y
 //                expireDate	String	Y	过期日	格式 MM/YY
 //                	String	Y	CVV-卡片背面后三位数字
 //        reference	String	Y	交易号
@@ -228,6 +250,7 @@ class AddBankNum2Fragment : BaseFragment() {
         var jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
+            jsonObject.put("cardNumber", cardNum)
             //卡号
             jsonObject.put("expireDate", expiryMonth.toString() + "/" + expiryYear)
             jsonObject.put("cvv", cvc)
@@ -246,34 +269,57 @@ class AddBankNum2Fragment : BaseFragment() {
                         if (BuildConfig.DEBUG) {
                             Log.e(TAG, " get access code ." + response.body())
                         }
+                        errorMsg("upload bank card failure " , response, jsonObject)
                         return
                     }
                     if (responseBean.hasUpload != true){
-                        ToastUtils.showShort("verify bank card failure")
+                        ToastUtils.showShort("verify bank card not correct")
+                        errorMsg("verify bank card not correct " , response, jsonObject)
                         return
                     }
-
+                    if (activity is BindNewCardActivity) {
+                        var bindNewCardActivity : BindNewCardActivity = activity as BindNewCardActivity
+                        bindNewCardActivity.toStep(BindNewCardActivity.BIND_BINK_CARD_SUCCESS)
+                    }
                 }
 
                 override fun onError(response: Response<String>) {
                     mHandler?.sendEmptyMessage(TYPE_HIDE_LOADING)
                     super.onError(response)
-                    Log.e(TAG, "get bank list = " + response.body())
+                    errorMsg("upload bank card error " , response, jsonObject)
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "get bank list = " + response.body())
+                    }
                 }
             })
     }
 
-    fun showTimePicker(listener: OnTimeSelectListener?) {
-        if (KeyboardUtils.isSoftInputVisible(requireActivity())) {
-            KeyboardUtils.hideSoftInput(requireActivity())
+    private fun errorMsg(errorMsg : String, response: Response<String>, requestJson : JSONObject){
+        toastMsg = errorMsg;
+        mHandler.removeMessages(TYPE_SHOW_TOAST)
+        mHandler.sendEmptyMessage(TYPE_SHOW_TOAST)
+        val result = StringBuffer()
+        if (response != null){
+            result.append(response.body())
         }
-        val type = booleanArrayOf(
-            true, true, false, false, false, false
-        )
-        //时间选择器
-        val pvTime = TimePickerBuilder(context, listener).setSubmitText("ok")
-            .setCancelText("cancel")
-            .setType(type).build()
-        pvTime.show()
+        result.append(requestJson.toString())
+       LogSaver.logToFile("errorMsg = " + errorMsg + " data = " + result.toString())
+    }
+
+    private fun errorMsg(errorMsg : String, error : String?){
+        toastMsg = errorMsg;
+        mHandler.removeMessages(TYPE_SHOW_TOAST)
+        mHandler.sendEmptyMessage(TYPE_SHOW_TOAST)
+        val result = StringBuffer()
+        if (!TextUtils.isEmpty(error)){
+            result.append(error)
+        }
+        LogSaver.logToFile("errorMsg = " + errorMsg + " data = " + result.toString())
+    }
+
+    override fun onDestroy() {
+        OkGo.getInstance().cancelTag(TAG)
+        mHandler?.removeCallbacksAndMessages(null)
+        super.onDestroy()
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.blankj.utilcode.util.BarUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
+import com.loan.icreditapp.event.UpdateBindCardResult
 import com.loan.icreditapp.event.UpdateGetOrderEvent
 import com.loan.icreditapp.ui.card.fragment.AddBankAccount1Fragment
 import com.loan.icreditapp.ui.card.fragment.AddBankNum2Fragment
@@ -27,6 +28,8 @@ class BindNewCardActivity : BaseActivity() {
         const val ADD_BANK_CARD_NUM = 112
 
         const val SUCCESS = 113
+
+        const val BIND_BINK_CARD_SUCCESS = 114
 
         fun launchAddBankAccount(context: Context){
             val intent = Intent(context, BindNewCardActivity::class.java)
@@ -78,6 +81,9 @@ class BindNewCardActivity : BaseActivity() {
             tvTitle?.text = resources.getString(R.string.bind_new_card_title2)
         } else if (step == SUCCESS) {
             EventBus.getDefault().post(UpdateGetOrderEvent())
+            finish()
+        } else if (step == BIND_BINK_CARD_SUCCESS){
+            EventBus.getDefault().post(UpdateBindCardResult())
             finish()
         }
     }
