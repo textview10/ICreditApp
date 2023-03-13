@@ -95,11 +95,14 @@ class MyLoanFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    pbLoading?.visibility = View.GONE
-                    refreshLayout?.finishRefresh()
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
+                    if (isDetached || isRemoving || !isAdded){
+                        return
+                    }
+                    pbLoading?.visibility = View.GONE
+                    refreshLayout?.finishRefresh()
                     val orderInfo: OrderInfoBean? =
                         checkResponseSuccess(response, OrderInfoBean::class.java)
                     if (orderInfo == null) {
@@ -111,6 +114,12 @@ class MyLoanFragment : BaseFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                        return
+                    }
+                    if (isDetached || isRemoving || !isAdded){
+                        return
+                    }
                     pbLoading?.visibility = View.GONE
                     refreshLayout?.finishRefresh()
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
@@ -213,6 +222,7 @@ class MyLoanFragment : BaseFragment() {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
         }
+        mHandler.removeCallbacksAndMessages(null)
         super.onDestroy()
     }
 }
