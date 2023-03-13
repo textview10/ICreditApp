@@ -402,6 +402,10 @@ class CollectDataMgr {
         return str
     }
 
+    fun onDestroy(){
+        OkGo.getInstance().cancelTag(TAG)
+    }
+
     interface Observer {
         fun success(response: Response<String>?)
         fun failure(response: String?)

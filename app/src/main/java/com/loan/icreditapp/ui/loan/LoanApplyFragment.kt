@@ -25,6 +25,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
+import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.bean.ApplyLoadResponse
 import com.loan.icreditapp.bean.loan.CheckLoanResponseBean
 import com.loan.icreditapp.bean.loan.ProductResponseBean
@@ -408,6 +409,11 @@ class LoanApplyFragment : BaseLoanFragment() {
         if (!isAdded || isDetached || isRemoving){
             return
         }
+        if (activity is BaseActivity){
+           if ( (activity as BaseActivity).isDestroyed){
+               return
+           }
+        }
         var trialDialog =  ProductTrialDialog(requireContext(), mTrialBean!!)
         trialDialog.setOnDialogClickListener(object : ProductTrialDialog.OnDialogClickListener() {
             override fun onClickAgree() {
@@ -484,6 +490,7 @@ class LoanApplyFragment : BaseLoanFragment() {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
         }
+        CollectDataMgr.sInstance.onDestroy()
         super.onDestroy()
     }
 }
