@@ -414,6 +414,9 @@ class LoanApplyFragment : BaseLoanFragment() {
                return
            }
         }
+        if (context == null){
+            return
+        }
         var trialDialog =  ProductTrialDialog(requireContext(), mTrialBean!!)
         trialDialog.setOnDialogClickListener(object : ProductTrialDialog.OnDialogClickListener() {
             override fun onClickAgree() {
