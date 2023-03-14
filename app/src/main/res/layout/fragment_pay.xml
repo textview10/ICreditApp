@@ -16,11 +16,13 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_pay_offline_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="My bank account:"
                 android:textColor="@color/black"
+                android:visibility="gone"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -28,6 +30,7 @@
                 android:id="@+id/fl_pay_nor"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:foreground="?attr/selectableItemBackground">
 

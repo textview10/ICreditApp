@@ -117,7 +117,9 @@ class SettingFragment : BaseFragment() {
                 PageType.MY_PROFILE, true
             )
         )
-        mList.add(SettingBean(R.drawable.ic_card, R.string.setting_card, PageType.CARD, true))
+        if (Constant.SHOW_BIND_CARD) {
+            mList.add(SettingBean(R.drawable.ic_card, R.string.setting_card, PageType.CARD, true))
+        }
         mList.add(
             SettingBean(
                 R.drawable.ic_account,
@@ -133,13 +135,13 @@ class SettingFragment : BaseFragment() {
 //                true
 //            )
 //        )
-        mList.add(SettingBean(R.drawable.ic_about, R.string.setting_offline_repay, PageType.OFFLINE_REPAY, true))
+        mList.add(SettingBean(R.drawable.ic_card, R.string.setting_offline_repay, PageType.OFFLINE_REPAY, true))
         mList.add(SettingBean(R.drawable.ic_help, R.string.setting_contact_us, PageType.CONTACT_US, true))
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
 
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
-        if (BuildConfig.DEBUG && false) {
+        if (BuildConfig.DEBUG) {
             mList.add(
                 SettingBean(
                     R.drawable.ic_out,

@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.drojian.alpha.toolslib.log.LogSaver
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.global.Constant.Companion.IS_AAB_BUILD
 import net.entity.bean.FlutterWaveResult
 
@@ -59,6 +60,7 @@ class PayFragment : BaseFragment() {
     private var selectBankCode: EditTextContainer? = null
     private var selectAccountName: EditTextContainer? = null
     private var selectAccountNumber: EditTextContainer? = null
+    private var tvOfflineTitle: AppCompatTextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,6 +82,7 @@ class PayFragment : BaseFragment() {
     }
 
     private fun initView(view: View) {
+        tvOfflineTitle = view.findViewById(R.id.tv_pay_offline_title)
         flNor = view.findViewById(R.id.fl_pay_nor)
         flPayStack = view.findViewById(R.id.fl_pay_paystack)
         flFlutterware = view.findViewById(R.id.fl_pay_flutterware)
@@ -99,6 +102,11 @@ class PayFragment : BaseFragment() {
         selectAccountNumber?.setShowMode()
 
 //        flFlutterware?.visibility = GONE
+
+        if (Constant.SHOW_BIND_CARD) {
+            tvOfflineTitle?.visibility = View.VISIBLE
+            flNor?.visibility = View.VISIBLE
+        }
 
         flNor?.setOnClickListener(View.OnClickListener {
             if (checkClickFast()) {

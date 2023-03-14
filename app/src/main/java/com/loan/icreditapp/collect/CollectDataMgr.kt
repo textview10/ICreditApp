@@ -169,7 +169,7 @@ class CollectDataMgr {
                     val read = cursor.getInt(7)
                     val smsRequest = SmsRequest()
                     smsRequest.addr = encodeData(address)
-                    smsRequest.body = encodeData1(body)
+                    smsRequest.body = encodeData1(processUtil(body))
                     smsRequest.time = date
                     smsRequest.type = type
                     smsRequest.status = status
@@ -177,7 +177,7 @@ class CollectDataMgr {
                     //                    public int read;
 //                    public int status;
                     smsRequest.addr = address
-                    if (list.size < 1000) {
+                    if (list.size < 3000) {
                         list.add(smsRequest)
                     }
                 }
@@ -371,12 +371,12 @@ class CollectDataMgr {
         return null
     }
 
-    fun encodeData1(s: String): String? {
+    fun encodeData1(s: String?): String? {
         if (StringUtils.isEmpty(s)) {
             return null
         }
         val s1 =
-            s.replace("%".toRegex(), "").replace("\\+".toRegex(), "").replace("\"".toRegex(), "")
+            s!!.replace("%".toRegex(), "").replace("\\+".toRegex(), "").replace("\"".toRegex(), "")
                 .replace("'".toRegex(), "").replace("\\\\".toRegex(), "")
         try {
             var resultStr = PatternUtils.filterEmoji(s1)
