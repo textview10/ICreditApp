@@ -75,7 +75,7 @@ class MyApp : Application() {
         val httpHeaders = HttpHeaders()
 //        httpHeaders.put("APP-Language", "en")
 //        httpHeaders.put("APP-ID", "1111")
-        httpHeaders.put("Accept", "application/json")
+//        httpHeaders.put("Accept", "application/json")
         httpHeaders.put("User-Agent", "retrofit")
         OkGo.getInstance().addCommonHeaders(httpHeaders)
 //        EncodeUtils.mainTest()
