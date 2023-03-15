@@ -23,21 +23,27 @@ class GooglePlaySdk {
                             if (referrerClient != null) {
                                 response = referrerClient!!.installReferrer
                             }
-                        } catch (e: RemoteException) {
-                            e.printStackTrace()
-                        }
-                        if (response != null) {
-                            val referrerUrl = response.installReferrer
-                            if (!TextUtils.isEmpty(referrerUrl)) {
-                                var refererMap = getSplitData(referrerUrl)
-                                if (refererMap != null) {
-                                    var map = refererMap.get("utm_medium")
-                                    if (!TextUtils.isEmpty(map)) {
-                                        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildAppId(map!!))
+                            if (response != null) {
+                                val referrerUrl = response.installReferrer
+                                if (!TextUtils.isEmpty(referrerUrl)) {
+                                    // utmsource
+                                    var utmSource = tryGetUtmSource(referrerUrl)
+                                    if (!TextUtils.isEmpty(utmSource)) {
+                                        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildUtmSource(utmSource!!))
+                                    }
+                                    var utmMedium =  tryGetUtmMedium(referrerUrl)
+                                    if (TextUtils.isEmpty(utmMedium)) {
+                                        utmMedium =  tryGetGCLID(referrerUrl)
+                                    }
+                                    if (!TextUtils.isEmpty(utmMedium)) {
+                                        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildUtmMedium(utmMedium!!))
                                     }
                                 }
                             }
+                        } catch (e: RemoteException) {
+                            e.printStackTrace()
                         }
+
                         referrerClient?.endConnection()
                     }
                     InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
@@ -53,6 +59,38 @@ class GooglePlaySdk {
                 start()
             }
         })
+    }
+
+    //gclid=Cj0KCQiA99ybBhD9ARIsALvZavXgHa7-8tWDN5VPj2_f2GRsN8aLHbt7CUDkAvjo9EYwpeohYLqFci0aApFDEALw_wcB
+    private fun tryGetGCLID(referrerUrl: String?) : String?{
+        if (TextUtils.isEmpty(referrerUrl) || referrerUrl?.contains("gclid") != true){
+            return null
+        }
+        val result = referrerUrl.replace("gclid=","")
+        return result
+    }
+
+    private fun tryGetUtmSource(referrerUrl: String?) : String?{
+        if (TextUtils.isEmpty(referrerUrl)){
+            return null
+        }
+        var refererMap = getSplitData(referrerUrl!!)
+        if (refererMap != null) {
+            var map = refererMap.get("utm_source")
+            return map
+        }
+        return null
+    }
+    private fun tryGetUtmMedium(referrerUrl: String?) : String?{
+        if (TextUtils.isEmpty(referrerUrl)){
+            return null
+        }
+        var refererMap = getSplitData(referrerUrl!!)
+        if (refererMap != null) {
+            var map = refererMap.get("utm_medium")
+            return map
+        }
+        return null
     }
 
     /**

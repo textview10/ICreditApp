@@ -26,6 +26,7 @@ class BuildRequestJsonUtils {
             try {
                 // device	String	Y	设备型号
                 httpHeaders.put("APP-Name", BuildConfig.APPLICATION_ID)  //设备型号
+                httpHeaders.put("APP-ID", "2")  //设备型号
                 //platform	String	Y	应用平台
                 httpHeaders.put("platform", "Google play")      //应用平台
                 // device	String	Y	设备型号
@@ -48,10 +49,10 @@ class BuildRequestJsonUtils {
                 httpHeaders.put("channel", "google play")   //安装包发布的渠道
                 //H5,google play
                 // utmSource	String	Y	客户来源
-                httpHeaders.put("utmSource", "google play")   //客户来源
+//                httpHeaders.put("utmSource", "")   //客户来源
                 //banner,click,search words
                 //  utmMedium	String	Y	媒介
-                httpHeaders.put("utmMedium", "banner")   //媒介
+//                httpHeaders.put("utmMedium", "")   //媒介
                 //   imei
 //                httpHeaders.put("imei", "")        //imei
                 // longitude	String	Y	经度
@@ -82,9 +83,16 @@ class BuildRequestJsonUtils {
             return httpHeaders
         }
 
-        fun buildAppId(appId : String): HttpHeaders {
+        fun buildUtmSource(utmSource : String): HttpHeaders {
             val httpHeaders = HttpHeaders()
-            httpHeaders.put("APP-ID", appId)      //广告来源
+            httpHeaders.put("utmSource", utmSource)
+//            Log.e("Test", " build app id = " + appId)
+            return httpHeaders
+        }
+
+        fun buildUtmMedium(utmMedium : String): HttpHeaders {
+            val httpHeaders = HttpHeaders()
+            httpHeaders.put("utmMedium", utmMedium)
 //            Log.e("Test", " build app id = " + appId)
             return httpHeaders
         }
