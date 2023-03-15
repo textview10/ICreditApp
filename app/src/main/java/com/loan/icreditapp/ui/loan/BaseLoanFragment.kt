@@ -58,8 +58,13 @@ abstract class BaseLoanFragment : BaseFragment() {
                 tvLoanAMount?.text = "₦ " + stage.amount.toString()
                 tvOriginFee?.text = "₦ " + stage.fee.toString()
                 tvRolloverFee?.text = "₦ " + stage.interest.toString()
-                if (tvOverdueFee != null) {
-                    tvOverdueFee?.text = "₦ " + stage.penalty.toString()
+                if (stage.penalty == null){
+                    tvOverdueFee?.visibility = View.GONE
+                } else {
+                    tvOverdueFee?.visibility = View.VISIBLE
+                    if (tvOverdueFee != null ) {
+                        tvOverdueFee?.text = "₦ " + stage.penalty.toString()
+                    }
                 }
             }
         }
