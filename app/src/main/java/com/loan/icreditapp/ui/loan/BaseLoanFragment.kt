@@ -3,6 +3,7 @@ package com.loan.icreditapp.ui.loan
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
@@ -28,6 +29,7 @@ abstract class BaseLoanFragment : BaseFragment() {
     private var tvRolloverFee: AppCompatTextView? = null
     private var tvOverdueFee: AppCompatTextView? = null
     private var tvTotalAmountDue: AppCompatTextView? = null
+    private var llOverdueFee: LinearLayout? = null
 
     open fun setOrderInfo(orderInfoBean: OrderInfoBean) {
         mOrderInfo = orderInfoBean
@@ -41,6 +43,7 @@ abstract class BaseLoanFragment : BaseFragment() {
         tvOriginFee = view.findViewById(R.id.tv_loan_process_loan_origin_fee)
         tvRolloverFee = view.findViewById(R.id.tv_loan_process_loan_fee)
         tvOverdueFee = view.findViewById(R.id.tv_loan_process_loan_overdue_fee)
+        llOverdueFee = view.findViewById(R.id.ll_loan_process_loan_overdue_fee)
         tvTotalAmountDue = view.findViewById(R.id.tv_loan_process_loan_total_amount_due)
         bindDataInternal()
     }
@@ -59,9 +62,9 @@ abstract class BaseLoanFragment : BaseFragment() {
                 tvOriginFee?.text = "₦ " + stage.fee.toString()
                 tvRolloverFee?.text = "₦ " + stage.interest.toString()
                 if (stage.penalty == null){
-                    tvOverdueFee?.visibility = View.GONE
+                    llOverdueFee?.visibility = View.GONE
                 } else {
-                    tvOverdueFee?.visibility = View.VISIBLE
+                    llOverdueFee?.visibility = View.VISIBLE
                     if (tvOverdueFee != null ) {
                         tvOverdueFee?.text = "₦ " + stage.penalty.toString()
                     }
