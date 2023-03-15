@@ -25,6 +25,7 @@ import com.loan.icreditapp.bean.UpdateResponseBean
 import com.loan.icreditapp.collect.UpdateMgr
 import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.dialog.RequestPermissionDialog
+import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.global.FireBaseMgr
@@ -35,6 +36,8 @@ import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
@@ -154,9 +157,9 @@ class MainActivity : BaseActivity() {
         OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
 //        LocationMgr.getInstance().getLocation()
 
-        handler.postDelayed(Runnable {
-            checkAndShowRateUs()
-        }, 500)
+//        handler.postDelayed(Runnable {
+//            checkAndShowRateUs()
+//        }, 500)
 //                handler.postDelayed(Runnable {
 //                    EventBus.getDefault().post(LogTimeOut())
 //        }, 6000)
@@ -166,23 +169,23 @@ class MainActivity : BaseActivity() {
         if (isFinishing || isDestroyed){
             return
         }
-        var hasShowRate = SPUtils.getInstance().getBoolean(Constant.KEY_HAS_SHOW_RATE)
-        if (!hasShowRate) {
-            var count = SPUtils.getInstance().getInt(Constant.KEY_SHOW_RATE_COUNT, 0)
-            if (count >= 2) {
-                if (rateUsDialog != null){
-                    if (rateUsDialog!!.isShowing){
-                        rateUsDialog!!.dismiss()
-                    }
+        var count = SPUtils.getInstance().getInt(Constant.KEY_SHOW_RATE_COUNT, 0)
+        if (count <= 1) {
+            if (rateUsDialog != null){
+                if (rateUsDialog!!.isShowing){
+                    rateUsDialog!!.dismiss()
                 }
-                rateUsDialog =  RateUsDialog(this@MainActivity)
-                rateUsDialog?.show()
-                SPUtils.getInstance().put(Constant.KEY_HAS_SHOW_RATE, true)
-            } else {
-                count++
-                SPUtils.getInstance().put(Constant.KEY_SHOW_RATE_COUNT, count)
             }
+            rateUsDialog =  RateUsDialog(this@MainActivity)
+            rateUsDialog?.show()
+            count++
+            SPUtils.getInstance().put(Constant.KEY_SHOW_RATE_COUNT, count)
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
+    fun onEvent(event: RateUsEvent) {
+        checkAndShowRateUs()
     }
 
     fun updatePageByType(@PageType type: Int) {

@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatTextView
 import com.loan.icreditapp.R
+import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.util.FirebaseUtils
+import org.greenrobot.eventbus.EventBus
 
 class LoanActiveFragment : BaseLoanFragment() {
 
@@ -36,7 +38,7 @@ class LoanActiveFragment : BaseLoanFragment() {
         if (checkNeedShowLog()){
             FirebaseUtils.logEvent("fireb_activity")
         }
-
+        EventBus.getDefault().post(RateUsEvent())
         flCommit?.setOnClickListener ( OnClickListener{
             clickRepayLoad()
         } )

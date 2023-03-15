@@ -17,6 +17,7 @@ import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.setting.SettingBean
 import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.dialog.RateUsDialog
+import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
@@ -24,6 +25,7 @@ import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
 
 class SettingFragment : BaseFragment() {
@@ -77,7 +79,8 @@ class SettingFragment : BaseFragment() {
                     }
                     PageType.RATE_US -> {
                         activity?.let {
-                            showRateUsDialog()
+                            EventBus.getDefault().post(RateUsEvent())
+//                            showRateUsDialog()
                         }
                         closeSlide()
                     }
@@ -140,8 +143,8 @@ class SettingFragment : BaseFragment() {
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
 
-        mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
         if (BuildConfig.DEBUG && false) {
+            mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
             mList.add(
                 SettingBean(
                     R.drawable.ic_out,
