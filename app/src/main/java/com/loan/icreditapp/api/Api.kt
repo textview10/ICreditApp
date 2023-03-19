@@ -132,6 +132,10 @@ class Api {
         val REDOCLY_REPAY_PAGE = HOST + "/v1/loan/get/redocly/repay/page"
 
         val GET_TEXT_INFO = HOST + "/v1/text/info"
+
+        val DEVICE_CHECK = HOST + "/v1/account/device/check"
+
+        val DEVICE_CAPTCHA = HOST + "/v1/account/device/captcha"
     }
 
 }

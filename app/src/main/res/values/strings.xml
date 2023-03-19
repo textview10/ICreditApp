@@ -135,4 +135,6 @@
     
     <string name="rate_us_desc">If you like our application, please take your valuable time to make a satisfactory evaluation for our application. Thank you.</string>
     <string name="rate_us">rate</string>
+
+    <string name="signin_captcha">Enter the captcha</string>
 </resources>

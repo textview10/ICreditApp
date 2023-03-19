@@ -19,6 +19,8 @@ import com.icredit.loancash.utils.Md5Mgr
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.bean.BaseResponseBean
+import com.loan.icreditapp.bean.login.CaptchaBean
 import com.loan.icreditapp.bean.login.SignInBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
@@ -47,6 +49,8 @@ class SignInFragment : BaseFragment() {
     private var ivShowPwd: ImageView? = null
     private var flLoading: FrameLayout? = null
     private var tvForgetPsd: AppCompatTextView? = null
+    private var flCaptcha: FrameLayout? = null
+    private var etCaptcha: EditTextContainer? = null
     private var mPresenter: PhoneNumPresenter? = null
 
     private var passwordMode = true
@@ -77,6 +81,8 @@ class SignInFragment : BaseFragment() {
         ivShowPwd = view.findViewById(R.id.iv_signin_show_pwd)
         flLoading = view.findViewById(R.id.fl_siginin_loading)
         tvForgetPsd = view.findViewById(R.id.tv_signin_forgot_password)
+        flCaptcha = view.findViewById(R.id.fl_signin_captcha)
+        etCaptcha = view.findViewById(R.id.et_signin_captcha)
 
         etPhoneNum?.setOnFocusChangeListener(View.OnFocusChangeListener { view, b ->
             run {
@@ -170,10 +176,15 @@ class SignInFragment : BaseFragment() {
             ToastUtils.showShort("password = null")
             return
         }
-        signIn(phoneNum, pwd)
+        var authCode : String? = null
+        if ((flCaptcha?.visibility == View.VISIBLE) && mSignInBean != null){
+            authCode = etCaptcha?.getText().toString()
+        }
+        signIn(phoneNum, pwd, authCode)
     }
 
-    private fun signIn(phoneNum : String, password : String){
+    private var mSignInBean: SignInBean? = null
+    private fun signIn(phoneNum : String, password : String, authCode : String?){
         flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
@@ -189,6 +200,9 @@ class SignInFragment : BaseFragment() {
 //            2348888888888
             jsonObject.put("mobile", finalPhoneNum)
             jsonObject.put("password", Md5Mgr.encodeMd5(password))
+            if (!TextUtils.isEmpty(authCode)) {
+                jsonObject.put("authCode", authCode)
+            }
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -206,15 +220,7 @@ class SignInFragment : BaseFragment() {
                     if (TextUtils.isEmpty(signInBean.token)){
                         return
                     }
-                    Constant.mAccountId = signInBean.accountId
-                    Constant.mToken = signInBean.token
-                    Constant.mMobile = signInBean.mobile
-                    SPUtils.getInstance().put(KEY_PHONE_NUM, phoneNum)
-                    SPUtils.getInstance().put(KEY_PASS_CODE, password)
-                    if (activity is SignInActivity) {
-                        var signIn : SignInActivity = activity as SignInActivity
-                        signIn.toHomePage()
-                    }
+                    deviceCheck(signInBean.mobile!!, signInBean, phoneNum, password)
                 }
 
                 override fun onError(response: Response<String>) {
@@ -222,6 +228,87 @@ class SignInFragment : BaseFragment() {
                     flLoading?.visibility = View.GONE
                     Log.e(TAG, "sign in error")
                     ToastUtils.showShort("sign in error..")
+                }
+            })
+    }
+
+    private fun showOrHide(showFlag : Boolean){
+        flCaptcha?.visibility = if (showFlag) View.VISIBLE else View.GONE
+    }
+
+    private fun deviceCheck(mobile : String, signInBean: SignInBean, phoneNum : String, password : String){
+        flLoading?.visibility = View.VISIBLE
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        try {
+            jsonObject.put("mobile", mobile)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        this.mSignInBean = signInBean
+        OkGo.post<String>(Api.DEVICE_CHECK).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    flLoading?.visibility = View.GONE
+                    val captchaBean: CaptchaBean? =
+                        checkResponseSuccess(response, CaptchaBean::class.java)
+                    if (captchaBean == null) {
+                        ToastUtils.showShort("device check failure.")
+                        showOrHide(true)
+                        sendDeviceCaptcha(phoneNum)
+                        return
+                    }
+                    if (captchaBean.verify != 1) {
+                        showOrHide(true)
+                        sendDeviceCaptcha(phoneNum)
+                        return
+                    }
+                    toHomePage(mSignInBean!!, phoneNum, password)
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    flLoading?.visibility = View.GONE
+                    showOrHide(true)
+                    ToastUtils.showShort("device check error..")
+                }
+            })
+    }
+
+    private fun toHomePage(signInBean: SignInBean, phoneNum : String, password : String){
+        Constant.mAccountId = signInBean.accountId
+        Constant.mToken = signInBean.token
+        Constant.mMobile = signInBean.mobile
+        SPUtils.getInstance().put(KEY_PHONE_NUM, phoneNum)
+        SPUtils.getInstance().put(KEY_PASS_CODE, password)
+        if (activity is SignInActivity) {
+            var signIn : SignInActivity = activity as SignInActivity
+            signIn.toHomePage()
+        }
+    }
+
+    private fun sendDeviceCaptcha(phoneNum : String){
+        etCaptcha?.getEditText()?.requestFocus()
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        try {
+            jsonObject.put("mobile", phoneNum)
+            jsonObject.put("captchaType", "3")
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        OkGo.post<String>(Api.DEVICE_CAPTCHA).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    if (isRemoving || isDetached) {
+                        return
+                    }
+                    ToastUtils.showShort("device captcha error..")
                 }
             })
     }

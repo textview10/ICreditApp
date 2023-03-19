@@ -15,142 +15,167 @@
             layout="@layout/include_logo"
             android:layout_height="wrap_content"/>
 
-        <FrameLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="80dp"
-            android:background="@color/white">
+            android:layout_weight="1"
+            android:layout_marginBottom="100dp"
+            android:layout_height="0dp">
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="80dp"
+                android:background="@color/white">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_signin_phone_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Enter your phone number:"
-                    android:textColor="#999999"
-                    android:textSize="16sp" />
-
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="51dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_signin_phone_num"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:text="Enter your phone number:"
+                        android:textColor="#999999"
+                        android:textSize="16sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="51dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:text="+"
-                                android:gravity="center_vertical"
-                                android:textSize="20sp" />
-
-                            <Spinner
-                                android:id="@+id/spinner_signin_input"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:background="@drawable/spinner_loan_logo_arrow"
-                                android:layout_gravity="center_vertical" />
-
-                            <FrameLayout
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="10dp">
+                                android:layout_height="50dp"
+                                android:orientation="horizontal">
 
-                                <androidx.appcompat.widget.AppCompatEditText
-                                    android:id="@+id/et_signin_phone_num"
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="+"
+                                    android:gravity="center_vertical"
+                                    android:textSize="20sp" />
+
+                                <Spinner
+                                    android:id="@+id/spinner_signin_input"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:background="@drawable/spinner_loan_logo_arrow"
+                                    android:layout_gravity="center_vertical" />
+
+                                <FrameLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:background="@null"
-                                    android:lines="1"
-                                    android:maxLines="1"
-                                    android:singleLine="true"
-                                    android:textColor="#333333"
-                                    android:maxLength="24"
-                                    android:textSize="18sp"
-                                    android:inputType="number"
-                                    android:textCursorDrawable="@drawable/et_cursor_color" />
+                                    android:layout_marginStart="10dp">
 
-                                <ImageView
-                                    android:id="@+id/iv_signin_phonenum_clear"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:layout_gravity="center_vertical|end"
-                                    android:paddingStart="10dp"
-                                    android:paddingTop="5dp"
-                                    android:paddingEnd="10dp"
-                                    android:paddingBottom="5dp"
-                                    android:src="@drawable/ic_edit_text_clear"
-                                    android:visibility="gone" />
+                                    <androidx.appcompat.widget.AppCompatEditText
+                                        android:id="@+id/et_signin_phone_num"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:background="@null"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:singleLine="true"
+                                        android:textColor="#333333"
+                                        android:maxLength="24"
+                                        android:textSize="18sp"
+                                        android:inputType="number"
+                                        android:textCursorDrawable="@drawable/et_cursor_color" />
 
-                            </FrameLayout>
+                                    <ImageView
+                                        android:id="@+id/iv_signin_phonenum_clear"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:layout_gravity="center_vertical|end"
+                                        android:paddingStart="10dp"
+                                        android:paddingTop="5dp"
+                                        android:paddingEnd="10dp"
+                                        android:paddingBottom="5dp"
+                                        android:src="@drawable/ic_edit_text_clear"
+                                        android:visibility="gone" />
+
+                                </FrameLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </FrameLayout>
 
-                </FrameLayout>
+                    <View style="@style/view_divide" />
 
-                <View style="@style/view_divide" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/white">
-
-                    <com.loan.icreditapp.ui.profile.widget.EditTextContainer
-                        android:id="@+id/et_signin_pwd"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="62dp"
-                        app:select_view_hint="@string/signin_pwd_title"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/white">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_signin_show_pwd"
-                        android:layout_width="25dp"
-                        android:layout_marginEnd="32dp"
-                        android:src="@drawable/ic_show_pwd"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_height="25dp"/>
+                        <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                            android:id="@+id/et_signin_pwd"
+                            android:layout_width="match_parent"
+                            android:layout_height="62dp"
+                            app:select_view_hint="@string/signin_pwd_title"/>
 
-                </FrameLayout>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_signin_show_pwd"
+                            android:layout_width="25dp"
+                            android:layout_marginEnd="32dp"
+                            android:src="@drawable/ic_show_pwd"
+                            android:layout_gravity="end|center_vertical"
+                            android:layout_height="25dp"/>
 
-                <View style="@style/view_divide" />
+                    </FrameLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_signin_forgot_password"
-                    android:layout_width="wrap_content"
-                    android:text="Forgot password ? "
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/theme_color"
-                    android:textSize="16sp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_height="wrap_content"/>
+                    <View style="@style/view_divide" />
 
-            </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_signin_forgot_password"
+                        android:layout_width="wrap_content"
+                        android:text="Forgot password ? "
+                        android:layout_marginTop="15dp"
+                        android:textColor="@color/theme_color"
+                        android:textSize="16sp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_height="wrap_content"/>
 
-        </FrameLayout>
+                    <FrameLayout
+                        android:id="@+id/fl_signin_captcha"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:visibility="gone"
+                        android:background="@color/white">
+
+                        <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                            android:id="@+id/et_signin_captcha"
+                            android:layout_width="match_parent"
+                            android:layout_height="62dp"
+                            app:select_view_hint="@string/signin_captcha"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
 
     </LinearLayout>
 
