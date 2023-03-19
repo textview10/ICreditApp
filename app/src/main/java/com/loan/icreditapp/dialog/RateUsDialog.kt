@@ -2,11 +2,13 @@ package com.loan.icreditapp.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.text.TextUtils
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import com.loan.icreditapp.R
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.GooglePlayUtils
 
 class RateUsDialog constructor(context: Context): Dialog(context) {
@@ -24,6 +26,10 @@ class RateUsDialog constructor(context: Context): Dialog(context) {
         }
         setContentView(R.layout.dialog_rate_us)
         val tvRateUs: AppCompatTextView = findViewById(R.id.tv_dialog_rate_us)
+        val tvDesc: AppCompatTextView = findViewById(R.id.tv_dialog_rate_us_desc)
+        if (Constant.textInfoResponse != null && !TextUtils.isEmpty(Constant.textInfoResponse!!.fiveStarContent)){
+            tvDesc?.text = Constant.textInfoResponse!!.fiveStarContent
+        }
         tvRateUs.setOnClickListener {
             if (GooglePlayUtils.getInstance().hasGooglePlay(getContext())){
                 GooglePlayUtils.getInstance()
