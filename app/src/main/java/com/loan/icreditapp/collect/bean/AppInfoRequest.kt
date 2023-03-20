@@ -1,13 +1,11 @@
 package com.loan.icreditapp.collect.bean
 
 class AppInfoRequest {
-    var name: String? = null
-    var packageName: String? = null
+    var appname: String? = null
+    var pkgname: String? = null
 
-    // INSTALL TIME
-    var it: Long = 0
-    // LAST UPDATE TIME
-    var lu: Long = 0
+    var installtime: Long = 0
+    var installtime_utc: String? = null
     //0 系统app, 1第三方app
-    var type : Int = 0
+    var type : String? = null
 }

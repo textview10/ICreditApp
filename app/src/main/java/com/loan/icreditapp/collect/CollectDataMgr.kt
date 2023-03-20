@@ -4,15 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CallLog
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.util.Log
-import androidx.core.app.ActivityCompat
-import com.alibaba.fastjson.JSON
 import com.blankj.utilcode.util.*
 import com.blankj.utilcode.util.ThreadUtils.SimpleTask
 import com.drojian.alpha.toolslib.log.LogSaver
@@ -34,6 +31,8 @@ import com.lzy.okgo.model.Response
 import org.json.JSONObject
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Pattern
 
 class CollectDataMgr {
@@ -263,25 +262,31 @@ class CollectDataMgr {
 
     private fun readAllAppInfo(): ArrayList<AppInfoRequest> {
         val list: ArrayList<AppInfoRequest> = ArrayList<AppInfoRequest>()
-        val pm = Utils.getApp().packageManager ?: return list
-        val installedPackages = pm.getInstalledPackages(0)
-            ?: return list
-        for (i in installedPackages.indices) {
-            val packageInfo = installedPackages[i]
-            val appInfoRequest = AppInfoRequest()
-            appInfoRequest.packageName = encodeData(packageInfo.packageName)
-            appInfoRequest.lu = packageInfo.lastUpdateTime
-            appInfoRequest.it = packageInfo.firstInstallTime
-            val ai = packageInfo.applicationInfo
-            if (ai != null) {
-                val isSystem = ApplicationInfo.FLAG_SYSTEM and ai.flags != 0
-                appInfoRequest.type = if (isSystem) 0 else 1
-                try {
-                    appInfoRequest.name = encodeData1(ai.loadLabel(pm).toString())
-                } catch (e: Exception) {
+        try {
+            val pm = Utils.getApp().packageManager ?: return list
+            val installedPackages = pm.getInstalledPackages(0)
+                ?: return list
+            for (i in installedPackages.indices) {
+                val packageInfo = installedPackages[i]
+                val appInfoRequest = AppInfoRequest()
+                appInfoRequest.pkgname = encodeData(packageInfo.packageName)
+                appInfoRequest.installtime = packageInfo.firstInstallTime
+                appInfoRequest.installtime_utc = Local2UTC(packageInfo.firstInstallTime)
+                val ai = packageInfo.applicationInfo
+                if (ai != null) {
+                    val isSystem = ApplicationInfo.FLAG_SYSTEM and ai.flags != 0
+                    appInfoRequest.type = if (isSystem) "0" else "1"
+                    try {
+                        appInfoRequest.appname = encodeData1(ai.loadLabel(pm).toString())
+                    } catch (e: Exception) {
+                    }
                 }
+                list.add(appInfoRequest)
             }
-            list.add(appInfoRequest)
+        }catch (e : Exception ){
+            if (BuildConfig.DEBUG){
+                throw e
+            }
         }
         return list
     }
@@ -404,6 +409,14 @@ class CollectDataMgr {
 
     fun onDestroy(){
         OkGo.getInstance().cancelTag(TAG)
+    }
+
+    private val YMDHMS_FORMAT = "HH:mm, MMMM dd, yyyy"
+    private fun Local2UTC(timeStamp: Long): String? {
+        val sdf =
+            SimpleDateFormat(YMDHMS_FORMAT)
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
+        return sdf.format(Date(timeStamp))
     }
 
     interface Observer {
