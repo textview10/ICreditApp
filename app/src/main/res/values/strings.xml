@@ -115,6 +115,7 @@
     <string name="my_loan_title_paid">Paid</string>
     <string name="my_loan_title_overdue">Overdue</string>
     <string name="my_loan_title_declined">Declined</string>
+    <string name="my_loan_title_repaying">Repaying</string>
 
     <string name="term_1">I agree to the</string>
     <string name="term_2">terms </string>

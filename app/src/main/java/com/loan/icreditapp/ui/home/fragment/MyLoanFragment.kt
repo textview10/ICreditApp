@@ -180,6 +180,11 @@ class MyLoanFragment : BaseFragment() {
                 toFragment(loanDeclinedFragment)
                 setTitleInternal(R.string.my_loan_title_declined)
             }
+            "6" -> {
+                val loanRepayingFragment = LoanRepayingFragment()
+                toFragment(loanRepayingFragment)
+                setTitleInternal(R.string.my_loan_title_repaying)
+            }
         }
     }
 
