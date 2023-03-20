@@ -31,5 +31,29 @@ class CardNumUtils {
             }
             return cardNumber
         }
+
+        fun getCardNumHide2(cardNumber: String?): String? {
+            val length: Int? = cardNumber?.length
+            var cardNumber: String = cardNumber!!
+            length?.let {
+                if (length > 4) {
+                    try {
+                        val result = cardNumber.toString()
+                        val tempResult = StringBuffer()
+                        for (i in 0 until result.length) {
+                            if (i >= 8 && i <= 11) {
+                                tempResult.append("*")
+                            } else {
+                                tempResult.append(result[i])
+                            }
+                        }
+                        cardNumber = tempResult.toString()
+                    } catch (_: java.lang.Exception) {
+
+                    }
+                }
+            }
+            return cardNumber
+        }
     }
 }

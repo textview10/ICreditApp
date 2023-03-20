@@ -177,7 +177,7 @@ class PayFragment : BaseFragment() {
                 mBankList.addAll(bankList)
                 if (!mBankList.isEmpty()) {
                     var bank: CardResponseBean.Bank = mBankList[0]
-                    tvNorCardNum?.text = CardNumUtils.getCardNumHide(bank.cardNumber)
+                    tvNorCardNum?.text = CardNumUtils.getCardNumHide2(bank.cardNumber)
                 }
             }
 
@@ -324,7 +324,7 @@ class PayFragment : BaseFragment() {
     fun onEvent(event: ChooseBankListEvent) {
         if (!TextUtils.isEmpty(event.bankNum)) {
             norPresenter?.setCurBankNum(event.bankNum)
-            tvNorCardNum?.text = CardNumUtils.getCardNumHide(event.bankNum)
+            tvNorCardNum?.text = CardNumUtils.getCardNumHide2(event.bankNum)
         }
     }
 

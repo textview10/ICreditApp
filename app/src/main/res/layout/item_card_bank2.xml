@@ -49,11 +49,11 @@
 
     <ImageView
         android:id="@+id/iv_card_list_check"
-        android:layout_width="wrap_content"
+        android:layout_width="25dp"
         android:src="@drawable/ic_success"
         android:layout_gravity="center_vertical|end"
         android:layout_marginEnd="20dp"
         android:visibility="gone"
-        android:layout_height="wrap_content"/>
+        android:layout_height="25dp"/>
 
 </FrameLayout>
