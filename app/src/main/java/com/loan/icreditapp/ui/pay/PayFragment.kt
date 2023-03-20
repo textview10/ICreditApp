@@ -2,6 +2,7 @@ package com.loan.icreditapp.ui.pay
 
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -27,9 +28,16 @@ import androidx.core.content.ContextCompat.getSystemService
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.drojian.alpha.toolslib.log.LogSaver
+import com.loan.icreditapp.bean.bank.CardResponseBean
+import com.loan.icreditapp.event.ChooseBankListEvent
+import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.global.Constant.Companion.IS_AAB_BUILD
+import com.loan.icreditapp.util.CardNumUtils
 import net.entity.bean.FlutterWaveResult
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import java.util.ArrayList
 
 
 class PayFragment : BaseFragment() {
@@ -61,6 +69,10 @@ class PayFragment : BaseFragment() {
     private var selectAccountName: EditTextContainer? = null
     private var selectAccountNumber: EditTextContainer? = null
     private var tvOfflineTitle: AppCompatTextView? = null
+    private var tvNorCardNum: AppCompatTextView? = null
+    private var llSelectBank: LinearLayout? = null
+
+    private var mBankList: ArrayList<CardResponseBean.Bank> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,10 +91,14 @@ class PayFragment : BaseFragment() {
         curPresenter = monifyPresenter
         llMonifyResult?.visibility = GONE
         startLoading()
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
     }
 
     private fun initView(view: View) {
         tvOfflineTitle = view.findViewById(R.id.tv_pay_offline_title)
+        tvNorCardNum = view.findViewById(R.id.tv_pay_offline_card_num)
         flNor = view.findViewById(R.id.fl_pay_nor)
         flPayStack = view.findViewById(R.id.fl_pay_paystack)
         flFlutterware = view.findViewById(R.id.fl_pay_flutterware)
@@ -95,6 +111,7 @@ class PayFragment : BaseFragment() {
         selectBankCode = view.findViewById(R.id.select_container_pay_bank_code)
         selectAccountName = view.findViewById(R.id.select_container_pay_account_name)
         selectAccountNumber = view.findViewById(R.id.select_container_pay_account_number)
+        llSelectBank = view.findViewById(R.id.ll_pay_offline_select_bank)
 
         selectBankName?.setShowMode()
         selectBankCode?.setShowMode()
@@ -113,6 +130,10 @@ class PayFragment : BaseFragment() {
                 return@OnClickListener
             }
             curPresenter = norPresenter
+            if (TextUtils.isEmpty(norPresenter?.getCurBankNum())) {
+                ToastUtils.showShort("no bind bank card.")
+                return@OnClickListener
+            }
             startLoading()
         })
 
@@ -138,17 +159,37 @@ class PayFragment : BaseFragment() {
             startLoading()
         })
         tvCopy?.setOnClickListener(OnClickListener {
-            if (checkClickFast()){
+            if (checkClickFast()) {
                 return@OnClickListener
             }
-            if (monifyPresenter == null){
+            if (monifyPresenter == null) {
                 return@OnClickListener
             }
             var text = monifyPresenter!!.getCLipBoardText()
-            if (!TextUtils.isEmpty(text)){
+            if (!TextUtils.isEmpty(text)) {
                 ClipboardUtils.copyText(text)
                 ToastUtils.showShort("Copy " + text + " to clipboard success")
             }
+        })
+        ConfigMgr.getBankList(object : ConfigMgr.CallBack4 {
+            override fun onGetData(bankList: ArrayList<CardResponseBean.Bank>) {
+                mBankList.clear()
+                mBankList.addAll(bankList)
+                if (!mBankList.isEmpty()) {
+                    var bank: CardResponseBean.Bank = mBankList[0]
+                    tvNorCardNum?.text = CardNumUtils.getCardNumHide(bank.cardNumber)
+                }
+            }
+
+        })
+        llSelectBank?.setOnClickListener(OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            if (context == null){
+                return@OnClickListener
+            }
+            PayBankListActivity.launchActivity(requireContext())
         })
     }
 
@@ -193,23 +234,23 @@ class PayFragment : BaseFragment() {
         curPresenter?.updateResult()
     }
 
-    fun onFlutterWaveResult(isSuccess : Boolean , bean : FlutterWaveResult?) {
+    fun onFlutterWaveResult(isSuccess: Boolean, bean: FlutterWaveResult?) {
         var statusOk = false
-        if (bean != null){
+        if (bean != null) {
             statusOk = TextUtils.equals(bean.status, "success")
         }
-        if (!isSuccess || !statusOk){
+        if (!isSuccess || !statusOk) {
             var sb = StringBuffer()
             sb.append("Flutterware result error")
-            if (bean != null){
-                if (!isSuccess && bean.data != null){
+            if (bean != null) {
+                if (!isSuccess && bean.data != null) {
                     sb.append(bean!!.data!!.vbvrespmessage)
                 } else {
                     sb.append(GsonUtils.toJson(bean))
                 }
             }
             flLoading?.visibility = View.GONE
-            ToastUtils.showShort( sb.toString())
+            ToastUtils.showShort(sb.toString())
             return
         }
         flLoading?.visibility = View.VISIBLE
@@ -250,8 +291,10 @@ class PayFragment : BaseFragment() {
                     if (!TextUtils.isEmpty(body) && !IS_AAB_BUILD) {
                         responseStr.append(body.toString())
                     }
-                    LogSaver.logToFile("repay failure = " + responseStr.toString() + " body = "
-                        + body)
+                    LogSaver.logToFile(
+                        "repay failure = " + responseStr.toString() + " body = "
+                                + body
+                    )
                 }
                 if (!TextUtils.isEmpty(responseStr.toString())) {
                     ToastUtils.showShort(responseStr.toString())
@@ -277,4 +320,18 @@ class PayFragment : BaseFragment() {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
+    fun onEvent(event: ChooseBankListEvent) {
+        if (!TextUtils.isEmpty(event.bankNum)) {
+            norPresenter?.setCurBankNum(event.bankNum)
+            tvNorCardNum?.text = CardNumUtils.getCardNumHide(event.bankNum)
+        }
+    }
+
+    override fun onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+        }
+        super.onDestroy()
+    }
 }

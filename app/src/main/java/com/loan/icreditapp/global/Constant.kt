@@ -1,6 +1,7 @@
 package com.loan.icreditapp.global
 
 import com.loan.icreditapp.bean.TextInfoResponse
+import com.loan.icreditapp.bean.bank.CardResponseBean
 import com.loan.icreditapp.dialog.order.OrderInfoBean
 
 class Constant {
@@ -35,7 +36,11 @@ class Constant {
         const val KEY_SHOW_RATE_COUNT : String = "key_show_rate_count"
         const val KEY_HAS_SHOW_RATE : String = "key_has_show_rate"
 
-        const val SHOW_BIND_CARD : Boolean = false
+        const val SHOW_BIND_CARD : Boolean = true
+
+        var bankList : ArrayList<CardResponseBean.Bank> = ArrayList()
+
+
     }
 
 }

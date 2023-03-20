@@ -103,6 +103,11 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".ui.pay.PayBankListActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
         <service
             android:name=".service.FcmService"
             android:exported="false">

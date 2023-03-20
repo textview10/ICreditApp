@@ -3,16 +3,21 @@ package com.loan.icreditapp.global
 import android.text.TextUtils
 import android.util.Log
 import android.util.Pair
+import android.view.View
 import com.blankj.utilcode.util.GsonUtils
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.bank.BankResponseBean
+import com.loan.icreditapp.bean.bank.CardResponseBean
+import com.loan.icreditapp.event.ChooseBankListEvent
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.CheckResponseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -274,7 +279,47 @@ class ConfigMgr {
                     }
                 })
         }
+
+        fun getBankList(callBack4: CallBack4) {
+            if (!Constant.bankList.isEmpty()){
+                callBack4?.onGetData(Constant.bankList)
+                return
+            }
+            val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+            try {
+                jsonObject.put("accountId", Constant.mAccountId)
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+            OkGo.post<String>(Api.GET_CARD_LIST).tag(TAG)
+                .upJson(jsonObject)
+                .execute(object : StringCallback() {
+                    override fun onSuccess(response: Response<String>) {
+                        val bankBean: CardResponseBean? =
+                            CheckResponseUtils.checkResponseSuccess(response, CardResponseBean::class.java)
+                        if (bankBean == null || bankBean.cardlist == null) {
+                            callBack4?.onGetData(Constant.bankList)
+                            return
+                        }
+                        if (!bankBean.cardlist!!.isEmpty()){
+                            Constant.bankList.clear()
+                            Constant.bankList.addAll(bankBean.cardlist!!)
+                        }
+                        callBack4?.onGetData(Constant.bankList)
+                    }
+
+                    override fun onError(response: Response<String>) {
+                        super.onError(response)
+                        callBack4?.onGetData(Constant.bankList)
+                        if (BuildConfig.DEBUG) {
+                            Log.e(TAG, " get bank list error =  ." + response.body())
+                        }
+                    }
+                })
+        }
     }
+
+
 
      private interface CallBack {
         fun onGetData(list : ArrayList<Pair<String, String>>)
@@ -286,5 +331,9 @@ class ConfigMgr {
 
    interface CallBack3 {
         fun onGetData(textInfoResponse: TextInfoResponse?)
+    }
+
+    interface CallBack4 {
+        fun onGetData(bankList : ArrayList<CardResponseBean.Bank>)
     }
 }

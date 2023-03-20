@@ -19,6 +19,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class NorLoanPresenter : BasePresenter {
+    private var bankNum : String? = null
 
     constructor(payFragment: PayFragment) : super(payFragment) {
 
@@ -31,6 +32,7 @@ class NorLoanPresenter : BasePresenter {
             jsonObject.put("accountId", Constant.mAccountId)
             jsonObject.put("orderId", orderId)
             jsonObject.put("amount", amount.toString())
+            jsonObject.put("cardNumber", bankNum)
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -69,5 +71,13 @@ class NorLoanPresenter : BasePresenter {
 
     override fun updateResult() {
 
+    }
+
+    fun getCurBankNum() : String?{
+        return bankNum
+    }
+
+    fun setCurBankNum(bankNum: String?) {
+        this.bankNum = bankNum
     }
 }
