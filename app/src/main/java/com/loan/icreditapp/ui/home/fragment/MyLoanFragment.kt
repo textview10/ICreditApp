@@ -134,7 +134,6 @@ class MyLoanFragment : BaseFragment() {
     }
 
     private fun updatePageByStatus(orderInfoBean: OrderInfoBean) {
-        orderInfoBean.status = "2"
         //可以借款
         if (orderInfoBean.canApply == true || TextUtils.isEmpty(orderInfoBean.orderId) ||
             TextUtils.equals(orderInfoBean.orderId, "0")
