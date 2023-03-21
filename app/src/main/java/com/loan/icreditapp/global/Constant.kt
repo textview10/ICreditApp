@@ -40,6 +40,7 @@ class Constant {
 
         var bankList : ArrayList<CardResponseBean.Bank> = ArrayList()
 
+        var imei : String? = null
 
     }
 

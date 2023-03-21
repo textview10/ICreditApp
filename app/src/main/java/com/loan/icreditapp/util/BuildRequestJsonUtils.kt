@@ -1,6 +1,7 @@
 package com.loan.icreditapp.util
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
 import android.util.Log
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.DeviceUtils
@@ -54,7 +55,8 @@ class BuildRequestJsonUtils {
                 //  utmMedium	String	Y	媒介
 //                httpHeaders.put("utmMedium", "")   //媒介
                 //   imei
-//                httpHeaders.put("imei", "")        //imei
+                httpHeaders.put("imei", if (!TextUtils.isEmpty(Constant.imei)) Constant.imei
+                else DeviceUtils.getAndroidID())        //imei
                 // longitude	String	Y	经度
 //                httpHeaders.put("longitude", "")   //经度
                 //latitude	String	Y	纬度
@@ -79,7 +81,9 @@ class BuildRequestJsonUtils {
         @SuppressLint("MissingPermission")
         fun buildHeaderImei(): HttpHeaders {
             val httpHeaders = HttpHeaders()
-            httpHeaders.put("imei", PhoneUtils.getIMEI())        //imei
+            Constant.imei = PhoneUtils.getIMEI()
+            httpHeaders.put("imei", if (!TextUtils.isEmpty(Constant.imei)) Constant.imei
+                else DeviceUtils.getAndroidID())        //imei
             return httpHeaders
         }
 

@@ -260,6 +260,7 @@ class SignInFragment : BaseFragment() {
                     }
                     if (captchaBean.verify != 1) {
                         showOrHide(true)
+                        ToastUtils.showShort("device check failure.")
                         sendDeviceCaptcha(phoneNum)
                         return
                     }
