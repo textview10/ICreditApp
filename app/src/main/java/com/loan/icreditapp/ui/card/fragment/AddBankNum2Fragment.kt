@@ -53,7 +53,6 @@ class AddBankNum2Fragment : BaseFragment() {
     private val TAG = "AddBankNum2Fragment"
 
     private var editBankNum: EditTextContainer? = null
-    private var flChooseDate: FrameLayout? = null
     private var etChooseDate: AppCompatEditText? = null
     private var etCvv: AppCompatEditText? = null
 
@@ -97,7 +96,6 @@ class AddBankNum2Fragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         editBankNum = view.findViewById(R.id.edit_container_add_bank_card_banknum)
-        flChooseDate = view.findViewById(R.id.fl_add_bank_card_choose_date)
         etChooseDate = view.findViewById(R.id.et_add_bank_card_choose_date)
         etCvv = view.findViewById(R.id.et_add_bank_card_cvv)
         flCommit = view.findViewById(R.id.fl_add_bank_num_commit)
