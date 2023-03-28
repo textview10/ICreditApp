@@ -139,4 +139,7 @@
     <string name="rate_us">rate</string>
 
     <string name="signin_captcha">Enter the captcha</string>
+
+    <string name="facebook_app_id">190342719637645</string>
+    <string name="fb_login_protocol_scheme">fb190342719637645</string>
 </resources>

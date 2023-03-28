@@ -132,5 +132,6 @@ dependencies {
         exclude group: 'com.squareup.okhttp'
         exclude group: 'com.squareup.okhttp3'
     }
-
+    implementation "com.android.installreferrer:installreferrer:2.2"
+    compile 'com.google.android.gms:play-services-analytics:10.2.4'
 }
