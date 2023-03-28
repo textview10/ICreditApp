@@ -5,6 +5,7 @@ import com.loan.icreditapp.ui.setting.PageType.Companion.ABOUT
 import com.loan.icreditapp.ui.setting.PageType.Companion.BANK_ACCOUNT
 import com.loan.icreditapp.ui.setting.PageType.Companion.CARD
 import com.loan.icreditapp.ui.setting.PageType.Companion.CONTACT_US
+import com.loan.icreditapp.ui.setting.PageType.Companion.FEED_BACK
 import com.loan.icreditapp.ui.setting.PageType.Companion.HELP
 import com.loan.icreditapp.ui.setting.PageType.Companion.LOGOUT
 import com.loan.icreditapp.ui.setting.PageType.Companion.MESSAGE
@@ -15,7 +16,7 @@ import com.loan.icreditapp.ui.setting.PageType.Companion.RATE_US
 import com.loan.icreditapp.ui.setting.PageType.Companion.TEST_TO_PROFILE
 
 
-@IntDef(MY_LOAN, MY_PROFILE, CARD, BANK_ACCOUNT, MESSAGE, HELP, ABOUT, LOGOUT, TEST_TO_PROFILE, RATE_US, CONTACT_US, OFFLINE_REPAY)
+@IntDef(MY_LOAN, MY_PROFILE, CARD, BANK_ACCOUNT, MESSAGE, HELP, ABOUT, LOGOUT, TEST_TO_PROFILE, RATE_US, CONTACT_US, OFFLINE_REPAY, FEED_BACK)
 @Retention(AnnotationRetention.SOURCE)
 annotation class PageType {
     companion object {
@@ -29,6 +30,7 @@ annotation class PageType {
         const val RATE_US = 7
         const val CONTACT_US = 8
         const val OFFLINE_REPAY = 9
+        const val FEED_BACK = 10
 
         const val LOGOUT = 111
         const val TEST_TO_PROFILE = 112

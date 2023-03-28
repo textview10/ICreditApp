@@ -36,7 +36,7 @@ class Constant {
         const val KEY_SHOW_RATE_COUNT : String = "key_show_rate_count"
         const val KEY_HAS_SHOW_RATE : String = "key_has_show_rate"
 
-        const val SHOW_BIND_CARD : Boolean = true
+        const val SHOW_BIND_CARD : Boolean = false
 
         var bankList : ArrayList<CardResponseBean.Bank> = ArrayList()
 
