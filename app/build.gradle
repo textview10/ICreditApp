@@ -14,8 +14,8 @@ android {
         applicationId "com.icredit.okash.loan.cash.opay.game"
         minSdkVersion 19
         targetSdkVersion 31
-        versionCode 20075
-        versionName "Version 2.1.4"
+        versionCode 20076
+        versionName "Version 2.1.5"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -128,9 +128,9 @@ dependencies {
 //        exclude group: 'com.squareup.okhttp3'
     }
     implementation('com.github.flutterwave.rave-android:rave_android:2.1.39') {
-        exclude group: 'com.squareup.okio'
-        exclude group: 'com.squareup.okhttp'
-        exclude group: 'com.squareup.okhttp3'
+//        exclude group: 'com.squareup.okio'
+//        exclude group: 'com.squareup.okhttp'
+//        exclude group: 'com.squareup.okhttp3'
     }
     implementation "com.android.installreferrer:installreferrer:2.2"
     compile 'com.google.android.gms:play-services-analytics:10.2.4'

@@ -53,6 +53,9 @@ class WelcomeActivity : BaseActivity() {
         tvRegister?.setOnClickListener(View.OnClickListener {
             checkServerAvailable(object : CallBack {
                 override fun onEnd() {
+                    if (isFinishing || isDestroyed){
+                        return
+                    }
                     if (hasShowTerm){
                         SignUpActivity.startActivity(this@WelcomeActivity, SignUpActivity.SIGNUP_NEW)
                         finish()
@@ -72,6 +75,9 @@ class WelcomeActivity : BaseActivity() {
         tvSignIn?.setOnClickListener(View.OnClickListener {
             checkServerAvailable(object : CallBack {
                 override fun onEnd() {
+                    if (isFinishing || isDestroyed){
+                        return
+                    }
                     if (hasShowTerm){
                         SignInActivity.startActivity(this@WelcomeActivity)
                         finish()
