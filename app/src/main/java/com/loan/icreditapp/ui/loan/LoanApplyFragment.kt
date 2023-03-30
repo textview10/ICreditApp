@@ -51,6 +51,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.Collections
 
 /**
  * 申请贷款的界面
@@ -140,6 +141,26 @@ class LoanApplyFragment : BaseLoanFragment() {
                         return
                     }
                     if (productBean.products != null) {
+                        Collections.sort(productBean.products!!, object : Comparator<ProductResponseBean.Product> {
+                            override fun compare(
+                                o1: ProductResponseBean.Product?,
+                                o2: ProductResponseBean.Product?
+                            ): Int {
+                                try {
+                                    if (o1 != null && o2 != null) {
+                                       val amount1  = o1.amount?.toDouble()
+                                       val amount2 =  o2.amount?.toDouble()
+                                        if (amount1 != null && amount2 != null){
+                                            return (amount2 - amount1).toInt()
+                                        }
+                                    }
+                                }catch (e : Exception){
+                                    Log.e(TAG, "parse exception ", e)
+                                }
+                                return 0
+                            }
+
+                        })
                         updateProductList(productBean.products!!)
                     }
                 }
