@@ -126,7 +126,9 @@ class CollectDataMgr {
                 val hasPermissionReadPhoneState =
                     PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
                 if (hasPermissionReadPhoneState) {
-                    jsonObject.put("imei", PhoneUtils.getIMEI())
+                    val imei = PhoneUtils.getIMEI()
+                    jsonObject.put("imei", if (!TextUtils.isEmpty(imei)) imei else
+                        DeviceUtils.getAndroidID())
                 }
             } catch (e :Exception){
 

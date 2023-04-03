@@ -154,7 +154,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun executeNext() {
-        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
+//        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
 //        LocationMgr.getInstance().getLocation()
 
 //        handler.postDelayed(Runnable {
