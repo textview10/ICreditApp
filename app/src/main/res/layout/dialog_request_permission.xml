@@ -54,6 +54,7 @@
 
                 <LinearLayout
                     style="@style/request_permission_container"
+                    android:visibility="gone"
                     android:layout_marginTop="20dp">
 
                     <ImageView
