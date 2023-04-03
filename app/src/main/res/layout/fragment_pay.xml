@@ -22,7 +22,7 @@
                 android:layout_marginTop="20dp"
                 android:text="My bank account:"
                 android:textColor="@color/black"
-                android:visibility="visible"
+                android:visibility="gone"
 
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -32,6 +32,7 @@
                     android:layout_width="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="center"
+                    android:visibility="gone"
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -61,7 +62,7 @@
                 android:id="@+id/fl_pay_nor"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"

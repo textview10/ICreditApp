@@ -123,6 +123,7 @@ class PayFragment : BaseFragment() {
         if (Constant.SHOW_BIND_CARD) {
             tvOfflineTitle?.visibility = View.VISIBLE
             flNor?.visibility = View.VISIBLE
+            llSelectBank?.visibility = View.VISIBLE
         }
 
         flNor?.setOnClickListener(View.OnClickListener {
