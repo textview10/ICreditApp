@@ -201,18 +201,22 @@ class PayFragment : BaseFragment() {
         }
         if (payStackPresenter == null) {
             payStackPresenter = PayStackPresenter(this)
+            payStackPresenter?.setData(orderId, amount)
             payStackPresenter?.setObserver(MyObserver())
         }
         if (flutterwarePresenter == null) {
             flutterwarePresenter = FlutterwarePresenter(this)
+            flutterwarePresenter?.setData(orderId, amount)
             flutterwarePresenter?.setObserver(MyObserver())
         }
         if (redoclyPresenter == null) {
             redoclyPresenter = RedoclyPresenter(this)
+            redoclyPresenter?.setData(orderId, amount)
             redoclyPresenter?.setObserver(MyObserver())
         }
         if (monifyPresenter == null) {
             monifyPresenter = MonifyPresenter(this)
+            monifyPresenter?.setData(orderId, amount)
             monifyPresenter?.setObserver(MyObserver())
         }
     }
