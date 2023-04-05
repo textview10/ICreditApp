@@ -198,6 +198,7 @@ class PayFragment : BaseFragment() {
         if (norPresenter == null) {
             norPresenter = NorLoanPresenter(this)
             norPresenter?.setObserver(MyObserver())
+            norPresenter?.setData(orderId, amount)
         }
         if (payStackPresenter == null) {
             payStackPresenter = PayStackPresenter(this)
