@@ -16,7 +16,6 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
@@ -215,6 +214,8 @@ class MainActivity : BaseActivity() {
                 setTitle(R.string.setting_my_loan)
                 if (mMyLoanFragment == null) {
                     mMyLoanFragment = MyLoanFragment()
+                } else {
+                    mMyLoanFragment?.setNeedRefresh()
                 }
                 curFragment = mMyLoanFragment
             }

@@ -42,6 +42,8 @@ class MyLoanFragment : BaseFragment() {
     private var pbLoading: ProgressBar? = null
     private var refreshLayout: SmartRefreshLayout? = null
 
+    private var needRefresh : Boolean = false
+
     private val mHandler = Handler(
         Looper.getMainLooper()
     ) { message ->
@@ -71,7 +73,12 @@ class MyLoanFragment : BaseFragment() {
         pbLoading = view.findViewById<ProgressBar>(R.id.pb_loan_loading)
         refreshLayout = view.findViewById(R.id.refresh_Layout_my_loan)
         pbLoading?.visibility = View.VISIBLE
-        mHandler.sendEmptyMessageDelayed(TYPE_DELAY, 500)
+        if (needRefresh){
+            refreshLayout?.autoRefresh()
+            needRefresh = false
+        } else {
+            mHandler.sendEmptyMessageDelayed(TYPE_DELAY, 500)
+        }
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
@@ -109,6 +116,7 @@ class MyLoanFragment : BaseFragment() {
                         Log.e(TAG, " order info error ." + response.body())
                         return
                     }
+                    Constant.mLaunchOrderInfo = orderInfo
                     updatePageByStatus(orderInfo)
                 }
 
@@ -229,5 +237,9 @@ class MyLoanFragment : BaseFragment() {
         }
         mHandler.removeCallbacksAndMessages(null)
         super.onDestroy()
+    }
+
+    fun setNeedRefresh() {
+        needRefresh = true
     }
 }
