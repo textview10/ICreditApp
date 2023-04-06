@@ -218,6 +218,9 @@ class MyLoanFragment : BaseFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
     fun onEvent(event: UpdateLoanEvent) {
+        if (!isAdded || isRemoving || isDetached){
+            return
+        }
         if (refreshLayout != null){
             if ( !refreshLayout!!.isRefreshing){
                 refreshLayout!!.autoRefresh(200)
