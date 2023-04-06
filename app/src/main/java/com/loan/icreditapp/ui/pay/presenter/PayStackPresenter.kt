@@ -90,7 +90,7 @@ class PayStackPresenter : BasePresenter {
                         return
                     }
                     if (!TextUtils.equals(payStackResult.status, "1")){
-                        mObserver?.repayFailure(response, true, "update payStack result status not correct")
+                        mObserver?.repayFailure(response, true, "update payStack result status not correct, try again.")
                         LogSaver.logToFile(" pay stack not correct = " + jsonObject.toString())
                         return
                     }
