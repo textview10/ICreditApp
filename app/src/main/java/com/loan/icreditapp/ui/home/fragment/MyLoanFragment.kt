@@ -52,6 +52,7 @@ class MyLoanFragment : BaseFragment() {
                 if (Constant.mLaunchOrderInfo != null) {
                     pbLoading?.setVisibility(View.GONE)
                     updatePageByStatus(Constant.mLaunchOrderInfo!!)
+                    Constant.mLaunchOrderInfo = null
                 } else {
                     getOrderInfo()
                 }
@@ -116,7 +117,6 @@ class MyLoanFragment : BaseFragment() {
                         Log.e(TAG, " order info error ." + response.body())
                         return
                     }
-                    Constant.mLaunchOrderInfo = orderInfo
                     updatePageByStatus(orderInfo)
                 }
 
