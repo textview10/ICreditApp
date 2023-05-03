@@ -45,7 +45,15 @@ class BuildRequestJsonUtils {
                 //  innerVersionCode	Integer	Y	内部版本号
                 httpHeaders.put("innerVersionCode", AppUtils.getAppVersionCode().toString())   //内部版本号
                 //   appVersion	String	Y	APP版本号
-                httpHeaders.put("appVersion", AppUtils.getAppVersionCode().toString())   //APP版本号
+                var appName : String? = null
+                try {
+                    appName = AppUtils.getAppVersionName().replace("Version","").trim()
+                } catch (e : Exception){
+                    if (BuildConfig.DEBUG){
+                        throw e
+                    }
+                }
+                httpHeaders.put("appVersion", appName)   //APP版本号
                 //  channel	String	Y	安装包发布的渠道
                 httpHeaders.put("channel", "google play")   //安装包发布的渠道
                 //H5,google play
