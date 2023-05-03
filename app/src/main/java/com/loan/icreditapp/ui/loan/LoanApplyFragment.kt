@@ -363,6 +363,9 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
+                    if (isDetached || isRemoving || context == null){
+                        return
+                    }
                     flLoading?.visibility = View.GONE
                     val checkLoanBean: CheckLoanResponseBean? =
                         checkResponseSuccess(response, CheckLoanResponseBean::class.java)
