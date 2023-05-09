@@ -43,6 +43,7 @@ import com.loan.icreditapp.ui.loan.adapter.LoanApplyAdapter
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.FirebaseUtils
+import com.loan.icreditapp.util.JumpPermissionUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -337,6 +338,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     }
 
                     override fun onDenied() {
+                        JumpPermissionUtils.goToSetting(activity)
                         ToastUtils.showShort("please allow permission for apply order.")
                     }
                 }).request()
@@ -360,7 +362,8 @@ class LoanApplyFragment : BaseLoanFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                    if (activity == null || context == null ||
+                        activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
                     if (isDetached || isRemoving || context == null){
@@ -429,8 +432,12 @@ class LoanApplyFragment : BaseLoanFragment() {
             })
     }
 
+    private var trialDialog : ProductTrialDialog? = null
     private fun showTrialDialog(orderId : String){
-        if (!isAdded || isDetached || isRemoving){
+        if (!isAdded || isDetached || isRemoving ){
+            return
+        }
+        if (activity == null || context == null) {
             return
         }
         if (activity is BaseActivity){
@@ -438,16 +445,16 @@ class LoanApplyFragment : BaseLoanFragment() {
                return
            }
         }
-        if (context == null){
-            return
+        if (trialDialog?.isShowing == true){
+            trialDialog?.dismiss()
         }
-        var trialDialog =  ProductTrialDialog(requireContext(), mTrialBean!!)
-        trialDialog.setOnDialogClickListener(object : ProductTrialDialog.OnDialogClickListener() {
+        trialDialog =  ProductTrialDialog(requireContext(), mTrialBean!!)
+        trialDialog?.setOnDialogClickListener(object : ProductTrialDialog.OnDialogClickListener() {
             override fun onClickAgree() {
                 applyLoad(orderId, trialDialog)
             }
         })
-        trialDialog.show()
+        trialDialog?.show()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)
@@ -455,7 +462,7 @@ class LoanApplyFragment : BaseLoanFragment() {
         executeGetOrderId()
     }
 
-    private fun applyLoad(orderId : String, trialDialog: ProductTrialDialog) {
+    private fun applyLoad(orderId : String, trialDialog: ProductTrialDialog?) {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
