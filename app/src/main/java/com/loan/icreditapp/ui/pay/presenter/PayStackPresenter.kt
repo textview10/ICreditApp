@@ -89,7 +89,8 @@ class PayStackPresenter : BasePresenter {
                         LogSaver.logToFile(" pay stack error = " + jsonObject.toString())
                         return
                     }
-                    if (!TextUtils.equals(payStackResult.status, "1")){
+                    val isSuccess = TextUtils.equals(payStackResult.status, "1") || TextUtils.equals(payStackResult.status, "success")
+                    if (!isSuccess){
                         mObserver?.repayFailure(response, true, "update payStack result status not correct, try again.")
                         LogSaver.logToFile(" pay stack not correct = " + jsonObject.toString())
                         return

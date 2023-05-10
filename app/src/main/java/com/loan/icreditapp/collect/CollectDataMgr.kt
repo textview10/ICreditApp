@@ -77,6 +77,7 @@ class CollectDataMgr {
                     if (BuildConfig.DEBUG) {
                         throw e
                     }
+                    observer?.failure("collect data exception = " + e.toString())
                 }
                 return ""
             }

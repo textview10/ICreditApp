@@ -118,7 +118,8 @@ class FlutterwarePresenter : BasePresenter {
                         mObserver?.repayFailure(response, false, null)
                         return
                     }
-                    if (TextUtils.equals(flutterware2Bean.status, "1")){
+                    val isSuccess = TextUtils.equals(flutterware2Bean.status, "1") || TextUtils.equals(flutterware2Bean.status, "success")
+                    if (isSuccess){
                         updateResult()
                     } else {
                         mObserver?.repayFailure(response, true, "flutterware uploadJson status != 1")
