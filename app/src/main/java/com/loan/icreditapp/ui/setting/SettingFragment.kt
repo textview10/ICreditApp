@@ -88,6 +88,14 @@ class SettingFragment : BaseFragment() {
                         test1()
                         closeSlide()
                     }
+                    PageType.TEST_TO_PROFILE3 -> {
+                       switchHost()
+                        activity?.finish()
+                        rvContent?.postDelayed(Runnable {
+                            android.os.Process.killProcess(android.os.Process.myPid())
+                        },2000)
+
+                    }
                     PageType.RATE_US -> {
                         activity?.let {
                             EventBus.getDefault().post(RateUsEvent())
@@ -115,6 +123,17 @@ class SettingFragment : BaseFragment() {
 
         })
     }
+
+    private fun switchHost() {
+        if (TextUtils.equals(Api.HOST, "https://srv.creditng.com")){
+            SPUtils.getInstance().put("Test1", false)
+            Api.HOST = "https://srv.creditng.ng"
+        } else {
+            SPUtils.getInstance().put("Test1", true)
+            Api.HOST = "https://srv.creditng.com"
+        }
+    }
+
 
     private var mEmail : String? = null
 
@@ -217,6 +236,14 @@ class SettingFragment : BaseFragment() {
 //        if (BuildConfig.DEBUG && true) {
         if (true) {
 //            mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
+            mList.add(
+                SettingBean(
+                    R.drawable.ic_out,
+                    R.string.setting_test3,
+                    PageType.TEST_TO_PROFILE3,
+                    (if (TextUtils.equals(Api.HOST, "https://srv.creditng.com")) " New " else " Old ") + Api.HOST
+                )
+            )
             mList.add(
                 SettingBean(
                     R.drawable.ic_out,

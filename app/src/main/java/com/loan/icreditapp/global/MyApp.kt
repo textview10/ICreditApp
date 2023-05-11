@@ -6,8 +6,10 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import co.paystack.android.PaystackSdk
 import com.blankj.utilcode.util.LanguageUtils
+import com.blankj.utilcode.util.SPUtils
 import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
+import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.util.EncodeUtils
 import com.lzy.okgo.OkGo
@@ -53,7 +55,20 @@ class MyApp : Application() {
         if (BuildConfig.DEBUG) {
             LogSaver.enableDebug()
         }
+        updateHost()
     }
+
+    private fun updateHost(){
+        val testFlag = SPUtils.getInstance().getBoolean("Test1", true)
+        if (testFlag){
+//            SPUtils.getInstance().put("Test1", true)
+            Api.HOST = "https://srv.creditng.com"
+        } else {
+            Api.HOST = "https://srv.creditng.ng"
+//            SPUtils.getInstance().put("Test1", false)
+        }
+    }
+
 
     private fun initOkGo() {
         val builder = OkHttpClient.Builder()

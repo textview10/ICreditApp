@@ -14,6 +14,8 @@ class SettingBean {
 
     var canSelect: Boolean = false
 
+    var desc: String? = null
+
     constructor(@DrawableRes icon: Int, @StringRes title: Int, @PageType type :Int) {
         this.leftIconRes = icon
         this.title = title
@@ -25,5 +27,12 @@ class SettingBean {
         this.title = title
         this.type = type
         this.canSelect = canSelect
+    }
+
+    constructor(@DrawableRes icon: Int, @StringRes title: Int, @PageType type :Int, desc : String) {
+        this.leftIconRes = icon
+        this.title = title
+        this.type = type
+        this.desc = desc
     }
 }

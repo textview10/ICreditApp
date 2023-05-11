@@ -49,6 +49,7 @@
     <string name="setting_rate_us">RateUs</string>
     <string name="setting_test1">New App upload test </string>
     <string name="setting_test2">Old App upload test</string>
+    <string name="setting_test3">SwitchHost</string>
 
     <string name="add_profile_title_1">Basic information about you</string>
     <string name="add_profile_title_1_2"> Tell us something more about you</string>

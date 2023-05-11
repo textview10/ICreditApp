@@ -1,10 +1,12 @@
 package com.loan.icreditapp.ui.setting
 
 import android.graphics.Color
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SPUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.bean.setting.SettingBean
 
@@ -28,7 +30,13 @@ class SettingAdapter : RecyclerView.Adapter<SettingHolder> {
     override fun onBindViewHolder(holder: SettingHolder, position: Int) {
         var settingBean = mList!!.get(position)
         holder.ivLeftIcon?.setImageResource(settingBean.leftIconRes)
-        holder.tvTitle?.setText(settingBean.title)
+        var str = holder.itemView.resources.getString(settingBean.title)
+        if (!TextUtils.isEmpty(settingBean.desc)){
+            str += " "
+            str += settingBean.desc
+            holder.tvTitle?.setTextSize(12f)
+        }
+        holder.tvTitle?.text = str
         if (isSelectPos(position, settingBean)) {
             holder.llContainer?.setBackgroundResource(R.drawable.setting_bg)
         } else {
