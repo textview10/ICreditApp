@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -8,10 +9,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-       <include
-           android:layout_width="match_parent"
-           layout="@layout/include_logo"
-           android:layout_height="wrap_content"/>
+        <include
+            layout="@layout/include_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -19,8 +20,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginBottom="80dp"
-            android:background="@color/white">
+            android:layout_marginBottom="80dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,9 +28,44 @@
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
+                <FrameLayout
+                    android:id="@+id/fl_send_code_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="25dp"
+                    android:paddingEnd="25dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/signup_commit_bg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="*347*8#"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+
+                </FrameLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_send_code_3"
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="Dial USSD code to get OTP"
+                    android:layout_height="wrap_content"/>
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_signup_phone_num"
                     android:layout_width="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:layout_height="wrap_content"
                     android:text="Enter your phone number:"
                     android:textColor="#999999"
@@ -54,18 +89,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:textColor="#333333"
-                                android:text="+"
                                 android:gravity="center_vertical"
+                                android:text="+"
+                                android:textColor="#333333"
                                 android:textSize="20sp" />
 
                             <Spinner
                                 android:id="@+id/spinner_signup_input"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:background="@drawable/spinner_loan_logo_arrow"
-                                android:gravity="center_vertical"
-                                android:layout_gravity="center_vertical" />
+                                android:gravity="center_vertical" />
 
                             <FrameLayout
                                 android:layout_width="match_parent"
@@ -77,15 +112,15 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:lines="1"
-                                    android:maxLines="1"
-                                    android:singleLine="true"
-                                    android:maxLength="24"
-                                    android:textColor="#333333"
-                                    android:textSize="18sp"
                                     android:background="@null"
                                     android:inputType="number"
-                                    android:textCursorDrawable="@drawable/et_cursor_color" />
+                                    android:lines="1"
+                                    android:maxLength="24"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:textColor="#333333"
+                                    android:textCursorDrawable="@drawable/et_cursor_color"
+                                    android:textSize="18sp" />
 
                                 <ImageView
                                     android:id="@+id/iv_signup_phonenum_clear"
@@ -149,9 +184,9 @@
                                 android:layout_gravity="center"
                                 android:background="@drawable/register_resend_msg_bg"
                                 android:gravity="center"
+                                android:maxLines="1"
                                 android:paddingStart="8dp"
                                 android:paddingTop="7dp"
-                                android:maxLines="1"
                                 android:paddingEnd="8dp"
                                 android:paddingBottom="7dp"
                                 android:text="@string/Resent_now" />
@@ -159,11 +194,9 @@
                         </FrameLayout>
 
 
-
                     </LinearLayout>
 
                 </LinearLayout>
-
 
             </LinearLayout>
 
@@ -179,17 +212,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <FrameLayout
             android:id="@+id/fl_signup_commit"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/signup_commit_bg">
             <!--        -->
 
@@ -197,9 +230,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="#FFFFFF"
                 android:text="next"
                 android:textAllCaps="true"
+                android:textColor="#FFFFFF"
                 android:textSize="16sp" />
             <!--        android:text="@string/signin_login"-->
 
@@ -207,45 +240,45 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_signup_agree_state"
                 android:layout_width="wrap_content"
-                android:src="@drawable/btn_disagree"
-                android:padding="5dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"/>
+                android:padding="5dp"
+                android:src="@drawable/btn_disagree" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
                 android:text="@string/term_1"
                 android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="2dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content">
+                android:layout_marginStart="2dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_signup_term"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/term_2"
-                    android:textColor="#09CAB3"
-                    android:paddingEnd="4dp"
                     android:paddingStart="3dp"
                     android:paddingTop="3dp"
+                    android:paddingEnd="4dp"
                     android:paddingBottom="3dp"
+                    android:text="@string/term_2"
+                    android:textColor="#09CAB3"
                     android:textSize="14sp" />
 
                 <TextView
@@ -259,10 +292,10 @@
                     android:id="@+id/tv_signup_privact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/privacy_2"
-                    android:paddingEnd="3dp"
-                    android:paddingTop="3dp"
                     android:paddingStart="4dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="3dp"
+                    android:text="@string/privacy_2"
                     android:textColor="#09CAB3"
                     android:textSize="14sp" />
 

@@ -21,6 +21,7 @@ import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.setting.SettingBean
 import com.loan.icreditapp.collect.CollectDataMgr
+import com.loan.icreditapp.collect.CollectDataMgr2
 import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.global.ConfigMgr
@@ -81,6 +82,10 @@ class SettingFragment : BaseFragment() {
                     }
                     PageType.TEST_TO_PROFILE -> {
                         test()
+                        closeSlide()
+                    }
+                    PageType.TEST_TO_PROFILE2 -> {
+                        test1()
                         closeSlide()
                     }
                     PageType.RATE_US -> {
@@ -209,13 +214,21 @@ class SettingFragment : BaseFragment() {
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
 
-        if (BuildConfig.DEBUG && false) {
-            mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
+//        if (BuildConfig.DEBUG && true) {
+        if (true) {
+//            mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
             mList.add(
                 SettingBean(
                     R.drawable.ic_out,
                     R.string.setting_test1,
                     PageType.TEST_TO_PROFILE
+                )
+            )
+            mList.add(
+                SettingBean(
+                    R.drawable.ic_out,
+                    R.string.setting_test2,
+                    PageType.TEST_TO_PROFILE2
                 )
             )
         }
@@ -236,17 +249,43 @@ class SettingFragment : BaseFragment() {
     }
 
     private fun test(){
+        var startTime = System.currentTimeMillis()
         CollectDataMgr.sInstance.collectAuthData(requireContext(),
             "230125150200000481",
             object : CollectDataMgr.Observer {
                 override fun success(response: Response<String>?) {
-
+                    val duration = (System.currentTimeMillis() - startTime)
+                    CollectDataMgr.sInstance.logFile("new upload time success total duration = " + duration)
+                    ToastUtils.showShort("new upload time = " + duration)
                 }
 
                 override fun failure(errorMsg: String?) {
-                    if (BuildConfig.DEBUG) {
-                        Log.e(TAG, "failure = " + errorMsg)
-                    }
+                    val duration = (System.currentTimeMillis() - startTime)
+                    CollectDataMgr.sInstance.logFile("new upload time failure total duration = " + duration)
+                    rvContent?.post(Runnable {
+                        ToastUtils.showShort("failure = " + errorMsg)
+                    })
+                }
+            })
+    }
+
+    private fun test1(){
+        var startTime = System.currentTimeMillis()
+        CollectDataMgr2.sInstance.collectAuthData(requireContext(),
+            "230125150200000481",
+            object : CollectDataMgr2.Observer {
+                override fun success(response: Response<String>?) {
+                    val duration = (System.currentTimeMillis() - startTime)
+                    CollectDataMgr.sInstance.logFile("old upload time success total duration = " + duration)
+                    ToastUtils.showShort("old upload time = " + (System.currentTimeMillis() - startTime))
+                }
+
+                override fun failure(errorMsg: String?) {
+                    val duration = (System.currentTimeMillis() - startTime)
+                    CollectDataMgr.sInstance.logFile("old upload time failure total duration = " + duration)
+                    rvContent?.post(Runnable {
+                        ToastUtils.showShort("failure = " + errorMsg)
+                    })
                 }
             })
     }

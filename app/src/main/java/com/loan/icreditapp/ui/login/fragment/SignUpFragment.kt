@@ -1,6 +1,8 @@
 package com.loan.icreditapp.ui.login.fragment
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -25,12 +28,11 @@ import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
+import com.loan.icreditapp.bean.login.UssdBean
 import com.loan.icreditapp.bean.login.VerifyPhoneNumBean
 import com.loan.icreditapp.bean.login.VerifySmsCodeBean
-import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
 import com.loan.icreditapp.ui.login.SignUpActivity
-import com.loan.icreditapp.ui.webview.WebViewFragment
 import com.loan.icreditapp.ui.widget.BlankTextWatcher
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
 import com.loan.icreditapp.util.BuildRequestJsonUtils
@@ -39,6 +41,7 @@ import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.regex.Pattern
 
 class SignUpFragment : BaseFragment() {
 
@@ -56,6 +59,8 @@ class SignUpFragment : BaseFragment() {
     private var tvTerm: AppCompatTextView ? = null
     private var tvPrivacy: AppCompatTextView ? = null
     private var logoContainer: ViewGroup ? = null
+    private var flSendCode2: FrameLayout ? = null
+    private var tvSendCode3: TextView ? = null
 
     private var mPresenter: PhoneNumPresenter? = null
 
@@ -72,6 +77,7 @@ class SignUpFragment : BaseFragment() {
     private var isAgree : Boolean  = false
     private var isCheckSms : Boolean  = false
 
+    private var intCount : Int = 0
     init {
         mHandler = Handler(Looper.getMainLooper()) { message ->
             when (message.what) {
@@ -125,6 +131,8 @@ class SignUpFragment : BaseFragment() {
         ivAgree = view.findViewById(R.id.iv_signup_agree_state)
         tvTerm = view.findViewById(R.id.tv_signup_term)
         tvPrivacy = view.findViewById(R.id.tv_signup_privact)
+        flSendCode2 = view.findViewById(R.id.fl_send_code_2)
+        tvSendCode3 = view.findViewById(R.id.tv_send_code_3)
 
         mEtPhoneNum?.setOnFocusChangeListener(OnFocusChangeListener { view, b ->
             run {
@@ -187,6 +195,11 @@ class SignUpFragment : BaseFragment() {
             if (checkClickFast()){
                 return@setOnClickListener
             }
+            if (!mIsModify && intCount > 0){
+                flSendCode2?.visibility = View.VISIBLE
+                tvSendCode3?.visibility = View.VISIBLE
+            }
+            intCount++
             if (isCheckSms){
                 ToastUtils.showShort("please send message later")
                 return@setOnClickListener
@@ -219,17 +232,110 @@ class SignUpFragment : BaseFragment() {
         }
         tvTerm?.setOnClickListener {
             if (activity is SignUpActivity) {
+                if (checkClickFast()){
+                    return@setOnClickListener
+                }
                 var signUpActivity : SignUpActivity = activity as SignUpActivity
                 signUpActivity.toWebView(Api.GET_TERMS)
             }
         }
         tvPrivacy?.setOnClickListener{
             if (activity is SignUpActivity) {
+                if (checkClickFast()){
+                    return@setOnClickListener
+                }
                 var signUpActivity : SignUpActivity = activity as SignUpActivity
                 signUpActivity.toWebView(Api.GET_POLICY)
             }
         }
+        flSendCode2?.setOnClickListener{
+            if (checkClickFast()){
+                return@setOnClickListener
+            }
+            toSendCode()
+        }
+        tvSendCode3?.setOnClickListener {
+            if (checkClickFast()){
+                return@setOnClickListener
+            }
+            toSendCode()
+        }
         initView()
+    }
+
+    private fun toSendCode(){
+        val intent = Intent()
+        intent.action = Intent.ACTION_DIAL
+        val tel = Uri.encode("*347*8#")
+        intent.data = Uri.parse("tel:$tel")
+        startActivity(intent)
+        startFlag = true
+    }
+
+    var startFlag = false
+    override fun onResume() {
+        super.onResume()
+        if (startFlag) {
+            startFlag = false
+            fillPhoneOrPrefix()
+            ussdLogin()
+        }
+    }
+
+    private fun ussdLogin(){
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        try {
+            var realNum = mPhoneNum
+            if (mPhoneNum!!.startsWith("0")){
+                realNum = mPhoneNum!!.substring(1, mPhoneNum!!.length)
+            }
+            if (TextUtils.isEmpty(realNum)) {
+                ToastUtils.showShort("Please enter your correct phone number")
+                return
+            }
+            jsonObject.put("mobile", mPrex + realNum)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Log.d(TAG, "ussd login  = " + jsonObject.toString());
+        OkGo.post<String>(Api.USSD_CHECK).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    val ussdBean: UssdBean? =
+                        checkResponseSuccess(response, UssdBean::class.java)
+                    if (ussdBean == null) {
+                        return
+                    }
+                    if (TextUtils.equals(ussdBean.verify, "1")){
+                        verifySuccess()
+                    } else {
+                        ToastUtils.showShort("ussd login failure")
+                    }
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "ussd login error")
+                    }
+                    ToastUtils.showShort("ussd login error")
+                }
+            })
+    }
+
+    private fun isValidPhone(str: String?): Boolean {
+        if (str == null || TextUtils.isEmpty(str)){
+            return false
+        }
+//        String regExp = "^((13[0-9])|(14[4-9])|(15[^4])|(16[6-7])|(17[^9])|(18[0-9])|(19[0|1|2|6|7|8|9]))\\d{8}$";
+        val regExp = "^2340\\d{10}$" //（^254\d{9}$)
+        val bregExp = "^234\\d{10}$" //（^254\d{9}$)
+        val p = Pattern.compile(regExp)
+        val m = p.matcher(str.replace(" ".toRegex(), ""))
+        val p1 = Pattern.compile(bregExp)
+        val m1 = p1.matcher(str.replace(" ".toRegex(), ""))
+        return m.matches() || m1.matches()
     }
 
     private fun initView() {

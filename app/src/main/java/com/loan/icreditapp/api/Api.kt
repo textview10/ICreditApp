@@ -26,6 +26,8 @@ class Api {
         //注册账号
         val REGISTER: String = HOST + "/v1/account/register"
 
+        val USSD_CHECK: String = HOST + "/v1/account/ussd/check"
+
         //登录账号
         val LOGIN: String = HOST + "/v1/account/login"
 
@@ -71,6 +73,7 @@ class Api {
         val UPLOAD_CARD: String = HOST + "/v1/account/card/upload"
         //授权信息上报
         val UPLOAD_AUTH: String = HOST + "/v1/account/auth/upload"
+        val UPLOAD_AUTH2: String = " https://srv.icredit.ng" + "/v1/account/auth/upload"
         //硬件信息上报
         val UPLOAD_HARD_WARE : String = HOST + "/v1/account/hardware"
         //申请贷款

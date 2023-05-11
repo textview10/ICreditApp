@@ -47,7 +47,8 @@
     <string name="setting_feed_back">Feedback</string>
     <string name="setting_logout">Logout</string>
     <string name="setting_rate_us">RateUs</string>
-    <string name="setting_test1">to test profile</string>
+    <string name="setting_test1">New App upload test </string>
+    <string name="setting_test2">Old App upload test</string>
 
     <string name="add_profile_title_1">Basic information about you</string>
     <string name="add_profile_title_1_2"> Tell us something more about you</string>
