@@ -255,13 +255,13 @@ class SignInFragment : BaseFragment() {
                     if (captchaBean == null) {
                         ToastUtils.showShort("device check failure.")
                         showOrHide(true)
-                        sendDeviceCaptcha(phoneNum)
+                        sendDeviceCaptcha(mobile)
                         return
                     }
                     if (captchaBean.verify != 1) {
                         showOrHide(true)
                         ToastUtils.showShort("device check failure.")
-                        sendDeviceCaptcha(phoneNum)
+                        sendDeviceCaptcha(mobile)
                         return
                     }
                     toHomePage(mSignInBean!!, phoneNum, password)
