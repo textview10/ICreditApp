@@ -376,7 +376,6 @@ class LoanApplyFragment : BaseLoanFragment() {
                         return
                     }
                     if (checkLoanBean.hasProfile != true || checkLoanBean.hasContact != true
-//                    if (checkLoanBean.hasProfile != true || checkLoanBean.hasContact != true
                         || checkLoanBean.hasOther != true || checkLoanBean.bvnChecked != true
                     ) {
                         var intent: Intent = Intent(context, AddProfileActivity::class.java)
@@ -388,14 +387,12 @@ class LoanApplyFragment : BaseLoanFragment() {
                         BindNewCardActivity.launchAddBankAccount(context!!)
                         return
                     }
-                    if (TextUtils.isEmpty(checkLoanBean.orderId)) {
-                        ToastUtils.showShort("need loan apply orderId")
+                    if (TextUtils.isEmpty(checkLoanBean.orderId) ||
+                        TextUtils.equals(checkLoanBean.orderId, "-1")) {
+                        ToastUtils.showShort("need correct loan apply orderId " + checkLoanBean.orderId)
                         return
                     }
                     FirebaseUtils.logEvent("fireb_apply")
-//                    if (checkLoanBean.hasProfile) {
-//
-//                    }
                     flLoading?.visibility = View.VISIBLE
                     CollectDataMgr.sInstance.collectAuthData(requireContext(),
                         checkLoanBean.orderId!!,
