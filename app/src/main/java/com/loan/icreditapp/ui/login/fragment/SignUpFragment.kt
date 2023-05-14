@@ -195,7 +195,7 @@ class SignUpFragment : BaseFragment() {
             if (checkClickFast()){
                 return@setOnClickListener
             }
-            if (!mIsModify && intCount > 0){
+            if (!mIsModify && intCount >= 1){
                 flSendCode2?.visibility = View.VISIBLE
                 tvSendCode3?.visibility = View.VISIBLE
             }
