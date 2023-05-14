@@ -373,11 +373,7 @@ class LoanApplyFragment : BaseLoanFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    if (activity == null || context == null ||
-                        activity?.isFinishing == true || activity?.isDestroyed == true) {
-                        return
-                    }
-                    if (isDetached || isRemoving || context == null){
+                    if (isDestroy()){
                         return
                     }
                     flLoading?.visibility = View.GONE
@@ -417,11 +413,15 @@ class LoanApplyFragment : BaseLoanFragment() {
                             }
 
                             override fun failure(errorMsg: String?) {
-                                flLoading?.visibility = View.GONE
+
                                 if (BuildConfig.DEBUG) {
                                     Log.e(TAG, "failure = " + errorMsg)
                                 }
                                 CollectSmsMgr.sInstance.setHasFailure()
+                                if (isDestroy()){
+                                    return
+                                }
+                                flLoading?.visibility = View.GONE
                                 ToastUtils.showShort("upload auth information failure." + errorMsg)
                             }
                         })
@@ -429,12 +429,9 @@ class LoanApplyFragment : BaseLoanFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
-                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
-                        return
-                    }
-                    if (isRemoving || isDetached){
-                        return
-                    }
+                   if (isDestroy()){
+                       return
+                   }
                     flLoading?.visibility = View.GONE
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, " product list error ." + response.body())
@@ -446,10 +443,7 @@ class LoanApplyFragment : BaseLoanFragment() {
 
     private var trialDialog : ProductTrialDialog? = null
     private fun showTrialDialog(orderId : String){
-        if (!isAdded || isDetached || isRemoving ){
-            return
-        }
-        if (activity == null || context == null) {
+        if (isDestroy()){
             return
         }
         if (activity is BaseActivity){
@@ -463,6 +457,9 @@ class LoanApplyFragment : BaseLoanFragment() {
         trialDialog =  ProductTrialDialog(requireContext(), mTrialBean!!)
         trialDialog?.setOnDialogClickListener(object : ProductTrialDialog.OnDialogClickListener() {
             override fun onClickAgree() {
+                if (isDestroy()){
+                    return
+                }
                 applyLoad(orderId, trialDialog)
             }
         })
@@ -490,7 +487,7 @@ class LoanApplyFragment : BaseLoanFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                    if (isDestroy()){
                         return
                     }
                     val applyLoadResponse: ApplyLoadResponse? =
@@ -520,7 +517,7 @@ class LoanApplyFragment : BaseLoanFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
-                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
+                    if (isDestroy()){
                         return
                     }
                     if (BuildConfig.DEBUG) {

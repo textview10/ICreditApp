@@ -103,10 +103,7 @@ class MyLoanFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
-                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
-                        return
-                    }
-                    if (isDetached || isRemoving || !isAdded){
+                    if (isDestroy()) {
                         return
                     }
                     pbLoading?.visibility = View.GONE
@@ -122,10 +119,7 @@ class MyLoanFragment : BaseFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
-                    if (activity?.isFinishing == true || activity?.isDestroyed == true) {
-                        return
-                    }
-                    if (isDetached || isRemoving || !isAdded){
+                    if (isDestroy()) {
                         return
                     }
                     pbLoading?.visibility = View.GONE
@@ -142,6 +136,9 @@ class MyLoanFragment : BaseFragment() {
     }
 
     private fun updatePageByStatus(orderInfoBean: OrderInfoBean) {
+        if (isDestroy()) {
+            return
+        }
         //可以借款
         if (orderInfoBean.canApply == true || TextUtils.isEmpty(orderInfoBean.orderId) ||
             TextUtils.equals(orderInfoBean.orderId, "0")

@@ -168,6 +168,9 @@ class SignUpFragment : BaseFragment() {
 
         verifyCodeView?.setObserver(object : InputVerifyCodeView.Observer {
             override fun onEnd() {
+                if (isDestroy()) {
+                    return
+                }
                 if (isAgree != true){
                     return
                 }
@@ -183,6 +186,9 @@ class SignUpFragment : BaseFragment() {
             }
 
             override fun onFocusChange(hasFocus: Boolean) {
+                if (isDestroy()) {
+                    return
+                }
                 var colorRes: Int
                 if (hasFocus) {
                     colorRes = R.color.verify_sms_select

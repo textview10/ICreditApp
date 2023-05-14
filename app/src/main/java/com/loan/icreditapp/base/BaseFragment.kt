@@ -36,4 +36,14 @@ open class BaseFragment : Fragment() {
         lastClickMillions = System.currentTimeMillis()
         return false
     }
+
+    protected fun isDestroy() : Boolean{
+        if (activity == null || activity?.isFinishing == true || activity?.isDestroyed == true) {
+            return true
+        }
+        if (isDetached || isRemoving || !isAdded){
+            return true
+        }
+        return false
+    }
 }
