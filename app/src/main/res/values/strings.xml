@@ -82,10 +82,14 @@
     <string name="profile2_item1">Referee\' full leagal name</string>
     <string name="profile2_item2">Referee\' mobile number</string>
     <string name="profile2_item3">Ralationship</string>
+
     <string name="add_profile_title_2_3">Second Referee\' s</string>
     <string name="profile2_item4">Referee\' full leagal name</string>
     <string name="profile2_item5">Referee\' mobile number</string>
     <string name="profile2_item6">Ralationship</string>
+
+    <string name="add_profile_title_2_4">Third Referee\' s</string>
+    <string name="add_profile_title_2_5">Fourth Referee\' s</string>
 
     <string name="loan_apply_title">Please do not transfer money to any stranger. Be careful not to be cheated.</string>
     <string name="bank_list">Bank List</string>

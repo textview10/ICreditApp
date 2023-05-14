@@ -109,6 +109,90 @@
 
             <View style="@style/view_divide" />
 
+            <!-- 3rd -->
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="15dp"
+                android:text="@string/add_profile_title_2_4"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                android:id="@+id/edit_container_profile2_leagal_name3"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                app:select_view_hint="@string/profile2_item1" />
+
+            <View style="@style/view_divide" />
+
+            <com.loan.icreditapp.ui.profile.widget.SelectContainer
+                android:id="@+id/select_container_profile_mobile3"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                app:select_view_desc="@string/profile3_item_desc"
+                app:select_view_hint="@string/profile2_item2"
+                app:select_view_icon="@drawable/ic_profile_contact" />
+
+            <View style="@style/view_divide" />
+
+            <com.loan.icreditapp.ui.profile.widget.SelectContainer
+                android:id="@+id/select_container_profile_relationship3"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                app:select_view_desc="@string/profile3_item_desc"
+                app:select_view_hint="@string/profile2_item3" />
+
+            <View style="@style/view_divide" />
+
+            <!-- 4rd -->
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="15dp"
+                android:text="@string/add_profile_title_2_5"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                android:id="@+id/edit_container_profile2_leagal_name4"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                app:select_view_hint="@string/profile2_item1" />
+
+            <View style="@style/view_divide" />
+
+            <com.loan.icreditapp.ui.profile.widget.SelectContainer
+                android:id="@+id/select_container_profile_mobile4"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                app:select_view_desc="@string/profile3_item_desc"
+                app:select_view_hint="@string/profile2_item2"
+                app:select_view_icon="@drawable/ic_profile_contact" />
+
+            <View style="@style/view_divide" />
+
+            <com.loan.icreditapp.ui.profile.widget.SelectContainer
+                android:id="@+id/select_container_profile_relationship4"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                app:select_view_desc="@string/profile3_item_desc"
+                app:select_view_hint="@string/profile2_item3" />
+
+            <View style="@style/view_divide" />
+
         </LinearLayout>
     </ScrollView>
 
