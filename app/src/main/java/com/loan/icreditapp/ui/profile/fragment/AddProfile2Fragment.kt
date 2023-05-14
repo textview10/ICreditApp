@@ -1,8 +1,7 @@
 package com.loan.icreditapp.ui.profile.fragment
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.database.Cursor
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.TextUtils
@@ -13,11 +12,8 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.PermissionUtils
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
@@ -25,8 +21,6 @@ import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.profile.ContactBean
 import com.loan.icreditapp.bean.profile.GetContact2Bean
 import com.loan.icreditapp.bean.profile.ModifyContact2Bean
-import com.loan.icreditapp.dialog.contact.SettingContactAdapter
-import com.loan.icreditapp.dialog.custom.CustomDialog
 import com.loan.icreditapp.dialog.selectdata.SelectDataDialog
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
@@ -41,6 +35,7 @@ import com.lzy.okgo.model.Response
 import org.json.JSONException
 import org.json.JSONObject
 
+
 class AddProfile2Fragment : BaseFragment() {
     private val TAG = "AddProfile2Fragment"
 
@@ -52,8 +47,7 @@ class AddProfile2Fragment : BaseFragment() {
     private var selectRelationShip2: SelectContainer? = null
     private var flCommit: FrameLayout? = null
 
-    private val mContactList: ArrayList<ContactBean> = ArrayList<ContactBean>()
-
+//    private val mContactList: ArrayList<ContactBean> = ArrayList<ContactBean>()
     private var hasUpload: Boolean = false
 
     //-------------------
@@ -65,6 +59,16 @@ class AddProfile2Fragment : BaseFragment() {
     private var mobile2: String? = null
     private var relationShip2: Pair<String,String>? = null
 
+    private var leagalName3: String? = null
+    private var mobile3: String? = null
+    private var relationShip3: Pair<String,String>? = null
+
+    private val TYPE_1 = 1111
+    private val TYPE_2 = 1112
+    private val TYPE_3 = 1113
+    private val TYPE_4 = 1114
+    private var startType : Int = TYPE_1
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -72,6 +76,53 @@ class AddProfile2Fragment : BaseFragment() {
     ): View? {
         var view = inflater.inflate(R.layout.fragment_add_profile2, container, false)
         return view
+    }
+
+    private var mActivityResultLauncher : ActivityResultLauncher<Intent>? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mActivityResultLauncher =  registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            val contactUri: Uri? = it.data?.data
+            val projection: Array<String> = arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER,
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+            )
+            context?.contentResolver?.query(contactUri!!, projection, null, null, null).use { cursor ->
+                if (cursor!!.moveToFirst()) {
+                    val NUMBER_INDEX = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                    val DISPLAY_NAME = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+                    val number = cursor.getString(NUMBER_INDEX)
+                    val name = cursor.getString(DISPLAY_NAME)
+                    Log.e("Test", "number = " + number +" name = " + name)
+                    when(startType){
+                        (TYPE_1) -> {
+                            leagalName1 = name
+                            mobile1 = number
+                            editLeagalName1?.setEditTextAndSelection(name)
+                            selectMobile1?.setData(number)
+                        }
+                        (TYPE_2) -> {
+                            leagalName2 = name
+                            mobile2 = number
+                            editLeagalName2?.setEditTextAndSelection(name)
+                            selectMobile2?.setData(number)
+                        }
+                        (TYPE_3) -> {
+//                            leagalName3 = name
+//                            mobile3 = number
+//                            editLeagalName2?.setEditTextAndSelection(name)
+//                            selectMobile2?.setData(number)
+                        }
+                        (TYPE_4) -> {
+
+                        }
+                    }
+                    // Do something with the phone number
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,7 +134,6 @@ class AddProfile2Fragment : BaseFragment() {
         editLeagalName2 = view.findViewById(R.id.edit_container_profile2_leagal_name2)
         selectMobile2 = view.findViewById(R.id.select_container_profile_mobile2)
         selectRelationShip2 = view.findViewById(R.id.select_container_profile_relationship2)
-
 
         flCommit = view.findViewById(R.id.fl_contact2_commit)
 
@@ -98,28 +148,38 @@ class AddProfile2Fragment : BaseFragment() {
         }
 
         selectMobile1?.setOnClickListener(View.OnClickListener {
-            showContactDialog(object : OnSelectContactListener {
-                override fun onData(contactBean: ContactBean?) {
-                    if (contactBean != null) {
-                        leagalName1 = contactBean.contactName
-                        mobile1 = contactBean.number
-                        editLeagalName1?.setEditTextAndSelection(contactBean.contactName!!)
-                        selectMobile1?.setData(contactBean.number!!)
-                    }
-                }
-            })
+//            showContactDialog(object : OnSelectContactListener {
+//                override fun onData(contactBean: ContactBean?) {
+//                    if (contactBean != null) {
+//                        leagalName1 = contactBean.contactName
+//                        mobile1 = contactBean.number
+//                        editLeagalName1?.setEditTextAndSelection(contactBean.contactName!!)
+//                        selectMobile1?.setData(contactBean.number!!)
+//                    }
+//                }
+//            })
+            val intent = Intent(Intent.ACTION_PICK).apply {
+                type = ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
+            }
+            startType = TYPE_1
+            mActivityResultLauncher?.launch(intent)
         })
         selectMobile2?.setOnClickListener(View.OnClickListener {
-            showContactDialog(object : OnSelectContactListener {
-                override fun onData(contactBean: ContactBean?) {
-                    if (contactBean != null) {
-                        leagalName2 = contactBean.contactName
-                        mobile2 = contactBean.number
-                        editLeagalName2?.setEditTextAndSelection(contactBean.contactName!!)
-                        selectMobile2?.setData(contactBean.number!!)
-                    }
-                }
-            })
+            val intent = Intent(Intent.ACTION_PICK).apply {
+                type = ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
+            }
+            startType = TYPE_2
+            mActivityResultLauncher?.launch(intent)
+//            showContactDialog(object : OnSelectContactListener {
+//                override fun onData(contactBean: ContactBean?) {
+//                    if (contactBean != null) {
+//                        leagalName2 = contactBean.contactName
+//                        mobile2 = contactBean.number
+//                        editLeagalName2?.setEditTextAndSelection(contactBean.contactName!!)
+//                        selectMobile2?.setData(contactBean.number!!)
+//                    }
+//                }
+//            })
         })
 
         selectRelationShip1?.setOnClickListener(OnClickListener {
@@ -148,63 +208,73 @@ class AddProfile2Fragment : BaseFragment() {
                 uploadContact2()
             }
         })
-        initializePermission()
+//        initializePermission()
         getContact2()
     }
 
-    private fun initializePermission() {
-        val hasReadContactPermission = PermissionUtils.isGranted(Manifest.permission.READ_CONTACTS)
-        if (!hasReadContactPermission) {
-            PermissionUtils.permission(PermissionConstants.CONTACTS)
-                .callback(object : PermissionUtils.SimpleCallback {
-                    override fun onGranted() {
-                        readContact()
-                    }
-
-                    override fun onDenied() {}
-                }).request()
-        } else {
-            readContact()
-        }
+    private fun showContactFromType(name : String, number : String,
+                                    et: EditTextContainer, selectMobile: SelectContainer){
+        et?.setEditTextAndSelection(name)
+        selectMobile?.setData(number)
+//                        leagalName1 = contactBean.contactName
+//                        mobile1 = contactBean.number
+//                        editLeagalName1?.
+//                        selectMobile1?.setData(contactBean.number!!)
     }
 
-    @SuppressLint("Range")
-    private fun readContact() {
-        //调用并获取联系人信息
-        var cursor: Cursor? = null
-        try {
-            cursor = requireActivity().contentResolver.query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                null, null, null, null
-            )
-            if (cursor != null) {
-                var set = HashSet<String>()
-                mContactList.clear()
-                while (cursor.moveToNext()) {
-                    val id =
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID))
-                    val displayName =
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-                    val number =
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                    val photoUri =
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI))
-                    val ringtone =
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CUSTOM_RINGTONE))
-                    //                    Log.e(TAG, " number = " + number + "  displayName = " + displayName);
-                    if (!TextUtils.isEmpty(number) && !set.contains(number)) {
-                        set.add(number)
-                        mContactList.add(ContactBean(id, number, displayName, photoUri, ringtone))
-                    }
-                }
-            }
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-            Log.e(TAG, " exception = $e")
-        } finally {
-            cursor?.close()
-        }
-    }
+//    private fun initializePermission() {
+//        val hasReadContactPermission = PermissionUtils.isGranted(Manifest.permission.READ_CONTACTS)
+//        if (!hasReadContactPermission) {
+//            PermissionUtils.permission(PermissionConstants.CONTACTS)
+//                .callback(object : PermissionUtils.SimpleCallback {
+//                    override fun onGranted() {
+//                        readContact()
+//                    }
+//
+//                    override fun onDenied() {}
+//                }).request()
+//        } else {
+//            readContact()
+//        }
+//    }
+
+//    @SuppressLint("Range")
+//    private fun readContact() {
+//        //调用并获取联系人信息
+//        var cursor: Cursor? = null
+//        try {
+//            cursor = requireActivity().contentResolver.query(
+//                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+//                null, null, null, null
+//            )
+//            if (cursor != null) {
+//                var set = HashSet<String>()
+//                mContactList.clear()
+//                while (cursor.moveToNext()) {
+//                    val id =
+//                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID))
+//                    val displayName =
+//                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+//                    val number =
+//                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+//                    val photoUri =
+//                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI))
+//                    val ringtone =
+//                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CUSTOM_RINGTONE))
+//                    //                    Log.e(TAG, " number = " + number + "  displayName = " + displayName);
+//                    if (!TextUtils.isEmpty(number) && !set.contains(number)) {
+//                        set.add(number)
+//                        mContactList.add(ContactBean(id, number, displayName, photoUri, ringtone))
+//                    }
+//                }
+//            }
+//        } catch (e: java.lang.Exception) {
+//            e.printStackTrace()
+//            Log.e(TAG, " exception = $e")
+//        } finally {
+//            cursor?.close()
+//        }
+//    }
 
     private fun showListDialog(
         list: ArrayList<Pair<String, String>>,
@@ -217,35 +287,35 @@ class AddProfile2Fragment : BaseFragment() {
         dialog.show()
     }
 
-    fun showContactDialog(listener: OnSelectContactListener) {
-        val customDialog = CustomDialog(requireContext())
-        customDialog.setView(R.layout.dialog_contact)
-        val rv: RecyclerView = customDialog.findViewById(R.id.rv_dialog_contact)
-        val tv: TextView = customDialog.findViewById(R.id.tv_contact_no_data)
-        if (mContactList.size == 0) {
-            rv.visibility = View.GONE
-            tv.visibility = View.VISIBLE
-        } else {
-            rv.visibility = View.VISIBLE
-            tv.visibility = View.GONE
-        }
-        rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val contactAdapter = SettingContactAdapter(mContactList)
-        contactAdapter.setOnItemClickListener(object : SettingContactAdapter.OnItemClickListener {
-            override fun onClick(pos: Int) {
-                try {
-                    var bean: ContactBean? = mContactList.get(pos)
-                    listener?.onData(bean)
-                } catch (e: Exception) {
-                }
-                if (customDialog != null) {
-                    customDialog.dismiss()
-                }
-            }
-        })
-        rv.adapter = contactAdapter
-        customDialog.show()
-    }
+//    fun showContactDialog(listener: OnSelectContactListener) {
+//        val customDialog = CustomDialog(requireContext())
+//        customDialog.setView(R.layout.dialog_contact)
+//        val rv: RecyclerView = customDialog.findViewById(R.id.rv_dialog_contact)
+//        val tv: TextView = customDialog.findViewById(R.id.tv_contact_no_data)
+//        if (mContactList.size == 0) {
+//            rv.visibility = View.GONE
+//            tv.visibility = View.VISIBLE
+//        } else {
+//            rv.visibility = View.VISIBLE
+//            tv.visibility = View.GONE
+//        }
+//        rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        val contactAdapter = SettingContactAdapter(mContactList)
+//        contactAdapter.setOnItemClickListener(object : SettingContactAdapter.OnItemClickListener {
+//            override fun onClick(pos: Int) {
+//                try {
+//                    var bean: ContactBean? = mContactList.get(pos)
+//                    listener?.onData(bean)
+//                } catch (e: Exception) {
+//                }
+//                if (customDialog != null) {
+//                    customDialog.dismiss()
+//                }
+//            }
+//        })
+//        rv.adapter = contactAdapter
+//        customDialog.show()
+//    }
 
     private fun checkContactAvailable() : Boolean {
         if (TextUtils.isEmpty(leagalName1)){

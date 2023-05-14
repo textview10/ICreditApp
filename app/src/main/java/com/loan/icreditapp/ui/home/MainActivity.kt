@@ -130,7 +130,7 @@ class MainActivity : BaseActivity() {
         dialog.setOnItemClickListener(object : RequestPermissionDialog.OnItemClickListener() {
             override fun onClickAgree() {
                 PermissionUtils.permission(
-                    Manifest.permission.READ_CONTACTS,
+//                    Manifest.permission.READ_CONTACTS,
                     Manifest.permission.READ_SMS,
 //                    Manifest.permission.ACCESS_COARSE_LOCATION,
 //                    Manifest.permission.ACCESS_FINE_LOCATION,

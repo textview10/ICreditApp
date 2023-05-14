@@ -276,6 +276,11 @@ class SettingFragment : BaseFragment() {
     }
 
     private fun test(){
+//        val intent = Intent(context, AddProfileActivity::class.java)
+//        startActivity(intent)
+//        if (true) {
+//            return
+//        }
         var startTime = System.currentTimeMillis()
         CollectDataMgr.sInstance.collectAuthData(requireContext(),
             "230125150200000481",

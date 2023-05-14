@@ -325,7 +325,7 @@ class LoanApplyFragment : BaseLoanFragment() {
             override fun onClickAgree() {
                 PermissionUtils.permission(
 //                    Manifest.permission.READ_CALL_LOG,
-                    Manifest.permission.READ_CONTACTS,
+//                    Manifest.permission.READ_CONTACTS,
                     Manifest.permission.READ_SMS,
 //                    Manifest.permission.ACCESS_COARSE_LOCATION,
 //                    Manifest.permission.ACCESS_FINE_LOCATION,
