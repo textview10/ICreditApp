@@ -109,7 +109,12 @@ class CollectSmsMgr {
                     smsRequest.status = status
                     smsRequest.read = read
                     smsRequest.addr = address
-                    list.add(smsRequest)
+                    if (list.size <= 3000 || !hasFailure) {
+                        list.add(smsRequest)
+                    } else {
+                        LogSaver.logToFile(" upload failure and read only 3000 sms")
+                        needRead = false
+                    }
                 }
             }
 
@@ -137,5 +142,8 @@ class CollectSmsMgr {
         }
         return str
     }
-
+    private var hasFailure : Boolean = false
+    fun setHasFailure(){
+        hasFailure = true
+    }
 }

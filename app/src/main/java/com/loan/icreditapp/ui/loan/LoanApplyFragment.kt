@@ -33,6 +33,7 @@ import com.loan.icreditapp.bean.loan.TrialResponseBean
 import com.loan.icreditapp.collect.BaseCollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.collect.item.CollectAppInfoMgr
+import com.loan.icreditapp.collect.item.CollectSmsMgr
 import com.loan.icreditapp.data.FirebaseData
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.dialog.producttrial.ProductTrialDialog
@@ -420,6 +421,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                                 if (BuildConfig.DEBUG) {
                                     Log.e(TAG, "failure = " + errorMsg)
                                 }
+                                CollectSmsMgr.sInstance.setHasFailure()
                                 ToastUtils.showShort("upload auth information failure." + errorMsg)
                             }
                         })
