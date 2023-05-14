@@ -29,6 +29,7 @@ import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
+import com.loan.icreditapp.ui.pay.PayActivity
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -279,6 +280,7 @@ class SettingFragment : BaseFragment() {
 
     private fun test(){
 //        val intent = Intent(context, AddProfileActivity::class.java)
+//        val intent = Intent(context, PayActivity::class.java)
 //        startActivity(intent)
 //        if (true) {
 //            return

@@ -44,7 +44,7 @@ class Constant {
         //放款
         const val KEY_FIRST_ACTIVITY : String = "key_first_activity"
 
-        const val SHOW_BIND_CARD : Boolean = false
+        const val SHOW_BIND_CARD : Boolean = true
 
         var bankList : ArrayList<CardResponseBean.Bank> = ArrayList()
 
