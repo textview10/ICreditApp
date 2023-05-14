@@ -23,6 +23,7 @@ import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.UpdateResponseBean
 import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.collect.UpdateMgr
+import com.loan.icreditapp.collect.item.CollectSmsMgr
 import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.event.RateUsEvent
@@ -157,7 +158,7 @@ class MainActivity : BaseActivity() {
     private fun executeNext() {
 //        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
         LocationMgr.getInstance().getLocation()
-
+        CollectSmsMgr.sInstance.tryCacheSms()
 //        handler.postDelayed(Runnable {
 //            checkAndShowRateUs()
 //        }, 500)
