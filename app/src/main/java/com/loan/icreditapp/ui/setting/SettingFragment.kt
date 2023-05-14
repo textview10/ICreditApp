@@ -20,6 +20,7 @@ import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.setting.SettingBean
+import com.loan.icreditapp.collect.BaseCollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr2
 import com.loan.icreditapp.dialog.RateUsDialog
@@ -284,7 +285,7 @@ class SettingFragment : BaseFragment() {
         var startTime = System.currentTimeMillis()
         CollectDataMgr.sInstance.collectAuthData(requireContext(),
             "230125150200000481",
-            object : CollectDataMgr.Observer {
+            object : BaseCollectDataMgr.Observer {
                 override fun success(response: Response<String>?) {
                     val duration = (System.currentTimeMillis() - startTime)
                     CollectDataMgr.sInstance.logFile("new upload time success total duration = " + duration)
@@ -305,7 +306,7 @@ class SettingFragment : BaseFragment() {
         var startTime = System.currentTimeMillis()
         CollectDataMgr2.sInstance.collectAuthData(requireContext(),
             "230125150200000481",
-            object : CollectDataMgr2.Observer {
+            object : BaseCollectDataMgr.Observer {
                 override fun success(response: Response<String>?) {
                     val duration = (System.currentTimeMillis() - startTime)
                     CollectDataMgr.sInstance.logFile("old upload time success total duration = " + duration)

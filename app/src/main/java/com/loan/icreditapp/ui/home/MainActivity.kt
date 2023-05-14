@@ -21,6 +21,7 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.UpdateResponseBean
+import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.collect.UpdateMgr
 import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.dialog.RequestPermissionDialog
@@ -111,14 +112,15 @@ class MainActivity : BaseActivity() {
 //            PermissionConstants.LOCATION,
 //            PermissionConstants.CAMERA,
             PermissionConstants.SMS,
-            PermissionConstants.CONTACTS,
+//            PermissionConstants.CONTACTS,
 //            PermissionConstants.STORAGE,
         )
+        val hasPermissionCoarseLocation = PermissionUtils.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
 //        val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
 //        val hasPermissionReadPhoneState =
 //            PermissionUtils.isGranted(Manifest.permission.READ_PHONE_STATE)
 //                if (false && hasPermission) {
-        if (hasPermission) {
+        if (hasPermissionCoarseLocation && hasPermission) {
             executeNext()
         } else {
             requestPermissionInternal()
@@ -132,7 +134,7 @@ class MainActivity : BaseActivity() {
                 PermissionUtils.permission(
 //                    Manifest.permission.READ_CONTACTS,
                     Manifest.permission.READ_SMS,
-//                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
 //                    Manifest.permission.ACCESS_FINE_LOCATION,
 //                    Manifest.permission.READ_PHONE_STATE,
 //                    Manifest.permission.CAMERA,
@@ -154,7 +156,7 @@ class MainActivity : BaseActivity() {
 
     private fun executeNext() {
 //        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
-//        LocationMgr.getInstance().getLocation()
+        LocationMgr.getInstance().getLocation()
 
 //        handler.postDelayed(Runnable {
 //            checkAndShowRateUs()

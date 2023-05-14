@@ -187,19 +187,19 @@ public class LocationMgr {
         }
         List<Address> result = null;
         try {
-            if (location != null) {
-                Geocoder gc = new Geocoder(mContext, Locale.getDefault());
-                result = gc.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                if (result == null || result.size() == 0) {
-                    return;
-                }
-                extra = new StringBuffer();
-                for (int i = 0; i < result.size(); i++) {
-                    Address address = result.get(i);
-                    extra.append("countryname" + address.getCountryName());
-                    extra.append("countryCode" + address.getCountryCode());
-                }
-            }
+//            if (location != null) {
+//                Geocoder gc = new Geocoder(mContext, Locale.getDefault());
+//                result = gc.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+//                if (result == null || result.size() == 0) {
+//                    return;
+//                }
+//                extra = new StringBuffer();
+//                for (int i = 0; i < result.size(); i++) {
+//                    Address address = result.get(i);
+//                    extra.append("countryname" + address.getCountryName());
+//                    extra.append("countryCode" + address.getCountryCode());
+//                }
+//            }
             Pair<Double, Double> pair = getLocationInfo();
             double longitude = pair.first;
             double latitude = pair.second;
@@ -216,10 +216,12 @@ public class LocationMgr {
     }
 
     public Pair<Double, Double> getLocationInfo() {
-        if (!Double.isNaN(gpsLongitude) && !Double.isNaN(gpsLatitude)) {
+        if (!Double.isNaN(gpsLongitude) && !Double.isNaN(gpsLatitude)
+                && gpsLongitude > 0 && gpsLatitude > 0) {
             return new Pair<>(gpsLongitude, gpsLatitude);
         }
-        if (!Double.isNaN(netWorkLongitude) && !Double.isNaN(netWorkLatitude)) {
+        if (!Double.isNaN(netWorkLongitude) && !Double.isNaN(netWorkLatitude)
+                && netWorkLongitude > 0 && netWorkLatitude > 0) {
             return new Pair<>(netWorkLongitude, netWorkLatitude);
         }
         return new Pair<>(0d, 0d);

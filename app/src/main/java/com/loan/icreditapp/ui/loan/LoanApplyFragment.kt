@@ -30,6 +30,7 @@ import com.loan.icreditapp.bean.ApplyLoadResponse
 import com.loan.icreditapp.bean.loan.CheckLoanResponseBean
 import com.loan.icreditapp.bean.loan.ProductResponseBean
 import com.loan.icreditapp.bean.loan.TrialResponseBean
+import com.loan.icreditapp.collect.BaseCollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.data.FirebaseData
 import com.loan.icreditapp.dialog.RequestPermissionDialog
@@ -304,7 +305,7 @@ class LoanApplyFragment : BaseLoanFragment() {
         val hasPermission = PermissionUtils.isGranted(
 //            PermissionConstants.LOCATION,
             PermissionConstants.SMS,
-            PermissionConstants.CONTACTS,
+//            PermissionConstants.CONTACTS,
 //            PermissionConstants.STORAGE,
         )
 //        val hasPermissionCallLog = PermissionUtils.isGranted(Manifest.permission.READ_CALL_LOG)
@@ -396,7 +397,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     flLoading?.visibility = View.VISIBLE
                     CollectDataMgr.sInstance.collectAuthData(requireContext(),
                         checkLoanBean.orderId!!,
-                        object : CollectDataMgr.Observer {
+                        object : BaseCollectDataMgr.Observer {
                             override fun success(response: Response<String>?) {
                                 flLoading?.visibility = View.GONE
                                 showTrialDialog(checkLoanBean.orderId!!)

@@ -86,14 +86,14 @@ class BuildRequestJsonUtils {
             httpHeaders.put("token", "")
             return httpHeaders
         }
-        @SuppressLint("MissingPermission")
-        fun buildHeaderImei(): HttpHeaders {
-            val httpHeaders = HttpHeaders()
-            Constant.imei = PhoneUtils.getIMEI()
-            httpHeaders.put("imei", if (!TextUtils.isEmpty(Constant.imei)) Constant.imei
-                else DeviceUtils.getAndroidID())        //imei
-            return httpHeaders
-        }
+//        @SuppressLint("MissingPermission")
+//        fun buildHeaderImei(): HttpHeaders {
+//            val httpHeaders = HttpHeaders()
+//            Constant.imei = PhoneUtils.getIMEI()
+//            httpHeaders.put("imei", if (!TextUtils.isEmpty(Constant.imei)) Constant.imei
+//                else DeviceUtils.getAndroidID())        //imei
+//            return httpHeaders
+//        }
 
         fun buildUtmSource(utmSource : String): HttpHeaders {
             val httpHeaders = HttpHeaders()
