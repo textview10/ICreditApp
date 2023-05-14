@@ -32,6 +32,7 @@ import com.loan.icreditapp.bean.loan.ProductResponseBean
 import com.loan.icreditapp.bean.loan.TrialResponseBean
 import com.loan.icreditapp.collect.BaseCollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr
+import com.loan.icreditapp.collect.item.CollectAppInfoMgr
 import com.loan.icreditapp.data.FirebaseData
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.dialog.producttrial.ProductTrialDialog
@@ -86,6 +87,12 @@ class LoanApplyFragment : BaseLoanFragment() {
     ): View? {
         var view = inflater.inflate(R.layout.fragment_loan_apply, container, false)
         return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //缓存一下applist
+        CollectAppInfoMgr.sInstance
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -395,8 +402,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     }
                     FirebaseUtils.logEvent("fireb_apply")
                     flLoading?.visibility = View.VISIBLE
-                    CollectDataMgr.sInstance.collectAuthData(requireContext(),
-                        checkLoanBean.orderId!!,
+                    CollectDataMgr.sInstance.collectAuthData(checkLoanBean.orderId!!,
                         object : BaseCollectDataMgr.Observer {
                             override fun success(response: Response<String>?) {
                                 flLoading?.visibility = View.GONE

@@ -284,8 +284,7 @@ class SettingFragment : BaseFragment() {
 //            return
 //        }
         var startTime = System.currentTimeMillis()
-        CollectDataMgr.sInstance.collectAuthData(requireContext(),
-            "230125150200000481",
+        CollectDataMgr.sInstance.collectAuthData("230125150200000481",
             object : BaseCollectDataMgr.Observer {
                 override fun success(response: Response<String>?) {
                     val duration = (System.currentTimeMillis() - startTime)
@@ -305,8 +304,7 @@ class SettingFragment : BaseFragment() {
 
     private fun test1(){
         var startTime = System.currentTimeMillis()
-        CollectDataMgr2.sInstance.collectAuthData(requireContext(),
-            "230125150200000481",
+        CollectDataMgr2.sInstance.collectAuthData("230125150200000481",
             object : BaseCollectDataMgr.Observer {
                 override fun success(response: Response<String>?) {
                     val duration = (System.currentTimeMillis() - startTime)
