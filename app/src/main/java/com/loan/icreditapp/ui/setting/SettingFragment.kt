@@ -238,14 +238,14 @@ class SettingFragment : BaseFragment() {
 //        if (BuildConfig.DEBUG && true) {
         if (true) {
 //            mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
-            mList.add(
-                SettingBean(
-                    R.drawable.ic_out,
-                    R.string.setting_test3,
-                    PageType.TEST_TO_PROFILE3,
-                    (if (TextUtils.equals(Api.HOST, "https://srv.creditng.com")) " New " else " Old ") + Api.HOST
-                )
-            )
+//            mList.add(
+//                SettingBean(
+//                    R.drawable.ic_out,
+//                    R.string.setting_test3,
+//                    PageType.TEST_TO_PROFILE3,
+//                    (if (TextUtils.equals(Api.HOST, "https://srv.creditng.com")) " New " else " Old ") + Api.HOST
+//                )
+//            )
             mList.add(
                 SettingBean(
                     R.drawable.ic_out,
@@ -360,6 +360,7 @@ class SettingFragment : BaseFragment() {
                     Constant.mToken = null
                     Constant.mAccountId = null
                     Constant.mLaunchOrderInfo = null
+                    SPUtils.getInstance().put(Constant.KEY_TOKEN, "")
                     val header = BuildRequestJsonUtils.clearHeaderToken()
                     OkGo.getInstance().addCommonHeaders(header)
                     var intent: Intent = Intent(activity, WelcomeActivity::class.java)

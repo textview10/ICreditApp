@@ -105,7 +105,9 @@ class LoanApplyFragment : BaseLoanFragment() {
         flLoading = view.findViewById(R.id.fl_apply_load_loading)
         scrollView = view.findViewById(R.id.sv_load_apply)
 
-        var manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+
+        val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvContent?.layoutManager = manager
         mAdapter = LoanApplyAdapter(mTrialList)
         rvContent?.adapter = mAdapter
@@ -383,6 +385,11 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (checkLoanBean == null) {
                         return
                     }
+                    val mIsFirstApply = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_APPLY, true)
+                    FirebaseUtils.logEvent(if (mIsFirstApply) "fireb_apply" else "fireb_apply_all")
+                    if (mIsFirstApply){
+                        SPUtils.getInstance().put(Constant.KEY_FIRST_APPLY, false)
+                    }
                     if (checkLoanBean.hasProfile != true || checkLoanBean.hasContact != true
                         || checkLoanBean.hasOther != true || checkLoanBean.bvnChecked != true
                     ) {
@@ -400,7 +407,6 @@ class LoanApplyFragment : BaseLoanFragment() {
                         ToastUtils.showShort("need correct loan apply orderId " + checkLoanBean.orderId)
                         return
                     }
-                    FirebaseUtils.logEvent("fireb_apply")
                     flLoading?.visibility = View.VISIBLE
                     CollectDataMgr.sInstance.collectAuthData(checkLoanBean.orderId!!,
                         object : BaseCollectDataMgr.Observer {
@@ -497,8 +503,11 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (trialDialog != null ){
                         trialDialog?.dismiss()
                     }
-                    FirebaseUtils.logEvent("fireb_apply_confirm")
-
+                    val mIsFirstApplyConfirm = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_APPLY_CONFIRM, true)
+                    FirebaseUtils.logEvent( if (mIsFirstApplyConfirm)"fireb_apply_confirm" else "fireb_apply_confirm_all")
+                    if (mIsFirstApplyConfirm){
+                        SPUtils.getInstance().put(Constant.KEY_FIRST_APPLY_CONFIRM, false)
+                    }
                     var data = FirebaseData()
                     data.orderId = orderId
                     data.status = 1

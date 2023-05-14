@@ -35,6 +35,14 @@ class Constant {
 
         const val KEY_SHOW_RATE_COUNT : String = "key_show_rate_count"
         const val KEY_HAS_SHOW_RATE : String = "key_has_show_rate"
+        //申请
+        const val KEY_FIRST_APPLY : String = "key_first_apply"
+        //首次申请确认成功
+        const val KEY_FIRST_APPLY_CONFIRM : String = "key_first_apply_confirm"
+        //逾期
+        const val KEY_FIRST_OVERDUE : String = "key_first_overdue"
+        //放款
+        const val KEY_FIRST_ACTIVITY : String = "key_first_activity"
 
         const val SHOW_BIND_CARD : Boolean = false
 

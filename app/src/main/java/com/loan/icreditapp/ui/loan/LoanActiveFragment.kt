@@ -7,8 +7,10 @@ import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.widget.AppCompatTextView
+import com.blankj.utilcode.util.SPUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.event.RateUsEvent
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.FirebaseUtils
 import org.greenrobot.eventbus.EventBus
 
@@ -36,9 +38,14 @@ class LoanActiveFragment : BaseLoanFragment() {
         tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
 
         if (checkNeedShowLog()){
-            FirebaseUtils.logEvent("fireb_activity")
+            val isFirstOverDue = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_ACTIVITY, true)
+            FirebaseUtils.logEvent(if (isFirstOverDue) "fireb_activity" else "fireb_activity_all")
+            if (isFirstOverDue) {
+                SPUtils.getInstance().put(Constant.KEY_FIRST_ACTIVITY, false)
+            }
+            EventBus.getDefault().post(RateUsEvent())
         }
-        EventBus.getDefault().post(RateUsEvent())
+
         flCommit?.setOnClickListener ( OnClickListener{
             clickRepayLoad()
         } )

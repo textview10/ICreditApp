@@ -36,6 +36,7 @@ import com.loan.icreditapp.ui.login.SignUpActivity
 import com.loan.icreditapp.ui.widget.BlankTextWatcher
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -199,6 +200,11 @@ class SignUpFragment : BaseFragment() {
                 flSendCode2?.visibility = View.VISIBLE
                 tvSendCode3?.visibility = View.VISIBLE
             }
+            if (intCount == 0){
+                FirebaseUtils.logEvent("fireb_send_sms")
+            } else {
+                FirebaseUtils.logEvent("fireb_resend_sms")
+            }
             intCount++
             if (isCheckSms){
                 ToastUtils.showShort("please send message later")
@@ -219,7 +225,7 @@ class SignUpFragment : BaseFragment() {
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(mPhoneNum)) {
-                ToastUtils.showShort("must send sms.")
+                ToastUtils.showShort("must input phone num.")
                 return@setOnClickListener
             }
             fillPhoneOrPrefix()
@@ -496,6 +502,10 @@ class SignUpFragment : BaseFragment() {
 //            verifyCodeView?.clearAll()
             return
         }
+        if (checkClickFast()){
+            return
+        }
+        FirebaseUtils.logEvent("fireb_register")
         requestVerifySmsCode(mPhoneNum, verifyCode)
     }
 

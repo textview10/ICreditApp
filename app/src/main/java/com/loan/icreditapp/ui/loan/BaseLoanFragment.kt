@@ -108,14 +108,13 @@ abstract class BaseLoanFragment : BaseFragment() {
         if (mOrderInfo == null){
             return false
         }
-        var orderId : String? = mOrderInfo!!.orderId
-        var dataStr = SPUtils.getInstance().getString(Constant.KEY_FIREBASE_DATA)
+        val orderId : String? = mOrderInfo!!.orderId
+        val dataStr = SPUtils.getInstance().getString(Constant.KEY_FIREBASE_DATA)
         if (!TextUtils.isEmpty(dataStr)){
-            var firebaseData = GsonUtils.fromJson(dataStr, FirebaseData::class.java)
+            val firebaseData = GsonUtils.fromJson(dataStr, FirebaseData::class.java)
             if (firebaseData != null){
                 if (TextUtils.equals(firebaseData.orderId, orderId)) {
                     if (firebaseData.status == 1){
-                        SPUtils.getInstance().put(Constant.KEY_FIREBASE_DATA, "")
                         return true
                     }
                 }

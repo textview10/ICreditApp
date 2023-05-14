@@ -180,6 +180,10 @@ class SignInFragment : BaseFragment() {
         if ((flCaptcha?.visibility == View.VISIBLE) && mSignInBean != null){
             authCode = etCaptcha?.getText().toString()
         }
+        if (checkClickFast()){
+            return
+        }
+        FirebaseUtils.logEvent("fireb_click_sign")
         signIn(phoneNum, pwd, authCode)
     }
 
