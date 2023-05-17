@@ -11,19 +11,12 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.R
-import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.pay.MonifyResponseBean
-import com.loan.icreditapp.global.Constant
-import com.loan.icreditapp.ui.pay.presenter.MonifyPresenter
+import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
-import com.loan.icreditapp.util.BuildRequestJsonUtils
-import com.loan.icreditapp.util.CheckResponseUtils
 import com.lzy.okgo.OkGo
-import com.lzy.okgo.callback.StringCallback
-import com.lzy.okgo.model.Response
-import org.json.JSONException
-import org.json.JSONObject
 
 class OfflineRepayFragment : BaseFragment() {
 
@@ -77,7 +70,8 @@ class OfflineRepayFragment : BaseFragment() {
                 ToastUtils.showShort("get reserved account failure")
             }
         })
-        getReservedAccount()
+//        getReservedAccount()
+        showOfflineTransfer()
     }
 
    private fun getCLipBoardText() : String?{
@@ -91,42 +85,65 @@ class OfflineRepayFragment : BaseFragment() {
         return sb.toString()
     }
 
-    private fun getReservedAccount() {
-        flLoading?.visibility = View.VISIBLE
-        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-        try {
-            jsonObject.put("accountId", Constant.mAccountId)
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        OkGo.post<String>(Api.GET_RESERVED_ACCOUNT).tag(TAG)
-            .upJson(jsonObject)
-            .execute(object : StringCallback() {
-                override fun onSuccess(response: Response<String>) {
-                    if (isDetached || isRemoving) {
-                        return
-                    }
-                    flLoading?.visibility = View.GONE
-                    var monifyBean = CheckResponseUtils.checkResponseSuccess(
-                        response,
-                        MonifyResponseBean::class.java
-                    )
-                    if (monifyBean == null) {
-                        return
-                    }
-                    mMonifyBean = monifyBean
-                    showMonifyPage(monifyBean)
+    private fun showOfflineTransfer(){
+        ConfigMgr.getTextInfo(object : ConfigMgr.CallBack3 {
+            override fun onGetData(textInfoResponse: TextInfoResponse?) {
+                if (textInfoResponse == null){
+                    return
                 }
+                if (!TextUtils.isEmpty(textInfoResponse.accountName)){
+                    selectAccountName?.setEditTextAndSelection(textInfoResponse.accountName!!)
+                }
+                if (!TextUtils.isEmpty(textInfoResponse.accountNumber)){
+                    selectAccountNumber?.setEditTextAndSelection(textInfoResponse.accountNumber!!)
+                }
+                if (!TextUtils.isEmpty(textInfoResponse.bank)){
+                    selectBankName?.setEditTextAndSelection(textInfoResponse.bank!!)
+                }
+//                if (!TextUtils.isEmpty(bean.bankCode)) {
+//                    selectBankCode?.setEditTextAndSelection(bean.bankCode!!)
+//                }
+            }
 
-                override fun onError(response: Response<String>) {
-                    super.onError(response)
-                    if (isDetached || isRemoving) {
-                        return
-                    }
-                    flLoading?.visibility = View.GONE
-                }
-            })
+        })
     }
+
+//    private fun getReservedAccount() {
+//        flLoading?.visibility = View.VISIBLE
+//        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+//        try {
+//            jsonObject.put("accountId", Constant.mAccountId)
+//        } catch (e: JSONException) {
+//            e.printStackTrace()
+//        }
+//        OkGo.post<String>(Api.GET_RESERVED_ACCOUNT).tag(TAG)
+//            .upJson(jsonObject)
+//            .execute(object : StringCallback() {
+//                override fun onSuccess(response: Response<String>) {
+//                    if (isDetached || isRemoving) {
+//                        return
+//                    }
+//                    flLoading?.visibility = View.GONE
+//                    var monifyBean = CheckResponseUtils.checkResponseSuccess(
+//                        response,
+//                        MonifyResponseBean::class.java
+//                    )
+//                    if (monifyBean == null) {
+//                        return
+//                    }
+//                    mMonifyBean = monifyBean
+//                    showMonifyPage(monifyBean)
+//                }
+//
+//                override fun onError(response: Response<String>) {
+//                    super.onError(response)
+//                    if (isDetached || isRemoving) {
+//                        return
+//                    }
+//                    flLoading?.visibility = View.GONE
+//                }
+//            })
+//    }
 
     private fun showMonifyPage(bean: MonifyResponseBean) {
         flLoading?.visibility = View.GONE

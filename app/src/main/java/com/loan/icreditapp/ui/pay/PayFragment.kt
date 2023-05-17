@@ -1,8 +1,5 @@
 package com.loan.icreditapp.ui.pay
 
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -12,32 +9,29 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
-import com.blankj.utilcode.util.ToastUtils
-import com.loan.icreditapp.R
-import com.loan.icreditapp.base.BaseFragment
-import com.loan.icreditapp.bean.pay.MonifyResponseBean
-import com.loan.icreditapp.event.UpdateLoanEvent
-import com.loan.icreditapp.ui.pay.presenter.*
-import com.loan.icreditapp.ui.profile.widget.EditTextContainer
-import com.lzy.okgo.model.Response
-import org.greenrobot.eventbus.EventBus
-import androidx.core.content.ContextCompat.getSystemService
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.drojian.alpha.toolslib.log.LogSaver
+import com.loan.icreditapp.R
+import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.bank.CardResponseBean
+import com.loan.icreditapp.bean.pay.MonifyResponseBean
 import com.loan.icreditapp.event.ChooseBankListEvent
+import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.global.Constant.Companion.IS_AAB_BUILD
+import com.loan.icreditapp.ui.pay.presenter.*
+import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.util.CardNumUtils
+import com.lzy.okgo.model.Response
 import net.entity.bean.FlutterWaveResult
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.ArrayList
 
 
 class PayFragment : BaseFragment() {
@@ -71,6 +65,13 @@ class PayFragment : BaseFragment() {
     private var tvOfflineTitle: AppCompatTextView? = null
     private var tvNorCardNum: AppCompatTextView? = null
     private var llSelectBank: LinearLayout? = null
+
+    private var llAccountResult: LinearLayout? = null
+    private var selectBankName2: EditTextContainer? = null
+    private var selectBankCode2: EditTextContainer? = null
+    private var selectAccountName2: EditTextContainer? = null
+    private var selectAccountNumber2: EditTextContainer? = null
+    private var tvCopy2: AppCompatTextView? = null
 
     private var mBankList: ArrayList<CardResponseBean.Bank> = ArrayList()
 
@@ -112,6 +113,13 @@ class PayFragment : BaseFragment() {
         selectAccountName = view.findViewById(R.id.select_container_pay_account_name)
         selectAccountNumber = view.findViewById(R.id.select_container_pay_account_number)
         llSelectBank = view.findViewById(R.id.ll_pay_offline_select_bank)
+
+        llAccountResult = view.findViewById(R.id.ll_account_result)
+        selectBankName2 = view.findViewById(R.id.select_container_pay_bank_name_2)
+        selectBankCode2 = view.findViewById(R.id.select_container_pay_bank_code_2)
+        selectAccountName2 = view.findViewById(R.id.select_container_pay_account_name_2)
+        selectAccountNumber2 = view.findViewById(R.id.select_container_pay_account_number_2)
+        tvCopy2 = view.findViewById(R.id.tv_pay_copy_account_num_2)
 
         selectBankName?.setShowMode()
         selectBankCode?.setShowMode()
@@ -311,6 +319,9 @@ class PayFragment : BaseFragment() {
         override fun showMonifyPage(bean: MonifyResponseBean) {
             flLoading?.visibility = View.GONE
             llMonifyResult?.visibility = VISIBLE
+//            if (TextUtils.equals(bean.reserved, "1")) {
+//
+//            }
             if (!TextUtils.isEmpty(bean.bankName)) {
                 selectBankName?.setEditTextAndSelection(bean.bankName!!)
             }
@@ -324,6 +335,26 @@ class PayFragment : BaseFragment() {
                 selectAccountNumber?.setEditTextAndSelection(bean.accountNumber!!)
             }
         }
+    }
+
+    private fun showOfflineTransfer(){
+        ConfigMgr.getTextInfo(object :ConfigMgr.CallBack3 {
+            override fun onGetData(textInfoResponse: TextInfoResponse?) {
+                if (textInfoResponse == null){
+                    return
+                }
+                if (!TextUtils.isEmpty(textInfoResponse.accountName)){
+                    selectAccountName?.setEditTextAndSelection(textInfoResponse.accountName!!)
+                }
+                if (!TextUtils.isEmpty(textInfoResponse.accountNumber)){
+                    selectAccountNumber?.setEditTextAndSelection(textInfoResponse.accountNumber!!)
+                }
+                if (!TextUtils.isEmpty(textInfoResponse.bank)){
+                    selectBankName?.setEditTextAndSelection(textInfoResponse.bank!!)
+                }
+            }
+
+        })
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = false)

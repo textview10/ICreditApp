@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                android:text="Welcome to cool Creditng"
+                android:text="Welcome to Crediting"
                 android:textColor="#666666"
                 android:layout_marginBottom="10dp"
                 android:textSize="17sp" />

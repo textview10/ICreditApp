@@ -180,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Offline transfer:"
+                    android:text="Virtual Account:"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -227,6 +227,84 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_pay_copy_account_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/shape_copy_bg"
+                        android:gravity="center"
+                        android:paddingStart="12dp"
+                        android:paddingTop="3dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="3dp"
+                        android:text="Copy"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                </FrameLayout>
+
+                <View style="@style/view_divide" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_account_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Offline transfer:"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                    android:id="@+id/select_container_pay_bank_name_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    app:select_view_hint="Bank name" />
+
+                <View style="@style/view_divide" />
+
+                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                    android:id="@+id/select_container_pay_bank_code_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    app:select_view_hint="Bank code" />
+
+
+                <View style="@style/view_divide" />
+
+                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                    android:id="@+id/select_container_pay_account_name_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    app:select_view_hint="Account name" />
+
+                <View style="@style/view_divide" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="62dp">
+
+                    <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                        android:id="@+id/select_container_pay_account_number_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="62dp"
+                        app:select_view_hint="Account number" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_pay_copy_account_num_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical|end"
