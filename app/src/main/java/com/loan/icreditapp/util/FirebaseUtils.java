@@ -3,6 +3,7 @@ package com.loan.icreditapp.util;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.loan.icreditapp.global.MyApp;
 
@@ -37,6 +38,7 @@ public class FirebaseUtils {
 
         Bundle params = new Bundle();
         Log.e(TAG, " log event = " + event);
+        ToastUtils.showShort("埋点 = " + event);
         FirebaseAnalytics.getInstance(MyApp.Companion.getMContext()).logEvent(event, params);
     }
 

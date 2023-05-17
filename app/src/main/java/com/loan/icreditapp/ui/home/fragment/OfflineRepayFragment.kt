@@ -67,23 +67,31 @@ class OfflineRepayFragment : BaseFragment() {
                 ClipboardUtils.copyText(text)
                 ToastUtils.showShort("Copy " + text + " to clipboard success")
             } else {
-                ToastUtils.showShort("get reserved account failure")
+                ToastUtils.showShort("offline account failure")
             }
         })
 //        getReservedAccount()
         showOfflineTransfer()
     }
 
-   private fun getCLipBoardText() : String?{
-        if (mMonifyBean == null){
-            return null
+    private fun getCLipBoardText() : String?{
+        if (selectAccountNumber != null ){
+            val str = selectAccountNumber!!.getText()
+            return str
         }
-        var sb = StringBuffer()
-        if (!TextUtils.isEmpty(mMonifyBean!!.accountNumber)){
-            sb.append(mMonifyBean!!.accountNumber)
-        }
-        return sb.toString()
+        return null
     }
+
+//   private fun getCLipBoardText() : String?{
+//        if (mMonifyBean == null){
+//            return null
+//        }
+//        var sb = StringBuffer()
+//        if (!TextUtils.isEmpty(mMonifyBean!!.accountNumber)){
+//            sb.append(mMonifyBean!!.accountNumber)
+//        }
+//        return sb.toString()
+//    }
 
     private fun showOfflineTransfer(){
         ConfigMgr.getTextInfo(object : ConfigMgr.CallBack3 {

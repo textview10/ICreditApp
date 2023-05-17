@@ -51,6 +51,8 @@ class PayFragment : BaseFragment() {
     private var flLoading: FrameLayout? = null
     private var tvCopy: AppCompatTextView? = null
 
+    private var tvMonifyTitle: AppCompatTextView? = null
+
     private var norPresenter: NorLoanPresenter? = null
     private var payStackPresenter: PayStackPresenter? = null
     private var flutterwarePresenter: FlutterwarePresenter? = null
@@ -120,6 +122,8 @@ class PayFragment : BaseFragment() {
         selectAccountName2 = view.findViewById(R.id.select_container_pay_account_name_2)
         selectAccountNumber2 = view.findViewById(R.id.select_container_pay_account_number_2)
         tvCopy2 = view.findViewById(R.id.tv_pay_copy_account_num_2)
+
+        tvMonifyTitle = view.findViewById(R.id.tv_monify_title_1)
 
         selectBankName?.setShowMode()
         selectBankCode?.setShowMode()
@@ -319,9 +323,11 @@ class PayFragment : BaseFragment() {
         override fun showMonifyPage(bean: MonifyResponseBean) {
             flLoading?.visibility = View.GONE
             llMonifyResult?.visibility = VISIBLE
-//            if (TextUtils.equals(bean.reserved, "1")) {
-//
-//            }
+            if (TextUtils.equals(bean.reserved, "0")) {
+                tvMonifyTitle?.setText("Offline Tranfer:")
+            } else {
+                tvMonifyTitle?.setText("Virtual Account:")
+            }
             if (!TextUtils.isEmpty(bean.bankName)) {
                 selectBankName?.setEditTextAndSelection(bean.bankName!!)
             }
