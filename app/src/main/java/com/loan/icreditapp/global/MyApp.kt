@@ -64,7 +64,7 @@ class MyApp : Application() {
 //            SPUtils.getInstance().put("Test1", true)
             Api.HOST = "https://srv.creditng.com"
         } else {
-            Api.HOST = "https://srv.creditng.ng"
+            Api.HOST = "http://srv.chucard.com"
 //            SPUtils.getInstance().put("Test1", false)
         }
     }

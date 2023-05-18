@@ -27,6 +27,8 @@ import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.ui.card.BindNewCardActivity
+import com.loan.icreditapp.ui.card.fragment.AddBankAccount1Fragment
 import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
 import com.loan.icreditapp.ui.pay.PayActivity
@@ -130,7 +132,7 @@ class SettingFragment : BaseFragment() {
     private fun switchHost() {
         if (TextUtils.equals(Api.HOST, "https://srv.creditng.com")){
             SPUtils.getInstance().put("Test1", false)
-            Api.HOST = "https://srv.creditng.ng"
+            Api.HOST = "http://srv.chucard.com"
         } else {
             SPUtils.getInstance().put("Test1", true)
             Api.HOST = "https://srv.creditng.com"
@@ -239,28 +241,28 @@ class SettingFragment : BaseFragment() {
 //        if (BuildConfig.DEBUG && true) {
         if (true) {
 //            mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
+            mList.add(
+                SettingBean(
+                    R.drawable.ic_out,
+                    R.string.setting_test3,
+                    PageType.TEST_TO_PROFILE3,
+                    (if (TextUtils.equals(Api.HOST, "https://srv.creditng.com")) " Release " else " Debug ") + Api.HOST
+                )
+            )
 //            mList.add(
 //                SettingBean(
 //                    R.drawable.ic_out,
-//                    R.string.setting_test3,
-//                    PageType.TEST_TO_PROFILE3,
-//                    (if (TextUtils.equals(Api.HOST, "https://srv.creditng.com")) " New " else " Old ") + Api.HOST
+//                    R.string.setting_test1,
+//                    PageType.TEST_TO_PROFILE
 //                )
 //            )
-            mList.add(
-                SettingBean(
-                    R.drawable.ic_out,
-                    R.string.setting_test1,
-                    PageType.TEST_TO_PROFILE
-                )
-            )
-            mList.add(
-                SettingBean(
-                    R.drawable.ic_out,
-                    R.string.setting_test2,
-                    PageType.TEST_TO_PROFILE2
-                )
-            )
+//            mList.add(
+//                SettingBean(
+//                    R.drawable.ic_out,
+//                    R.string.setting_test2,
+//                    PageType.TEST_TO_PROFILE2
+//                )
+//            )
         }
     }
 
@@ -280,8 +282,10 @@ class SettingFragment : BaseFragment() {
 
     private fun test(){
 //        val intent = Intent(context, AddProfileActivity::class.java)
+//        val intent = Intent(context, AddBankAccount1Fragment::class.java)
 //        val intent = Intent(context, PayActivity::class.java)
 //        startActivity(intent)
+//        BindNewCardActivity.launchAddBankAccount(context!!)
 //        if (true) {
 //            return
 //        }
