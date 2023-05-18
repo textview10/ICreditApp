@@ -100,6 +100,10 @@ class AddProfile2Fragment : BaseFragment() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             val contactUri: Uri? = it.data?.data
+            if (contactUri == null){
+                ToastUtils.showShort("not select contact.")
+                return@registerForActivityResult
+            }
             val projection: Array<String> = arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
             )
