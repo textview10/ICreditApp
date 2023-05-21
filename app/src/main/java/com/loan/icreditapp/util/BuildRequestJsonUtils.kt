@@ -53,6 +53,9 @@ class BuildRequestJsonUtils {
                         throw e
                     }
                 }
+                if (TextUtils.isEmpty(appName)) {
+                    appName = "2.1.9"
+                }
                 httpHeaders.put("appVersion", appName)   //APP版本号
                 //  channel	String	Y	安装包发布的渠道
                 httpHeaders.put("channel", "google play")   //安装包发布的渠道

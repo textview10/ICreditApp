@@ -59,14 +59,14 @@ class MyApp : Application() {
     }
 
     private fun updateHost(){
-        val testFlag = SPUtils.getInstance().getBoolean("Test1", true)
-        if (testFlag){
-//            SPUtils.getInstance().put("Test1", true)
-            Api.HOST = "https://srv.creditng.com"
-        } else {
-            Api.HOST = "http://srv.chucard.com"
-//            SPUtils.getInstance().put("Test1", false)
-        }
+//        val testFlag = SPUtils.getInstance().getBoolean("Test1", true)
+//        if (testFlag){
+////            SPUtils.getInstance().put("Test1", true)
+//            Api.HOST = "https://srv.crediting.com"
+//        } else {
+//            Api.HOST = "http://srv.chucard.com"
+////            SPUtils.getInstance().put("Test1", false)
+//        }
     }
 
 

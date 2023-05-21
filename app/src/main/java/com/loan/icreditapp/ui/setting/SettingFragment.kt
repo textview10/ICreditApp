@@ -241,14 +241,14 @@ class SettingFragment : BaseFragment() {
 //        if (BuildConfig.DEBUG && true) {
         if (true) {
 //            mList.add(SettingBean(R.drawable.ic_about, R.string.setting_rate_us, PageType.RATE_US))
-            mList.add(
-                SettingBean(
-                    R.drawable.ic_out,
-                    R.string.setting_test3,
-                    PageType.TEST_TO_PROFILE3,
-                    (if (TextUtils.equals(Api.HOST, "https://srv.creditng.com")) " Release " else " Debug ") + Api.HOST
-                )
-            )
+//            mList.add(
+//                SettingBean(
+//                    R.drawable.ic_out,
+//                    R.string.setting_test3,
+//                    PageType.TEST_TO_PROFILE3,
+//                    (if (TextUtils.equals(Api.HOST, "http://srv.creditng.com")) " Release " else " Debug ") + Api.HOST
+//                )
+//            )
 //            mList.add(
 //                SettingBean(
 //                    R.drawable.ic_out,
