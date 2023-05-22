@@ -286,6 +286,8 @@ class SettingFragment : BaseFragment() {
 //        val intent = Intent(context, PayActivity::class.java)
 //        startActivity(intent)
 //        BindNewCardActivity.launchAddBankAccount(context!!)
+//        val test = Test()
+//        test.test1()
 //        if (true) {
 //            return
 //        }

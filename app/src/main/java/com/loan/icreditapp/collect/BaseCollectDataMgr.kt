@@ -221,7 +221,7 @@ abstract class BaseCollectDataMgr {
 
                     }
                     observer?.failure(errorMsg)
-                    logFile("start upload auth failure =  " + (System.currentTimeMillis() - startMillions))
+                    logFile("start upload auth failure =  " + (System.currentTimeMillis() - startMillions) + errorMsg)
                 }
             })
     }

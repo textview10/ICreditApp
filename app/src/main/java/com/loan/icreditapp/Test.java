@@ -1,6 +1,7 @@
 package com.loan.icreditapp;
 
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +12,17 @@ import com.loan.icreditapp.ui.pay.presenter.BasePresenter;
 
 public class Test {
 
-    private void test1() {
+    public void test1() {
+       String str = "    com.internationalloanspk\n" ;
+       StringBuffer sb = new StringBuffer();
+      String[] strss =  str.split("\n");
+      for (int i = 0; i < strss.length; i++){
+          String item = strss[i].replace(" ", "");
+//          <package android:name="loanapp.india.personal.loanassist" />
+          sb.append("<package android:name=\"").append(item).append("\" />").append("\n");
+      }
+       String temp =  sb.toString();
+        Log.e("Tesat", temp);
 //        String[] type = new String[5];
 //        Spinner spinner = null;
 //        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -26,15 +37,15 @@ public class Test {
 //            }
 //        });
 
-        EditText et = null;
-        et.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                return false;
-            }
-        });
-
-        et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+//        EditText et = null;
+//        et.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+//                return false;
+//            }
+//        });
+//
+//        et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
     }
 
 //    private void chargeCard() {
