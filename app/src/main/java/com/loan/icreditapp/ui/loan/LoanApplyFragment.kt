@@ -499,8 +499,8 @@ class LoanApplyFragment : BaseLoanFragment() {
                         ToastUtils.showShort("apply loan failure.")
                         return
                     }
-                    if (trialDialog != null ){
-                        trialDialog?.dismiss()
+                    if (trialDialog != null && trialDialog.isShowing){
+                        trialDialog.dismiss()
                     }
                     val mIsFirstApplyConfirm = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_APPLY_CONFIRM, true)
                     FirebaseUtils.logEvent( if (mIsFirstApplyConfirm)"fireb_apply_confirm" else "fireb_apply_confirm_all")
