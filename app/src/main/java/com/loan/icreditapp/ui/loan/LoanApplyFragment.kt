@@ -472,6 +472,7 @@ class LoanApplyFragment : BaseLoanFragment() {
     }
 
     private fun applyLoad(orderId : String, trialDialog: ProductTrialDialog?) {
+        trialDialog?.setAgreeEnable(false)
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -490,6 +491,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (isDestroy()){
                         return
                     }
+                    trialDialog?.setAgreeEnable(true)
                     val applyLoadResponse: ApplyLoadResponse? =
                         checkResponseSuccess(response, ApplyLoadResponse::class.java)
                     if (applyLoadResponse == null ) {
@@ -523,6 +525,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, " apply load error ." + response.body())
                     }
+                    trialDialog?.setAgreeEnable(true)
                     ToastUtils.showShort("apply load error")
                 }
             })

@@ -55,7 +55,7 @@
             android:layout_marginTop="10dp"
             android:text=" REGISTER "
             android:textAllCaps="true"
-            android:background="@drawable/splash_register_bg"
+            android:background="@drawable/ripple_splash_register_bg"
             android:gravity="center"
             android:textColor="@color/theme_color"
             android:textSize="16sp" />
@@ -77,7 +77,7 @@
             android:layout_marginTop="10dp"
             android:text=" SIGN IN "
             android:textAllCaps="true"
-            android:background="@drawable/splash_signin_bg"
+            android:background="@drawable/ripple_splash_signin_bg"
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="25dp"

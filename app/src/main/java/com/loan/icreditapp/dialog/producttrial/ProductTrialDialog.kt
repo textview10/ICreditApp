@@ -28,6 +28,7 @@ class ProductTrialDialog : Dialog {
     var tvAmount: AppCompatTextView? = null
     var flCancel: FrameLayout? = null
     var flSubmit: FrameLayout? = null
+    var tvSubmit: AppCompatTextView? = null
 
     constructor(context: Context, response : TrialResponseBean) : super(context){
         window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -42,6 +43,7 @@ class ProductTrialDialog : Dialog {
         tvAmount = findViewById(R.id.tv_product_trial_amount)
         flCancel = findViewById(R.id.fl_product_trial_cancel)
         flSubmit = findViewById(R.id.fl_product_trial_submit)
+        tvSubmit = findViewById(R.id.tv_product_trial_submit)
 
         flSubmit?.setOnClickListener {
             mListener?.onClickAgree()
@@ -56,6 +58,11 @@ class ProductTrialDialog : Dialog {
         }
     }
 
+    fun setAgreeEnable(enable : Boolean){
+        val color = context.resources.getColor(if (enable) R.color.theme_color else R.color.grey)
+        tvSubmit?.setTextColor(color)
+        flSubmit?.isEnabled = enable
+    }
 
     private var mListener: OnDialogClickListener? = null
 
