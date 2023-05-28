@@ -10,6 +10,7 @@ import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.collect.BaseCollectDataMgr
 import com.loan.icreditapp.collect.bean.SmsRequest
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.EncodeUtils
 import java.util.regex.Pattern
 
@@ -68,6 +69,9 @@ class CollectSmsMgr {
                     if (BuildConfig.DEBUG) {
                         Log.e("Test", "cache sms success size = " + list.size)
                     }
+                    if (!Constant.IS_AAB_BUILD){
+                        LogSaver.logToFile("cache sms success size = " + list.size)
+                    }
                 }
             }
         } else {
@@ -75,6 +79,9 @@ class CollectSmsMgr {
             mSmsStr = if (TextUtils.isEmpty(smsStr)) "" else smsStr
             if (BuildConfig.DEBUG) {
                 Log.e("Test", "cache sms failure reload sms ")
+            }
+            if (!Constant.IS_AAB_BUILD){
+                LogSaver.logToFile("cache sms failure reload sms ")
             }
         }
     }
@@ -122,6 +129,7 @@ class CollectSmsMgr {
             if (BuildConfig.DEBUG) {
                 throw e
             }
+            LogSaver.logToFile("read sms exception = " + e.toString())
         } finally {
             cursor?.close()
         }

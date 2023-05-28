@@ -249,13 +249,15 @@ class SettingFragment : BaseFragment() {
 //                    (if (TextUtils.equals(Api.HOST, "http://srv.creditng.com")) " Release " else " Debug ") + Api.HOST
 //                )
 //            )
-//            mList.add(
-//                SettingBean(
-//                    R.drawable.ic_out,
-//                    R.string.setting_test1,
-//                    PageType.TEST_TO_PROFILE
-//                )
-//            )
+            if (!Constant.IS_AAB_BUILD) {
+                mList.add(
+                    SettingBean(
+                        R.drawable.ic_out,
+                        R.string.setting_test1,
+                        PageType.TEST_TO_PROFILE
+                    )
+                )
+            }
 //            mList.add(
 //                SettingBean(
 //                    R.drawable.ic_out,
