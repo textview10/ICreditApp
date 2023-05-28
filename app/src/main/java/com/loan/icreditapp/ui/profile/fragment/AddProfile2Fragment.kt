@@ -314,6 +314,26 @@ class AddProfile2Fragment : BaseFragment() {
             ToastUtils.showShort("Please select contact4 relationship")
             return false
         }
+        if (TextUtils.equals(mobile3, mobile1)){
+            ToastUtils.showShort("Phone number 3 and phone number 1 are the same")
+            return false
+        }
+        if (TextUtils.equals(mobile3, mobile2)){
+            ToastUtils.showShort("Phone number 3 and phone number 2 are the same")
+            return false
+        }
+        if (TextUtils.equals(mobile4, mobile1)){
+            ToastUtils.showShort("Phone number 4 and phone number 1 are the same")
+            return false
+        }
+        if (TextUtils.equals(mobile4, mobile2)){
+            ToastUtils.showShort("Phone number 4 and phone number 2 are the same")
+            return false
+        }
+        if (TextUtils.equals(mobile4, mobile3)){
+            ToastUtils.showShort("Phone number 4 and phone number 3 are the same")
+            return false
+        }
         return true
     }
 
