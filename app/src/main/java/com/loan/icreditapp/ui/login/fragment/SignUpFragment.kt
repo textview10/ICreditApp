@@ -511,7 +511,7 @@ class SignUpFragment : BaseFragment() {
         if (checkClickFast()){
             return
         }
-        FirebaseUtils.logEvent("fireb_register")
+        FirebaseUtils.logEvent("fireb_register_start")
         requestVerifySmsCode(mPhoneNum, verifyCode)
     }
 

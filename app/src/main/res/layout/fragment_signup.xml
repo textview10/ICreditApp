@@ -189,7 +189,7 @@
                                 android:paddingTop="7dp"
                                 android:paddingEnd="8dp"
                                 android:paddingBottom="7dp"
-                                android:text="@string/Resent_now" />
+                                android:text=" Send " />
 
                         </FrameLayout>
 

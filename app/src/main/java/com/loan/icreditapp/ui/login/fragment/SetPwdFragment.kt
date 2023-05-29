@@ -140,7 +140,7 @@ class SetPwdFragment : BaseFragment() {
                     Constant.mMobile = registerBean.mobile
                     SPUtils.getInstance().put(SignInFragment.KEY_PHONE_NUM, mPhoneNum)
                     SPUtils.getInstance().put(SignInFragment.KEY_PASS_CODE, pwd)
-                    FirebaseUtils.logEvent("fireb_register")
+                    FirebaseUtils.logEvent("fireb_click_register")
                     if (activity is SignUpActivity) {
                         var signUpActivity : SignUpActivity = activity as SignUpActivity
                         signUpActivity.toHomePage()
