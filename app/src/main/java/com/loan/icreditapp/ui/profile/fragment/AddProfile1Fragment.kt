@@ -174,8 +174,8 @@ class AddProfile1Fragment : BaseFragment() {
                             var addProfileActivity : AddProfileActivity = activity as AddProfileActivity
                             addProfileActivity.toStep(AddProfileActivity.TO_STEP_2)
                         }
-                        FirebaseUtils.logEvent("fireb_data1")
                         ToastUtils.showShort("modify profile1 success")
+                        FirebaseUtils.logEvent("fireb_data1")
                     }
                 }
 

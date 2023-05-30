@@ -382,11 +382,12 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (checkLoanBean == null) {
                         return
                     }
-                    val mIsFirstApply = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_APPLY, true)
+//                    val mIsFirstApply = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_APPLY, true)
+                    val mIsFirstApply = Constant.IS_FIRST_APPLY
                     FirebaseUtils.logEvent(if (mIsFirstApply) "fireb_apply" else "fireb_apply_all")
-                    if (mIsFirstApply){
-                        SPUtils.getInstance().put(Constant.KEY_FIRST_APPLY, false)
-                    }
+//                    if (mIsFirstApply){
+//                        SPUtils.getInstance().put(Constant.KEY_FIRST_APPLY, false)
+//                    }
                     if (checkLoanBean.hasProfile != true || checkLoanBean.hasContact != true
                         || checkLoanBean.hasOther != true || checkLoanBean.bvnChecked != true
                     ) {
@@ -499,16 +500,19 @@ class LoanApplyFragment : BaseLoanFragment() {
                     }
                     if (!TextUtils.equals(applyLoadResponse.status, "1")){
                         ToastUtils.showShort("apply loan failure.")
+                        Constant.IS_FIRST_APPLY = false
                         return
                     }
                     if (trialDialog != null && trialDialog.isShowing){
                         trialDialog.dismiss()
                     }
-                    val mIsFirstApplyConfirm = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_APPLY_CONFIRM, true)
+//                    val mIsFirstApplyConfirm = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_APPLY_CONFIRM, true)
+                    val mIsFirstApplyConfirm = Constant.IS_FIRST_APPLY
                     FirebaseUtils.logEvent( if (mIsFirstApplyConfirm)"fireb_apply_confirm" else "fireb_apply_confirm_all")
-                    if (mIsFirstApplyConfirm){
-                        SPUtils.getInstance().put(Constant.KEY_FIRST_APPLY_CONFIRM, false)
-                    }
+//                    if (mIsFirstApplyConfirm){
+//                        SPUtils.getInstance().put(Constant.KEY_FIRST_APPLY_CONFIRM, false)
+//                    }
+                    Constant.IS_FIRST_APPLY = false
                     var data = FirebaseData()
                     data.orderId = orderId
                     data.status = 1

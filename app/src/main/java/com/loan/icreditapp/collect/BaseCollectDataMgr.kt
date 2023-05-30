@@ -4,18 +4,20 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
-import android.net.Uri
+import android.location.Address
+import android.location.Geocoder
 import android.provider.CallLog
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.util.Log
+import android.util.Pair
+import com.alibaba.fastjson.JSON
 import com.blankj.utilcode.util.*
 import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.bean.auth.AuthResponseBean
 import com.loan.icreditapp.collect.bean.CallRecordRequest
 import com.loan.icreditapp.collect.bean.ContactRequest
-import com.loan.icreditapp.collect.bean.SmsRequest
 import com.loan.icreditapp.collect.item.CollectAppInfoMgr
 import com.loan.icreditapp.collect.item.CollectSmsMgr
 import com.loan.icreditapp.global.Constant
@@ -31,7 +33,6 @@ import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.regex.Pattern
 
 abstract class BaseCollectDataMgr {
 
@@ -101,12 +102,17 @@ abstract class BaseCollectDataMgr {
                     val duration3 = (System.currentTimeMillis() - startMillions)
                     val aesAppInfoStr = CollectAppInfoMgr.sInstance.getAppInfoAesStr()
                     logFile(" read app info duration = " + duration3)
-                    val locationBean = ""
-//                        EncodeUtils.encryptAES(GsonUtils.toJson(LocationMgr.getInstance().locationBean))
-
+                    var locationBeanStr = ""
+                    val locationStr = getLocation()
+                    if (!TextUtils.isEmpty(locationStr)){
+                        if (BuildConfig.DEBUG) {
+                            Log.e("Test", locationStr)
+                        }
+                        locationBeanStr = EncodeUtils.encryptAES(locationStr)
+                    }
                     val jsonObject = buildRequestJsonObj(
                         aesSmsStr, callRecordStr, contractStr,
-                        aesAppInfoStr, locationBean, orderId,
+                        aesAppInfoStr, locationBeanStr, orderId,
                     )
                     getAuthData(jsonObject, observer)
                 } catch (e: Exception) {
@@ -118,6 +124,7 @@ abstract class BaseCollectDataMgr {
                 return null
             }
 
+
             override fun onSuccess(result: Exception?) {
                 if (result != null){
                     observer?.failure("collect data exception = " + result.toString())
@@ -127,6 +134,25 @@ abstract class BaseCollectDataMgr {
         })
     }
 
+    private fun getLocation() :String {
+        var pair : Pair<Double, Double> = LocationMgr.getInstance().getLocationInfo()
+        if ((pair.first.equals(0)) || (pair.second.equals(0))) {
+            return ""
+        }
+        try {
+            val gc = Geocoder(Utils.getApp(), Locale.getDefault())
+            val list : List<Address> = gc.getFromLocation(pair.second, pair.first, 1)
+            if (list != null && list.isNotEmpty()) {
+                return JSON.toJSON(list[0]).toString()
+            }
+        } catch ( e : Exception) {
+            if (BuildConfig.DEBUG) {
+                Log.e("Test", "GPS get = ", e)
+            }
+            LogSaver.logToFile(" get gps failure = " + e.toString())
+        }
+        return ""
+    }
 
     @SuppressLint("MissingPermission")
     private fun buildRequestJsonObj(

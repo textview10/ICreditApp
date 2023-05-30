@@ -269,6 +269,7 @@ class ConfigMgr {
                             TextInfoResponse::class.java)
                         if (textInfo != null){
                             Constant.textInfoResponse = textInfo
+                            Constant.IS_FIRST_APPLY = TextUtils.equals(textInfo.first_approve, "1")
                             callBack3?.onGetData(Constant.textInfoResponse)
                         }
                     }

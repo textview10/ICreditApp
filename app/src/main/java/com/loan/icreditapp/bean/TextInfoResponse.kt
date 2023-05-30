@@ -24,4 +24,5 @@ class TextInfoResponse {
     var ussd: String? = null
     var paystackCallbackAddress: String? = null
     var email: String? = null
+    var first_approve : String? = null
 }

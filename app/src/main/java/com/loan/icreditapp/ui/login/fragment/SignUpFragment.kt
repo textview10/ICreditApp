@@ -61,6 +61,7 @@ class SignUpFragment : BaseFragment() {
     private var tvPrivacy: AppCompatTextView ? = null
     private var logoContainer: ViewGroup ? = null
     private var flSendCode2: FrameLayout ? = null
+    private var flLoading: FrameLayout ? = null
     private var tvSendCode3: TextView ? = null
 
     private var mPresenter: PhoneNumPresenter? = null
@@ -134,6 +135,7 @@ class SignUpFragment : BaseFragment() {
         tvPrivacy = view.findViewById(R.id.tv_signup_privact)
         flSendCode2 = view.findViewById(R.id.fl_send_code_2)
         tvSendCode3 = view.findViewById(R.id.tv_send_code_3)
+        flLoading = view.findViewById(R.id.fl_signup_loading)
 
         mEtPhoneNum?.setOnFocusChangeListener(OnFocusChangeListener { view, b ->
             run {
@@ -309,11 +311,13 @@ class SignUpFragment : BaseFragment() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+        flLoading?.visibility = View.VISIBLE
         Log.d(TAG, "ussd login  = " + jsonObject.toString());
         OkGo.post<String>(Api.USSD_CHECK).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    flLoading?.visibility = View.GONE
                     val ussdBean: UssdBean? =
                         checkResponseSuccess(response, UssdBean::class.java)
                     if (ussdBean == null) {
@@ -328,6 +332,7 @@ class SignUpFragment : BaseFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    flLoading?.visibility = View.GONE
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, "ussd login error")
                     }
@@ -410,11 +415,13 @@ class SignUpFragment : BaseFragment() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+        flLoading?.visibility = View.VISIBLE
         Log.d(TAG, "requestCheckPhoneNum = " + jsonObject.toString());
         OkGo.post<String>(Api.CHECK_MOBILE).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    flLoading?.visibility = View.GONE
                     val verifyPhoneNumBean: VerifyPhoneNumBean? =
                         checkResponseSuccess(response, VerifyPhoneNumBean::class.java)
                     if (verifyPhoneNumBean == null) {
@@ -430,6 +437,7 @@ class SignUpFragment : BaseFragment() {
                 }
 
                 override fun onError(response: Response<String>) {
+                    flLoading?.visibility = View.GONE
                     isCheckSms = false
                     super.onError(response)
                     Log.e(TAG, "verify phone num data error")
@@ -453,11 +461,12 @@ class SignUpFragment : BaseFragment() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-
+        flLoading?.visibility = View.VISIBLE
         OkGo.post<String>(Api.GET_SMS_CODE).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    flLoading?.visibility = View.GONE
                     var responseBean: BaseResponseBean? = null
                     try {
                         responseBean = com.alibaba.fastjson.JSONObject.parseObject(
@@ -485,6 +494,7 @@ class SignUpFragment : BaseFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    flLoading?.visibility = View.GONE
                     isCheckSms = false
                     Log.e(TAG, "request send sms error")
                     ToastUtils.showShort("request send sms error ...")
@@ -523,10 +533,12 @@ class SignUpFragment : BaseFragment() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+        flLoading?.visibility = View.VISIBLE
         OkGo.post<String>(Api.CHECK_SMS_CODE).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    flLoading?.visibility = View.GONE
                     val baseResponseBean: VerifySmsCodeBean? =
                         checkResponseSuccess(response, VerifySmsCodeBean::class.java)
                     if (baseResponseBean == null) {
@@ -541,6 +553,7 @@ class SignUpFragment : BaseFragment() {
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
+                    flLoading?.visibility = View.GONE
                     Log.e(TAG, "request send sms error")
                     ToastUtils.showShort("request send sms error ...")
                 }

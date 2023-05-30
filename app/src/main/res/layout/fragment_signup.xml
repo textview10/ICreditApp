@@ -200,12 +200,6 @@
 
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/pb_login_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
         </FrameLayout>
 
     </LinearLayout>
@@ -305,6 +299,21 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_signup_loading"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/theme_color"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
 
 
 </FrameLayout>

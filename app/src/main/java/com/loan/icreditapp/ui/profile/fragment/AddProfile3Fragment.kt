@@ -201,8 +201,8 @@ class AddProfile3Fragment : BaseFragment() {
                         ToastUtils.showShort("upload other 3 failure.")
                         return
                     }
-                    FirebaseUtils.logEvent("fireb_data3")
                     ToastUtils.showShort("modify other3 success")
+                    FirebaseUtils.logEvent("fireb_data3")
                     EventBus.getDefault().post(UpdateLoanEvent())
                     activity?.finish()
                 }
