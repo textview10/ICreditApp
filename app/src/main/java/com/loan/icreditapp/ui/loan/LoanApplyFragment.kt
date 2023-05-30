@@ -106,8 +106,6 @@ class LoanApplyFragment : BaseLoanFragment() {
         flLoading = view.findViewById(R.id.fl_apply_load_loading)
         scrollView = view.findViewById(R.id.sv_load_apply)
 
-
-
         val manager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvContent?.layoutManager = manager
         mAdapter = LoanApplyAdapter(mTrialList)
@@ -506,12 +504,8 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (trialDialog != null && trialDialog.isShowing){
                         trialDialog.dismiss()
                     }
-//                    val mIsFirstApplyConfirm = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_APPLY_CONFIRM, true)
                     val mIsFirstApplyConfirm = Constant.IS_FIRST_APPLY
                     FirebaseUtils.logEvent( if (mIsFirstApplyConfirm)"fireb_apply_confirm" else "fireb_apply_confirm_all")
-//                    if (mIsFirstApplyConfirm){
-//                        SPUtils.getInstance().put(Constant.KEY_FIRST_APPLY_CONFIRM, false)
-//                    }
                     Constant.IS_FIRST_APPLY = false
                     var data = FirebaseData()
                     data.orderId = orderId

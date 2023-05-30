@@ -315,23 +315,28 @@ class AddProfile2Fragment : BaseFragment() {
             return false
         }
         if (TextUtils.equals(mobile3, mobile1)){
-            ToastUtils.showShort("Phone number 3 and phone number 1 are the same")
+//            ToastUtils.showShort("Phone number 3 and phone number 1 are the same")
+            ToastUtils.showShort("Duplicate contact info.")
             return false
         }
         if (TextUtils.equals(mobile3, mobile2)){
-            ToastUtils.showShort("Phone number 3 and phone number 2 are the same")
+//            ToastUtils.showShort("Phone number 3 and phone number 2 are the same")
+            ToastUtils.showShort("Duplicate contact info.")
             return false
         }
         if (TextUtils.equals(mobile4, mobile1)){
-            ToastUtils.showShort("Phone number 4 and phone number 1 are the same")
+//            ToastUtils.showShort("Phone number 4 and phone number 1 are the same")
+            ToastUtils.showShort("Duplicate contact info.")
             return false
         }
         if (TextUtils.equals(mobile4, mobile2)){
-            ToastUtils.showShort("Phone number 4 and phone number 2 are the same")
+//            ToastUtils.showShort("Phone number 4 and phone number 2 are the same")
+            ToastUtils.showShort("Duplicate contact info.")
             return false
         }
         if (TextUtils.equals(mobile4, mobile3)){
-            ToastUtils.showShort("Phone number 4 and phone number 3 are the same")
+//            ToastUtils.showShort("Phone number 4 and phone number 3 are the same")
+            ToastUtils.showShort("Duplicate contact info.")
             return false
         }
         return true
@@ -458,7 +463,7 @@ class AddProfile2Fragment : BaseFragment() {
         if (mobile3 == null) {
             mobile3 = contact2Bean.contact3Mobile
         }
-        if (relationShip3 == null){
+        if (relationShip3 == null && !TextUtils.isEmpty(mobile3)){
             if (!TextUtils.isEmpty(contact2Bean.contact3RelationshipLabel) &&
                 contact2Bean.contact3Relationship != 0) {
                 relationShip3 = Pair(contact2Bean.contact3RelationshipLabel,
@@ -471,7 +476,7 @@ class AddProfile2Fragment : BaseFragment() {
         if (mobile4 == null) {
             mobile4 = contact2Bean.contact4Mobile
         }
-        if (relationShip4 == null){
+        if (relationShip4 == null && !TextUtils.isEmpty(mobile4)){
             if (!TextUtils.isEmpty(contact2Bean.contact4RelationshipLabel) &&
                 contact2Bean.contact4Relationship != 0) {
                 relationShip4 = Pair(contact2Bean.contact4RelationshipLabel,

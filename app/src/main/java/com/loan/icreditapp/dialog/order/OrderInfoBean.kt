@@ -25,6 +25,7 @@ class OrderInfoBean {
     //账期
     var stageList: List<Stage>? = null
 
+    var firstApprove : Int? = null
 
     class Stage {
         //当期期号
@@ -62,6 +63,7 @@ class OrderInfoBean {
 
         //是否可以还款
         var payable: Boolean? = false
+
     }
 
 }
