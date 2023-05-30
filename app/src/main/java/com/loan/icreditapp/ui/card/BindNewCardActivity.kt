@@ -80,7 +80,7 @@ class BindNewCardActivity : BaseActivity() {
             toFragment(addBankNum2Fragment)
             tvTitle?.text = resources.getString(R.string.bind_new_card_title2)
         } else if (step == SUCCESS) {
-            EventBus.getDefault().post(UpdateGetOrderEvent())
+//            EventBus.getDefault().post(UpdateGetOrderEvent())
             finish()
         } else if (step == BIND_BINK_CARD_SUCCESS){
             EventBus.getDefault().post(UpdateBindCardResult())

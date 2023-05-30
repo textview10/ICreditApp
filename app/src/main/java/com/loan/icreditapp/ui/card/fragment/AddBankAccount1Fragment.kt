@@ -144,7 +144,7 @@ class AddBankAccount1Fragment : BaseFragment() {
                     if (activity is BindNewCardActivity) {
                         var bindNewCardActivity : BindNewCardActivity = activity as BindNewCardActivity
                         bindNewCardActivity.toStep(BindNewCardActivity.SUCCESS)
-//                        EventBus.getDefault().post(UpdateLoanEvent())
+                        EventBus.getDefault().post(UpdateLoanEvent())
                     }
                 }
 
