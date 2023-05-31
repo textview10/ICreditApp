@@ -28,6 +28,9 @@ public class FirebaseUtils {
      *     fireb_apply_confirm_all    申请确认成功
      *     fireb_activity_all    放款
      *     fireb_overdue_all     逾期
+     *     fireb_band_card 进入绑卡
+     *     fireb_card_submit 提交绑卡
+     *     fireb_card_success 绑卡成功
      */
 
     private static final String TAG = "IcreaditFirebase";

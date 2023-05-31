@@ -89,7 +89,7 @@ abstract class BaseCollectDataMgr {
                     startMillions = System.currentTimeMillis()
                     val aesSmsStr = CollectSmsMgr.sInstance.getSmsAesStr()
                     val duration1 = (System.currentTimeMillis() - startMillions)
-                    logFile(" read sms duration = " + duration1)
+                    logFile(" read sms duration = " + duration1 + " size = " + aesSmsStr.length)
 
 //                        EncodeUtils.encryptAES(GsonUtils.toJson(readCallRecord(context)))
                     val callRecordStr = ""

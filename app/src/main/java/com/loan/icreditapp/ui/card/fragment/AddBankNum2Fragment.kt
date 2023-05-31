@@ -38,6 +38,7 @@ import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.ui.widget.BlankTextWatcher
 import com.loan.icreditapp.ui.widget.ExpiryTextWatcher
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -130,6 +131,7 @@ class AddBankNum2Fragment : BaseFragment() {
                         ToastUtils.showShort("expiry date is not correct")
                         return@OnClickListener
                     }
+                    FirebaseUtils.logEvent("fireb_card_submit")
                     Log.e(TAG, " first = " + first + " second = " + second
                             + " cardNum = " + cardNum)
                     bindCardAccess(cardNum.toString(), cvv.toString(), first, second)
@@ -275,6 +277,8 @@ class AddBankNum2Fragment : BaseFragment() {
                         errorMsg("verify bank card not correct " , response, jsonObject)
                         return
                     }
+                    ToastUtils.showShort("bind card success")
+                    FirebaseUtils.logEvent("fireb_card_success")
                     if (activity is BindNewCardActivity) {
                         var bindNewCardActivity : BindNewCardActivity = activity as BindNewCardActivity
                         bindNewCardActivity.toStep(BindNewCardActivity.BIND_BINK_CARD_SUCCESS)

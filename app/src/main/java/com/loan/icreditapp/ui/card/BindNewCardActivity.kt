@@ -16,6 +16,7 @@ import com.loan.icreditapp.ui.card.fragment.AddBankNum2Fragment
 import com.loan.icreditapp.ui.profile.AddProfileActivity
 import com.loan.icreditapp.ui.profile.fragment.AddProfile2Fragment
 import com.loan.icreditapp.ui.profile.fragment.AddProfile3Fragment
+import com.loan.icreditapp.util.FirebaseUtils
 import org.greenrobot.eventbus.EventBus
 
 class BindNewCardActivity : BaseActivity() {
@@ -64,6 +65,7 @@ class BindNewCardActivity : BaseActivity() {
         })
         toStepInternal(if (mType == ADD_BANK_CARD_NUM ) ADD_BANK_CARD_NUM
             else ADD_BANK_ACCOUNT)
+        FirebaseUtils.logEvent("fireb_band_card")
     }
 
     fun toStep(step: Int){
