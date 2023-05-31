@@ -2,6 +2,7 @@ package com.loan.icreditapp.ui.pay
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -184,8 +185,25 @@ class PayFragment : BaseFragment() {
                 ToastUtils.showShort("Copy " + text + " to clipboard success")
             }
         })
+        updateBankListInternal()
+
+        llSelectBank?.setOnClickListener(OnClickListener {
+            if (checkClickFast()){
+                return@OnClickListener
+            }
+            if (context == null || activity == null){
+                return@OnClickListener
+            }
+            PayBankListActivity.launchActivityForResult(requireActivity())
+        })
+    }
+
+    private fun updateBankListInternal(){
         ConfigMgr.getBankList(object : ConfigMgr.CallBack4 {
             override fun onGetData(bankList: ArrayList<CardResponseBean.Bank>) {
+                if (isDestroy()){
+                    return
+                }
                 mBankList.clear()
                 mBankList.addAll(bankList)
                 if (!mBankList.isEmpty()) {
@@ -194,15 +212,6 @@ class PayFragment : BaseFragment() {
                 }
             }
 
-        })
-        llSelectBank?.setOnClickListener(OnClickListener {
-            if (checkClickFast()){
-                return@OnClickListener
-            }
-            if (context == null){
-                return@OnClickListener
-            }
-            PayBankListActivity.launchActivity(requireContext())
         })
     }
 
@@ -251,6 +260,13 @@ class PayFragment : BaseFragment() {
         flLoading?.visibility = View.VISIBLE
         curPresenter?.updateResult()
     }
+
+    fun onUpdateBindCard(){
+        Log.e("Test", "on update bind card.")
+        Constant.bankList.clear()
+        updateBankListInternal()
+    }
+
 
     fun onFlutterWaveResult(isSuccess: Boolean, bean: FlutterWaveResult?) {
         var statusOk = false

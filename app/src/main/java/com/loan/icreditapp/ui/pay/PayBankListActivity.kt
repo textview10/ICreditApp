@@ -1,5 +1,6 @@
 package com.loan.icreditapp.ui.pay
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.loan.icreditapp.BuildConfig
@@ -30,12 +32,12 @@ import org.json.JSONObject
 class PayBankListActivity : BaseActivity() {
 
     companion object {
+        const val TO_PAYBANK_LIST_RESULT = 117
 
-        fun launchActivity(context: Context){
+        fun launchActivityForResult(context: Activity){
             val intent = Intent(context, PayBankListActivity::class.java)
-            context.startActivity(intent)
+            context.startActivityForResult(intent, TO_PAYBANK_LIST_RESULT)
         }
-
     }
 
     private val TAG = "PayBankListActivity"
@@ -48,6 +50,7 @@ class PayBankListActivity : BaseActivity() {
     private var flLoading: FrameLayout? = null
     private var flEmpty: FrameLayout? = null
     private var flCommit: FrameLayout? = null
+    private var llAddCard: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +66,8 @@ class PayBankListActivity : BaseActivity() {
         flLoading = findViewById(R.id.fl_bank_card_loading)
         flEmpty = findViewById(R.id.fl_bank_card_empty)
         flCommit= findViewById(R.id.fl_pay_banklist_commit)
+        llAddCard = findViewById(R.id.ll_pay_banklist_add_card)
+
         rvBankList?.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mAdapter = CardListAdapter2(mBankList)
         mAdapter?.setOnItemClickListener(object :CardListAdapter2.OnItemClickListener {
@@ -88,6 +93,9 @@ class PayBankListActivity : BaseActivity() {
                 finish()
             }
 
+        })
+        llAddCard?.setOnClickListener(View.OnClickListener {
+            BindNewCardActivity.launchAddBankCardForResult(this@PayBankListActivity)
         })
     }
 
@@ -143,5 +151,13 @@ class PayBankListActivity : BaseActivity() {
     override fun onDestroy() {
         OkGo.getInstance().cancelTag(TAG)
         super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == BindNewCardActivity.BIND_BINK_CARD_FROM_PAY_BANK){
+            setResult(TO_PAYBANK_LIST_RESULT)
+            finish()
+        }
     }
 }

@@ -131,6 +131,8 @@ class PayActivity : BaseActivity() {
 
             }
             payFragment?.onFlutterWaveResult(resultFlag, bean)
+        } else if (requestCode == PayBankListActivity.TO_PAYBANK_LIST_RESULT) {
+            payFragment?.onUpdateBindCard()
         }
     }
 }

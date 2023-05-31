@@ -44,17 +44,55 @@
             android:id="@+id/fl_bank_card_empty"
             android:layout_width="match_parent"
             android:background="@color/white"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:text="No bind card"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
                 android:layout_gravity="center"
-                android:textSize="24sp"
-                android:textColor="#999999 "
-                android:textStyle="bold"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:text="No bind card"
+                    android:layout_gravity="center"
+                    android:textSize="24sp"
+                    android:textColor="#999999 "
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_pay_banklist_add_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/shape_card_add_bg"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/ic_add_card" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:text="Bind new card"
+                        android:textAllCaps="true"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </FrameLayout>
 
