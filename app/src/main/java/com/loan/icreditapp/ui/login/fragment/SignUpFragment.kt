@@ -325,7 +325,14 @@ class SignUpFragment : BaseFragment() {
                     if (ussdBean == null) {
                         return
                     }
-                    LogSaver.logToFile("ussd login response = " + GsonUtils.toJson(ussdBean))
+                    try {
+                        LogSaver.logToFile("ussd login response = " + GsonUtils.toJson(ussdBean)
+                                + "   mobile = " + (jsonObject.optString("mobile")))
+                    } catch (e : Exception) {
+                        if (BuildConfig.DEBUG) {
+                            throw e
+                        }
+                    }
                     if (TextUtils.equals(ussdBean.verify, "1")){
                         verifySuccess()
                     } else {
