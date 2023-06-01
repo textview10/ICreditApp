@@ -80,6 +80,7 @@ class LoanApplyFragment : BaseLoanFragment() {
     private var mTrialBean: TrialResponseBean? = null
     private var mProduct: ProductResponseBean.Product? = null
     private var scrollView: NestedScrollView? = null
+    private var isMarketing : Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -171,6 +172,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                             }
 
                         })
+                        isMarketing = productBean.isMarketing()
                         updateProductList(productBean.products!!)
                     }
                 }
@@ -455,6 +457,14 @@ class LoanApplyFragment : BaseLoanFragment() {
         trialDialog?.setOnDialogClickListener(object : ProductTrialDialog.OnDialogClickListener() {
             override fun onClickAgree() {
                 if (isDestroy()){
+                    return
+                }
+                if (isMarketing) {
+                    if (trialDialog?.isShowing == true){
+                        trialDialog?.dismiss()
+                    }
+                    ToastUtils.showShort("is market order, please refresh and reload.")
+                    getProducts()
                     return
                 }
                 applyLoad(orderId, trialDialog)
