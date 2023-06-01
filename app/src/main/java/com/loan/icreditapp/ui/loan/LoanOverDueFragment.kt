@@ -33,12 +33,10 @@ class LoanOverDueFragment : BaseLoanFragment() {
 
 
         if (checkNeedShowLog()){
-//            val isFirstOverDue = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_OVERDUE, true)
-            val isFirstOverDue = Constant.IS_FIRST_APPLY
-            FirebaseUtils.logEvent(if (isFirstOverDue) "fireb_overdue" else "fireb_overdue_all")
-//            if (isFirstOverDue) {
-//                SPUtils.getInstance().put(Constant.KEY_FIRST_OVERDUE, false)
-//            }
+            if (Constant.IS_FIRST_APPLY) {
+                FirebaseUtils.logEvent("fireb_overdue")
+            }
+            FirebaseUtils.logEvent("fireb_overdue_all")
         }
 
         flCommit?.setOnClickListener(View.OnClickListener {

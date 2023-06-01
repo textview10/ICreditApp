@@ -44,6 +44,8 @@ class Constant {
 //        //放款
 //        const val KEY_FIRST_ACTIVITY : String = "key_first_activity"
 
+        var IS_FIRST_APPROVE = false
+
         var IS_FIRST_APPLY = false
 
         const val SHOW_BIND_CARD : Boolean = true

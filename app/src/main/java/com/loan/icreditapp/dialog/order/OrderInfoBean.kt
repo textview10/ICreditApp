@@ -26,6 +26,15 @@ class OrderInfoBean {
     var stageList: List<Stage>? = null
 
     var firstApprove : Int? = null
+    //0 首贷  大于0复贷
+    var reloan : Int? = null
+
+    fun isFirstLoan() : Boolean{
+        if (reloan == 0){
+            return true
+        }
+        return false
+    }
 
     class Stage {
         //当期期号

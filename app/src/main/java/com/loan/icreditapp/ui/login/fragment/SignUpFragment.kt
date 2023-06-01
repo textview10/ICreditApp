@@ -21,8 +21,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
@@ -323,6 +325,7 @@ class SignUpFragment : BaseFragment() {
                     if (ussdBean == null) {
                         return
                     }
+                    LogSaver.logToFile("ussd login response = " + GsonUtils.toJson(ussdBean))
                     if (TextUtils.equals(ussdBean.verify, "1")){
                         verifySuccess()
                     } else {

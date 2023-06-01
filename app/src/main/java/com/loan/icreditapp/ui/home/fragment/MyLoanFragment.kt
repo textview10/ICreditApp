@@ -140,7 +140,8 @@ class MyLoanFragment : BaseFragment() {
             return
         }
         //可以借款
-        Constant.IS_FIRST_APPLY = (orderInfoBean.firstApprove == 1)
+        Constant.IS_FIRST_APPROVE = (orderInfoBean.firstApprove == 1)
+        Constant.IS_FIRST_APPLY = orderInfoBean.isFirstLoan()
         if (orderInfoBean.canApply == true || TextUtils.isEmpty(orderInfoBean.orderId) ||
             TextUtils.equals(orderInfoBean.orderId, "0")
         ) {

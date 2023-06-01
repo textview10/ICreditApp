@@ -285,14 +285,14 @@ class SettingFragment : BaseFragment() {
     private fun test(){
 //        val intent = Intent(context, AddProfileActivity::class.java)
 //        val intent = Intent(context, AddBankAccount1Fragment::class.java)
-        val intent = Intent(context, PayActivity::class.java)
-        startActivity(intent)
+//        val intent = Intent(context, PayActivity::class.java)
+//        startActivity(intent)
 //        BindNewCardActivity.launchAddBankAccount(context!!)
 //        val test = Test()
 //        test.test1()
-        if (true) {
-            return
-        }
+//        if (true) {
+//            return
+//        }
         var startTime = System.currentTimeMillis()
         CollectDataMgr.sInstance.collectAuthData("230125150200000481",
             object : BaseCollectDataMgr.Observer {
