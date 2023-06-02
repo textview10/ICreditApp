@@ -38,12 +38,10 @@ class LoanActiveFragment : BaseLoanFragment() {
         tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
 
         if (checkNeedShowLog()){
-            val isFirstOverDue = Constant.IS_FIRST_APPLY
-//            val isFirstOverDue = SPUtils.getInstance().getBoolean(Constant.KEY_FIRST_ACTIVITY, true)
-            FirebaseUtils.logEvent(if (isFirstOverDue) "fireb_activity" else "fireb_activity_all")
-//            if (isFirstOverDue) {
-//                SPUtils.getInstance().put(Constant.KEY_FIRST_ACTIVITY, false)
-//            }
+            if (Constant.IS_FIRST_APPLY) {
+                FirebaseUtils.logEvent( "fireb_activity")
+            }
+            FirebaseUtils.logEvent( "fireb_activity_all")
             EventBus.getDefault().post(RateUsEvent())
         }
 
