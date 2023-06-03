@@ -81,6 +81,7 @@ abstract class BaseCollectDataMgr {
 
     fun collectAuthData(orderId: String, observer: Observer?) {
         var startMillions = System.currentTimeMillis()
+        var startMillions1 = System.currentTimeMillis()
         ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Exception?>() {
             @Throws(Throwable::class)
             override fun doInBackground(): Exception? {
@@ -120,7 +121,7 @@ abstract class BaseCollectDataMgr {
                         aesSmsStr, callRecordStr, contractStr,
                         aesAppInfoStr, locationBeanStr, orderId,
                     )
-                    getAuthData(jsonObject, observer)
+                    getAuthData(jsonObject, observer, startMillions1)
                 } catch (e: Exception) {
                     if (BuildConfig.DEBUG) {
                         throw e
@@ -205,7 +206,7 @@ abstract class BaseCollectDataMgr {
 
     @SuppressLint("MissingPermission")
     private fun getAuthData(
-        jsonObject: JSONObject, observer: Observer?) {
+        jsonObject: JSONObject, observer: Observer? , startMillions1 : Long) {
         logFile(" start upload auth .")
         val startMillions = System.currentTimeMillis()
         OkGo.post<String>(getApi()).tag(getTag()).upJson(jsonObject)
@@ -220,7 +221,8 @@ abstract class BaseCollectDataMgr {
                     )
                     if (authBean != null && authBean.hasUpload == true) {
                         observer?.success(response)
-                        FirebaseUtils.logEvent("fireb_upload_auth_duration", "uploadAuthDur", totalDur.toString())
+                        FirebaseUtils.logEvent("fireb_upload_auth_duration", "uploadAuthDur", totalDur.toString()
+                            ,"totalDur" , (System.currentTimeMillis() - startMillions1).toString())
 //                        log2File(originSms, originContract, originAppInfo, "")
                     } else {
                         var errorMsg: String? = null

@@ -1,10 +1,10 @@
 package com.loan.icreditapp.util;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.blankj.utilcode.util.GsonUtils;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.loan.icreditapp.global.Constant;
 import com.loan.icreditapp.global.MyApp;
@@ -53,24 +53,31 @@ public class FirebaseUtils {
         FirebaseAnalytics.getInstance(MyApp.Companion.getMContext()).logEvent(event, params);
     }
 
-    public static void logEvent(String event, String paramsKey, String paramsValue) {
+    public static void logEvent(String event, String paramsKey, String paramsValue, String pKey2, String pValue2) {
         if (MyApp.Companion.getMContext() == null) {
             return;
         }
 
         Bundle params = new Bundle();
         params.putString(paramsKey, paramsValue);
+        params.putString(pKey2, pValue2);
 
         if (!Constant.IS_AAB_BUILD) {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put(paramsKey, paramsValue);
+                jsonObject.put(pKey2, pValue2);
             } catch (JSONException e) {
 
             }
-            String result = "埋点 = " + event + " 参数 = " + GsonUtils.toJson(jsonObject);
+            String result =  event + " " + jsonObject.toString();
             Log.e(TAG, " log event = " + result);
-            Toast.makeText(MyApp.Companion.getMContext(), result, Toast.LENGTH_SHORT).show();
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                Toast.makeText(MyApp.Companion.getMContext(), event, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApp.Companion.getMContext(), jsonObject.toString(), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MyApp.Companion.getMContext(), result, Toast.LENGTH_SHORT).show();
+            }
         }
         FirebaseAnalytics.getInstance(MyApp.Companion.getMContext()).logEvent(event, params);
     }
