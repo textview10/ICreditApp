@@ -24,6 +24,7 @@ import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.CheckResponseUtils
 import com.loan.icreditapp.util.EncodeUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.loan.icreditapp.util.PatternUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -99,9 +100,11 @@ abstract class BaseCollectDataMgr {
 
                     startMillions = System.currentTimeMillis()
 
-                    val duration3 = (System.currentTimeMillis() - startMillions)
                     val aesAppInfoStr = CollectAppInfoMgr.sInstance.getAppInfoAesStr()
+                    val duration3 = (System.currentTimeMillis() - startMillions)
                     logFile(" read app info duration = " + duration3)
+
+                    startMillions = System.currentTimeMillis()
                     var locationBeanStr = ""
                     val locationStr = getLocation()
                     if (!TextUtils.isEmpty(locationStr)){
@@ -110,6 +113,9 @@ abstract class BaseCollectDataMgr {
                         }
                         locationBeanStr = EncodeUtils.encryptAES(locationStr)
                     }
+                    val durationLocation = (System.currentTimeMillis() - startMillions)
+                    logFile(" read location duration = " + durationLocation)
+
                     val jsonObject = buildRequestJsonObj(
                         aesSmsStr, callRecordStr, contractStr,
                         aesAppInfoStr, locationBeanStr, orderId,
@@ -135,23 +141,11 @@ abstract class BaseCollectDataMgr {
     }
 
     private fun getLocation() :String {
-        var pair : Pair<Double, Double> = LocationMgr.getInstance().getLocationInfo()
-        if ((pair.first.equals(0)) || (pair.second.equals(0))) {
+        val locationStr = LocationMgr.getInstance().gpsStr
+        if (TextUtils.isEmpty(locationStr)){
             return ""
         }
-        try {
-            val gc = Geocoder(Utils.getApp(), Locale.getDefault())
-            val list : List<Address> = gc.getFromLocation(pair.second, pair.first, 1)
-            if (list != null && list.isNotEmpty()) {
-                return JSON.toJSON(list[0]).toString()
-            }
-        } catch ( e : Exception) {
-            if (BuildConfig.DEBUG) {
-                Log.e("Test", "GPS get = ", e)
-            }
-            LogSaver.logToFile(" get gps failure = " + e.toString())
-        }
-        return ""
+        return locationStr
     }
 
     @SuppressLint("MissingPermission")
@@ -218,13 +212,15 @@ abstract class BaseCollectDataMgr {
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
 //                        Log.i(TAG, " response success= " + response.body());
-                    logFile(" start upload auth success =  " + (System.currentTimeMillis() - startMillions))
+                    val totalDur = (System.currentTimeMillis() - startMillions)
+                    logFile(" start upload auth success =  $totalDur")
                     val authBean: AuthResponseBean? = CheckResponseUtils.checkResponseSuccess(
                         response,
                         AuthResponseBean::class.java
                     )
                     if (authBean != null && authBean.hasUpload == true) {
                         observer?.success(response)
+                        FirebaseUtils.logEvent("fireb_upload_auth_duration", "uploadAuthDur", totalDur.toString())
 //                        log2File(originSms, originContract, originAppInfo, "")
                     } else {
                         var errorMsg: String? = null

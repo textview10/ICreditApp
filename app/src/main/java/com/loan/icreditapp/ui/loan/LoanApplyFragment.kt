@@ -512,7 +512,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (trialDialog != null && trialDialog.isShowing){
                         trialDialog.dismiss()
                     }
-                    if (Constant.IS_FIRST_APPLY) {
+                    if (Constant.IS_FIRST_APPROVE) {
                         FirebaseUtils.logEvent( "fireb_apply_confirm")
                     }
                     FirebaseUtils.logEvent( "fireb_apply_confirm_all")

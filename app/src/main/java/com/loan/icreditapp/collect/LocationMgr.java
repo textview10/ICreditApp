@@ -14,8 +14,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
+import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
+import com.drojian.alpha.toolslib.log.LogSaver;
 import com.loan.icreditapp.BuildConfig;
 import com.loan.icreditapp.collect.bean.LocationRequest;
 import com.loan.icreditapp.util.BuildRequestJsonUtils;
@@ -171,6 +174,8 @@ public class LocationMgr {
     private StringBuffer extra = new StringBuffer();
     private ArrayList<String> mBSSIDs = new ArrayList<>();
 
+    private String gpsStr;
+
     //获取地址信息:城市、街道等信息
     private void getAddress(Location location, boolean mIsGps) {
         if (location != null) {
@@ -207,9 +212,14 @@ public class LocationMgr {
                 OkGo.getInstance().addCommonHeaders(
                         BuildRequestJsonUtils.Companion.buildHeaderLocation(
                                 longitude + "", latitude + ""));
-                Log.d("LocationMgr", " gps 1 = " + gpsLongitude + " gps 2 = " + gpsLatitude
+                Log.d("Test", " gps 1 = " + gpsLongitude + " gps 2 = " + gpsLatitude
                         + "network 1 = " + netWorkLongitude + " network 2 = " + netWorkLatitude);
             }
+           String gps = getGpsInfoInternal();
+            if (!TextUtils.isEmpty(gps)) {
+                gpsStr = gps;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -225,6 +235,45 @@ public class LocationMgr {
             return new Pair<>(netWorkLongitude, netWorkLatitude);
         }
         return new Pair<>(0d, 0d);
+    }
+
+    public String getGpsStr(){
+        if (!TextUtils.isEmpty(gpsStr)){
+            return gpsStr;
+        }
+        return getGpsInfoInternal();
+    }
+
+//    public void cacheGps(){
+//        String gps = getGpsInfoInternal();
+//        if (!TextUtils.isEmpty(gps)) {
+//            gpsStr = gps;
+//            LogSaver.logToFile("cache gps success.");
+//            if (BuildConfig.DEBUG) {
+//                Log.e("Test", "cache gps success = " + gpsStr);
+//            }
+//        }
+//    }
+
+   private String getGpsInfoInternal(){
+       Pair<Double, Double> pair = LocationMgr.getInstance().getLocationInfo();
+       if ((pair.first == 0) || (pair.second == 0)) {
+           return "";
+       }
+       Geocoder gc =  new Geocoder(Utils.getApp(),  Locale.getDefault());
+       List<Address> list = null;
+       try {
+           list = gc.getFromLocation(pair.second, pair.first, 1);
+       } catch (Exception e) {
+           if (BuildConfig.DEBUG) {
+               Log.e("Test", "GPS get = ", e);
+           }
+           LogSaver.logToFile(" get gps failure = " + e.toString());
+       }
+       if (list != null && !list.isEmpty()) {
+           return JSON.toJSONString(list.get(0));
+       }
+       return "";
     }
 
     public LocationRequest getLocationBean(){

@@ -24,7 +24,7 @@ class OrderInfoBean {
 
     //账期
     var stageList: List<Stage>? = null
-
+    //1是首次, 0是非首次
     var firstApprove : Int? = null
     //0 首贷  大于0复贷
     var reloan : Int? = null

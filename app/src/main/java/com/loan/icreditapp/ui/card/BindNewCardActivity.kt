@@ -77,7 +77,9 @@ class BindNewCardActivity : BaseActivity() {
         })
         toStepInternal(if (mType == ADD_BANK_CARD_NUM ) ADD_BANK_CARD_NUM
             else ADD_BANK_ACCOUNT)
-        FirebaseUtils.logEvent("fireb_band_card")
+        if (mType == ADD_BANK_CARD_NUM) {
+            FirebaseUtils.logEvent("fireb_band_card")
+        }
     }
 
     fun toStep(step: Int){

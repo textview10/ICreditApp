@@ -294,12 +294,15 @@ class SettingFragment : BaseFragment() {
 //            return
 //        }
         var startTime = System.currentTimeMillis()
+        if (BuildConfig.DEBUG) {
+            Log.e("Test", " start upload --------------------------------")
+        }
         CollectDataMgr.sInstance.collectAuthData("230125150200000481",
             object : BaseCollectDataMgr.Observer {
                 override fun success(response: Response<String>?) {
                     val duration = (System.currentTimeMillis() - startTime)
                     CollectDataMgr.sInstance.logFile("new upload time success total duration = " + duration)
-                    ToastUtils.showShort("new upload time = " + duration)
+//                    ToastUtils.showShort("new upload time = " + duration)
                 }
 
                 override fun failure(errorMsg: String?) {
