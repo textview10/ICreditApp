@@ -498,7 +498,6 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (isDestroy()){
                         return
                     }
-                    Constant.IS_FIRST_APPROVE = false
                     trialDialog?.setAgreeEnable(true)
                     val applyLoadResponse: ApplyLoadResponse? =
                         checkResponseSuccess(response, ApplyLoadResponse::class.java)
