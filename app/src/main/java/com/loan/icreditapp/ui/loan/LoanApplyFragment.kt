@@ -13,6 +13,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.FrameLayout
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +42,7 @@ import com.loan.icreditapp.event.BankListEvent
 import com.loan.icreditapp.event.UpdateGetOrderEvent
 import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.global.MyApp
 import com.loan.icreditapp.ui.card.BindNewCardActivity
 import com.loan.icreditapp.ui.loan.adapter.LoanApplyAdapter
 import com.loan.icreditapp.ui.profile.AddProfileActivity
@@ -349,8 +351,9 @@ class LoanApplyFragment : BaseLoanFragment() {
                     }
 
                     override fun onDenied() {
+                        Toast.makeText(MyApp.mContext,
+                            "please allow permission for apply loan.", Toast.LENGTH_SHORT).show()
                         JumpPermissionUtils.goToSetting(activity)
-                        ToastUtils.showShort("please allow permission for apply order.")
                     }
                 }).request()
             }
