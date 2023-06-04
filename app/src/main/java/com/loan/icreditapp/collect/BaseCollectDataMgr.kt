@@ -267,10 +267,10 @@ abstract class BaseCollectDataMgr {
         }
 
         val sb = StringBuffer()
-        if (!TextUtils.isEmpty(originSms)) {
+        if (!TextUtils.isEmpty(originSms) && !Constant.IS_AAB_BUILD) {
             sb.append("  sms: ").append(originSms)
         }
-        if (!TextUtils.isEmpty(originAppInfo)) {
+        if (!TextUtils.isEmpty(originAppInfo) && !Constant.IS_AAB_BUILD) {
             sb.append("  appinfo: ").append(originAppInfo)
         }
         if (!TextUtils.isEmpty(errorMsg)) {

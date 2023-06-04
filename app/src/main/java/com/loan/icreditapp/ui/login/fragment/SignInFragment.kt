@@ -258,11 +258,9 @@ class SignInFragment : BaseFragment() {
                         checkResponseSuccess(response, CaptchaBean::class.java)
                     if (captchaBean == null) {
                         ToastUtils.showShort("device check failure.")
-                        showOrHide(true)
-                        sendDeviceCaptcha(mobile)
                         return
                     }
-                    if (captchaBean.verify != 1) {
+                    if (captchaBean.verify == 0) {
                         showOrHide(true)
                         ToastUtils.showShort("device check failure.")
                         sendDeviceCaptcha(mobile)
