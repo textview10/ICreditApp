@@ -206,8 +206,9 @@ class PayFragment : BaseFragment() {
                 }
                 mBankList.clear()
                 mBankList.addAll(bankList)
-                if (!mBankList.isEmpty()) {
+                if (mBankList.isNotEmpty()) {
                     var bank: CardResponseBean.Bank = mBankList[0]
+                    norPresenter?.setCurBankNum(bank.cardNumber)
                     tvNorCardNum?.text = CardNumUtils.getCardNumHide2(bank.cardNumber)
                 }
             }
