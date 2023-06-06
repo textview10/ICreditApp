@@ -548,6 +548,9 @@ class LoanApplyFragment : BaseLoanFragment() {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this)
         }
+        if (trialDialog?.isShowing == true){
+            trialDialog?.dismiss()
+        }
         CollectDataMgr.sInstance.onDestroy()
         super.onDestroy()
     }
