@@ -185,7 +185,6 @@ class PayFragment : BaseFragment() {
                 ToastUtils.showShort("Copy " + text + " to clipboard success")
             }
         })
-        updateBankListInternal()
 
         llSelectBank?.setOnClickListener(OnClickListener {
             if (checkClickFast()){
@@ -242,6 +241,7 @@ class PayFragment : BaseFragment() {
             monifyPresenter?.setData(orderId, amount)
             monifyPresenter?.setObserver(MyObserver())
         }
+        updateBankListInternal()
     }
 
     private fun startLoading() {
