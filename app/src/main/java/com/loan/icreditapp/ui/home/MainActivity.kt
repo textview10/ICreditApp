@@ -12,10 +12,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.BarUtils
-import com.blankj.utilcode.util.PermissionUtils
-import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
@@ -157,8 +154,21 @@ class MainActivity : BaseActivity() {
 
     private fun executeNext() {
 //        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
-        LocationMgr.getInstance().getLocation()
-        CollectSmsMgr.sInstance.tryCacheSms()
+        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Exception?>() {
+            @Throws(Throwable::class)
+            override fun doInBackground(): Exception? {
+                LocationMgr.getInstance().getLocation()
+                CollectSmsMgr.sInstance.tryCacheSms()
+                return null
+            }
+
+
+            override fun onSuccess(result: Exception?) {
+
+            }
+
+        })
+
 //        handler.postDelayed(Runnable {
 //            checkAndShowRateUs()
 //        }, 500)

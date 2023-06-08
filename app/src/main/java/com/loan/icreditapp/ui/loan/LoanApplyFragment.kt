@@ -9,20 +9,13 @@ import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.FrameLayout
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.PermissionUtils
-import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
@@ -38,7 +31,6 @@ import com.loan.icreditapp.collect.item.CollectSmsMgr
 import com.loan.icreditapp.data.FirebaseData
 import com.loan.icreditapp.dialog.RequestPermissionDialog
 import com.loan.icreditapp.dialog.producttrial.ProductTrialDialog
-import com.loan.icreditapp.event.BankListEvent
 import com.loan.icreditapp.event.UpdateGetOrderEvent
 import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.Constant
@@ -57,7 +49,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.Collections
+import java.util.*
 
 /**
  * 申请贷款的界面
@@ -95,8 +87,20 @@ class LoanApplyFragment : BaseLoanFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //缓存一下applist
-        CollectAppInfoMgr.sInstance
+        ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Exception?>() {
+            @Throws(Throwable::class)
+            override fun doInBackground(): Exception? {
+                //缓存一下applist
+                CollectAppInfoMgr.sInstance
+                return null
+            }
+
+
+            override fun onSuccess(result: Exception?) {
+
+            }
+
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
