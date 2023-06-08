@@ -145,6 +145,7 @@
     <string name="rate_us">rate</string>
 
     <string name="signin_captcha">Enter the captcha</string>
+    <string name="declined_desc">Dear Customer , sorry to inform you that your application was declined. Please keep better records and apply later. The reason why your application is unsuccessful is because your credit score did not reach our minimum requirement. We got your credit score from an independent credit agency and you can improve it by having a healthy spending habit and building good credit history.</string>
 
     <string name="facebook_app_id">190342719637645</string>
     <string name="fb_login_protocol_scheme">fb190342719637645</string>
