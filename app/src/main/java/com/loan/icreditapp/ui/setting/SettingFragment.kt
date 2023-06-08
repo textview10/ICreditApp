@@ -167,7 +167,7 @@ class SettingFragment : BaseFragment() {
             val addressEmail = arrayOf<String>(mEmail!!)
             data.putExtra(Intent.EXTRA_EMAIL, addressEmail)
 
-            data.putExtra(Intent.EXTRA_SUBJECT, "Crediting Feedback")
+            data.putExtra(Intent.EXTRA_SUBJECT, "Icredit Feedback")
             val mobile = SPUtils.getInstance().getString(Constant.KEY_MOBILE)
             data.putExtra(Intent.EXTRA_TEXT, "Hi:  num " + mobile + ", I want to feedback....")
             activity?.startActivity(data)
@@ -192,10 +192,10 @@ class SettingFragment : BaseFragment() {
         val addressEmail = arrayOf<String>(mEmail!!)
         data.putExtra(Intent.EXTRA_EMAIL, addressEmail)
 
-        data.putExtra(Intent.EXTRA_SUBJECT, "Crediting Feedback")
+        data.putExtra(Intent.EXTRA_SUBJECT, "Icredit Feedback")
         val mobile = SPUtils.getInstance().getString(Constant.KEY_MOBILE)
         data.putExtra(Intent.EXTRA_TEXT, "Hi:  num " + mobile + ", I want to feedback....")
-        activity?.startActivity(Intent.createChooser(data, "Crediting Feedback:"))
+        activity?.startActivity(Intent.createChooser(data, "Icredit Feedback:"))
     }
 
     private fun buildSettingList() {

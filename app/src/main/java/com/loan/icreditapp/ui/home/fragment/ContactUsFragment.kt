@@ -172,7 +172,7 @@ class ContactUsFragment : BaseFragment() {
                 val addressCC = arrayOf<String>("wang867103701@gmail.com")
                 data.putExtra(Intent.EXTRA_CC, addressCC)
             }
-            data.putExtra(Intent.EXTRA_SUBJECT, "Crediting Feedback")
+            data.putExtra(Intent.EXTRA_SUBJECT, "Icredit Feedback")
             val mobile = SPUtils.getInstance().getString(Constant.KEY_MOBILE)
             data.putExtra(Intent.EXTRA_TEXT, "Hi:  num " + mobile + ",")
             if (!TextUtils.isEmpty(traceFile)) {
@@ -181,7 +181,7 @@ class ContactUsFragment : BaseFragment() {
                     getFileUri(requireContext(), File(traceFile!!), getAuthority(requireContext()))
                 )
             }
-            activity?.startActivity(Intent.createChooser(data, "Crediting Feedback:"))
+            activity?.startActivity(Intent.createChooser(data, "Icredit Feedback:"))
         } catch (e: Exception) {
             if ((e is ActivityNotFoundException)) {
                 ToastUtils.showShort(" not exist email app")
