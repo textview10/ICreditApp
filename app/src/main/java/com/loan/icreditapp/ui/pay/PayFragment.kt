@@ -98,6 +98,7 @@ class PayFragment : BaseFragment() {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
+        updateBankListInternal()
     }
 
     private fun initView(view: View) {
@@ -185,7 +186,6 @@ class PayFragment : BaseFragment() {
                 ToastUtils.showShort("Copy " + text + " to clipboard success")
             }
         })
-        updateBankListInternal()
 
         llSelectBank?.setOnClickListener(OnClickListener {
             if (checkClickFast()){
