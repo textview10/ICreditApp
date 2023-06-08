@@ -98,6 +98,7 @@ class PayFragment : BaseFragment() {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
+        updateBankListInternal()
     }
 
     private fun initView(view: View) {
