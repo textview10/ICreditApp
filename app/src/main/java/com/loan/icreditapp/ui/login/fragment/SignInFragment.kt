@@ -253,16 +253,18 @@ class SignInFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    if (isDestroy()){
+                        return
+                    }
                     flLoading?.visibility = View.GONE
                     val captchaBean: CaptchaBean? =
                         checkResponseSuccess(response, CaptchaBean::class.java)
                     if (captchaBean == null) {
-                        ToastUtils.showShort("device check failure.")
                         return
                     }
                     if (captchaBean.verify == 0) {
                         showOrHide(true)
-                        ToastUtils.showShort("device check failure.")
+                        ToastUtils.showShort(resources.getString(R.string.device_check_failure))
                         sendDeviceCaptcha(mobile)
                         return
                     }
@@ -311,7 +313,7 @@ class SignInFragment : BaseFragment() {
                     if (isRemoving || isDetached) {
                         return
                     }
-                    ToastUtils.showShort("device captcha error..")
+                    ToastUtils.showShort(resources.getString(R.string.send_sms_error))
                 }
             })
     }

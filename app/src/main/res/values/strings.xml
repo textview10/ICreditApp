@@ -148,4 +148,15 @@
 
     <string name="facebook_app_id">190342719637645</string>
     <string name="fb_login_protocol_scheme">fb190342719637645</string>
+
+    <string name="server_is_not_alive">server is not alive .</string>
+    <string name="device_check_failure">device check failure.</string>
+    <string name="send_sms_error">send sms error.</string>
+    <string name="please_send_msg_later">please send message later</string>
+    <string name="must_agree_term">must agree term.</string>
+    <string name="enter_correct_phone_num">Please enter your correct phone number</string>
+    <string name="ussd_login_failure">ussd login failure</string>
+    <string name="ussd_login_error">ussd login error</string>
+
+
 </resources>
