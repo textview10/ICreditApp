@@ -548,6 +548,9 @@ class SignUpFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    if (isDestroy()){
+                        return
+                    }
                     flLoading?.visibility = View.GONE
                     val baseResponseBean: VerifySmsCodeBean? =
                         checkResponseSuccess(response, VerifySmsCodeBean::class.java)
@@ -555,7 +558,7 @@ class SignUpFragment : BaseFragment() {
                         return
                     }
                     if (!baseResponseBean.verifyed) {
-                        ToastUtils.showShort("check sms code verifyed failure.")
+                        ToastUtils.showShort(resources.getString(R.string.check_sms_code_verify_failure))
                         return
                     }
                     verifySuccess()

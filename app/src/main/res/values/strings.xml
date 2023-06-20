@@ -157,6 +157,7 @@
     <string name="enter_correct_phone_num">Please enter your correct phone number</string>
     <string name="ussd_login_failure">ussd login failure</string>
     <string name="ussd_login_error">ussd login error</string>
+    <string name="check_sms_code_verify_failure">check sms code verify failure.</string>
 
 
 </resources>
