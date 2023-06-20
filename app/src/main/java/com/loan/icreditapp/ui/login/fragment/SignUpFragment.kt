@@ -217,7 +217,7 @@ class SignUpFragment : BaseFragment() {
             }
             intCount++
             if (isCheckSms){
-                ToastUtils.showShort("please send message later")
+                ToastUtils.showShort(resources.getString(R.string.please_send_msg_later))
                 return@setOnClickListener
             }
             fillPhoneOrPrefix()
@@ -231,7 +231,7 @@ class SignUpFragment : BaseFragment() {
 
         flCommit?.setOnClickListener {
             if (!isAgree){
-                ToastUtils.showShort("must agree term.")
+                ToastUtils.showShort(resources.getString(R.string.must_agree_term))
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(mPhoneNum)) {
@@ -306,7 +306,7 @@ class SignUpFragment : BaseFragment() {
                 realNum = mPhoneNum!!.substring(1, mPhoneNum!!.length)
             }
             if (TextUtils.isEmpty(realNum)) {
-                ToastUtils.showShort("Please enter your correct phone number")
+                ToastUtils.showShort(resources.getString(R.string.enter_correct_phone_num))
                 return
             }
             jsonObject.put("mobile", mPrex + realNum)
@@ -336,7 +336,7 @@ class SignUpFragment : BaseFragment() {
                     if (TextUtils.equals(ussdBean.verify, "1")){
                         verifySuccess()
                     } else {
-                        ToastUtils.showShort("ussd login failure")
+                        ToastUtils.showShort(resources.getString(R.string.ussd_login_failure))
                     }
                 }
 
@@ -346,7 +346,7 @@ class SignUpFragment : BaseFragment() {
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, "ussd login error")
                     }
-                    ToastUtils.showShort("ussd login error")
+                    ToastUtils.showShort(resources.getString(R.string.ussd_login_error))
                 }
             })
     }
@@ -548,6 +548,9 @@ class SignUpFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    if (isDestroy()){
+                        return
+                    }
                     flLoading?.visibility = View.GONE
                     val baseResponseBean: VerifySmsCodeBean? =
                         checkResponseSuccess(response, VerifySmsCodeBean::class.java)
@@ -555,7 +558,7 @@ class SignUpFragment : BaseFragment() {
                         return
                     }
                     if (!baseResponseBean.verifyed) {
-                        ToastUtils.showShort("check sms code verifyed failure.")
+                        ToastUtils.showShort(resources.getString(R.string.check_sms_code_verify_failure))
                         return
                     }
                     verifySuccess()

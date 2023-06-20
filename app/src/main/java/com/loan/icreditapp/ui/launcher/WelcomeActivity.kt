@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
@@ -122,15 +123,22 @@ class WelcomeActivity : BaseActivity() {
                     val serverLiveBean: ServerLiveBean? =
                         checkResponseSuccess(response, ServerLiveBean::class.java)
                     if (serverLiveBean != null && serverLiveBean.isServerLive()) {
-                        Log.d(TAG, "the server is alive")
+                        if (BuildConfig.DEBUG) {
+                            Log.d(TAG, "the server is alive")
+                        }
                         callBack?.onEnd()
                     }
                 }
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
-                    Log.e(TAG, "the server is not alive")
-                    ToastUtils.showShort("server is not alive .")
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "the server is not alive")
+                    }
+                    if (isDestroyed || isFinishing){
+                        return
+                    }
+                    ToastUtils.showShort(resources.getString(R.string.server_is_not_alive))
                 }
             })
     }
@@ -140,7 +148,7 @@ class WelcomeActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
-        if (dialog != null){
+        if (dialog != null && dialog!!.isShowing){
             dialog?.onDestroyDialog()
         }
         OkGo.getInstance().cancelTag(TAG)
