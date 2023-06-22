@@ -14,8 +14,8 @@ android {
         applicationId "com.icredit.okash.loan.cash.opay.game"
         minSdkVersion 19
         targetSdkVersion 31
-        versionCode 20084
-        versionName "Version2.2.2"
+        versionCode 20085
+        versionName "Version2.2.3"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
