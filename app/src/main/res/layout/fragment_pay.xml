@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="Flutterware"
+                    android:text="Flutterwave"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
