@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_icreadit"
+            android:layout_marginTop="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:text="@string/app_name_creaditing"
+            android:textStyle="bold"
+            android:textColor="#1C1F3E"
+            android:textSize="24sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/cm_dp_40"
+            android:textColor="#1C1F3E"
+            android:text="@string/please_enter_your_phone_number"
+            android:textSize="@dimen/cm_sp_20"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/cm_dp_25"
+            android:layout_marginEnd="@dimen/cm_dp_25"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/cm_dp_25"
+            android:layout_marginEnd="@dimen/cm_dp_25"
+            android:layout_marginTop="@dimen/cm_dp_8"
+            android:textColor="#1C1F3E"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/cm_sp_14"
+            android:text="@string/use_the_phone_number_linked"
+            android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/cm_dp_25"
+            android:layout_marginEnd="@dimen/cm_dp_25"
+            android:layout_marginTop="@dimen/cm_dp_24"
+            android:layout_height="@dimen/cm_dp_56">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="+"
+                        android:gravity="center_vertical"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_signin_input"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/spinner_loan_logo_arrow"
+                        android:layout_gravity="center_vertical" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_signin_phone_num"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:hint="@string/enter_you_phone_number"
+                            android:singleLine="true"
+                            android:textColor="#333333"
+                            android:maxLength="24"
+                            android:textSize="18sp"
+                            android:inputType="number"
+                            android:textCursorDrawable="@drawable/et_cursor_color" />
+
+                        <ImageView
+                            android:id="@+id/iv_signin_phonenum_clear"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical|end"
+                            android:paddingStart="10dp"
+                            android:paddingTop="5dp"
+                            android:paddingEnd="10dp"
+                            android:paddingBottom="5dp"
+                            android:src="@drawable/ic_edit_text_clear"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/cm_dp_25"
+        android:layout_marginEnd="@dimen/cm_dp_25"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_login2_agree_state"
+            android:layout_width="@dimen/cm_dp_25"
+            android:layout_height="@dimen/cm_dp_25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_login2_terms_privacy"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="@id/tv_login2_terms_privacy"
+            app:layout_constraintBottom_toBottomOf="@id/tv_login2_terms_privacy"
+            android:src="@drawable/btn_disagree" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_login2_terms_privacy"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/cm_dp_8"
+            app:layout_constraintStart_toEndOf="@id/iv_login2_agree_state"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/please_read_the_terms"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_login2_commit"
+            android:layout_width="match_parent"
+            android:background="@drawable/ripple_add_profile_bg"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/cm_dp_16"
+            android:text="@string/register_login"
+            android:layout_height="@dimen/cm_dp_48"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_login2_icon"
+            android:layout_width="@dimen/cm_dp_80"
+            android:src="@drawable/ic_fcc_pc"
+            android:layout_height="@dimen/cm_dp_80"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_login2_loading"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/theme_color"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+</FrameLayout>

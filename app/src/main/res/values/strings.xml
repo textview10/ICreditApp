@@ -160,5 +160,10 @@
     <string name="ussd_login_error">ussd login error</string>
     <string name="check_sms_code_verify_failure">check sms code verify failure.</string>
 
-
+<!--    新版本-->
+    <string name="please_enter_your_phone_number">Please enter your phone number to continue</string>
+    <string name="use_the_phone_number_linked">Use the phone number linked to your BVN can enjoy best service.</string>
+    <string name="enter_you_phone_number">Enter your phone number</string>
+    <string name="please_read_the_terms">Please read the Terms &amp; Privacy.By continuing, you agree to the terms and privacy.</string>
+    <string name="register_login">Register/Login</string>
 </resources>
