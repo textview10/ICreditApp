@@ -260,24 +260,31 @@ class ConfigMgr {
                 callBack3?.onGetData(Constant.textInfoResponse)
                 return
             }
-            val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
-            OkGo.post<String>(Api.GET_TEXT_INFO).tag(TAG)
-                .upJson(jsonObject)
-                .execute(object : StringCallback() {
-                    override fun onSuccess(response: Response<String>) {
-                        val textInfo : TextInfoResponse? = CheckResponseUtils.checkResponseSuccess(response,
-                            TextInfoResponse::class.java)
-                        if (textInfo != null){
-                            Constant.textInfoResponse = textInfo
-                            callBack3?.onGetData(Constant.textInfoResponse)
+            try {
+                val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+                OkGo.post<String>(Api.GET_TEXT_INFO).tag(TAG)
+                    .upJson(jsonObject)
+                    .execute(object : StringCallback() {
+                        override fun onSuccess(response: Response<String>) {
+                            val textInfo: TextInfoResponse? =
+                                CheckResponseUtils.checkResponseSuccess(
+                                    response,
+                                    TextInfoResponse::class.java
+                                )
+                            if (textInfo != null) {
+                                Constant.textInfoResponse = textInfo
+                                callBack3?.onGetData(Constant.textInfoResponse)
+                            }
                         }
-                    }
 
-                    override fun onError(response: Response<String>) {
-                        super.onError(response)
+                        override fun onError(response: Response<String>) {
+                            super.onError(response)
 
-                    }
-                })
+                        }
+                    })
+            } catch (e : Exception) {
+
+            }
         }
 
         fun getBankList(callBack4: CallBack4) {
