@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_title_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/cm_dp_20"
+        android:layout_marginTop="@dimen/cm_dp_10"
+        android:src="@drawable/ic_otp_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:textColor="#1C1F3E"
+        android:textSize="@dimen/cm_sp_20"
+        app:layout_constraintBottom_toBottomOf="@id/iv_title_back"
+        app:layout_constraintStart_toEndOf="@id/iv_title_back"
+        app:layout_constraintTop_toTopOf="@id/iv_title_back" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_login_otp_desc1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/cm_dp_25"
+        android:layout_marginTop="@dimen/cm_dp_15"
+        android:text="@string/login_otp"
+        android:textColor="#1C1F3E"
+        android:textSize="@dimen/cm_sp_21"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_login_otp_desc2"
+        app:layout_constraintTop_toBottomOf="@id/iv_title_back" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_login_otp_desc2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/cm_dp_25"
+        android:layout_marginTop="@dimen/cm_dp_8"
+        android:text="The OTP is 4 digit"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/cm_sp_14"
+        app:layout_constraintBottom_toTopOf="@id/input_verify_code_otp"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_otp_desc1" />
+
+    <include
+        android:id="@+id/input_verify_code_otp"
+        layout="@layout/include_input_verify_code2"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/input_verify_code_otp"
+        app:layout_constraintTop_toBottomOf="@id/tv_login_otp_desc2"
+        android:layout_height="56dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

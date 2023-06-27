@@ -166,4 +166,7 @@
     <string name="enter_you_phone_number">Enter your phone number</string>
     <string name="please_read_the_terms">Please read the Terms &amp; Privacy.By continuing, you agree to the terms and privacy.</string>
     <string name="register_login">Register/Login</string>
+    <string name="login_otp">Please enter the OTP we sent to %s via sms</string>
+
+
 </resources>
