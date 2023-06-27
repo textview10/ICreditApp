@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -10,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/cm_dp_20"
-        android:layout_marginTop="@dimen/cm_dp_10"
+        android:layout_marginTop="@dimen/cm_dp_15"
         android:src="@drawable/ic_otp_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +22,9 @@
         android:layout_height="wrap_content"
         android:text="Back"
         android:textColor="#1C1F3E"
-        android:textSize="@dimen/cm_sp_20"
+        android:textSize="20sp"
+        android:layout_marginStart="10dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_title_back"
         app:layout_constraintStart_toEndOf="@id/iv_title_back"
         app:layout_constraintTop_toTopOf="@id/iv_title_back" />
@@ -34,7 +37,8 @@
         android:layout_marginTop="@dimen/cm_dp_15"
         android:text="@string/login_otp"
         android:textColor="#1C1F3E"
-        android:textSize="@dimen/cm_sp_21"
+        android:textStyle="bold"
+        android:textSize="21sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_login_otp_desc2"
         app:layout_constraintTop_toBottomOf="@id/iv_title_back" />
@@ -45,19 +49,67 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/cm_dp_25"
         android:layout_marginTop="@dimen/cm_dp_8"
-        android:text="The OTP is 4 digit"
+        android:text="@string/the_otp_is_4_digit"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="@dimen/cm_sp_14"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@id/input_verify_code_otp"
         app:layout_constraintTop_toBottomOf="@id/tv_login_otp_desc1" />
 
     <include
         android:id="@+id/input_verify_code_otp"
-        layout="@layout/include_input_verify_code2"
+        layout="@layout/include_input_verify_code"
         android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/cm_dp_25"
+        android:layout_marginTop="@dimen/cm_dp_25"
+        android:layout_marginEnd="@dimen/cm_dp_90"
         app:layout_constraintBottom_toTopOf="@id/input_verify_code_otp"
         app:layout_constraintTop_toBottomOf="@id/tv_login_otp_desc2"
         android:layout_height="56dp" />
 
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_otp_login_commit"
+        android:layout_width="match_parent"
+        android:background="@drawable/selector_commit_bg"
+        android:layout_marginBottom="25dp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        android:text="@string/register_login"
+        android:layout_marginStart="@dimen/cm_dp_35"
+        android:layout_marginEnd="@dimen/cm_dp_35"
+        app:layout_constraintBottom_toTopOf="@id/tv_can_not_recevie"
+        android:layout_height="@dimen/cm_dp_60"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_can_not_recevie"
+        android:layout_width="wrap_content"
+        android:text="@string/can_not_recieve_sms"
+        android:textColor="#019FB8"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/cm_dp_25"
+        android:layout_marginEnd="@dimen/cm_dp_25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:lines="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="18dp"
+        android:layout_height="wrap_content"/>
+
+    <FrameLayout
+        android:id="@+id/fl_otp_login_loading"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:visibility="gone"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/theme_color"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

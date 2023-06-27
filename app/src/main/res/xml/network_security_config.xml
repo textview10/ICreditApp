@@ -2,8 +2,8 @@
 <network-security-config>
     <base-config cleartextTrafficPermitted="true" />
 
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">srv.chucard.com</domain>
-    </domain-config>
+<!--    <domain-config cleartextTrafficPermitted="true">-->
+<!--        <domain includeSubdomains="true">srv.chucard.com</domain>-->
+<!--    </domain-config>-->
 
 </network-security-config>

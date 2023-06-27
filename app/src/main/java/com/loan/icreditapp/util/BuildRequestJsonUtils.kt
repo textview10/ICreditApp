@@ -43,10 +43,7 @@ class BuildRequestJsonUtils {
                 // lang	String	Y	语言
                 httpHeaders.put("lang", "en")
                 //  innerVersionCode	Integer	Y	内部版本号
-                var innerVersionCode = AppUtils.getAppVersionCode()
-                if (innerVersionCode < 20000){
-                    innerVersionCode = 20084
-                }
+                var innerVersionCode = MyAppUtils.getAppVersionCode()
                 httpHeaders.put("innerVersionCode", innerVersionCode.toString())   //内部版本号
                 //   appVersion	String	Y	APP版本号
                 var appName : String? = null

@@ -111,8 +111,8 @@ class InputVerifyCodeView2 : LinearLayout {
             }
         })
 
-        selectedColor = ColorUtils.getColor(R.color.verify_sms_select)
-        unselectedColor = ColorUtils.getColor(R.color.verify_sms_unselect)
+        selectedColor = resources.getColor(R.color.verify_sms_select)
+        unselectedColor = resources.getColor(R.color.verify_sms_unselect)
         etNum1?.requestFocus()
 //        if (true){
 //            return

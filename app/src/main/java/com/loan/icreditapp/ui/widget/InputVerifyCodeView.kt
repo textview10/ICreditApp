@@ -136,8 +136,8 @@ class InputVerifyCodeView : LinearLayout {
                 onTextChange(etNum6, null, etNum5)
             }
         })
-        selectedColor = ColorUtils.getColor(R.color.verify_sms_select)
-        unselectedColor = ColorUtils.getColor(R.color.verify_sms_unselect)
+        selectedColor = resources.getColor(R.color.verify_sms_select)
+        unselectedColor = resources.getColor(R.color.verify_sms_unselect)
         etNum1?.requestFocus()
 //        if (true){
 //            return
@@ -307,6 +307,10 @@ class InputVerifyCodeView : LinearLayout {
     }
 
     private var mObserver: Observer? = null
+
+    fun getEditText() :AppCompatEditText?{
+       return etNum1
+    }
 
     fun setObserver(observer: Observer?) {
         mObserver = observer

@@ -21,11 +21,8 @@ import com.loan.icreditapp.collect.bean.ContactRequest
 import com.loan.icreditapp.collect.item.CollectAppInfoMgr
 import com.loan.icreditapp.collect.item.CollectSmsMgr
 import com.loan.icreditapp.global.Constant
-import com.loan.icreditapp.util.BuildRequestJsonUtils
-import com.loan.icreditapp.util.CheckResponseUtils
+import com.loan.icreditapp.util.*
 import com.loan.icreditapp.util.EncodeUtils
-import com.loan.icreditapp.util.FirebaseUtils
-import com.loan.icreditapp.util.PatternUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -192,7 +189,7 @@ abstract class BaseCollectDataMgr {
             jsonObject.put("mac", DeviceUtils.getMacAddress())
             //手机品牌型号
             jsonObject.put("brand", DeviceUtils.getManufacturer())
-            jsonObject.put("innerVersionCode", AppUtils.getAppVersionCode())
+            jsonObject.put("innerVersionCode", MyAppUtils.getAppVersionCode())
             jsonObject.put("isRooted", if (DeviceUtils.isDeviceRooted()) 1 else 0)
             jsonObject.put("isEmulator", if (DeviceUtils.isEmulator()) 1 else 0)
         } catch (e: java.lang.Exception) {

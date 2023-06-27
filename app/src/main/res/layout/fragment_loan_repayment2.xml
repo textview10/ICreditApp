@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="38dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="35dp"
+                android:src="@drawable/ic_icreadit"
+                android:layout_height="match_parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:text="@string/app_name_creaditing"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="5dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/theme_color"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_fcc_pc"
+                android:layout_marginStart="15dp"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="#1C1F3E"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="45dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="0.5dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:text="Total Amount (₦)"
+            android:textColor="#991C1F3E"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_loan_paid_total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="3,000"
+            android:textColor="#FF1C1F3E"
+            android:textSize="28sp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold" />
+
+        <include
+            layout="@layout/include_loan_processing" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="30dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_loan_repay"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_orange_corner"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:layout_height="47dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_discount_loan_repay"
+                    android:layout_width="wrap_content"
+                    android:drawableStart="@drawable/ic_discount"
+                    android:text="@string/discount_account"
+                    android:textSize="14sp"
+                    android:drawablePadding="3dp"
+                    android:includeFontPadding="false"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:textColor="#B2FFFFFF"
+                    android:textSize="12sp"
+                    android:text="@string/discount_account_desc"
+                    android:layout_gravity="center_horizontal"
+                    android:includeFontPadding="false"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        
+        <View
+            android:id="@+id/view_loan_repay"
+            android:layout_width="20dp"
+            android:background="@drawable/ic_bottom_arrow"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="15dp"/>
+
+        <FrameLayout
+            android:id="@+id/fl_loan_paid_commit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/ripple_add_profile_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/repay_now"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

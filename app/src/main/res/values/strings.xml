@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name_creaditing">Icredit</string>
+    <string name="app_name_creaditing">CreditNg</string>
     <string name="app_name_creaditing_debug">Icredit测试版</string>
 
     <string name="request_permission_title">Welcome to Icredit !</string>
@@ -20,8 +20,8 @@
     <string name="request_permission_sms_desc">We use SMS data to retrieve financial and transactional data to understand your financial history and help us determine your eligibility for credit. Your information will be stored encrypted crediting.com. Your data will be uploaded to our server (https://srv.crediting.com/).</string>
     <string name="request_permission_desc2">Please read the authorization carefully before using  Icredit</string>
 
-<!--    <string name="request_permission_calendar_title">Calendar</string>-->
-<!--    <string name="request_permission_calendar_desc">You agree that we must be granted access to your smartphone\'s calendar in order to input reminders pertaining to repayment dates of your loan. We will not extract nor view any information in your calendar and limit our actions to setting reminders Gallery We need to obtain your storage permission to ensure the normal operation of the program. </string>-->
+    <!--    <string name="request_permission_calendar_title">Calendar</string>-->
+    <!--    <string name="request_permission_calendar_desc">You agree that we must be granted access to your smartphone\'s calendar in order to input reminders pertaining to repayment dates of your loan. We will not extract nor view any information in your calendar and limit our actions to setting reminders Gallery We need to obtain your storage permission to ensure the normal operation of the program. </string>-->
     <string name="request_permission_cancel">disagree</string>
     <string name="request_permission_agree">Allow</string>
 
@@ -119,9 +119,9 @@
 
     <string name="my_loan_title_processing">Processing</string>
     <string name="my_loan_title_active">Active</string>
-    <string name="my_loan_title_paid">Paid</string>
+    <string name="my_loan_title_paid">Repayment</string>
     <string name="my_loan_title_overdue">Overdue</string>
-    <string name="my_loan_title_declined">Declined</string>
+    <string name="my_loan_title_declined">Application Result</string>
     <string name="my_loan_title_repaying">Repaying</string>
 
     <string name="term_1">I agree to the</string>
@@ -140,7 +140,7 @@
 
     <string name="about_terms">Terms of Service</string>
     <string name="about_privacy">Privacy Policy</string>
-    
+
     <string name="rate_us_desc">If you like our application, please take your valuable time to make a satisfactory evaluation for our application. Thank you.</string>
     <string name="rate_us">rate</string>
 
@@ -160,13 +160,21 @@
     <string name="ussd_login_error">ussd login error</string>
     <string name="check_sms_code_verify_failure">check sms code verify failure.</string>
 
-<!--    新版本-->
+    <!--    新版本-->
     <string name="please_enter_your_phone_number">Please enter your phone number to continue</string>
     <string name="use_the_phone_number_linked">Use the phone number linked to your BVN can enjoy best service.</string>
     <string name="enter_you_phone_number">Enter your phone number</string>
     <string name="please_read_the_terms">Please read the Terms &amp; Privacy.By continuing, you agree to the terms and privacy.</string>
     <string name="register_login">Register/Login</string>
     <string name="login_otp">Please enter the OTP we sent to %s via sms</string>
+    <string name="loan_declined_desc1">Sorry!!! \nWe could not approve your loan at the moment because of certain reasons. Please keep better records and apply later.</string>
+    <string name="loan_declined_desc2_1">Possible Reason ：\n• Low credit Score\n• We got your credit score from an /nindependent credit agency and you can improve it by building good credit history</string>
 
+    <string name="the_otp_is_4_digit">The OTP is 4 digit</string>
+    <string name="can_not_recieve_sms">Can\'t recieve SMS ? \nDial USSD code to get OTP</string>
 
+    <string name="resend">Resend</string>
+    <string name="repay_now">Repay Now</string>
+    <string name="discount_account">Discount ₦ %s</string>
+    <string name="discount_account_desc">It is only for the method provide in App</string>
 </resources>

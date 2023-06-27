@@ -98,6 +98,7 @@
                             android:lines="1"
                             android:maxLines="1"
                             android:hint="@string/enter_you_phone_number"
+                            android:textColorHint="#401C1F3E"
                             android:singleLine="true"
                             android:textColor="#333333"
                             android:maxLength="24"
@@ -123,14 +124,20 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:background="#401C1F3E"
+                android:layout_gravity="bottom"
+                android:layout_height="1dp"/>
+
         </FrameLayout>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
-        android:layout_marginStart="@dimen/cm_dp_25"
-        android:layout_marginEnd="@dimen/cm_dp_25"
+        android:layout_marginStart="@dimen/cm_dp_35"
+        android:layout_marginEnd="@dimen/cm_dp_35"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -163,10 +170,11 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_login2_commit"
             android:layout_width="match_parent"
-            android:background="@drawable/ripple_add_profile_bg"
+            android:background="@drawable/selector_commit_bg"
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:textColor="#FFFFFF"
+            android:enabled="true"
             android:textSize="@dimen/cm_dp_18"
             android:text="@string/register_login"
             app:layout_constraintTop_toBottomOf="@id/tv_login2_terms_privacy"

@@ -17,6 +17,7 @@ import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.dialog.order.OrderInfoBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.MainActivity
+import com.loan.icreditapp.ui.login.Login2Activity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.CheckResponseUtils
 import com.lzy.okgo.OkGo
@@ -45,8 +46,8 @@ class LauncherActivity : BaseActivity() {
                 TO_WELCOME_PAGE -> {
                     mHandler?.removeCallbacksAndMessages(null)
                     OkGo.getInstance().cancelTag(TAG)
-                    val welcomeIntent = Intent(this@LauncherActivity, WelcomeActivity::class.java)
-                    startActivity(welcomeIntent)
+                    val login2Intent = Intent(this@LauncherActivity, Login2Activity::class.java)
+                    startActivity(login2Intent)
                     finish()
                 }
                 TO_MAIN_PAGE -> {
