@@ -90,6 +90,7 @@ class PayBankListActivity : BaseActivity() {
                 var event = ChooseBankListEvent()
                 event.bankNum = mAdapter?.getBankNum()
                 EventBus.getDefault().post(event)
+                setResult(11111)
                 finish()
             }
 

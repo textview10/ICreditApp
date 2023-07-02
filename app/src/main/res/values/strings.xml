@@ -41,7 +41,6 @@
     <string name="setting_bank_account">Bank Account</string>
     <string name="setting_message">Message</string>
     <string name="setting_help">Help</string>
-    <string name="setting_offline_repay">Offline repay</string>
     <string name="setting_about">About</string>
     <string name="setting_contact_us">Contact us</string>
     <string name="setting_feed_back">Feedback</string>
@@ -178,4 +177,7 @@
     <string name="discount_account">Discount ₦ %s</string>
     <string name="discount_account_desc">It is only for the method provide in App</string>
     <string name="click_to_choose_method">Click to choose methods</string>
+    <string name="setting_offline_repay">Bank Transfer</string>
+    <string name="bank_transfer_title">Personal repayment account</string>
+    <string name="bank_transfer_desc">The account only available for you， order will auto settled in 1 hour after repayment</string>
 </resources>

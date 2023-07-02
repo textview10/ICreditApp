@@ -283,8 +283,9 @@ class SettingFragment : BaseFragment() {
     private fun test(){
 //        val intent = Intent(context, AddProfileActivity::class.java)
 //        val intent = Intent(context, AddBankAccount1Fragment::class.java)
-        val intent = Intent(context, PayActivity2::class.java)
-        startActivity(intent)
+//        val intent = Intent(context, PayActivity2::class.java)
+//        startActivity(intent)
+        PayActivity2.launchPayActivity(activity!!, "","")
 //        BindNewCardActivity.launchAddBankAccount(context!!)
 //        val test = Test()
 //        test.test1()

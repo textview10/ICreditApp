@@ -7,18 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseFragment
-import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.bank.CardResponseBean
 import com.loan.icreditapp.bean.pay.MonifyResponseBean
 import com.loan.icreditapp.event.ChooseBankListEvent
@@ -27,8 +23,10 @@ import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.pay.adapter.ChoosePayAdapter
 import com.loan.icreditapp.ui.pay.adapter.ChoosePayData
-import com.loan.icreditapp.ui.pay.presenter.*
-import com.loan.icreditapp.ui.profile.widget.EditTextContainer
+import com.loan.icreditapp.ui.pay.presenter.BasePresenter
+import com.loan.icreditapp.ui.pay.presenter.FlutterwarePresenter
+import com.loan.icreditapp.ui.pay.presenter.NorLoanPresenter
+import com.loan.icreditapp.ui.pay.presenter.PayStackPresenter
 import com.loan.icreditapp.util.CardNumUtils
 import com.lzy.okgo.model.Response
 import net.entity.bean.FlutterWaveResult
@@ -44,6 +42,8 @@ class ChoosePayFragment : BaseFragment() {
     private var rvPay : RecyclerView? = null
     private var flLoading : FrameLayout? = null
     private var mAdapter : ChoosePayAdapter? = null
+    private var ivClose : AppCompatImageView? = null
+    private var flBottom : FrameLayout? = null
 
     private var orderId: String? = null
     private var amount: String? = null
@@ -70,6 +70,8 @@ class ChoosePayFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         rvPay = view.findViewById(R.id.rv_choose_pay)
         flLoading = view.findViewById(R.id.fl_pay_loading)
+        ivClose = view.findViewById(R.id.iv_choose_pay_close)
+        flBottom = view.findViewById(R.id.fl_choose_pay_bottom)
 
         initView()
         initData()
@@ -109,13 +111,21 @@ class ChoosePayFragment : BaseFragment() {
                         startLoading()
                     }
                     (3) -> {
-
+                        activity?.setResult(PayActivity2.RESULT_CODE_SELECT_BANK_TRANFER)
+                        activity?.finish()
                     }
                 }
             }
 
         })
         rvPay?.adapter = mAdapter
+
+        ivClose?.setOnClickListener{
+            activity?.finish()
+        }
+        flBottom?.setOnClickListener{
+            activity?.finish()
+        }
     }
 
     private fun updateBankListInternal(){

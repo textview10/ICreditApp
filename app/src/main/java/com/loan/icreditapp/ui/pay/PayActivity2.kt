@@ -1,23 +1,19 @@
 package com.loan.icreditapp.ui.pay
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.Toast
 import com.blankj.utilcode.util.BarUtils
 import com.flutterwave.raveandroid.RavePayActivity
 import com.flutterwave.raveandroid.rave_java_commons.RaveConstants
 import com.google.gson.Gson
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
-import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.event.UpdateLoanEvent
-import com.loan.icreditapp.ui.launcher.WelcomeActivity
 import com.loan.icreditapp.ui.webview.WebViewFragment
 import net.entity.bean.FlutterWaveResult
 import org.greenrobot.eventbus.EventBus
@@ -34,25 +30,28 @@ class PayActivity2 : BaseActivity() {
     private var ivBack: ImageView? = null
 
     companion object {
-        private const val TAG = "PayActivity"
+        private const val TAG = "PayActivity2"
 
         const val EXTRA_ORDER_ID = "extra_order_id"
         const val EXTRA_AMOUNT = "extra_amount"
 
-        fun showMe(context: Context, orderId: String, amount: String) {
+        const val RESULT_CODE_SELECT_BANK_TRANFER = 1112
+
+        const val REQUEST_CODE_TO_PAY = 2111
+        fun launchPayActivity(context: Activity, orderId: String, amount: String) {
             var intent = Intent(context, PayActivity2::class.java)
             intent.putExtra(EXTRA_AMOUNT, amount)
             intent.putExtra(EXTRA_ORDER_ID, orderId)
-            context.startActivity(intent)
+            context.startActivityForResult(intent, REQUEST_CODE_TO_PAY)
         }
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        BarUtils.setStatusBarColor(this, resources.getColor(R.color.white))
-        BarUtils.setStatusBarLightMode(this, true)
-        setContentView(R.layout.activity_pay)
+        BarUtils.setStatusBarColor(this, resources.getColor(android.R.color.transparent))
+        BarUtils.setNavBarLightMode(this, false)
+        setContentView(R.layout.activity_pay2)
 
         handleIntent()
         initView()

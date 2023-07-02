@@ -2,13 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="#CC000000"
+    android:id="@+id/fl_choose_pay_bottom"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="@drawable/bg_white_corner"
+        android:clickable="true"
         android:layout_height="wrap_content">
 
         <RelativeLayout
@@ -18,11 +20,13 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="18dp"
+                android:id="@+id/iv_choose_pay_close"
+                android:layout_width="22dp"
                 android:src="@drawable/ic_repay_close"
                 android:layout_marginStart="25dp"
+                android:padding="2dp"
                 android:layout_gravity="center_vertical"
-                android:layout_height="18dp"/>
+                android:layout_height="22dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"

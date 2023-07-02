@@ -1,6 +1,7 @@
 package com.loan.icreditapp.ui.home
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -29,6 +30,7 @@ import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.global.FireBaseMgr
 import com.loan.icreditapp.ui.home.fragment.*
+import com.loan.icreditapp.ui.pay.PayActivity2
 import com.loan.icreditapp.ui.setting.PageType
 import com.loan.icreditapp.ui.setting.SettingFragment
 import com.loan.icreditapp.util.BuildRequestJsonUtils
@@ -325,5 +327,14 @@ class MainActivity : BaseActivity() {
 
     override fun useLogout() : Boolean{
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PayActivity2.REQUEST_CODE_TO_PAY) {
+            if (resultCode == PayActivity2.RESULT_CODE_SELECT_BANK_TRANFER) {
+                updatePageByType(PageType.OFFLINE_REPAY)
+            }
+        }
     }
 }

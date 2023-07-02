@@ -2646,6 +2646,7 @@
 
         <activity android:name=".ui.pay.PayActivity2"
             android:exported="true"
+            android:theme="@style/TranslucentTheme"
             android:screenOrientation="portrait">
 
         </activity>
