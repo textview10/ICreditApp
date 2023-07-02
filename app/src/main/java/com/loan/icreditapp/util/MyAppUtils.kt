@@ -6,7 +6,7 @@ object MyAppUtils {
     fun getAppVersionCode() : Int{
         var innerVersionCode = AppUtils.getAppVersionCode()
         if (innerVersionCode < 20000){
-            innerVersionCode = 20084
+            innerVersionCode = 20086
         }
         return innerVersionCode
     }

@@ -372,6 +372,10 @@ class LoanApplyFragment : BaseLoanFragment() {
     }
 
     private fun executeGetOrderId(){
+        if (TextUtils.equals(mProduct?.usable, "false") ){
+            ToastUtils.showShort(" Product usable can not use")
+            return
+        }
         getOrderId()
     }
 

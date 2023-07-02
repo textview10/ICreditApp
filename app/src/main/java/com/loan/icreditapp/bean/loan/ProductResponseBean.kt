@@ -14,6 +14,7 @@ class ProductResponseBean {
         var prodName: String? = null
         var period: String? = null
         var stage: String? = null
+        var usable: String? = null
     }
 
     fun isMarketing() : Boolean{
