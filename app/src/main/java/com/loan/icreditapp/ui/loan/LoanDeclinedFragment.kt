@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.loan.icreditapp.R
 import com.loan.icreditapp.event.ToApplyLoanEvent
-import com.loan.icreditapp.event.UpdateLoanEvent
 import org.greenrobot.eventbus.EventBus
 
 class LoanDeclinedFragment : BaseLoanFragment() {
@@ -19,7 +18,7 @@ class LoanDeclinedFragment : BaseLoanFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_loan_declined, container, false)
+        var view = inflater.inflate(R.layout.fragment_loan_declined_2, container, false)
         return view
     }
 

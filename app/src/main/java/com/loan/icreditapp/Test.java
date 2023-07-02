@@ -1,6 +1,7 @@
 package com.loan.icreditapp;
 
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,7 +11,20 @@ import androidx.annotation.NonNull;
 
 import com.loan.icreditapp.ui.pay.presenter.BasePresenter;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Test {
+
+    public void test3(String content){
+        String TEMPLATE = "Your authentication number is";
+        if (!TextUtils.isEmpty(content) && content.contains(TEMPLATE)){
+            Pattern pattern = Pattern.compile("[^0-9]"); //正则表达式.
+            Matcher matcher = pattern.matcher(content);
+            String result = matcher.replaceAll("");
+            Log.e("Test", " result = " + result);
+        }
+    }
 
     public void test1() {
        String str = "    com.internationalloanspk\n" ;
@@ -22,7 +36,7 @@ public class Test {
           sb.append("<package android:name=\"").append(item).append("\" />").append("\n");
       }
        String temp =  sb.toString();
-        Log.e("Tesat", temp);
+        Log.e("Test", temp);
 //        String[] type = new String[5];
 //        Spinner spinner = null;
 //        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

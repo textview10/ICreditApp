@@ -5,14 +5,13 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.View.OnKeyListener
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatEditText
-import com.blankj.utilcode.util.ColorUtils
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 
 class InputVerifyCodeView : LinearLayout {
@@ -197,7 +196,15 @@ class InputVerifyCodeView : LinearLayout {
                 } else {
 //                    cur?.setSelection()
                 }
-                next?.requestFocus()
+                try {
+                    cur.setSelection(1)
+                    cur.requestFocus()
+                } catch (e : Exception) {
+
+                }
+                if (next != null) {
+                    next?.requestFocus()
+                }
             }
         } else {
             //当删除时
@@ -295,6 +302,26 @@ class InputVerifyCodeView : LinearLayout {
         }
     }
 
+    fun setVerifyCode(authCode : String) {
+        try {
+            val num1 = authCode[0].toString()
+            val num2 = authCode[1].toString()
+            val num3 = authCode[2].toString()
+            val num4 = authCode[3].toString()
+            val num5 = authCode[4].toString()
+            val num6 = authCode[5].toString()
+            etNum1?.setText(num1)
+            etNum2?.setText(num2)
+            etNum3?.setText(num3)
+            etNum4?.setText(num4)
+            etNum5?.setText(num5)
+            etNum6?.setText(num6)
+        } catch (e : java.lang.Exception) {
+            if (BuildConfig.DEBUG) {
+                throw e
+            }
+        }
+    }
 
     fun clearAll() {
         etNum1?.setText("")

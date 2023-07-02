@@ -1,5 +1,6 @@
 package com.loan.icreditapp.ui.login2
 
+import android.Manifest
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -13,13 +14,17 @@ import android.widget.Spinner
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
+import com.loan.icreditapp.bean.ServerLiveBean
 import com.loan.icreditapp.bean.login.VerifyPhoneNumBean
+import com.loan.icreditapp.dialog.term.TermsDialog
 import com.loan.icreditapp.presenter.PhoneNumPresenter
 import com.loan.icreditapp.ui.login.Login2Activity
 import com.loan.icreditapp.ui.widget.BlankTextWatcher
@@ -37,6 +42,8 @@ class Login2Fragment : BaseFragment() {
         const val TAG = "Login2Fragment"
 
         val KEY_PHONE_NUM_2 = "key_sign_in_phone_num_2"
+
+        private const val KEY_SHOW_TERM_2 = "key_show_term_2"
     }
 
     private var etSignIn : AppCompatEditText? = null
@@ -45,8 +52,17 @@ class Login2Fragment : BaseFragment() {
     private var ivClear : AppCompatImageView? = null
     private var ivCheckState : AppCompatImageView? = null
     private var flLoading : FrameLayout? = null
+    private var tvTerm : AppCompatTextView? = null
+    private var tvPrivacy : AppCompatTextView? = null
+    private var ivAgree : AppCompatImageView? = null
 
     private var mPresenter: PhoneNumPresenter? = null
+
+    private var hasShowTerm = false
+    private var dialog : TermsDialog? = null
+
+    private var mPhoneNum : String?= null
+    private var isAgree : Boolean  = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,8 +81,22 @@ class Login2Fragment : BaseFragment() {
         ivClear = view.findViewById<AppCompatImageView>(R.id.iv_signin_phonenum_clear)
         ivCheckState = view.findViewById<AppCompatImageView>(R.id.iv_login2_agree_state)
         flLoading = view.findViewById<FrameLayout>(R.id.fl_login2_loading)
+        tvTerm = view.findViewById<AppCompatTextView>(R.id.tv_login2_terms_privacy_2)
+        tvPrivacy = view.findViewById<AppCompatTextView>(R.id.tv_login2_terms_privacy_4)
+        ivAgree = view.findViewById<AppCompatImageView>(R.id.iv_login2_agree_state)
 
         initView()
+
+        hasShowTerm = SPUtils.getInstance().getBoolean(KEY_SHOW_TERM_2)
+        if (!hasShowTerm) {
+            showTermDialog(object : TermsDialog.OnClickAgreeListener {
+                override fun onClickAgree() {
+                    SPUtils.getInstance().put(KEY_SHOW_TERM_2, true)
+                    hasShowTerm = true
+                    dialog?.dismiss()
+                }
+            })
+        }
     }
 
     private fun initView(){
@@ -88,12 +118,64 @@ class Login2Fragment : BaseFragment() {
                 }
             }
         })
+
+        var phoneNum = SPUtils.getInstance().getString(KEY_PHONE_NUM_2, "")
+        if (TextUtils.isEmpty(phoneNum)) {
+            phoneNum = mPhoneNum
+        }
+        if (etSignIn != null && !TextUtils.isEmpty(phoneNum)) {
+            etSignIn!!.setText(phoneNum)
+        }
+        updateState()
+
         tvCommit?.setOnClickListener {
-            checkMobile()
+            if (!isAgree){
+                ToastUtils.showShort(resources.getString(R.string.must_agree_term))
+                return@setOnClickListener
+            }
+            var hasPermissions: Boolean = PermissionUtils.isGranted(Manifest.permission.READ_SMS)
+            if (hasPermissions) {
+                checkMobile()
+            } else {
+                PermissionUtils.permission(Manifest.permission.READ_SMS)
+                    .callback(object : PermissionUtils.SimpleCallback {
+                        override fun onGranted() {
+                            checkMobile()
+                        }
+
+                        override fun onDenied() {
+                            checkMobile()
+                        }
+                    }).request()
+            }
         }
         ivClear?.setOnClickListener {
             etSignIn?.setText("")
             etSignIn?.setSelection(0)
+        }
+
+        ivAgree?.setOnClickListener {
+            isAgree = !isAgree
+            updateState()
+        }
+
+        tvTerm?.setOnClickListener {
+            if (activity is Login2Activity) {
+                if (checkClickFast(false)){
+                    return@setOnClickListener
+                }
+                var login2Activity : Login2Activity = activity as Login2Activity
+                login2Activity.toWebView(Api.GET_TERMS)
+            }
+        }
+        tvPrivacy?.setOnClickListener{
+            if (activity is Login2Activity) {
+                if (checkClickFast(false)){
+                    return@setOnClickListener
+                }
+                var login2Activity : Login2Activity = activity as Login2Activity
+                login2Activity.toWebView(Api.GET_POLICY)
+            }
         }
     }
 
@@ -109,8 +191,16 @@ class Login2Fragment : BaseFragment() {
         if (checkClickFast()){
             return
         }
+        mPhoneNum = phoneNum
         FirebaseUtils.logEvent("fireb_click_sign")
-        requestSendSms(phoneNum)
+        checkServerAvailable(object : CallBack {
+            override fun onEnd() {
+                if (isDestroy()){
+                    return
+                }
+                requestSendSms(phoneNum)
+            }
+        })
     }
 
     //申请发送短信
@@ -118,9 +208,9 @@ class Login2Fragment : BaseFragment() {
         flLoading?.visibility = View.VISIBLE
         tvCommit?.isEnabled = false
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        val mPrex: String? = mPresenter?.getSelectString(0)
         var finalPhoneNum = phoneNum
         try {
-            var mPrex: String? = mPresenter?.getSelectString(0)
             if (!TextUtils.isEmpty(mPrex)) {
                 var realNum = phoneNum
                 if (phoneNum.startsWith("0")){
@@ -161,7 +251,7 @@ class Login2Fragment : BaseFragment() {
                         return
                     }
                     if (activity is Login2Activity) {
-                        (activity as Login2Activity).toOtpFragment(finalPhoneNum)
+                        (activity as Login2Activity).toOtpFragment(mPrex!!, phoneNum)
                     }
                 }
 
@@ -173,6 +263,45 @@ class Login2Fragment : BaseFragment() {
                     ToastUtils.showShort("request send sms error ...")
                 }
             })
+    }
+
+    private fun checkServerAvailable(callBack: CallBack?) {
+        val jsonObject: JSONObject? = BuildRequestJsonUtils.buildRequestJson()
+        try {
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        //        Log.e(TAG, " = " + jsonObject.toString());
+        OkGo.post<String>(Api.CHECK_SERVER_ALIVE).tag(TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    val serverLiveBean: ServerLiveBean? =
+                        checkResponseSuccess(response, ServerLiveBean::class.java)
+                    if (serverLiveBean != null && serverLiveBean.isServerLive()) {
+                        if (BuildConfig.DEBUG) {
+                            Log.d(TAG, "the server is alive")
+                        }
+                        callBack?.onEnd()
+                    }
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "the server is not alive")
+                    }
+                    if (isDestroy()){
+                        return
+                    }
+                    ToastUtils.showShort(resources.getString(R.string.server_is_not_alive))
+                }
+            })
+    }
+
+    interface CallBack {
+        fun onEnd()
     }
 
     private fun requestCheckMobile(phoneNum : String){
@@ -219,6 +348,23 @@ class Login2Fragment : BaseFragment() {
     }
     override fun onDestroy() {
         OkGo.getInstance().cancelTag(TAG)
+        if (dialog != null && dialog!!.isShowing){
+            dialog?.dismiss()
+        }
         super.onDestroy()
+    }
+    private fun showTermDialog(listener: TermsDialog.OnClickAgreeListener) {
+        if (dialog == null){
+            dialog = TermsDialog(requireContext())
+        }
+        dialog?.setOnClickListener(listener)
+        if (dialog?.isShowing == true){
+            return
+        }
+        dialog?.show()
+    }
+
+    private fun updateState(){
+        ivAgree?.setImageResource(if (isAgree) R.drawable.btn_agree else R.drawable.btn_disagree)
     }
 }

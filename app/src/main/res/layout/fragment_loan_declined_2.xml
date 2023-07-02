@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="@id/view_declined_1"
         android:src="@drawable/ic_pay_reject"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="@dimen/cm_dp_60"
+        android:layout_marginStart="42dp"
         android:layout_height="0dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -43,8 +43,8 @@
         android:textSize="20sp"
         android:text="@string/loan_declined_desc1"
         android:textColor="#1C1F3E"
-        android:layout_marginStart="@dimen/cm_dp_42"
-        android:layout_marginEnd="@dimen/cm_dp_42"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center_vertical|start"
@@ -55,9 +55,10 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="0dp"
         app:layout_constraintTop_toTopOf="@id/view_declined_3"
-        android:layout_marginStart="@dimen/cm_dp_42"
-        android:layout_marginEnd="@dimen/cm_dp_42"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
         android:gravity="start"
+        android:textSize="14sp"
         android:layout_marginTop="@dimen/cm_dp_25"
         android:textColor="#991C1F3E"
         android:text="@string/loan_declined_desc2_1"

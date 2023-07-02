@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
-            android:src="@drawable/ic_icreadit"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/cm_dp_70"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"/>
+            android:src="@drawable/ic_icreadit" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:text="@string/app_name_creaditing"
-            android:textStyle="bold"
-            android:textColor="#1C1F3E"
-            android:textSize="@dimen/cm_sp_28"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/cm_dp_10"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"/>
+            android:text="@string/app_name_creaditing"
+            android:textColor="#1C1F3E"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:layout_marginTop="@dimen/cm_dp_40"
-            android:textColor="#1C1F3E"
-            android:text="@string/please_enter_your_phone_number"
-            android:textSize="@dimen/cm_sp_22"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginStart="@dimen/cm_dp_25"
-            android:layout_marginEnd="@dimen/cm_dp_25"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"/>
+            android:layout_marginStart="@dimen/cm_dp_25"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="@dimen/cm_dp_25"
+            android:gravity="start"
+            android:text="@string/please_enter_your_phone_number"
+            android:textColor="#1C1F3E"
+            android:textSize="21sp"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
-            android:layout_marginStart="@dimen/cm_dp_25"
-            android:layout_marginEnd="@dimen/cm_dp_25"
-            android:layout_marginTop="@dimen/cm_dp_12"
-            android:textColor="#981C1F3E"
+            android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:gravity="center"
-            android:textSize="@dimen/cm_sp_18"
+            android:layout_marginStart="@dimen/cm_dp_25"
+            android:layout_marginTop="@dimen/cm_dp_12"
+            android:layout_marginEnd="@dimen/cm_dp_25"
+            android:gravity="start"
             android:text="@string/use_the_phone_number_linked"
-            android:layout_height="wrap_content"/>
+            android:textColor="#991C1F3E"
+            android:textSize="15sp" />
 
         <FrameLayout
             android:layout_width="match_parent"
+            android:layout_height="56dp"
             android:layout_marginStart="@dimen/cm_dp_25"
-            android:layout_marginEnd="@dimen/cm_dp_25"
             android:layout_marginTop="@dimen/cm_dp_24"
-            android:layout_height="@dimen/cm_dp_60">
+            android:layout_marginEnd="@dimen/cm_dp_25">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,24 +65,32 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="56dp"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="+"
                         android:gravity="center_vertical"
-                        android:textSize="20sp" />
+                        android:text="+"
+                        android:textSize="18sp" />
 
                     <Spinner
                         android:id="@+id/spinner_signin_input"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
                         android:background="@drawable/spinner_loan_logo_arrow"
-                        android:layout_gravity="center_vertical" />
+                        android:gravity="center_vertical" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="|"
+                        android:textColor="#401C1F3E"
+                        android:textSize="16sp" />
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -95,16 +103,16 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@null"
-                            android:lines="1"
-                            android:maxLines="1"
                             android:hint="@string/enter_you_phone_number"
-                            android:textColorHint="#401C1F3E"
-                            android:singleLine="true"
-                            android:textColor="#333333"
-                            android:maxLength="24"
-                            android:textSize="18sp"
                             android:inputType="number"
-                            android:textCursorDrawable="@drawable/et_cursor_color" />
+                            android:lines="1"
+                            android:maxLength="24"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="#801C1F3E"
+                            android:textColorHint="#401C1F3E"
+                            android:textCursorDrawable="@drawable/et_cursor_color"
+                            android:textSize="18sp" />
 
                         <ImageView
                             android:id="@+id/iv_signin_phonenum_clear"
@@ -126,87 +134,150 @@
 
             <View
                 android:layout_width="match_parent"
-                android:background="#401C1F3E"
+                android:layout_height="1dp"
                 android:layout_gravity="bottom"
-                android:layout_height="1dp"/>
+                android:background="#301C1F3E" />
 
         </FrameLayout>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginStart="@dimen/cm_dp_35"
-        android:layout_marginEnd="@dimen/cm_dp_35"
-        android:layout_height="wrap_content">
+        android:layout_marginEnd="@dimen/cm_dp_35">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_login2_agree_state"
             android:layout_width="@dimen/cm_dp_25"
             android:layout_height="@dimen/cm_dp_25"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_login2_terms_privacy"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/cm_dp_20"
-            app:layout_constraintTop_toTopOf="@id/tv_login2_terms_privacy"
-            app:layout_constraintBottom_toBottomOf="@id/tv_login2_terms_privacy"
-            android:src="@drawable/btn_disagree" />
+            android:src="@drawable/btn_disagree"
+            app:layout_constraintBottom_toBottomOf="@id/cl_login2_terms_privacy"
+            app:layout_constraintEnd_toStartOf="@id/cl_login2_terms_privacy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cl_login2_terms_privacy" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_login2_terms_privacy"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_login2_terms_privacy"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/cm_dp_8"
-            app:layout_constraintStart_toEndOf="@id/iv_login2_agree_state"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="@dimen/cm_dp_20"
             android:layout_marginEnd="@dimen/cm_dp_20"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="@dimen/cm_sp_16"
-            android:textColor="#1C1F3E"
+            android:layout_marginBottom="@dimen/cm_dp_20"
             app:layout_constraintBottom_toTopOf="@id/tv_login2_commit"
-            android:text="@string/please_read_the_terms"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_login2_agree_state"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:layout_width="0dp"
+                app:layout_constraintStart_toStartOf="@id/tv_login2_terms_privacy_2"
+                app:layout_constraintEnd_toEndOf="@id/tv_login2_terms_privacy_4"
+                app:layout_constraintBottom_toBottomOf="@id/tv_login2_terms_privacy_1"
+                android:background="#019FB8"
+                android:layout_marginBottom="1dp"
+                android:layout_height="0.5dp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_login2_terms_privacy_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/please_read_the_terms_1"
+                android:textColor="#FF000000"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_login2_terms_privacy_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_marginStart="2dp"
+                android:text="@string/please_read_the_terms_2"
+                android:textColor="#019FB8"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@id/tv_login2_terms_privacy_1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_login2_terms_privacy_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:includeFontPadding="false"
+                android:text="@string/please_read_the_terms_3"
+                android:textColor="#019FB8"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@id/tv_login2_terms_privacy_2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_login2_terms_privacy_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:includeFontPadding="false"
+                android:text="@string/please_read_the_terms_4"
+                android:textColor="#019FB8"
+                android:textSize="13sp"
+                app:layout_constraintStart_toEndOf="@id/tv_login2_terms_privacy_3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_login2_terms_privacy_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/please_read_the_terms_5"
+                android:textColor="#FF000000"
+                android:layout_marginTop="2dp"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/tv_login2_terms_privacy_1"
+                app:layout_constraintTop_toBottomOf="@id/tv_login2_terms_privacy_1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_login2_commit"
             android:layout_width="match_parent"
-            android:background="@drawable/selector_commit_bg"
+            android:layout_height="50dp"
             android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
+            android:background="@drawable/selector_commit_bg"
             android:enabled="true"
-            android:textSize="@dimen/cm_dp_18"
+            android:gravity="center"
             android:text="@string/register_login"
-            app:layout_constraintTop_toBottomOf="@id/tv_login2_terms_privacy"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
             app:layout_constraintBottom_toTopOf="@id/iv_login2_icon"
-            android:layout_height="@dimen/cm_dp_60"/>
+            app:layout_constraintTop_toBottomOf="@id/cl_login2_terms_privacy" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_login2_icon"
             android:layout_width="@dimen/cm_dp_70"
-            android:src="@drawable/ic_fcc_pc"
-            app:layout_constraintTop_toBottomOf="@id/tv_login2_commit"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="@dimen/cm_dp_7"
+            android:layout_height="@dimen/cm_dp_70"
             android:layout_marginTop="@dimen/cm_dp_10"
-            android:layout_height="@dimen/cm_dp_70"/>
+            android:layout_marginBottom="@dimen/cm_dp_7"
+            android:src="@drawable/ic_fcc_pc"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_login2_terms_privacy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/fl_login2_loading"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clickable="true"
-        android:visibility="gone"
-        android:layout_height="match_parent">
+        android:visibility="gone">
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/theme_color"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/theme_color" />
 
     </FrameLayout>
 

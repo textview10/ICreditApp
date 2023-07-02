@@ -6,10 +6,8 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
@@ -46,8 +44,8 @@ class LauncherActivity : BaseActivity() {
                 TO_WELCOME_PAGE -> {
                     mHandler?.removeCallbacksAndMessages(null)
                     OkGo.getInstance().cancelTag(TAG)
-                    val login2Intent = Intent(this@LauncherActivity, WelcomeActivity::class.java)
-//                    val login2Intent = Intent(this@LauncherActivity, Login2Activity::class.java)
+//                    val login2Intent = Intent(this@LauncherActivity, WelcomeActivity::class.java)
+                    val login2Intent = Intent(this@LauncherActivity, Login2Activity::class.java)
                     startActivity(login2Intent)
                     finish()
                 }

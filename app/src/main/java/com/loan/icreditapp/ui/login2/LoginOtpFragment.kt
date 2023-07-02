@@ -23,12 +23,12 @@ import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.login.RegLoginBean
-import com.loan.icreditapp.bean.login.SignInBean
 import com.loan.icreditapp.bean.login.UssdBean
 import com.loan.icreditapp.bean.login.VerifySmsCodeBean
+import com.loan.icreditapp.collect.ReadSmsMgr
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.ui.login.Login2Activity
 import com.loan.icreditapp.ui.login.SignInActivity
-import com.loan.icreditapp.ui.login.fragment.SignInFragment
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -39,6 +39,7 @@ import org.json.JSONObject
 
 class LoginOtpFragment : BaseFragment(){
     private var mPhoneNum : String? = null
+    private var mPrex : String? = null
 
     private var ivBack : AppCompatImageView? = null
     private var tvCommit : AppCompatTextView? = null
@@ -48,6 +49,7 @@ class LoginOtpFragment : BaseFragment(){
     private var flLoading : FrameLayout? = null
 
     private var mHandler: Handler? = null
+    private var mAuthCode : String? = null
 
     private val MAX_TIME = 60
     private var mCurTime: Int = MAX_TIME
@@ -72,7 +74,7 @@ class LoginOtpFragment : BaseFragment(){
                         } else if (mCurTime == 0) {
                             mHandler?.removeMessages(TYPE_TIME_REDUCE)
                             tvCommit?.text = StringUtils.getString(R.string.resend)
-                            tvCommit?.isEnabled = false
+                            tvCommit?.isEnabled = true
 //                            tvCommit?.setTextColor(Color.parseColor("#0EC6A2"))
                             mCurTime = MAX_TIME
                         } else {
@@ -136,13 +138,19 @@ class LoginOtpFragment : BaseFragment(){
         })
 
         ivBack?.setOnClickListener{
-
+            if (activity is Login2Activity) {
+                (activity as Login2Activity).toLoginFragment()
+                if (KeyboardUtils.isSoftInputVisible(requireActivity())){
+                    KeyboardUtils.hideSoftInput(requireActivity())
+                }
+            }
         }
         tvCommit?.setOnClickListener{
-            if (TextUtils.isEmpty(mPhoneNum)){
+            if (TextUtils.isEmpty(getFinalPhoneNum())){
                 ToastUtils.showShort("phone num is null")
             }
-            requestSendSms(mPhoneNum!!)
+            requestSendSms(getFinalPhoneNum())
+            mHandler?.sendEmptyMessage(TYPE_TIME_REDUCE)
         }
         mHandler?.sendEmptyMessage(TYPE_TIME_REDUCE)
         verifyCodeView?.post(Runnable {
@@ -159,7 +167,7 @@ class LoginOtpFragment : BaseFragment(){
         }
 
         val text = resources.getString(R.string.login_otp)
-        val textDesc = String.format(text, mPhoneNum)
+        val textDesc = String.format(text, getFinalPhoneNum())
         tvDesc1?.text = textDesc
 
         KeyboardUtils.registerSoftInputChangedListener(requireActivity(), object : OnSoftInputChangedListener {
@@ -167,7 +175,6 @@ class LoginOtpFragment : BaseFragment(){
                 if (tvReceive == null){
                     return
                 }
-                Log.e("Test", " height = " +height)
                 val marginBottom = ConvertUtils.dp2px(18f)
                 val layoutParams = tvReceive!!.layoutParams as ConstraintLayout.LayoutParams
                 layoutParams.bottomMargin = (height + marginBottom)
@@ -175,13 +182,35 @@ class LoginOtpFragment : BaseFragment(){
             }
 
         })
+        ReadSmsMgr.setObserver(object : ReadSmsMgr.Observer {
+            override fun onReceiveAuthCode(authCode: String) {
+                if (TextUtils.equals(mAuthCode, authCode)) {
+                    return
+                }
+                mAuthCode = authCode
+                if (TextUtils.isEmpty(mAuthCode)) {
+                    return
+                }
+                mHandler?.postDelayed(Runnable {
+                    if (isDestroy()){
+                        return@Runnable
+                    }
+                    verifyCodeView?.setVerifyCode(mAuthCode!!)
+                    Log.e("Test", " authCode = " + mAuthCode)
+                }, 100)
+
+            }
+
+        })
+
     }
-    fun setPhoneNum(phoneNum: String){
+    fun setPhoneNum(prex : String , phoneNum: String){
+        mPrex = prex
         mPhoneNum = phoneNum
     }
 
     private fun checkVerifySmsCode(needTip : Boolean){
-        if (TextUtils.isEmpty(mPhoneNum)) {
+        if (TextUtils.isEmpty(getFinalPhoneNum())) {
             if (BuildConfig.DEBUG) {
                 throw java.lang.IllegalArgumentException("checkVerifySmsCode")
             }
@@ -199,13 +228,13 @@ class LoginOtpFragment : BaseFragment(){
             return
         }
 //        FirebaseUtils.logEvent("fireb_register_start")
-        requestVerifySmsCode(mPhoneNum, verifyCode)
+        requestVerifySmsCode(verifyCode)
     }
 
-    private fun requestVerifySmsCode(mPhoneNum: String?, verifyCode: String?) {
+    private fun requestVerifySmsCode(verifyCode: String?) {
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
-            jsonObject.put("mobile", mPhoneNum)
+            jsonObject.put("mobile", getFinalPhoneNum())
             jsonObject.put("captchaCode", verifyCode)
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -227,7 +256,7 @@ class LoginOtpFragment : BaseFragment(){
                         ToastUtils.showShort(resources.getString(R.string.check_sms_code_verify_failure))
                         return
                     }
-                    regOrLogin(mPhoneNum)
+                    regOrLogin()
                 }
 
                 override fun onError(response: Response<String>) {
@@ -239,11 +268,11 @@ class LoginOtpFragment : BaseFragment(){
             })
     }
 
-    private fun regOrLogin(phoneNum : String?){
+    private fun regOrLogin(){
         flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
-            var finalPhoneNum = phoneNum
+            var finalPhoneNum = getFinalPhoneNum()
             jsonObject.put("mobile", finalPhoneNum)
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -261,14 +290,22 @@ class LoginOtpFragment : BaseFragment(){
                     if (TextUtils.isEmpty(regLoginBean.token)){
                         return
                     }
-                    toHomePage(regLoginBean, mPhoneNum!!)
+                    toHomePage(regLoginBean)
                 }
 
                 override fun onError(response: Response<String>) {
                     super.onError(response)
                     flLoading?.visibility = View.GONE
                     Log.e(Login2Fragment.TAG, "sign in error")
-                    ToastUtils.showShort("sign in error..")
+                    var errorStr = ""
+                    if (response != null){
+                        try {
+                            errorStr = response.body()
+                        } catch (e : Exception) {
+
+                        }
+                    }
+                    ToastUtils.showShort("sign in error..$errorStr")
                 }
             })
     }
@@ -277,10 +314,16 @@ class LoginOtpFragment : BaseFragment(){
 
     override fun onResume() {
         super.onResume()
+        ReadSmsMgr.onResume()
         if (startFlag) {
             startFlag = false
             ussdLogin()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ReadSmsMgr.onDestroy()
     }
 
     private fun toSendCodeActivity(){
@@ -339,7 +382,7 @@ class LoginOtpFragment : BaseFragment(){
     private fun ussdLogin(){
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
-            jsonObject.put("mobile", mPhoneNum)
+            jsonObject.put("mobile", getFinalPhoneNum())
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -364,7 +407,7 @@ class LoginOtpFragment : BaseFragment(){
                         }
                     }
                     if (TextUtils.equals(ussdBean.verify, "1")){
-                        regOrLogin(mPhoneNum)
+                        regOrLogin()
                     } else {
                         ToastUtils.showShort(resources.getString(R.string.ussd_login_failure))
                     }
@@ -381,14 +424,18 @@ class LoginOtpFragment : BaseFragment(){
             })
     }
 
-    private fun toHomePage(bean: RegLoginBean, phoneNum : String){
+    private fun toHomePage(bean: RegLoginBean){
         Constant.mAccountId = bean.accountId
         Constant.mToken = bean.token
         Constant.mMobile = bean.mobile
-        SPUtils.getInstance().put(Login2Fragment.KEY_PHONE_NUM_2, phoneNum)
+        SPUtils.getInstance().put(Login2Fragment.KEY_PHONE_NUM_2, mPhoneNum)
         if (activity is SignInActivity) {
             var signIn : SignInActivity = activity as SignInActivity
             signIn.toHomePage()
         }
+    }
+
+    private fun getFinalPhoneNum() : String{
+        return mPrex + mPhoneNum
     }
 }

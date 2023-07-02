@@ -18,9 +18,15 @@ open class BaseFragment : Fragment() {
     private var lastClickMillions: Long = 0
 
     protected fun checkClickFast(): Boolean {
+        return checkClickFast(true)
+    }
+
+    protected fun checkClickFast(showFlag : Boolean): Boolean {
         val delay = System.currentTimeMillis() - lastClickMillions
         if (delay < 3000) {
-            ToastUtils.showShort("click too fast. please wait a monment")
+            if (showFlag) {
+                ToastUtils.showShort("click too fast. please wait a monment")
+            }
             return true
         }
         lastClickMillions = System.currentTimeMillis()

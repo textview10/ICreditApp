@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_title_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/cm_dp_20"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="@dimen/cm_dp_15"
         android:src="@drawable/ic_otp_back"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/cm_dp_25"
-        android:layout_marginTop="@dimen/cm_dp_15"
+        android:layout_marginTop="22dp"
         android:text="@string/login_otp"
         android:textColor="#1C1F3E"
         android:textStyle="bold"
@@ -48,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/cm_dp_25"
-        android:layout_marginTop="@dimen/cm_dp_8"
+        android:layout_marginTop="8dp"
         android:text="@string/the_otp_is_4_digit"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="14sp"
@@ -79,14 +80,14 @@
         android:layout_marginStart="@dimen/cm_dp_35"
         android:layout_marginEnd="@dimen/cm_dp_35"
         app:layout_constraintBottom_toTopOf="@id/tv_can_not_recevie"
-        android:layout_height="@dimen/cm_dp_60"/>
+        android:layout_height="50dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_can_not_recevie"
         android:layout_width="wrap_content"
         android:text="@string/can_not_recieve_sms"
         android:textColor="#019FB8"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:gravity="center"
         android:layout_marginStart="@dimen/cm_dp_25"
         android:layout_marginEnd="@dimen/cm_dp_25"

@@ -14,6 +14,7 @@ import com.loan.icreditapp.data.FirebaseData
 import com.loan.icreditapp.dialog.order.OrderInfoBean
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.pay.PayActivity
+import com.loan.icreditapp.ui.pay.PayActivity2
 import com.lzy.okgo.OkGo
 
 abstract class BaseLoanFragment : BaseFragment() {
@@ -98,7 +99,10 @@ abstract class BaseLoanFragment : BaseFragment() {
                 amount = stage.amount.toString()
             }
         }
-        PayActivity.showMe(requireContext(), mOrderInfo?.orderId!!, amount!!)
+        if (activity == null || requireActivity().isDestroyed || requireActivity().isFinishing) {
+            return
+        }
+        PayActivity2.launchPayActivity(requireActivity(), mOrderInfo?.orderId!!, amount!!)
 //        if (!TextUtils.isEmpty(amount)) {
 //            uploadReplayLoad(mOrderInfo?.orderId!!, amount!!)
 //        }

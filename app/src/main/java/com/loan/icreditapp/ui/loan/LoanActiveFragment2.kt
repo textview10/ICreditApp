@@ -6,39 +6,44 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.DiscountAmountBean
-import com.loan.icreditapp.dialog.order.OrderInfoBean
+import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.loan.icreditapp.util.MyAppUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONException
 import org.json.JSONObject
 
-class LoanRepayingFragment2 : BaseLoanFragment() {
+class LoanActiveFragment2 : BaseLoanFragment() {
 
-    private val TAG = "LoanRepayingFragment"
+    private val TAG = "LoanActiveFragment2"
 
     private var tvLoanRepay : AppCompatTextView? = null
     private var llBtnTop : LinearLayout? = null
     private var viewBottom : View? = null
     private var tvLoanPay : AppCompatTextView? = null
+    private var tvTotalAmount: AppCompatTextView? = null
+
+    private var flCommit: FrameLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_loan_repayment2, container, false)
+        var view = inflater.inflate(R.layout.fragment_loan_active_2, container, false)
         return view
     }
 
@@ -48,6 +53,21 @@ class LoanRepayingFragment2 : BaseLoanFragment() {
         llBtnTop = view.findViewById(R.id.ll_loan_repay)
         viewBottom = view.findViewById(R.id.view_loan_repay)
         tvLoanPay = view.findViewById(R.id.tv_discount_loan_repay)
+        flCommit = view.findViewById(R.id.fl_loan_paid_commit)
+        tvTotalAmount = view.findViewById(R.id.tv_loan_paid_total_amount)
+
+        tvTotalAmount?.text = mOrderInfo?.totalAmount.toString()
+        if (checkNeedShowLog()){
+            if (Constant.IS_FIRST_APPLY) {
+                FirebaseUtils.logEvent( "fireb_activity")
+            }
+            FirebaseUtils.logEvent( "fireb_activity_all")
+            EventBus.getDefault().post(RateUsEvent())
+        }
+
+        flCommit?.setOnClickListener {
+            clickRepayLoad()
+        }
 
         discountAmount()
     }
@@ -119,5 +139,10 @@ class LoanRepayingFragment2 : BaseLoanFragment() {
             val discountAmount = String.format(discountAccountStr, bean.discountAmount)
             tvLoanPay?.text = discountAmount
         }
+    }
+
+    override fun onDestroy() {
+        OkGo.getInstance().cancelTag(TAG)
+        super.onDestroy()
     }
 }
