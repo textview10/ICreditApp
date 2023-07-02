@@ -1,6 +1,7 @@
 package com.loan.icreditapp.ui.pay.presenter
 
 import android.text.TextUtils
+import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.GsonUtils
 import com.flutterwave.raveandroid.RaveUiManager
 import com.loan.icreditapp.R
@@ -24,7 +25,7 @@ class FlutterwarePresenter : BasePresenter {
     private var mTxRef : String? = null
     private var mBean : FlutterWaveResult? = null
 
-    constructor(payFragment: PayFragment) : super(payFragment) {
+    constructor(payFragment: Fragment) : super(payFragment) {
 
     }
 

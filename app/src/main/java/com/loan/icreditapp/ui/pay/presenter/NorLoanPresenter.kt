@@ -2,6 +2,7 @@ package com.loan.icreditapp.ui.pay.presenter
 
 import android.text.TextUtils
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.api.Api
@@ -21,7 +22,7 @@ import org.json.JSONObject
 class NorLoanPresenter : BasePresenter {
     private var bankNum : String? = null
 
-    constructor(payFragment: PayFragment) : super(payFragment) {
+    constructor(fragment: Fragment) : super(fragment) {
 
     }
 

@@ -1,19 +1,20 @@
 package com.loan.icreditapp.ui.pay.presenter
 
+import androidx.fragment.app.Fragment
 import com.loan.icreditapp.bean.pay.MonifyResponseBean
 import com.loan.icreditapp.ui.pay.PayFragment
 import com.lzy.okgo.model.Response
 
 open abstract class BasePresenter {
-    var mPayFragment: PayFragment? = null
+    var mPayFragment: Fragment? = null
 
     var orderId: String? = null
     var amount: String? = null
 
     var mObserver : Observer? = null
 
-    constructor(payFragment: PayFragment) {
-        mPayFragment = payFragment
+    constructor(fragment: Fragment) {
+        mPayFragment = fragment
     }
 
     abstract fun requestUrl(orderId: String?, amount: String?)

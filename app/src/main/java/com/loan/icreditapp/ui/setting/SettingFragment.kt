@@ -27,12 +27,10 @@ import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
-import com.loan.icreditapp.ui.card.BindNewCardActivity
-import com.loan.icreditapp.ui.card.fragment.AddBankAccount1Fragment
 import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.launcher.WelcomeActivity
-import com.loan.icreditapp.ui.pay.PayActivity
-import com.loan.icreditapp.ui.profile.AddProfileActivity
+import com.loan.icreditapp.ui.pay.ChoosePayFragment
+import com.loan.icreditapp.ui.pay.PayActivity2
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
@@ -285,7 +283,7 @@ class SettingFragment : BaseFragment() {
     private fun test(){
 //        val intent = Intent(context, AddProfileActivity::class.java)
 //        val intent = Intent(context, AddBankAccount1Fragment::class.java)
-        val intent = Intent(context, PayActivity::class.java)
+        val intent = Intent(context, PayActivity2::class.java)
         startActivity(intent)
 //        BindNewCardActivity.launchAddBankAccount(context!!)
 //        val test = Test()

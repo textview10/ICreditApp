@@ -136,6 +136,7 @@ class LoanApplyFragment : BaseLoanFragment() {
     }
 
     private fun getProducts() {
+        flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("accountId", Constant.mAccountId)
@@ -152,6 +153,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (isRemoving || isDetached) {
                         return
                     }
+                    flLoading?.visibility = View.GONE
                     val productBean: ProductResponseBean? =
                         checkResponseSuccess(response, ProductResponseBean::class.java)
                     if (productBean == null || productBean.products?.isEmpty() == true) {
@@ -188,6 +190,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
+                    flLoading?.visibility = View.GONE
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, " product list error ." + response.body())
                     }
@@ -279,6 +282,7 @@ class LoanApplyFragment : BaseLoanFragment() {
     }
 
     private fun requestLoanTrial(proId : String , loanAmount : String) {
+        flLoading?.visibility = View.VISIBLE
         val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
         try {
             jsonObject.put("prodId", proId)
@@ -293,6 +297,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
+                    flLoading?.visibility = View.GONE
                     val trialBean: TrialResponseBean? =
                         checkResponseSuccess(response, TrialResponseBean::class.java)
                     if (trialBean == null || trialBean.trial?.size == 0) {
@@ -309,6 +314,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                     if (activity?.isFinishing == true || activity?.isDestroyed == true) {
                         return
                     }
+                    flLoading?.visibility = View.GONE
                     if (BuildConfig.DEBUG) {
                         Log.e(TAG, " product list error ." + response.body())
                     }

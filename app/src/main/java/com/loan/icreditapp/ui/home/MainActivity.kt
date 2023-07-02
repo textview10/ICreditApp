@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.*
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
@@ -157,8 +158,15 @@ class MainActivity : BaseActivity() {
         ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Exception?>() {
             @Throws(Throwable::class)
             override fun doInBackground(): Exception? {
-                LocationMgr.getInstance().getLocation()
-                CollectSmsMgr.sInstance.tryCacheSms()
+                try {
+                    LocationMgr.getInstance().getLocation()
+                    CollectSmsMgr.sInstance.tryCacheSms()
+                } catch (e : Exception) {
+                    if (BuildConfig.DEBUG) {
+                        throw e
+                    }
+                }
+
                 return null
             }
 

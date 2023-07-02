@@ -6,12 +6,9 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import co.paystack.android.PaystackSdk
 import com.blankj.utilcode.util.LanguageUtils
-import com.blankj.utilcode.util.SPUtils
 import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
-import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.collect.LocationMgr
-import com.loan.icreditapp.util.EncodeUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.cookie.CookieJarImpl
 import com.lzy.okgo.cookie.store.DBCookieStore

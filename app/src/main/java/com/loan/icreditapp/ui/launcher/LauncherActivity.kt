@@ -46,7 +46,8 @@ class LauncherActivity : BaseActivity() {
                 TO_WELCOME_PAGE -> {
                     mHandler?.removeCallbacksAndMessages(null)
                     OkGo.getInstance().cancelTag(TAG)
-                    val login2Intent = Intent(this@LauncherActivity, Login2Activity::class.java)
+                    val login2Intent = Intent(this@LauncherActivity, WelcomeActivity::class.java)
+//                    val login2Intent = Intent(this@LauncherActivity, Login2Activity::class.java)
                     startActivity(login2Intent)
                     finish()
                 }

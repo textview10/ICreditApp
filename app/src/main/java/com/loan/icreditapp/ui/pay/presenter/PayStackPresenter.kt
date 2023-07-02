@@ -1,6 +1,7 @@
 package com.loan.icreditapp.ui.pay.presenter
 
 import android.text.TextUtils
+import androidx.fragment.app.Fragment
 import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.bean.pay.PayStackResponseBean
@@ -19,7 +20,7 @@ class PayStackPresenter : BasePresenter {
 
     private var mPayStackBean: PayStackResponseBean? = null
 
-    constructor(payFragment: PayFragment) : super(payFragment) {
+    constructor(payFragment: Fragment) : super(payFragment) {
 
     }
 

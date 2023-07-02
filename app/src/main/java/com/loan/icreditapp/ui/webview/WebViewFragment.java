@@ -20,6 +20,7 @@ import com.loan.icreditapp.base.BaseFragment;
 import com.loan.icreditapp.bean.TextInfoResponse;
 import com.loan.icreditapp.global.Constant;
 import com.loan.icreditapp.ui.pay.PayActivity;
+import com.loan.icreditapp.ui.pay.PayActivity2;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -87,6 +88,9 @@ public class WebViewFragment extends BaseFragment {
                 }
                 if (getActivity() instanceof PayActivity){
                     PayActivity payActivity = (PayActivity) getActivity();
+                    payActivity.payStackSuccess();
+                } else if (getActivity() instanceof PayActivity2){
+                    PayActivity2 payActivity = (PayActivity2) getActivity();
                     payActivity.payStackSuccess();
                 }
             }

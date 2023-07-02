@@ -177,4 +177,5 @@
     <string name="repay_now">Repay Now</string>
     <string name="discount_account">Discount ₦ %s</string>
     <string name="discount_account_desc">It is only for the method provide in App</string>
+    <string name="click_to_choose_method">Click to choose methods</string>
 </resources>
