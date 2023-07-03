@@ -429,8 +429,8 @@ class LoginOtpFragment : BaseFragment(){
         Constant.mToken = bean.token
         Constant.mMobile = bean.mobile
         SPUtils.getInstance().put(Login2Fragment.KEY_PHONE_NUM_2, mPhoneNum)
-        if (activity is SignInActivity) {
-            var signIn : SignInActivity = activity as SignInActivity
+        if (activity is Login2Activity) {
+            var signIn : Login2Activity = activity as Login2Activity
             signIn.toHomePage()
         }
     }

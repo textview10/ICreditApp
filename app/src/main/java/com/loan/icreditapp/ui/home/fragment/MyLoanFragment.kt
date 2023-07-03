@@ -165,7 +165,7 @@ class MyLoanFragment : BaseFragment() {
                 setTitleInternal(R.string.my_loan_title_processing)
             }
             "2" -> {
-                val loanActiveFragment = LoanActiveFragment()
+                val loanActiveFragment = LoanActiveFragment2()
                 loanActiveFragment.setOrderInfo(orderInfoBean)
                 toFragment(loanActiveFragment)
                 setTitleInternal(R.string.my_loan_title_active)

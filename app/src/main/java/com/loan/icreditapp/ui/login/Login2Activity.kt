@@ -1,5 +1,6 @@
 package com.loan.icreditapp.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
@@ -9,6 +10,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.ui.home.MainActivity
 import com.loan.icreditapp.ui.login2.Login2Fragment
 import com.loan.icreditapp.ui.login2.LoginOtpFragment
 import com.loan.icreditapp.ui.webview.WebViewFragment
@@ -81,6 +83,12 @@ class Login2Activity : BaseActivity() {
 //        val intent = Intent(this, WelcomeActivity::class.java)
 //        startActivity(intent)
         overridePendingTransition(R.anim.slide_in_left_my, R.anim.slide_out_right_my)
+        finish()
+    }
+
+    fun toHomePage() {
+        var intent: Intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
         finish()
     }
 }
