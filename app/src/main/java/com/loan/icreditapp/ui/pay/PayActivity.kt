@@ -14,9 +14,7 @@ import com.flutterwave.raveandroid.rave_java_commons.RaveConstants
 import com.google.gson.Gson
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
-import com.loan.icreditapp.base.BaseFragment
 import com.loan.icreditapp.event.UpdateLoanEvent
-import com.loan.icreditapp.ui.launcher.WelcomeActivity
 import com.loan.icreditapp.ui.webview.WebViewFragment
 import net.entity.bean.FlutterWaveResult
 import org.greenrobot.eventbus.EventBus

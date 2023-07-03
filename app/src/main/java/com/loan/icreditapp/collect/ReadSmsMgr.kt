@@ -115,7 +115,14 @@ object ReadSmsMgr {
             if (result.length == 6) {
                 try {
                     Integer.parseInt(result)
-                    return result
+                    val delta = Math.abs(System.currentTimeMillis() - date)
+                    //十分钟内的短信才行
+                    if (delta < 10 * 60 * 1000){
+                        return result
+                    }
+//                   Log.e("Test"," date = " +date)
+//                   Log.e("Test"," cur time = " +System.currentTimeMillis())
+
                 } catch (e: Exception) {
 
                 }

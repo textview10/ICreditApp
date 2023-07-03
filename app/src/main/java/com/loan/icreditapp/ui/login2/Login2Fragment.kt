@@ -87,7 +87,7 @@ class Login2Fragment : BaseFragment() {
 
         initView()
 
-        hasShowTerm = SPUtils.getInstance().getBoolean(KEY_SHOW_TERM_2)
+        hasShowTerm = SPUtils.getInstance().getBoolean(KEY_SHOW_TERM_2, false)
         if (!hasShowTerm) {
             showTermDialog(object : TermsDialog.OnClickAgreeListener {
                 override fun onClickAgree() {

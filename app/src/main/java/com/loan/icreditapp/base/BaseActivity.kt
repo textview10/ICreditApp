@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.loan.icreditapp.event.LogTimeOut
 import com.loan.icreditapp.global.AppManager
 import com.loan.icreditapp.global.Constant
+import com.loan.icreditapp.ui.login.Login2Activity
 import com.loan.icreditapp.ui.login.SignInActivity
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.CheckResponseUtils
@@ -72,7 +73,7 @@ abstract class BaseActivity : AppCompatActivity() {
         OkGo.getInstance().addCommonHeaders(header)
 
         AppManager.sInstance.finishAllActivity()
-        val intent = Intent(this, SignInActivity::class.java)
+        val intent = Intent(this, Login2Activity::class.java)
         startActivity(intent)
     }
 

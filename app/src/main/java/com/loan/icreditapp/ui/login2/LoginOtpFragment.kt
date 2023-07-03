@@ -28,7 +28,6 @@ import com.loan.icreditapp.bean.login.VerifySmsCodeBean
 import com.loan.icreditapp.collect.ReadSmsMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.login.Login2Activity
-import com.loan.icreditapp.ui.login.SignInActivity
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -429,6 +428,9 @@ class LoginOtpFragment : BaseFragment(){
         Constant.mToken = bean.token
         Constant.mMobile = bean.mobile
         SPUtils.getInstance().put(Login2Fragment.KEY_PHONE_NUM_2, mPhoneNum)
+        if (KeyboardUtils.isSoftInputVisible(requireActivity())){
+            KeyboardUtils.hideSoftInput(requireActivity())
+        }
         if (activity is Login2Activity) {
             var signIn : Login2Activity = activity as Login2Activity
             signIn.toHomePage()

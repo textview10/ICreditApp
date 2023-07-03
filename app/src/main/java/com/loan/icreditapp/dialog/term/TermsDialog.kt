@@ -9,8 +9,10 @@ import android.view.ViewGroup.LayoutParams
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatTextView
+import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
@@ -21,6 +23,7 @@ class TermsDialog : Dialog {
     private var pbLoading : ProgressBar? = null
     private var tvAgree : AppCompatTextView? = null
     private var tvCancel : AppCompatTextView? = null
+    private var llContainer : LinearLayout? = null
 
     private var URL : String = Api.GET_ALL
     private var mListener: OnClickAgreeListener? = null
@@ -35,6 +38,15 @@ class TermsDialog : Dialog {
         pbLoading = findViewById(R.id.pb_dialog_term_loading)
         tvAgree = findViewById(R.id.tv_dialog_term_comfirm)
         tvCancel = findViewById(R.id.tv_dialog_term_cancel)
+        llContainer = findViewById(R.id.ll_term_container)
+
+        llContainer?.let {
+            val height = Math.min(ScreenUtils.getScreenHeight() * 3f / 4, ConvertUtils.dp2px(470f).toFloat())
+            val layoutParams =  it.layoutParams
+            layoutParams.height = height.toInt()
+            it.layoutParams = layoutParams
+        }
+
         initializeData()
     }
 

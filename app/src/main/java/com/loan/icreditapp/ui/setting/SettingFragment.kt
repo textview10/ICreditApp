@@ -28,8 +28,7 @@ import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.home.MainActivity
-import com.loan.icreditapp.ui.launcher.WelcomeActivity
-import com.loan.icreditapp.ui.pay.ChoosePayFragment
+import com.loan.icreditapp.ui.login.Login2Activity
 import com.loan.icreditapp.ui.pay.PayActivity2
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
@@ -350,6 +349,9 @@ class SettingFragment : BaseFragment() {
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
+                    if (isDestroy()) {
+                        return
+                    }
                     var responseBean: BaseResponseBean? = null
                     try {
                         responseBean = com.alibaba.fastjson.JSONObject.parseObject(
@@ -375,7 +377,7 @@ class SettingFragment : BaseFragment() {
                     SPUtils.getInstance().put(Constant.KEY_TOKEN, "")
                     val header = BuildRequestJsonUtils.clearHeaderToken()
                     OkGo.getInstance().addCommonHeaders(header)
-                    var intent: Intent = Intent(activity, WelcomeActivity::class.java)
+                    var intent: Intent = Intent(activity, Login2Activity::class.java)
                     activity?.startActivity(intent)
                     activity?.overridePendingTransition(R.anim.slide_in_left_my, R.anim.slide_out_right_my)
                     activity?.finish()

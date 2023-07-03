@@ -140,7 +140,7 @@ class Api {
 
         val DEVICE_CAPTCHA = HOST + "/v1/account/device/captcha"
 
-        val REG_LOGIN_V2 = HOST + "/v2/account/reg_login"
+        val REG_LOGIN_V2 = HOST + "/v1/account/reg_login"
         //在线还款减免金额
         val DISCOUNT_AMOUNT = HOST + "/v1/loan/online/discount/amount"
     }
