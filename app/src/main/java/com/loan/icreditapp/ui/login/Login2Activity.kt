@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.BarUtils
 import com.loan.icreditapp.R
 import com.loan.icreditapp.base.BaseActivity
@@ -20,6 +21,7 @@ class Login2Activity : BaseActivity() {
     private var llWebView : LinearLayout? = null
 
     private var webViewFragment : WebViewFragment? = null
+    private var curFragment : Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +42,8 @@ class Login2Activity : BaseActivity() {
     fun toOtpFragment(prex : String ,phoneNum : String){
         val loginOtp = LoginOtpFragment()
         loginOtp.setPhoneNum(prex, phoneNum)
+
+        curFragment = loginOtp
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction() // 开启一个事务
         transaction.add(R.id.fl_login2_container, loginOtp, LoginOtpFragment.TAG)
@@ -51,6 +55,7 @@ class Login2Activity : BaseActivity() {
         if (login2Fragment == null) {
             login2Fragment = Login2Fragment()
         }
+        curFragment = login2Fragment
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction() // 开启一个事务
         transaction.replace(R.id.fl_login2_container, login2Fragment, Login2Fragment.TAG)
@@ -80,8 +85,10 @@ class Login2Activity : BaseActivity() {
                 return
             }
         }
-//        val intent = Intent(this, WelcomeActivity::class.java)
-//        startActivity(intent)
+       if (curFragment != null && curFragment is LoginOtpFragment) {
+           toLoginFragment()
+           return
+       }
         overridePendingTransition(R.anim.slide_in_left_my, R.anim.slide_out_right_my)
         finish()
     }

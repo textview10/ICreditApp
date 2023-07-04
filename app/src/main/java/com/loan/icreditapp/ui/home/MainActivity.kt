@@ -74,6 +74,7 @@ class MainActivity : BaseActivity() {
         SPUtils.getInstance().put(Constant.KEY_ACCOUNT_ID, Constant.mAccountId)
         SPUtils.getInstance().put(Constant.KEY_TOKEN, Constant.mToken)
         SPUtils.getInstance().put(Constant.KEY_MOBILE, Constant.mMobile)
+        SPUtils.getInstance().put(Constant.KEY_LOGIN_TIME, System.currentTimeMillis())
 
         FireBaseMgr.sInstance.reportFcmToken()
 

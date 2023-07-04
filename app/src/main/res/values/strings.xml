@@ -153,7 +153,7 @@
     <string name="device_check_failure">device check failure.</string>
     <string name="send_sms_error">send sms error.</string>
     <string name="please_send_msg_later">please send message later</string>
-    <string name="must_agree_term">You must agree term.</string>
+    <string name="must_agree_term">Please read and agree the Terms &amp; Privacy.</string>
     <string name="enter_correct_phone_num">Please enter your correct phone number</string>
     <string name="ussd_login_failure">ussd login failure</string>
     <string name="ussd_login_error">ussd login error</string>
@@ -169,7 +169,7 @@
     <string name="please_read_the_terms_4">Privacy.</string>
     <string name="please_read_the_terms_5">By continuing, you agree to the terms and privacy.</string>
     <string name="register_login">Register/Login</string>
-    <string name="login_otp">Please enter the OTP we sent to %s via sms</string>
+    <string name="login_otp">Please enter the OTP we sent to +%s via sms</string>
     <string name="loan_declined_desc1">Sorry!!! \nWe could not approve your loan at the moment because of certain reasons. Please keep better records and apply later.</string>
     <string name="loan_declined_desc2_1">Possible Reason ：\n• Low credit Score\n• We got your credit score from an /nindependent credit agency and you can improve it by building good credit history</string>
 

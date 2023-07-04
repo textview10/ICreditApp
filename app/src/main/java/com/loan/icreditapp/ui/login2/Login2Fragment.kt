@@ -113,6 +113,7 @@ class Login2Fragment : BaseFragment() {
                 val text: String = editable.toString()
                 if (!TextUtils.isEmpty(text)) {
                     ivClear?.visibility = View.VISIBLE
+                    tvCommit?.isEnabled = text.length >= 12
                 } else {
                     ivClear?.visibility = View.GONE
                 }
@@ -125,6 +126,9 @@ class Login2Fragment : BaseFragment() {
         }
         if (etSignIn != null && !TextUtils.isEmpty(phoneNum)) {
             etSignIn!!.setText(phoneNum)
+            tvCommit?.isEnabled = true
+        } else {
+            tvCommit?.isEnabled = false
         }
         updateState()
 
@@ -185,14 +189,14 @@ class Login2Fragment : BaseFragment() {
             phoneNum = phoneNum?.replace(" ", "")
         }
         if (TextUtils.isEmpty(phoneNum)) {
-            ToastUtils.showShort("phone num = null")
+            ToastUtils.showShort("Please enter your phone number.")
             return
         }
         if (checkClickFast()){
             return
         }
         mPhoneNum = phoneNum
-        FirebaseUtils.logEvent("fireb_click_sign")
+//        FirebaseUtils.logEvent("fireb_click_sign")
         checkServerAvailable(object : CallBack {
             override fun onEnd() {
                 if (isDestroy()){
@@ -251,6 +255,8 @@ class Login2Fragment : BaseFragment() {
                         return
                     }
                     if (activity is Login2Activity) {
+                        ToastUtils.showShort("send sms success")
+                        FirebaseUtils.logEvent("fireb_send_sms")
                         (activity as Login2Activity).toOtpFragment(mPrex!!, phoneNum)
                     }
                 }

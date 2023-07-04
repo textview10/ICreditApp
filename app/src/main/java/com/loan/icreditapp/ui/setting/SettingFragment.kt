@@ -375,6 +375,7 @@ class SettingFragment : BaseFragment() {
                     Constant.mAccountId = null
                     Constant.mLaunchOrderInfo = null
                     SPUtils.getInstance().put(Constant.KEY_TOKEN, "")
+                    SPUtils.getInstance().put(Constant.KEY_LOGIN_TIME, 0L)
                     val header = BuildRequestJsonUtils.clearHeaderToken()
                     OkGo.getInstance().addCommonHeaders(header)
                     var intent: Intent = Intent(activity, Login2Activity::class.java)

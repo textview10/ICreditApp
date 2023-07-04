@@ -30,6 +30,7 @@ import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.login.Login2Activity
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
 import com.loan.icreditapp.util.BuildRequestJsonUtils
+import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
@@ -43,9 +44,10 @@ class LoginOtpFragment : BaseFragment(){
     private var ivBack : AppCompatImageView? = null
     private var tvCommit : AppCompatTextView? = null
     private var tvDesc1 : AppCompatTextView? = null
-    private var tvReceive : AppCompatTextView? = null
+    private var tvUssd : AppCompatTextView? = null
     private var verifyCodeView : InputVerifyCodeView? = null
     private var flLoading : FrameLayout? = null
+    private var viewBottom : View? = null
 
     private var mHandler: Handler? = null
     private var mAuthCode : String? = null
@@ -81,6 +83,11 @@ class LoginOtpFragment : BaseFragment(){
                             tvCommit?.isEnabled = false
                             tvCommit?.text = text
                             mHandler?.sendEmptyMessageDelayed(TYPE_TIME_REDUCE, 1000)
+                            if (mCurTime <= 30) {
+                                if (tvUssd?.visibility != View.VISIBLE) {
+                                    tvUssd?.visibility = View.VISIBLE
+                                }
+                            }
                         }
                     }
                 }
@@ -105,7 +112,8 @@ class LoginOtpFragment : BaseFragment(){
         verifyCodeView = view.findViewById<InputVerifyCodeView>(R.id.input_verify_code_otp)
         flLoading = view.findViewById<FrameLayout>(R.id.fl_otp_login_loading)
         tvDesc1 = view.findViewById<AppCompatTextView>(R.id.tv_login_otp_desc1)
-        tvReceive = view.findViewById<AppCompatTextView>(R.id.tv_can_not_recevie)
+        tvUssd = view.findViewById<AppCompatTextView>(R.id.tv_can_not_recevie)
+        viewBottom = view.findViewById<View>(R.id.view_bottom_otp)
 
         verifyCodeView?.setObserver(object : InputVerifyCodeView.Observer {
             override fun onEnd() {
@@ -151,7 +159,9 @@ class LoginOtpFragment : BaseFragment(){
             requestSendSms(getFinalPhoneNum())
             mHandler?.sendEmptyMessage(TYPE_TIME_REDUCE)
         }
+        tvCommit?.isEnabled = false
         mHandler?.sendEmptyMessage(TYPE_TIME_REDUCE)
+
         verifyCodeView?.post(Runnable {
             if (isDestroy() || verifyCodeView == null){
                 return@Runnable
@@ -161,7 +171,7 @@ class LoginOtpFragment : BaseFragment(){
             }
         })
 
-        tvReceive?.setOnClickListener{
+        tvUssd?.setOnClickListener{
             toSendCodeActivity()
         }
 
@@ -171,13 +181,13 @@ class LoginOtpFragment : BaseFragment(){
 
         KeyboardUtils.registerSoftInputChangedListener(requireActivity(), object : OnSoftInputChangedListener {
             override fun onSoftInputChanged(height: Int) {
-                if (tvReceive == null){
+                if (viewBottom == null){
                     return
                 }
                 val marginBottom = ConvertUtils.dp2px(18f)
-                val layoutParams = tvReceive!!.layoutParams as ConstraintLayout.LayoutParams
+                val layoutParams = viewBottom!!.layoutParams as ConstraintLayout.LayoutParams
                 layoutParams.bottomMargin = (height + marginBottom)
-                tvReceive!!.layoutParams = layoutParams
+                viewBottom!!.layoutParams = layoutParams
             }
 
         })
@@ -346,7 +356,6 @@ class LoginOtpFragment : BaseFragment(){
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
                     flLoading?.visibility = View.GONE
-                    tvCommit?.isEnabled = true
                     var responseBean: BaseResponseBean? = null
                     try {
                         responseBean = com.alibaba.fastjson.JSONObject.parseObject(
@@ -360,12 +369,17 @@ class LoginOtpFragment : BaseFragment(){
                     }
                     if (response == null) {
                         ToastUtils.showShort(" send sms failure.")
+                        tvCommit?.isEnabled = true
                         return
                     }
                     if (responseBean!!.isRequestSuccess() != true) {
                         ToastUtils.showShort("" + responseBean.getMessage())
+                        tvCommit?.isEnabled = true
                         return
                     }
+                    tvCommit?.isEnabled = false
+                    ToastUtils.showShort("send sms success")
+                    FirebaseUtils.logEvent("fireb_send_sms")
                 }
 
                 override fun onError(response: Response<String>) {

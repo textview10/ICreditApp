@@ -15,6 +15,8 @@ class Constant {
 
         const val KEY_MOBILE = "key_sign_in_mobile"
 
+        const val KEY_LOGIN_TIME = "key_sign_in_login_time"
+
         var mToken : String? = null
 
         var mAccountId : String? = null

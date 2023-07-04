@@ -8,6 +8,8 @@ import android.text.TextUtils
 import android.util.Log
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
@@ -76,13 +78,24 @@ class LauncherActivity : BaseActivity() {
         val accountId = SPUtils.getInstance().getString(Constant.KEY_ACCOUNT_ID)
         val token = SPUtils.getInstance().getString(Constant.KEY_TOKEN)
         val mobile = SPUtils.getInstance().getString(Constant.KEY_MOBILE)
-
+        val lastLoginTime = SPUtils.getInstance().getLong(Constant.KEY_LOGIN_TIME, 0L)
+        var canUseToken = true
+        if (lastLoginTime > 0 && System.currentTimeMillis() >= lastLoginTime) {
+            val deltaTime = System.currentTimeMillis() - lastLoginTime
+            if (deltaTime >= 30 * 24 * 60 * 60 * 1000) {
+                canUseToken = false
+            }
+        }
         Constant.mToken = token
 //        Log.e(TAG, " token = " + token)
 
         if (TextUtils.isEmpty(accountId) || TextUtils.isEmpty(token)
-            || TextUtils.isEmpty(mobile)) {
+            || TextUtils.isEmpty(mobile) || !canUseToken) {
 //        if (BuildConfig.DEBUG) {
+            if (!canUseToken && BuildConfig.DEBUG) {
+                ToastUtils.showShort("token desire")
+            }
+            LogSaver.logToFile("auto login token has desire")
             mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 1000)
         } else {
             val httpHeaders = BuildRequestJsonUtils.buildHeaderToken()
