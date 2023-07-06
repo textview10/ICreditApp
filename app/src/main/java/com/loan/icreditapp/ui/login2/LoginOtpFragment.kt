@@ -184,7 +184,7 @@ class LoginOtpFragment : BaseFragment(){
                 if (viewBottom == null){
                     return
                 }
-                val marginBottom = ConvertUtils.dp2px(18f)
+                val marginBottom = ConvertUtils.dp2px(2f)
                 val layoutParams = viewBottom!!.layoutParams as ConstraintLayout.LayoutParams
                 layoutParams.bottomMargin = (height + marginBottom)
                 viewBottom!!.layoutParams = layoutParams

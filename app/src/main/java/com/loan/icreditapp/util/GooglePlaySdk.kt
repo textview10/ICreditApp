@@ -27,10 +27,11 @@ class GooglePlaySdk {
                                 val referrerUrl = response.installReferrer
                                 if (!TextUtils.isEmpty(referrerUrl)) {
                                     // utmsource
-                                    var utmSource = tryGetUtmSource(referrerUrl)
-                                    if (!TextUtils.isEmpty(utmSource)) {
-                                        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildUtmSource(utmSource!!))
-                                    }
+                                    OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildUtmSource(referrerUrl))
+//                                    var utmSource = tryGetUtmSource(referrerUrl)
+//                                    if (!TextUtils.isEmpty(utmSource)) {
+//                                        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildUtmSource(utmSource!!))
+//                                    }
                                     var utmMedium =  tryGetUtmMedium(referrerUrl)
                                     if (TextUtils.isEmpty(utmMedium)) {
                                         utmMedium =  tryGetGCLID(referrerUrl)
