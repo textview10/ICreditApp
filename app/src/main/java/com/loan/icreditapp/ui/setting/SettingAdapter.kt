@@ -63,6 +63,11 @@ class SettingAdapter : RecyclerView.Adapter<SettingHolder> {
         return pos == mCurPos
     }
 
+    fun setCurPos(pos : Int) {
+        mCurPos = pos
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return if (mList == null) 0 else mList!!.size
     }

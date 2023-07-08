@@ -15,7 +15,7 @@ class ChoosePayData() {
 
     companion object {
 
-        fun buildList(cardNum : String?) : ArrayList<ChoosePayData>{
+        fun buildList(cardNum : String?, showBottom : Boolean) : ArrayList<ChoosePayData>{
             val list = ArrayList<ChoosePayData>()
 
             val pay1 = ChoosePayData()
@@ -37,12 +37,13 @@ class ChoosePayData() {
             pay3.desc = "Flutterwave"
             list.add(pay3)
 
-            val pay4 = ChoosePayData()
-            pay4.icon = R.drawable.ic_pay_4
-            pay4.title = "Bank Transfer"
-            pay4.desc = null
-            list.add(pay4)
-
+            if (showBottom) {
+                val pay4 = ChoosePayData()
+                pay4.icon = R.drawable.ic_pay_4
+                pay4.title = "Bank Transfer"
+                pay4.desc = null
+                list.add(pay4)
+            }
             return list
         }
     }

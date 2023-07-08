@@ -50,6 +50,7 @@ class MainActivity : BaseActivity() {
     private var flSetting: FrameLayout? = null
     private var ivMenu: ImageView? = null
     private var tvTitle: AppCompatTextView? = null
+    private var settingFragment: SettingFragment? = null
 
     private var handler: Handler = Handler(Looper.getMainLooper())
 
@@ -98,8 +99,8 @@ class MainActivity : BaseActivity() {
         })
 
         updatePageByTypeInternal()
-        var settingFragment = SettingFragment()
-        replaceFragment(settingFragment, R.id.fl_main_setting)
+        settingFragment = SettingFragment()
+        replaceFragment(settingFragment!!, R.id.fl_main_setting)
     }
 
     private fun replaceFragment(fragment: BaseFragment, containRes: Int) {
@@ -278,6 +279,10 @@ class MainActivity : BaseActivity() {
                 setTitle(R.string.setting_offline_repay)
                 curFragment = OfflineRepayFragment()
             }
+            PageType.VIRTUAL_ACCOUNT -> {
+                setTitle(R.string.setting_virtual_account)
+                curFragment = VirtualAccountFragment()
+            }
         }
         if (curFragment != null) {
             replaceFragment(curFragment, R.id.fl_main_content)
@@ -334,7 +339,8 @@ class MainActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PayActivity2.REQUEST_CODE_TO_PAY) {
             if (resultCode == PayActivity2.RESULT_CODE_SELECT_BANK_TRANFER) {
-                updatePageByType(PageType.OFFLINE_REPAY)
+                settingFragment?.selectNone()
+                updatePageByType(PageType.VIRTUAL_ACCOUNT)
             }
         }
     }

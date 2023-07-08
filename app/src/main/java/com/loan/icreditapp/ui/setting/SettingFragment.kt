@@ -416,4 +416,7 @@ class SettingFragment : BaseFragment() {
             })
     }
 
+    fun selectNone(){
+        mAdater?.setCurPos(-1)
+    }
 }

@@ -16,9 +16,11 @@ import com.loan.icreditapp.ui.setting.PageType.Companion.RATE_US
 import com.loan.icreditapp.ui.setting.PageType.Companion.TEST_TO_PROFILE
 import com.loan.icreditapp.ui.setting.PageType.Companion.TEST_TO_PROFILE2
 import com.loan.icreditapp.ui.setting.PageType.Companion.TEST_TO_PROFILE3
+import com.loan.icreditapp.ui.setting.PageType.Companion.VIRTUAL_ACCOUNT
 
 
-@IntDef(MY_LOAN, MY_PROFILE, CARD, BANK_ACCOUNT, MESSAGE, HELP, ABOUT, LOGOUT, TEST_TO_PROFILE, RATE_US, CONTACT_US, OFFLINE_REPAY, FEED_BACK, TEST_TO_PROFILE2, TEST_TO_PROFILE3)
+@IntDef(MY_LOAN, MY_PROFILE, CARD, BANK_ACCOUNT, MESSAGE, HELP, ABOUT, LOGOUT, TEST_TO_PROFILE, RATE_US, CONTACT_US, OFFLINE_REPAY, FEED_BACK, TEST_TO_PROFILE2, TEST_TO_PROFILE3
+,VIRTUAL_ACCOUNT)
 @Retention(AnnotationRetention.SOURCE)
 annotation class PageType {
     companion object {
@@ -33,6 +35,7 @@ annotation class PageType {
         const val CONTACT_US = 8
         const val OFFLINE_REPAY = 9
         const val FEED_BACK = 10
+        const val VIRTUAL_ACCOUNT = 11
 
         const val LOGOUT = 111
         const val TEST_TO_PROFILE = 112

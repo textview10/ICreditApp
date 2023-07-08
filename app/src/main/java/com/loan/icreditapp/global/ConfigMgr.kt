@@ -279,7 +279,7 @@ class ConfigMgr {
 
                         override fun onError(response: Response<String>) {
                             super.onError(response)
-
+                            callBack3?.onGetData(null)
                         }
                     })
             } catch (e : Exception) {

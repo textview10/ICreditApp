@@ -14,7 +14,9 @@ import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.R
+import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseFragment
+import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.bank.CardResponseBean
 import com.loan.icreditapp.bean.pay.MonifyResponseBean
 import com.loan.icreditapp.event.ChooseBankListEvent
@@ -27,12 +29,18 @@ import com.loan.icreditapp.ui.pay.presenter.BasePresenter
 import com.loan.icreditapp.ui.pay.presenter.FlutterwarePresenter
 import com.loan.icreditapp.ui.pay.presenter.NorLoanPresenter
 import com.loan.icreditapp.ui.pay.presenter.PayStackPresenter
+import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.CardNumUtils
+import com.loan.icreditapp.util.CheckResponseUtils
+import com.lzy.okgo.OkGo
+import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
 import net.entity.bean.FlutterWaveResult
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONException
+import org.json.JSONObject
 
 class ChoosePayFragment : BaseFragment() {
     companion object {
@@ -54,6 +62,8 @@ class ChoosePayFragment : BaseFragment() {
     private var norPresenter: NorLoanPresenter? = null
     private var payStackPresenter: PayStackPresenter? = null
     private var flutterwavePresenter: FlutterwarePresenter? = null
+    private var needShow: Boolean = false
+    private var cardNum: String? = null
     //    private var redoclyPresenter: RedoclyPresenter? = null
 //    private var monifyPresenter: MonifyPresenter? = null
 
@@ -86,7 +96,7 @@ class ChoosePayFragment : BaseFragment() {
         rvPay?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         mChooseDataList.clear()
-        mChooseDataList.addAll(ChoosePayData.buildList(null))
+        mChooseDataList.addAll(ChoosePayData.buildList(cardNum, needShow))
 
         mAdapter = ChoosePayAdapter(mChooseDataList)
         mAdapter?.setOnItemClickListener(object :ChoosePayAdapter.OnItemClickListener {
@@ -129,21 +139,72 @@ class ChoosePayFragment : BaseFragment() {
     }
 
     private fun updateBankListInternal(){
-        ConfigMgr.getBankList(object : ConfigMgr.CallBack4 {
-            override fun onGetData(bankList: ArrayList<CardResponseBean.Bank>) {
+        val jsonObject: JSONObject = BuildRequestJsonUtils.buildRequestJson()
+        try {
+            jsonObject.put("accountId", Constant.mAccountId)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        OkGo.post<String>(Api.GET_RESERVED_ACCOUNT).tag(PayFragment.TAG)
+            .upJson(jsonObject)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>) {
+                    if (isDestroy()) {
+                        return
+                    }
+                    var monifyBean = CheckResponseUtils.checkResponseSuccess(
+                        response,
+                        MonifyResponseBean::class.java
+                    )
+                    if (monifyBean != null) {
+                        if (TextUtils.equals(monifyBean.reserved, "1")
+                            && !TextUtils.isEmpty(monifyBean.bankName)
+                            && !TextUtils.isEmpty(monifyBean.accountNumber)
+                            && !TextUtils.isEmpty(monifyBean.bankName)) {
+                            needShow = true
+                        }
+                    }
+                    ConfigMgr.getBankList(object : ConfigMgr.CallBack4 {
+                        override fun onGetData(bankList: ArrayList<CardResponseBean.Bank>) {
+                            if (isDestroy()){
+                                return
+                            }
+                            mBankList.clear()
+                            mBankList.addAll(bankList)
+                            if (mBankList.isNotEmpty()) {
+                                var bank: CardResponseBean.Bank = mBankList[0]
+                                norPresenter?.setCurBankNum(bank.cardNumber)
+
+                                mChooseDataList.clear()
+                                cardNum = CardNumUtils.getCardNumHide2(bank.cardNumber)
+                            }
+                            mChooseDataList.clear()
+                            mChooseDataList.addAll(ChoosePayData.buildList(cardNum, needShow))
+                            Log.e("Test", " test 2222 = " +cardNum + "  needShow = " + needShow)
+                            mAdapter?.notifyDataSetChanged()
+                        }
+
+                    })
+                }
+
+                override fun onError(response: Response<String>) {
+                    super.onError(response)
+                    if (isDestroy()) {
+                        return
+                    }
+                }
+            })
+
+        ConfigMgr.getTextInfo(object : ConfigMgr.CallBack3 {
+            override fun onGetData(textInfoResponse: TextInfoResponse?) {
                 if (isDestroy()){
                     return
                 }
-                mBankList.clear()
-                mBankList.addAll(bankList)
-                if (mBankList.isNotEmpty()) {
-                    var bank: CardResponseBean.Bank = mBankList[0]
-                    norPresenter?.setCurBankNum(bank.cardNumber)
 
-                    mChooseDataList.clear()
-                    val cardNum = CardNumUtils.getCardNumHide2(bank.cardNumber)
-                    mChooseDataList.addAll(ChoosePayData.buildList(cardNum))
-                }
+//                if (!TextUtils.isEmpty(bean.bankCode)) {
+//                    selectBankCode?.setEditTextAndSelection(bean.bankCode!!)
+//                }
+
             }
 
         })

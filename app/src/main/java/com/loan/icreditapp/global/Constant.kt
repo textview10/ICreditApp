@@ -2,6 +2,7 @@ package com.loan.icreditapp.global
 
 import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.bank.CardResponseBean
+import com.loan.icreditapp.bean.pay.MonifyResponseBean
 import com.loan.icreditapp.dialog.order.OrderInfoBean
 
 class Constant {
@@ -48,6 +49,7 @@ class Constant {
 
         var imei : String? = null
 
+        var monifyBean : MonifyResponseBean? = null
     }
 
 }

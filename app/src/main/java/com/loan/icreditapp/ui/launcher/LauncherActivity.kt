@@ -82,7 +82,8 @@ class LauncherActivity : BaseActivity() {
         var canUseToken = true
         if (lastLoginTime > 0 && System.currentTimeMillis() >= lastLoginTime) {
             val deltaTime = System.currentTimeMillis() - lastLoginTime
-            if (deltaTime >= 30 * 24 * 60 * 60 * 1000) {
+            val TIME : Long = 30L * 24 * 60 * 60 * 1000
+            if (deltaTime >= TIME) {
                 canUseToken = false
             }
         }
