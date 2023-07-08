@@ -48,6 +48,8 @@ class LoginOtpFragment : BaseFragment(){
     private var verifyCodeView : InputVerifyCodeView? = null
     private var flLoading : FrameLayout? = null
     private var viewBottom : View? = null
+    private var icIcon : AppCompatImageView? = null
+    private var clBottom : View? = null
 
     private var mHandler: Handler? = null
     private var mAuthCode : String? = null
@@ -114,6 +116,8 @@ class LoginOtpFragment : BaseFragment(){
         tvDesc1 = view.findViewById<AppCompatTextView>(R.id.tv_login_otp_desc1)
         tvUssd = view.findViewById<AppCompatTextView>(R.id.tv_can_not_recevie)
         viewBottom = view.findViewById<View>(R.id.view_bottom_otp)
+        icIcon = view.findViewById<AppCompatImageView>(R.id.iv_login2_icon)
+        clBottom = view.findViewById<View>(R.id.cl_otp_bottom)
 
         verifyCodeView?.setObserver(object : InputVerifyCodeView.Observer {
             override fun onEnd() {
@@ -181,13 +185,19 @@ class LoginOtpFragment : BaseFragment(){
 
         KeyboardUtils.registerSoftInputChangedListener(requireActivity(), object : OnSoftInputChangedListener {
             override fun onSoftInputChanged(height: Int) {
-                if (viewBottom == null){
+                if (icIcon == null || clBottom == null){
                     return
                 }
-                val marginBottom = ConvertUtils.dp2px(2f)
-                val layoutParams = viewBottom!!.layoutParams as ConstraintLayout.LayoutParams
-                layoutParams.bottomMargin = (height + marginBottom)
-                viewBottom!!.layoutParams = layoutParams
+                Log.e("Test"," bottom = " + height)
+                if (height == 0){
+                    icIcon?.visibility = View.VISIBLE
+                } else {
+                    icIcon?.visibility = View.GONE
+                }
+                val layoutParams = clBottom!!.layoutParams as ConstraintLayout.LayoutParams
+                layoutParams.bottomMargin = (height)
+                clBottom!!.layoutParams = layoutParams
+
             }
 
         })
@@ -286,7 +296,8 @@ class LoginOtpFragment : BaseFragment(){
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        OkGo.post<String>(Api.REG_LOGIN_V2).tag(Login2Fragment.TAG)
+        OkGo.post<String>(Api.REG_LOGIN_V2).tag(LoginOtpFragment.TAG)
+            .headers("token", "")
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
@@ -441,6 +452,11 @@ class LoginOtpFragment : BaseFragment(){
         Constant.mAccountId = bean.accountId
         Constant.mToken = bean.token
         Constant.mMobile = bean.mobile
+        if (TextUtils.equals(bean.active, "1")){
+            FirebaseUtils.logEvent("fireb_click_register")
+        } else if (TextUtils.equals(bean.active, "2")) {
+            FirebaseUtils.logEvent("fireb_click_sign")
+        }
         SPUtils.getInstance().put(Login2Fragment.KEY_PHONE_NUM_2, mPhoneNum)
         if (KeyboardUtils.isSoftInputVisible(requireActivity())){
             KeyboardUtils.hideSoftInput(requireActivity())

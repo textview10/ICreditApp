@@ -7,4 +7,6 @@ class RegLoginBean {
     var token: String? = null
     //用户ID
     var accountId: String? = null
+    //"1"注册,2 "登录"
+    var active: String? = null
 }

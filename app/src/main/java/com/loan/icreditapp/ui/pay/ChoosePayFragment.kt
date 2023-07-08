@@ -229,8 +229,8 @@ class ChoosePayFragment : BaseFragment() {
 
     private fun toWebViewInternal(url: String) {
         flLoading?.visibility = View.GONE
-        if (activity is PayActivity) {
-            var payActivity = activity as PayActivity
+        if (activity is PayActivity2) {
+            var payActivity = activity as PayActivity2
             payActivity.toWebView(url)
         }
     }

@@ -63,4 +63,9 @@
     </style>
 
     <style name="myBtnStyle">value</style>
+
+    <style name="login_spinner" parent="@android:style/Widget.TextView.SpinnerItem" >
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

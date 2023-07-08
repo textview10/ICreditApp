@@ -1,5 +1,6 @@
 package com.loan.icreditapp.ui.pay.adapter
 
+import android.text.TextUtils
 import androidx.annotation.DrawableRes
 import com.loan.icreditapp.R
 
@@ -20,7 +21,8 @@ class ChoosePayData() {
             val pay1 = ChoosePayData()
             pay1.icon = R.drawable.ic_bank_pay
             pay1.title = "BankCard"
-            pay1.desc = cardNum
+            pay1.desc = if (cardNum == null || TextUtils.isEmpty(cardNum))
+                "no bind card" else cardNum
             list.add(pay1)
 
             val pay2 = ChoosePayData()

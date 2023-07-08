@@ -95,7 +95,7 @@ class LauncherActivity : BaseActivity() {
             if (!canUseToken && BuildConfig.DEBUG) {
                 ToastUtils.showShort("token desire")
             }
-            LogSaver.logToFile("auto login token has desire")
+            LogSaver.logToFile("auto login token has desire last login time = $lastLoginTime" + " curTime = " + System.currentTimeMillis())
             mHandler?.sendEmptyMessageDelayed(TO_WELCOME_PAGE, 1000)
         } else {
             val httpHeaders = BuildRequestJsonUtils.buildHeaderToken()

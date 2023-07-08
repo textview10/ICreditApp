@@ -78,57 +78,64 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="30dp"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:id="@+id/ll_loan_repay"
             android:layout_width="match_parent"
-            android:background="@drawable/bg_orange_corner"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            android:layout_height="47dp">
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content">
+                android:background="@drawable/bg_orange_corner"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:layout_height="47dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_discount_loan_repay"
-                    android:layout_width="wrap_content"
-                    android:drawableStart="@drawable/ic_discount"
-                    android:text="@string/discount_account"
-                    android:background="@drawable/bg_grey_corner"
-                    android:textSize="14sp"
-                    android:paddingTop="1dp"
-                    android:paddingBottom="1dp"
-                    android:paddingStart="3dp"
-                    android:paddingEnd="3dp"
-                    android:drawablePadding="3dp"
-                    android:includeFontPadding="false"
-                    android:layout_gravity="center_horizontal"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:textColor="#B2FFFFFF"
-                    android:textSize="12sp"
-                    android:text="@string/discount_account_desc"
-                    android:layout_gravity="center_horizontal"
-                    android:includeFontPadding="false"
-                    android:layout_height="wrap_content"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_discount_loan_repay"
+                        android:layout_width="wrap_content"
+                        android:drawableStart="@drawable/ic_discount"
+                        android:text="@string/discount_account"
+                        android:background="@drawable/bg_grey_corner"
+                        android:textSize="14sp"
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"
+                        android:paddingStart="3dp"
+                        android:paddingEnd="3dp"
+                        android:drawablePadding="3dp"
+                        android:includeFontPadding="false"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:layout_height="wrap_content"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:textColor="#B2FFFFFF"
+                        android:textSize="12sp"
+                        android:text="@string/discount_account_desc"
+                        android:layout_gravity="center_horizontal"
+                        android:includeFontPadding="false"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <View
+                android:id="@+id/view_loan_repay"
+                android:layout_width="20dp"
+                android:background="@drawable/ic_bottom_arrow"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="15dp"/>
+
         </LinearLayout>
-        
-        <View
-            android:id="@+id/view_loan_repay"
-            android:layout_width="20dp"
-            android:background="@drawable/ic_bottom_arrow"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="15dp"/>
 
         <FrameLayout
             android:id="@+id/fl_loan_paid_commit"

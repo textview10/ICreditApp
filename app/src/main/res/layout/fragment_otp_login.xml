@@ -9,8 +9,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_title_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/cm_dp_42"
+        android:layout_height="@dimen/cm_dp_42"
         android:layout_marginStart="20dp"
         android:layout_marginTop="@dimen/cm_dp_15"
         android:src="@drawable/ic_otp_back"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Back"
         android:textColor="#1C1F3E"
-        android:textSize="20sp"
+        android:textSize="@dimen/cm_sp_20"
         android:layout_marginStart="10dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_title_back"
@@ -35,11 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/cm_dp_25"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="@dimen/cm_dp_22"
         android:text="@string/login_otp"
         android:textColor="#1C1F3E"
         android:textStyle="bold"
-        android:textSize="21sp"
+        android:textSize="@dimen/cm_sp_21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_login_otp_desc2"
         app:layout_constraintTop_toBottomOf="@id/iv_title_back" />
@@ -49,10 +49,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/cm_dp_25"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/cm_dp_8"
         android:text="@string/the_otp_is_4_digit"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="14sp"
+        android:textSize="@dimen/cm_sp_14"
         app:layout_constraintBottom_toTopOf="@id/input_verify_code_otp"
         app:layout_constraintTop_toBottomOf="@id/tv_login_otp_desc1" />
 
@@ -65,55 +65,62 @@
         android:layout_marginEnd="@dimen/cm_dp_90"
         app:layout_constraintBottom_toTopOf="@id/input_verify_code_otp"
         app:layout_constraintTop_toBottomOf="@id/tv_login_otp_desc2"
-        android:layout_height="56dp" />
+        android:layout_height="@dimen/cm_dp_56" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_otp_login_commit"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_otp_bottom"
         android:layout_width="match_parent"
-        android:background="@drawable/selector_commit_bg"
-        android:layout_marginBottom="25dp"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="17sp"
-        android:text="@string/register_login"
-        android:layout_marginStart="@dimen/cm_dp_35"
-        android:layout_marginEnd="@dimen/cm_dp_35"
-        app:layout_constraintBottom_toTopOf="@id/tv_can_not_recevie"
-        android:layout_height="50dp"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_can_not_recevie"
-        android:layout_width="wrap_content"
-        android:text="@string/can_not_recieve_sms"
-        android:textColor="#019FB8"
-        android:textSize="14sp"
-        android:gravity="center"
-        android:layout_marginStart="@dimen/cm_dp_25"
-        android:layout_marginEnd="@dimen/cm_dp_25"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:lines="2"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/view_bottom_otp"
-        android:layout_height="wrap_content"/>
-
-    <View
-        android:id="@+id/view_bottom_otp"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="6dp"
-        app:layout_constraintBottom_toTopOf="@id/iv_login2_icon"
-        android:layout_height="1dp"/>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_login2_icon"
-        android:layout_width="@dimen/cm_dp_70"
-        android:layout_height="@dimen/cm_dp_70"
-        android:layout_marginTop="@dimen/cm_dp_10"
-        android:layout_marginBottom="@dimen/cm_dp_7"
-        android:src="@drawable/ic_fcc_pc"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_otp_login_commit"
+            android:layout_width="match_parent"
+            android:background="@drawable/selector_commit_bg"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/cm_sp_17"
+            android:text="@string/register_login"
+            android:layout_marginStart="@dimen/cm_dp_35"
+            android:layout_marginEnd="@dimen/cm_dp_35"
+            app:layout_constraintBottom_toTopOf="@id/tv_can_not_recevie"
+            android:layout_height="@dimen/cm_dp_50"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_can_not_recevie"
+            android:layout_width="wrap_content"
+            android:text="@string/can_not_recieve_sms"
+            android:textColor="#019FB8"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/cm_dp_25"
+            android:layout_marginEnd="@dimen/cm_dp_25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:lines="2"
+            android:layout_marginTop="6dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/view_bottom_otp"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:id="@+id/view_bottom_otp"
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toTopOf="@id/iv_login2_icon"
+            android:layout_height="1dp"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_login2_icon"
+            android:layout_width="@dimen/cm_dp_60"
+            android:layout_height="@dimen/cm_dp_60"
+            android:layout_marginBottom="@dimen/cm_dp_7"
+            android:src="@drawable/ic_fcc_pc"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/fl_otp_login_loading"
