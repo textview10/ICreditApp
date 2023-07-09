@@ -22,7 +22,7 @@ class ChoosePayData() {
             pay1.icon = R.drawable.ic_bank_pay
             pay1.title = "BankCard"
             pay1.desc = if (cardNum == null || TextUtils.isEmpty(cardNum))
-                "no bind card" else cardNum
+                "No card record" else cardNum
             list.add(pay1)
 
             val pay2 = ChoosePayData()

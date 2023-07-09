@@ -188,7 +188,6 @@ class LoginOtpFragment : BaseFragment(){
                 if (icIcon == null || clBottom == null){
                     return
                 }
-                Log.e("Test"," bottom = " + height)
                 if (height == 0){
                     icIcon?.visibility = View.VISIBLE
                 } else {
@@ -215,7 +214,6 @@ class LoginOtpFragment : BaseFragment(){
                         return@Runnable
                     }
                     verifyCodeView?.setVerifyCode(mAuthCode!!)
-                    Log.e("Test", " authCode = " + mAuthCode)
                 }, 100)
 
             }
@@ -296,7 +294,7 @@ class LoginOtpFragment : BaseFragment(){
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        OkGo.post<String>(Api.REG_LOGIN_V2).tag(LoginOtpFragment.TAG)
+        OkGo.post<String>(Api.REG_LOGIN_V2).tag(TAG)
             .headers("token", "")
             .upJson(jsonObject)
             .execute(object : StringCallback() {
@@ -316,7 +314,7 @@ class LoginOtpFragment : BaseFragment(){
                 override fun onError(response: Response<String>) {
                     super.onError(response)
                     flLoading?.visibility = View.GONE
-                    Log.e(Login2Fragment.TAG, "sign in error")
+                    Log.e(TAG, "sign in error")
                     var errorStr = ""
                     if (response != null){
                         try {
@@ -342,6 +340,7 @@ class LoginOtpFragment : BaseFragment(){
     }
 
     override fun onDestroy() {
+        OkGo.getInstance().cancelTag(TAG)
         super.onDestroy()
         ReadSmsMgr.onDestroy()
     }
@@ -362,7 +361,7 @@ class LoginOtpFragment : BaseFragment(){
         jsonObject.put("mobile", phoneNum)
         //“1”:注册，“2”：修改密码 3 设备更换
         jsonObject.put("captchaType", "1")
-        OkGo.post<String>(Api.GET_SMS_CODE).tag(Login2Fragment.TAG)
+        OkGo.post<String>(Api.GET_SMS_CODE).tag(TAG)
             .upJson(jsonObject)
             .execute(object : StringCallback() {
                 override fun onSuccess(response: Response<String>) {
@@ -397,7 +396,7 @@ class LoginOtpFragment : BaseFragment(){
                     super.onError(response)
                     flLoading?.visibility = View.GONE
                     tvCommit?.isEnabled = true
-                    Log.e(Login2Fragment.TAG, "request send sms error")
+                    Log.e(TAG, "request send sms error")
                     ToastUtils.showShort("request send sms error ...")
                 }
             })

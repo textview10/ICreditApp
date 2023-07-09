@@ -264,7 +264,7 @@ class PayFragment : BaseFragment() {
     }
 
     fun onUpdateBindCard(){
-        Log.e("Test", "on update bind card.")
+//        Log.e("Test", "on update bind card.")
         Constant.bankList.clear()
         updateBankListInternal()
     }
@@ -342,9 +342,9 @@ class PayFragment : BaseFragment() {
             flLoading?.visibility = View.GONE
             llMonifyResult?.visibility = VISIBLE
             if (TextUtils.equals(bean.reserved, "0")) {
-                tvMonifyTitle?.setText("Offline Tranfer:")
+                tvMonifyTitle?.text = "Offline Tranfer:"
             } else {
-                tvMonifyTitle?.setText("Virtual Account:")
+                tvMonifyTitle?.text = "Virtual Account:"
             }
             if (!TextUtils.isEmpty(bean.bankName)) {
                 selectBankName?.setEditTextAndSelection(bean.bankName!!)
