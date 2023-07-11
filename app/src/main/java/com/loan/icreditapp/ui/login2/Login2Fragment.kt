@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
@@ -25,6 +26,7 @@ import com.loan.icreditapp.bean.BaseResponseBean
 import com.loan.icreditapp.bean.ServerLiveBean
 import com.loan.icreditapp.bean.login.VerifyPhoneNumBean
 import com.loan.icreditapp.dialog.term.TermsDialog
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.presenter.PhoneNumPresenter
 import com.loan.icreditapp.ui.login.Login2Activity
 import com.loan.icreditapp.ui.widget.BlankTextWatcher
@@ -141,13 +143,22 @@ class Login2Fragment : BaseFragment() {
             if (hasPermissions) {
                 checkMobile()
             } else {
+                if (Constant.IS_COLLECT) {
+                    LogSaver.logToFile(" start request permission ")
+                }
                 PermissionUtils.permission(Manifest.permission.READ_SMS)
                     .callback(object : PermissionUtils.SimpleCallback {
                         override fun onGranted() {
+                            if (Constant.IS_COLLECT) {
+                                LogSaver.logToFile(" grant permission ")
+                            }
                             checkMobile()
                         }
 
                         override fun onDenied() {
+                            if (Constant.IS_COLLECT) {
+                                LogSaver.logToFile(" denied permission ")
+                            }
                             checkMobile()
                         }
                     }).request()
@@ -372,5 +383,11 @@ class Login2Fragment : BaseFragment() {
 
     private fun updateState(){
         ivAgree?.setImageResource(if (isAgree) R.drawable.btn_agree else R.drawable.btn_disagree)
+    }
+
+    fun onWindowFocusChanged(hasFocus: Boolean) {
+        if (Constant.IS_COLLECT) {
+            LogSaver.logToFile(" on window focus changed " + hasFocus)
+        }
     }
 }

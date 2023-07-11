@@ -98,4 +98,12 @@ class Login2Activity : BaseActivity() {
         startActivity(intent)
         finish()
     }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        var login2Fragment = supportFragmentManager.findFragmentByTag(Login2Fragment.TAG)
+        if (login2Fragment != null && login2Fragment is Login2Fragment) {
+            login2Fragment.onWindowFocusChanged(hasFocus)
+        }
+    }
 }

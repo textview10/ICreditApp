@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.drojian.alpha.toolslib.log.LogSaver;
 import com.loan.icreditapp.R;
 import com.loan.icreditapp.base.BaseFragment;
 import com.loan.icreditapp.bean.TextInfoResponse;
@@ -93,6 +94,9 @@ public class WebViewFragment extends BaseFragment {
                     PayActivity2 payActivity = (PayActivity2) getActivity();
                     payActivity.payStackSuccess();
                 }
+            }
+            if (Constant.IS_COLLECT) {
+                LogSaver.logToFile("webview url = " + url);
             }
         }
     };

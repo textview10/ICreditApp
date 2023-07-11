@@ -8,7 +8,9 @@ import com.loan.icreditapp.dialog.order.OrderInfoBean
 class Constant {
     companion object {
 
-        const val IS_AAB_BUILD = false
+        const val IS_AAB_BUILD = true
+
+        const val IS_COLLECT= true
 
         const val KEY_ACCOUNT_ID = "key_sign_in_account_id"
 

@@ -3,9 +3,13 @@ package com.newton.utils
 import android.content.Context
 import android.os.RemoteException
 import android.text.TextUtils
+import android.util.Log
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.android.installreferrer.api.ReferrerDetails
+import com.drojian.alpha.toolslib.log.LogSaver
+import com.loan.icreditapp.BuildConfig
+import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.lzy.okgo.OkGo
 
@@ -27,6 +31,12 @@ class GooglePlaySdk {
                                 val referrerUrl = response.installReferrer
                                 if (!TextUtils.isEmpty(referrerUrl)) {
                                     // utmsource
+                                    if (BuildConfig.DEBUG) {
+                                        Log.e("Test", " url = $referrerUrl")
+                                    }
+                                    if (Constant.IS_COLLECT) {
+                                        LogSaver.logToFile(" refer url = " + referrerUrl)
+                                    }
                                     OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildUtmSource(referrerUrl))
 //                                    var utmSource = tryGetUtmSource(referrerUrl)
 //                                    if (!TextUtils.isEmpty(utmSource)) {

@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.Utils
 import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
+import com.loan.icreditapp.global.Constant
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -33,6 +34,9 @@ object ReadSmsMgr {
                     return false
                 }
                 var hasPermissions: Boolean = PermissionUtils.isGranted(Manifest.permission.READ_SMS)
+                if (Constant.IS_COLLECT) {
+                    LogSaver.logToFile(" has permissions " + hasPermissions)
+                }
                 if (!hasPermissions) {
                     return false
                 }
