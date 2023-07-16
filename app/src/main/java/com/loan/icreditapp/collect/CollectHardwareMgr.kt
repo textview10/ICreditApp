@@ -143,7 +143,7 @@ class CollectHardwareMgr {
             }
             jsonObject.put("is_usb_debug", is_usb_debug)
 
-            jsonObject.put("mac", DeviceUtils.getMacAddress())
+            jsonObject.put("mac", NetworkUtils.getIPAddress(true))
             var netWorkType : String = ""
             when (NetworkUtils.getNetworkType()) {
                 (NetworkUtils.NetworkType.NETWORK_ETHERNET) -> {
