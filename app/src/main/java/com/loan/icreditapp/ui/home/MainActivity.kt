@@ -79,12 +79,12 @@ class MainActivity : BaseActivity() {
 
         FireBaseMgr.sInstance.reportFcmToken()
 
-        UpdateMgr.sInstance.setOnShowUpdateListener(object : UpdateMgr.OnShowUpdateListener {
-            override fun onShowDialog(updateBean: UpdateResponseBean) {
-
-            }
-        })
-        UpdateMgr.sInstance.checkUpdate()
+//        UpdateMgr.sInstance.setOnShowUpdateListener(object : UpdateMgr.OnShowUpdateListener {
+//            override fun onShowDialog(updateBean: UpdateResponseBean) {
+//
+//            }
+//        })
+//        UpdateMgr.sInstance.checkUpdate()
     }
 
     private fun initializeView() {

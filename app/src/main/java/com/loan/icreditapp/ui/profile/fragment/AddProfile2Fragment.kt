@@ -108,7 +108,7 @@ class AddProfile2Fragment : BaseFragment() {
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
             )
             context?.contentResolver?.query(contactUri!!, projection, null, null, null).use { cursor ->
-                if (cursor!!.moveToFirst()) {
+                if (cursor != null && cursor.moveToFirst()) {
                     val NUMBER_INDEX = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                     val DISPLAY_NAME = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
                     val number = cursor.getString(NUMBER_INDEX)

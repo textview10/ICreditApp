@@ -26,6 +26,7 @@ import com.loan.icreditapp.bean.loan.ProductResponseBean
 import com.loan.icreditapp.bean.loan.TrialResponseBean
 import com.loan.icreditapp.collect.BaseCollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr
+import com.loan.icreditapp.collect.CollectHardwareMgr
 import com.loan.icreditapp.collect.item.CollectAppInfoMgr
 import com.loan.icreditapp.collect.item.CollectSmsMgr
 import com.loan.icreditapp.data.FirebaseData
@@ -421,6 +422,7 @@ class LoanApplyFragment : BaseLoanFragment() {
                         return
                     }
                     flLoading?.visibility = View.VISIBLE
+                    CollectHardwareMgr.sInstance.collectHardware(activity,null)
                     CollectDataMgr.sInstance.collectAuthData(checkLoanBean.orderId!!,
                         object : BaseCollectDataMgr.Observer {
                             override fun success(response: Response<String>?) {

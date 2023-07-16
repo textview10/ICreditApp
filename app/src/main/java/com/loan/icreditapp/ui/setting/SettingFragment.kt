@@ -23,6 +23,7 @@ import com.loan.icreditapp.bean.setting.SettingBean
 import com.loan.icreditapp.collect.BaseCollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr2
+import com.loan.icreditapp.collect.CollectHardwareMgr
 import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.global.ConfigMgr
@@ -284,10 +285,11 @@ class SettingFragment : BaseFragment() {
 //        val intent = Intent(context, AddBankAccount1Fragment::class.java)
 //        val intent = Intent(context, PayActivity2::class.java)
 //        startActivity(intent)
-        PayActivity2.launchPayActivity(activity!!, "","")
+//        PayActivity2.launchPayActivity(activity!!, "","")
 //        BindNewCardActivity.launchAddBankAccount(context!!)
 //        val test = Test()
 //        test.test1()
+        CollectHardwareMgr.sInstance.collectHardware(activity,null)
         if (true) {
             return
         }
