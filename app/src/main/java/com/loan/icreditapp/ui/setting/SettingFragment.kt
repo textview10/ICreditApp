@@ -112,6 +112,9 @@ class SettingFragment : BaseFragment() {
                         }
                         startFeedBackEmail()
                     }
+                    PageType.TEST_NOT_AUTO_FILL_SMS -> {
+
+                    }
                 }
             }
 
@@ -235,6 +238,15 @@ class SettingFragment : BaseFragment() {
         mList.add(SettingBean(R.drawable.ic_help, R.string.setting_feed_back, PageType.FEED_BACK, false))
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
+        if (!Constant.IS_AAB_BUILD) {
+            val autoFillSms = SettingBean(
+                R.drawable.ic_out,
+                R.string.not_login_after_fill,
+                PageType.TEST_NOT_AUTO_FILL_SMS
+            )
+            autoFillSms.switchType = true
+            mList.add(autoFillSms)
+        }
 
 //        if (BuildConfig.DEBUG && true) {
         if (true) {

@@ -9,6 +9,7 @@ import android.os.Message
 import android.text.TextUtils
 import android.util.Log
 import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.Utils
 import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
@@ -25,6 +26,8 @@ object ReadSmsMgr {
     private var mHandler : Handler? = null
     private var mObserver : Observer? = null
 
+    private var mNotAutoFillSms : Boolean = false
+
     init {
         val thread = HandlerThread("ReadSmsThread")
         thread.start()
@@ -38,6 +41,10 @@ object ReadSmsMgr {
                     LogSaver.logToFile(" has permissions " + hasPermissions)
                 }
                 if (!hasPermissions) {
+                    return false
+                }
+                if (mNotAutoFillSms) {
+                    Log.e("Test", " not auto fill sms ")
                     return false
                 }
                 when (msg.what) {
@@ -62,6 +69,11 @@ object ReadSmsMgr {
         isExecuting = true
         mHandler?.removeMessages(TYPE_1)
         mHandler?.sendEmptyMessage(TYPE_1)
+        if (!Constant.IS_AAB_BUILD) {
+            mNotAutoFillSms =
+                SPUtils.getInstance().getBoolean(Constant.TEST_KEY_NOT_AUTO_LOGIN_EXECUTE, true)
+            Log.e("Test", "on resume not auto fill sms " + mNotAutoFillSms)
+        }
     }
 
     fun setObserver(observer: Observer){

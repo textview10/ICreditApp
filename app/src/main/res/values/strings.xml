@@ -185,4 +185,6 @@
     <string name="setting_virtual_account">Virtual Account</string>
     <string name="bank_transfer_title">Personal repayment account</string>
     <string name="bank_transfer_desc">The account only available for you， order will auto settled in 1 hour after repayment</string>
+
+    <string name="not_login_after_fill">not auto fill sms code</string>
 </resources>

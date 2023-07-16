@@ -16,6 +16,8 @@ class SettingBean {
 
     var desc: String? = null
 
+    var switchType: Boolean = false
+
     constructor(@DrawableRes icon: Int, @StringRes title: Int, @PageType type :Int) {
         this.leftIconRes = icon
         this.title = title

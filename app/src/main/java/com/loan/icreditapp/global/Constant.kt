@@ -8,7 +8,7 @@ import com.loan.icreditapp.dialog.order.OrderInfoBean
 class Constant {
     companion object {
 
-        const val IS_AAB_BUILD = true
+        const val IS_AAB_BUILD = false
 
         const val IS_COLLECT= true
 
@@ -19,6 +19,8 @@ class Constant {
         const val KEY_MOBILE = "key_sign_in_mobile"
 
         const val KEY_LOGIN_TIME = "key_sign_in_login_time"
+
+        const val TEST_KEY_NOT_AUTO_LOGIN_EXECUTE = "test_key_not_auto_login_execute"
 
         var mToken : String? = null
 
