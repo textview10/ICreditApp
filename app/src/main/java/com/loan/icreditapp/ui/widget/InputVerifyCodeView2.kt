@@ -13,6 +13,7 @@ import android.view.View.OnKeyListener
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatEditText
 import com.blankj.utilcode.util.ColorUtils
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.R
 
 class InputVerifyCodeView2 : LinearLayout {
@@ -262,6 +263,27 @@ class InputVerifyCodeView2 : LinearLayout {
         etNum3?.setText("")
         etNum4?.setText("")
         etNum1?.requestFocus()
+    }
+
+    fun setVerifyCode(authCode : String) {
+        try {
+            val num1 = authCode[0].toString()
+            val num2 = authCode[1].toString()
+            val num3 = authCode[2].toString()
+            val num4 = authCode[3].toString()
+            etNum1?.setText(num1)
+            etNum2?.setText(num2)
+            etNum3?.setText(num3)
+            etNum4?.setText(num4)
+        } catch (e : java.lang.Exception) {
+            if (BuildConfig.DEBUG) {
+                throw e
+            }
+        }
+    }
+
+    fun getEditText() :AppCompatEditText?{
+        return etNum1
     }
 
     private var mObserver: Observer? = null

@@ -58,11 +58,11 @@
 
     <include
         android:id="@+id/input_verify_code_otp"
-        layout="@layout/include_input_verify_code"
+        layout="@layout/include_input_verify_code2"
         android:layout_width="match_parent"
         android:layout_marginStart="@dimen/cm_dp_25"
         android:layout_marginTop="@dimen/cm_dp_25"
-        android:layout_marginEnd="@dimen/cm_dp_90"
+        android:layout_marginEnd="@dimen/cm_dp_110"
         app:layout_constraintBottom_toTopOf="@id/input_verify_code_otp"
         app:layout_constraintTop_toBottomOf="@id/tv_login_otp_desc2"
         android:layout_height="@dimen/cm_dp_56" />

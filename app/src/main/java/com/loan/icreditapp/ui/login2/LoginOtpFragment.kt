@@ -29,6 +29,7 @@ import com.loan.icreditapp.collect.ReadSmsMgr
 import com.loan.icreditapp.global.Constant
 import com.loan.icreditapp.ui.login.Login2Activity
 import com.loan.icreditapp.ui.widget.InputVerifyCodeView
+import com.loan.icreditapp.ui.widget.InputVerifyCodeView2
 import com.loan.icreditapp.util.BuildRequestJsonUtils
 import com.loan.icreditapp.util.FirebaseUtils
 import com.lzy.okgo.OkGo
@@ -45,7 +46,7 @@ class LoginOtpFragment : BaseFragment(){
     private var tvCommit : AppCompatTextView? = null
     private var tvDesc1 : AppCompatTextView? = null
     private var tvUssd : AppCompatTextView? = null
-    private var verifyCodeView : InputVerifyCodeView? = null
+    private var verifyCodeView : InputVerifyCodeView2? = null
     private var flLoading : FrameLayout? = null
     private var viewBottom : View? = null
     private var icIcon : AppCompatImageView? = null
@@ -111,7 +112,7 @@ class LoginOtpFragment : BaseFragment(){
         super.onViewCreated(view, savedInstanceState)
         ivBack = view.findViewById<AppCompatImageView>(R.id.iv_title_back)
         tvCommit = view.findViewById<AppCompatTextView>(R.id.tv_otp_login_commit)
-        verifyCodeView = view.findViewById<InputVerifyCodeView>(R.id.input_verify_code_otp)
+        verifyCodeView = view.findViewById<InputVerifyCodeView2>(R.id.input_verify_code_otp)
         flLoading = view.findViewById<FrameLayout>(R.id.fl_otp_login_loading)
         tvDesc1 = view.findViewById<AppCompatTextView>(R.id.tv_login_otp_desc1)
         tvUssd = view.findViewById<AppCompatTextView>(R.id.tv_can_not_recevie)
@@ -119,7 +120,7 @@ class LoginOtpFragment : BaseFragment(){
         icIcon = view.findViewById<AppCompatImageView>(R.id.iv_login2_icon)
         clBottom = view.findViewById<View>(R.id.cl_otp_bottom)
 
-        verifyCodeView?.setObserver(object : InputVerifyCodeView.Observer {
+        verifyCodeView?.setObserver(object : InputVerifyCodeView2.Observer {
             override fun onEnd() {
                 if (isDestroy()) {
                     return

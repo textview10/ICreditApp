@@ -3,12 +3,12 @@
 <com.loan.icreditapp.ui.widget.InputVerifyCodeView2 xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/view_input_verify_code_verify_code"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="@dimen/cm_dp_56"
     android:orientation="horizontal">
 
     <FrameLayout
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/cm_dp_56"
         android:layout_weight="1">
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -35,7 +35,7 @@
 
     <FrameLayout
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/cm_dp_56"
         android:layout_marginStart="12dp"
         android:layout_weight="1">
 
@@ -63,7 +63,7 @@
 
     <FrameLayout
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/cm_dp_56"
         android:layout_marginStart="12dp"
         android:layout_weight="1">
 
@@ -91,7 +91,7 @@
 
     <FrameLayout
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/cm_dp_56"
         android:layout_marginStart="12dp"
         android:layout_weight="1">
 

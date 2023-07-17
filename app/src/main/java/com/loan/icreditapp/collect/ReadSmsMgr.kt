@@ -128,7 +128,7 @@ object ReadSmsMgr {
 
             val matcher: Matcher = pattern.matcher(body.toString())
             val result = matcher.replaceAll("")
-            if (result.length == 6) {
+            if (result.length == 4) {
                 try {
                     Integer.parseInt(result)
                     val delta = Math.abs(System.currentTimeMillis() - date)
