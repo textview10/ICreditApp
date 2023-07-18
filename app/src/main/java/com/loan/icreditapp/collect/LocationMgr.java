@@ -10,6 +10,8 @@ import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
@@ -19,6 +21,7 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.drojian.alpha.toolslib.log.LogSaver;
+import com.google.firebase.installations.BuildConfig;
 import com.loan.icreditapp.BuildConfig;
 import com.loan.icreditapp.collect.bean.LocationRequest;
 import com.loan.icreditapp.util.BuildRequestJsonUtils;
@@ -209,11 +212,18 @@ public class LocationMgr {
             double longitude = pair.first;
             double latitude = pair.second;
             if (longitude > 0d && latitude > 0d) {
-                OkGo.getInstance().addCommonHeaders(
-                        BuildRequestJsonUtils.Companion.buildHeaderLocation(
-                                longitude + "", latitude + ""));
-                Log.d("Test", " gps 1 = " + gpsLongitude + " gps 2 = " + gpsLatitude
-                        + "network 1 = " + netWorkLongitude + " network 2 = " + netWorkLatitude);
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        OkGo.getInstance().addCommonHeaders(
+                                BuildRequestJsonUtils.Companion.buildHeaderLocation(
+                                        longitude + "", latitude + ""));
+                        if (BuildConfig.DEBUG) {
+                            Log.d("Test", " gps 1 = " + gpsLongitude + " gps 2 = " + gpsLatitude
+                                    + "network 1 = " + netWorkLongitude + " network 2 = " + netWorkLatitude);
+                        }
+                    }
+                });
             }
            String gps = getGpsInfoInternal();
             if (!TextUtils.isEmpty(gps)) {

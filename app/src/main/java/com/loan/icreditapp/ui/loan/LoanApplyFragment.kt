@@ -364,7 +364,11 @@ class LoanApplyFragment : BaseLoanFragment() {
                     override fun onDenied() {
                         Toast.makeText(MyApp.mContext,
                             "please allow permission for apply loan.", Toast.LENGTH_SHORT).show()
-                        JumpPermissionUtils.goToSetting(activity)
+                        try {
+                            JumpPermissionUtils.goToSetting(activity)
+                        } catch (e : Exception) {
+
+                        }
                     }
                 }).request()
             }

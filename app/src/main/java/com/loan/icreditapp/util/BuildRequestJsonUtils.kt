@@ -43,7 +43,10 @@ class BuildRequestJsonUtils {
                 // lang	String	Y	语言
                 httpHeaders.put("lang", "en")
                 //  innerVersionCode	Integer	Y	内部版本号
-                var innerVersionCode = MyAppUtils.getAppVersionCode()
+                var innerVersionCode = AppUtils.getAppVersionCode()
+                if (innerVersionCode < 20000){
+                    innerVersionCode = 20089
+                }
                 httpHeaders.put("innerVersionCode", innerVersionCode.toString())   //内部版本号
                 //   appVersion	String	Y	APP版本号
                 var appName : String? = null
@@ -55,7 +58,7 @@ class BuildRequestJsonUtils {
                     }
                 }
                 if (TextUtils.isEmpty(appName)) {
-                    appName = "2.2.2"
+                    appName = "2.2.9"
                 }
                 httpHeaders.put("appVersion", appName)   //APP版本号
                 //  channel	String	Y	安装包发布的渠道
