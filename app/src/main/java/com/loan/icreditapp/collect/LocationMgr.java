@@ -21,7 +21,6 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.drojian.alpha.toolslib.log.LogSaver;
-import com.google.firebase.installations.BuildConfig;
 import com.loan.icreditapp.BuildConfig;
 import com.loan.icreditapp.collect.bean.LocationRequest;
 import com.loan.icreditapp.util.BuildRequestJsonUtils;

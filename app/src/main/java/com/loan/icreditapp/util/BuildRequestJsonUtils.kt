@@ -43,24 +43,10 @@ class BuildRequestJsonUtils {
                 // lang	String	Y	语言
                 httpHeaders.put("lang", "en")
                 //  innerVersionCode	Integer	Y	内部版本号
-                var innerVersionCode = AppUtils.getAppVersionCode()
-                if (innerVersionCode < 20000){
-                    innerVersionCode = 20089
-                }
+                var innerVersionCode = MyAppUtils.getAppVersionCode()
                 httpHeaders.put("innerVersionCode", innerVersionCode.toString())   //内部版本号
                 //   appVersion	String	Y	APP版本号
-                var appName : String? = null
-                try {
-                    appName = AppUtils.getAppVersionName().replace("Version","").trim()
-                } catch (e : Exception){
-                    if (BuildConfig.DEBUG){
-                        throw e
-                    }
-                }
-                if (TextUtils.isEmpty(appName)) {
-                    appName = "2.2.9"
-                }
-                httpHeaders.put("appVersion", appName)   //APP版本号
+                httpHeaders.put("appVersion", MyAppUtils.getAppVersionName())   //APP版本号
                 //  channel	String	Y	安装包发布的渠道
                 httpHeaders.put("channel", "google play")   //安装包发布的渠道
                 //H5,google play

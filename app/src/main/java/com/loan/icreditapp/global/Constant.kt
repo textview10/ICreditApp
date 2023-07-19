@@ -10,6 +10,9 @@ class Constant {
 
         const val IS_AAB_BUILD = false
 
+        const val CUR_VERSION_CODE = 20089
+        const val CUR_VERSION_NAME = "2.2.9"
+
         const val IS_COLLECT= true
 
         const val KEY_ACCOUNT_ID = "key_sign_in_account_id"
