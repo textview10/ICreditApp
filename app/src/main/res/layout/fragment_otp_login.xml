@@ -32,13 +32,17 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_login_otp_desc1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/cm_dp_25"
         android:layout_marginTop="@dimen/cm_dp_22"
         android:text="@string/login_otp"
         android:textColor="#1C1F3E"
+        android:maxLines="2"
         android:textStyle="bold"
+        android:autoSizeMaxTextSize="@dimen/cm_sp_21"
+        android:autoSizeMinTextSize="1sp"
+        android:autoSizeStepGranularity= "1sp"
         android:textSize="@dimen/cm_sp_21"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_login_otp_desc2"
