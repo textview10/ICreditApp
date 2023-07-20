@@ -234,11 +234,11 @@ class SignUpFragment : BaseFragment() {
                 ToastUtils.showShort(resources.getString(R.string.must_agree_term))
                 return@setOnClickListener
             }
+            fillPhoneOrPrefix()
             if (TextUtils.isEmpty(mPhoneNum)) {
                 ToastUtils.showShort("must input phone num.")
                 return@setOnClickListener
             }
-            fillPhoneOrPrefix()
             checkVerifySmsCode(true)
         }
 

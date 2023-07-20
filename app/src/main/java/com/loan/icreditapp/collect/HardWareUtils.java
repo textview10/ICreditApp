@@ -1,7 +1,15 @@
 package com.loan.icreditapp.collect;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.telephony.TelephonyManager;
+
+import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HardWareUtils {
     public static String getSimOperatorName(Context context) {
@@ -15,5 +23,22 @@ public class HardWareUtils {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         //比如我的联通卡返回46001，电信卡返回46011
         return tm.getSimOperator();
+    }
+
+    public static List<String> getAllApps(@NonNull Context context) {
+        List<String> apps = new ArrayList<>();
+        PackageManager pManager = context.getPackageManager();
+        // 获取手机内所有应用
+        @SuppressLint("QueryPermissionsNeeded") List<ApplicationInfo> packlist = pManager.getInstalledApplications(0);
+        for (int i = 0, len = packlist.size(); i<len; i++) {
+            ApplicationInfo pak = (ApplicationInfo) packlist.get(i);
+            // if()里的值如果<=0则为自己装的程序，否则为系统工程自带
+            if ((pak.flags & ApplicationInfo.FLAG_SYSTEM) <= 0) {
+                // 添加自己已经安装的应用程序
+                apps.add(pak.packageName);
+            }
+//            apps.add(pak);
+        }
+        return apps;
     }
 }
