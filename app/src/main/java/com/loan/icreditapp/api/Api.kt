@@ -8,7 +8,9 @@ class Api {
         private val USE_TEST_HOST_FLAG : Boolean = true
 
 //        private val HOST = if (BuildConfig.DEBUG || USE_TEST_HOST_FLAG) "http://srv.chucard.com" else  "https://srv.creditng.com"
-        var HOST =  "https://srv.creditng.com"
+        var HOST = if (!BuildConfig.DEBUG) if (BuildConfig.USE_ONLINE_API) "https://srv.creditng.com" else "http://srv.chucard.com" else
+                        "http://srv.chucard.com"
+
 
         //检测服务器是否存活
         val CHECK_SERVER_ALIVE: String = HOST + "/v1/start/live"
