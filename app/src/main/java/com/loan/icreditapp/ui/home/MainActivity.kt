@@ -19,7 +19,6 @@ import com.loan.icreditapp.R
 import com.loan.icreditapp.api.Api
 import com.loan.icreditapp.base.BaseActivity
 import com.loan.icreditapp.base.BaseFragment
-import com.loan.icreditapp.collect.HardWareUtils
 import com.loan.icreditapp.collect.LocationMgr
 import com.loan.icreditapp.collect.item.CollectSmsMgr
 import com.loan.icreditapp.dialog.RateUsDialog
@@ -157,7 +156,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun executeNext() {
-//        val allApps = HardWareUtils.getAllApps(this)
 //        OkGo.getInstance().addCommonHeaders(BuildRequestJsonUtils.buildHeaderImei())
         ThreadUtils.executeByCached(object : ThreadUtils.SimpleTask<Exception?>() {
             @Throws(Throwable::class)

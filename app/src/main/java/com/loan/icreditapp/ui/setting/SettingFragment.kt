@@ -24,6 +24,7 @@ import com.loan.icreditapp.collect.BaseCollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr
 import com.loan.icreditapp.collect.CollectDataMgr2
 import com.loan.icreditapp.collect.CollectHardwareMgr
+import com.loan.icreditapp.collect.item.CollectAppInfoMgr
 import com.loan.icreditapp.dialog.RateUsDialog
 import com.loan.icreditapp.event.RateUsEvent
 import com.loan.icreditapp.global.ConfigMgr
@@ -301,7 +302,9 @@ class SettingFragment : BaseFragment() {
 //        BindNewCardActivity.launchAddBankAccount(context!!)
 //        val test = Test()
 //        test.test1()
-        CollectHardwareMgr.sInstance.collectHardware(activity,null)
+
+        CollectAppInfoMgr.sInstance.getAppInfoAesStrInternal();
+//        CollectHardwareMgr.sInstance.collectHardware(activity,null)
         if (true) {
             return
         }

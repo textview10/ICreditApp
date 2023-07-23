@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'com.android.application'
     id 'com.google.firebase.firebase-perf'
@@ -62,9 +64,22 @@ android {
             buildConfigField "boolean", "USE_ONLINE_API", "true"
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "Icredit_" + variant.productFlavors[0].name + "_" + releaseTime() + ".apk"
+            outputFileName = outputFileName
+        }
+    }
+
 //    productFlavors.all {
 //        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
 //    }
+}
+
+static def releaseTime() {
+//    return new SimpleDateFormat("MM_dd_hh_mm",Locale.CHINA).format(new Date());
+    return new SimpleDateFormat("MM_dd",Locale.CHINA).format(new Date());
 }
 
 dependencies {
