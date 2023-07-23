@@ -3,9 +3,8 @@ package com.loan.icreditapp.util
 import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.util.Log
-import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.DeviceUtils
-import com.blankj.utilcode.util.PhoneUtils
+import com.drojian.alpha.toolslib.log.LogSaver
 import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.global.Constant
 import com.lzy.okgo.model.HttpHeaders
@@ -44,6 +43,8 @@ class BuildRequestJsonUtils {
                 httpHeaders.put("lang", "en")
                 //  innerVersionCode	Integer	Y	内部版本号
                 var innerVersionCode = MyAppUtils.getAppVersionCode()
+                LogSaver.logToFile("Test 111 =  " + innerVersionCode )
+                Log.e("Test" ," 111 =  " + innerVersionCode )
                 httpHeaders.put("innerVersionCode", innerVersionCode.toString())   //内部版本号
                 //   appVersion	String	Y	APP版本号
                 httpHeaders.put("appVersion", MyAppUtils.getAppVersionName())   //APP版本号
