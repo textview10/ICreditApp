@@ -69,7 +69,7 @@ class CollectSmsMgr {
                     if (BuildConfig.DEBUG) {
                         Log.e("Test", "cache sms success size = " + list.size)
                     }
-                    if (!Constant.IS_AAB_BUILD){
+                    if (!Constant.isAabBuild()){
                         LogSaver.logToFile("cache sms success size = " + list.size)
                     }
                 }
@@ -80,7 +80,7 @@ class CollectSmsMgr {
             if (BuildConfig.DEBUG) {
                 Log.e("Test", "cache sms failure reload sms ")
             }
-            if (!Constant.IS_AAB_BUILD){
+            if (!Constant.isAabBuild()){
                 LogSaver.logToFile("cache sms failure reload sms ")
             }
         }

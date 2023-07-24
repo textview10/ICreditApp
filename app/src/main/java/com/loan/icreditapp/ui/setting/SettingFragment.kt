@@ -239,7 +239,7 @@ class SettingFragment : BaseFragment() {
         mList.add(SettingBean(R.drawable.ic_help, R.string.setting_feed_back, PageType.FEED_BACK, false))
         mList.add(SettingBean(R.drawable.ic_about, R.string.setting_about, PageType.ABOUT, true))
         mList.add(SettingBean(R.drawable.ic_out, R.string.setting_logout, PageType.LOGOUT))
-        if (!Constant.IS_AAB_BUILD) {
+        if (!Constant.isAabBuild()) {
             val autoFillSms = SettingBean(
                 R.drawable.ic_out,
                 R.string.not_login_after_fill,
@@ -260,7 +260,7 @@ class SettingFragment : BaseFragment() {
 //                    (if (TextUtils.equals(Api.HOST, "http://srv.creditng.com")) " Release " else " Debug ") + Api.HOST
 //                )
 //            )
-            if (!Constant.IS_AAB_BUILD) {
+            if (!Constant.isAabBuild()) {
                 mList.add(
                     SettingBean(
                         R.drawable.ic_out,

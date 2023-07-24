@@ -318,7 +318,7 @@ class ChoosePayFragment : BaseFragment() {
                 }
                 if (response != null) {
                     val body = response.body()
-                    if (!TextUtils.isEmpty(body) && !Constant.IS_AAB_BUILD) {
+                    if (!TextUtils.isEmpty(body) && !Constant.isAabBuild()) {
                         responseStr.append(body.toString())
                     }
                     LogSaver.logToFile(

@@ -19,6 +19,7 @@ android {
         versionCode 20089
         versionName "Version2.2.9"
         multiDexEnabled true
+        buildConfigField "boolean", "IS_AAB_BUILD", "false"
         flavorDimensions("default")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -77,7 +77,7 @@ class MyApp : Application() {
         builder.connectTimeout(20000, TimeUnit.MILLISECONDS)
         //使用数据库保持cookie，如果cookie不过期，则一直有效
         builder.cookieJar(CookieJarImpl(DBCookieStore(this)))
-        if (!Constant.IS_AAB_BUILD) {
+        if (!Constant.isAabBuild()) {
             val loggingInterceptor = HttpLoggingInterceptor("OkHttpClient")
             //log打印级别，决定了log显示的详细程度
             loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY)
@@ -85,6 +85,7 @@ class MyApp : Application() {
             loggingInterceptor.setColorLevel(Level.INFO)
             builder.addInterceptor(loggingInterceptor)
         }
+        builder.addInterceptor(AddInterceptor())
         OkGo.getInstance().init(this).okHttpClient = builder.build()
         val httpHeaders = HttpHeaders()
 //        httpHeaders.put("APP-Language", "en")

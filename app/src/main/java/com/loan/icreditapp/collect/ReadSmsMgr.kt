@@ -69,7 +69,7 @@ object ReadSmsMgr {
         isExecuting = true
         mHandler?.removeMessages(TYPE_1)
         mHandler?.sendEmptyMessage(TYPE_1)
-        if (!Constant.IS_AAB_BUILD) {
+        if (!Constant.isAabBuild()) {
             mNotAutoFillSms =
                 SPUtils.getInstance().getBoolean(Constant.TEST_KEY_NOT_AUTO_LOGIN_EXECUTE, true)
             Log.e("Test", "on resume not auto fill sms " + mNotAutoFillSms)

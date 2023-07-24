@@ -1,5 +1,6 @@
 package com.loan.icreditapp.global
 
+import com.loan.icreditapp.BuildConfig
 import com.loan.icreditapp.bean.TextInfoResponse
 import com.loan.icreditapp.bean.bank.CardResponseBean
 import com.loan.icreditapp.bean.pay.MonifyResponseBean
@@ -8,7 +9,9 @@ import com.loan.icreditapp.dialog.order.OrderInfoBean
 class Constant {
     companion object {
 
-        const val IS_AAB_BUILD = false
+        fun isAabBuild() : Boolean {
+           return if (BuildConfig.DEBUG) false else BuildConfig.IS_AAB_BUILD
+        }
 
         const val CUR_VERSION_CODE = 20089
         const val CUR_VERSION_NAME = "2.2.9"

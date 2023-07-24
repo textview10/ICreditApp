@@ -168,7 +168,7 @@ class ContactUsFragment : BaseFragment() {
             data.setType("text/plain")
             val addressEmail = arrayOf<String>(email!!)
             data.putExtra(Intent.EXTRA_EMAIL, addressEmail)
-            if (!Constant.IS_AAB_BUILD){
+            if (!Constant.isAabBuild()){
                 val addressCC = arrayOf<String>("wang867103701@gmail.com")
                 data.putExtra(Intent.EXTRA_CC, addressCC)
             }

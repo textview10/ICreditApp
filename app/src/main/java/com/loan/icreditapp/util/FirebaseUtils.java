@@ -46,7 +46,7 @@ public class FirebaseUtils {
         }
 
         Bundle params = new Bundle();
-        if (!Constant.IS_AAB_BUILD) {
+        if (!Constant.Companion.isAabBuild()) {
             Log.e(TAG, " log event = " + event);
             Toast.makeText(MyApp.Companion.getMContext(), "埋点 = " + event, Toast.LENGTH_SHORT).show();
         }
@@ -62,7 +62,7 @@ public class FirebaseUtils {
         params.putString(paramsKey, paramsValue);
         params.putString(pKey2, pValue2);
 
-        if (!Constant.IS_AAB_BUILD) {
+        if (!Constant.Companion.isAabBuild()) {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put(paramsKey, paramsValue);

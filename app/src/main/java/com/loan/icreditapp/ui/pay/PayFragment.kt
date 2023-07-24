@@ -24,7 +24,6 @@ import com.loan.icreditapp.event.ChooseBankListEvent
 import com.loan.icreditapp.event.UpdateLoanEvent
 import com.loan.icreditapp.global.ConfigMgr
 import com.loan.icreditapp.global.Constant
-import com.loan.icreditapp.global.Constant.Companion.IS_AAB_BUILD
 import com.loan.icreditapp.ui.pay.presenter.*
 import com.loan.icreditapp.ui.profile.widget.EditTextContainer
 import com.loan.icreditapp.util.CardNumUtils
@@ -324,7 +323,7 @@ class PayFragment : BaseFragment() {
                 }
                 if (response != null) {
                     val body = response.body()
-                    if (!TextUtils.isEmpty(body) && !IS_AAB_BUILD) {
+                    if (!TextUtils.isEmpty(body) && !Constant.isAabBuild()) {
                         responseStr.append(body.toString())
                     }
                     LogSaver.logToFile(
