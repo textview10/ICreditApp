@@ -123,7 +123,7 @@ class FlutterwarePresenter : BasePresenter {
                     if (isSuccess){
                         updateResult()
                     } else {
-                        mObserver?.repayFailure(response, true, "flutterware uploadJson status != 1")
+                        mObserver?.repayFailure(response, true, "flutterwave uploadJson status != 1")
                     }
                 }
 
@@ -161,7 +161,7 @@ class FlutterwarePresenter : BasePresenter {
                     if (TextUtils.equals(flutterwareResult.status, "1")){
                         mObserver?.repaySuccess()
                     } else {
-                        mObserver?.repayFailure(response, true, "flutterware status != 1")
+                        mObserver?.repayFailure(response, true, "flutterwave status != 1")
                     }
                 }
 
@@ -170,7 +170,7 @@ class FlutterwarePresenter : BasePresenter {
                     if (isDestroy()){
                         return
                     }
-                    mObserver?.repayFailure(response, true, "request flutterware error")
+                    mObserver?.repayFailure(response, true, "request flutterwave error")
                 }
             })
     }

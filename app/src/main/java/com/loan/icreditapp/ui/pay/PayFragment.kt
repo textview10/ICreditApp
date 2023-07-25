@@ -276,7 +276,7 @@ class PayFragment : BaseFragment() {
         }
         if (!isSuccess || !statusOk) {
             var sb = StringBuffer()
-            sb.append("Flutterware result error")
+            sb.append("Flutterwave result error")
             if (bean != null) {
                 if (!isSuccess && bean.data != null) {
                     sb.append(bean!!.data!!.vbvrespmessage)
