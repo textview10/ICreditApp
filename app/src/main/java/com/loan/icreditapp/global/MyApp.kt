@@ -47,8 +47,10 @@ class MyApp : Application() {
         initializeData()
         LanguageUtils.applyLanguage(Locale.ENGLISH, false)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
         LogSaver.init(this)
+        if (!Constant.isAabBuild()) {
+            CrashHandler.getInstance().init(this)
+        }
         if (BuildConfig.DEBUG) {
             LogSaver.enableDebug()
         }
