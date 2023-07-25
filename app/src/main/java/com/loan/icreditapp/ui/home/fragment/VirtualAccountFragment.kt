@@ -47,7 +47,7 @@ class VirtualAccountFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_offline_repay, container, false)
+        val view = inflater.inflate(R.layout.fragment_virtual_account, container, false)
         return view
     }
 
