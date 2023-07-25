@@ -258,7 +258,7 @@ class ChoosePayFragment : BaseFragment() {
     }
 
     fun onUpdateBindCard(){
-        Log.e("Test", "on update bind card.")
+//        Log.e("Test", "on update bind card.")
         Constant.bankList.clear()
         updateBankListInternal()
     }

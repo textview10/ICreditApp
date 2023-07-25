@@ -41,7 +41,8 @@ class CardNumUtils {
                         val result = cardNumber.toString()
                         val tempResult = StringBuffer()
                         for (i in 0 until result.length) {
-                            if (i >= 8 && i <= 11) {
+//                            if (i >= 8 && i <= 11) {
+                            if (i <= 11) {
                                 tempResult.append("*")
                             } else {
                                 tempResult.append(result[i])
