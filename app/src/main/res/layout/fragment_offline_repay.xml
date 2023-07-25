@@ -40,6 +40,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="62dp">
+
+                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                    android:id="@+id/select_container_pay_account_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    app:select_view_hint="Account number" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pay_copy_account_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/shape_copy_bg"
+                    android:gravity="center"
+                    android:paddingStart="12dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="3dp"
+                    android:text="Copy"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,36 +110,6 @@
 
             <View style="@style/view_divide" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="62dp">
-
-                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
-                    android:id="@+id/select_container_pay_account_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="62dp"
-                    app:select_view_hint="Account number" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_pay_copy_account_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|end"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/shape_copy_bg"
-                    android:gravity="center"
-                    android:paddingStart="12dp"
-                    android:paddingTop="3dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="3dp"
-                    android:text="Copy"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
-
-            </FrameLayout>
-
-            <View style="@style/view_divide" />
 
         </LinearLayout>
 
