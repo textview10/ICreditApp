@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#f8f8f8ff"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:text="@string/bank_transfer_title"
+            android:textColor="#1C1F3E"
+            android:textSize="18sp"
+            android:includeFontPadding="false"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:text="@string/bank_transfer_desc"
+            android:textColor="#991C1F3E"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:includeFontPadding="false"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/ll_offline_repay_result"
+            android:layout_width="match_parent"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_white_corner_2"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="62dp">
+
+                <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                    android:id="@+id/select_container_pay_account_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    app:select_view_hint="Account number" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pay_copy_account_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/shape_copy_bg"
+                    android:gravity="center"
+                    android:paddingStart="12dp"
+                    android:paddingTop="3dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="3dp"
+                    android:text="Copy"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+            </FrameLayout>
+
+            <View style="@style/view_divide" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Offline transfer:"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                android:id="@+id/select_container_pay_bank_name"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                app:select_view_hint="Bank name" />
+
+            <View style="@style/view_divide" />
+
+            <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                android:id="@+id/select_container_pay_bank_code"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                app:select_view_hint="Bank code" />
+
+
+            <View style="@style/view_divide" />
+
+            <com.loan.icreditapp.ui.profile.widget.EditTextContainer
+                android:id="@+id/select_container_pay_account_name"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                app:select_view_hint="Account name" />
+
+            <View style="@style/view_divide" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_offline_repay_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp" />
+
+    </FrameLayout>
+
+</FrameLayout>
